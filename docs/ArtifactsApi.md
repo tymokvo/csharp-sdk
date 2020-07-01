@@ -34,9 +34,8 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure HTTP basic authorization: JWT
-            Configuration.Default.Username = "YOUR_USERNAME";
-            Configuration.Default.Password = "YOUR_PASSWORD";
+            // Configure OAuth2 access token for authorization: JWT
+            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ArtifactsApi(Configuration.Default);
             var owner = owner_example;  // string | 
@@ -118,9 +117,8 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure HTTP basic authorization: JWT
-            Configuration.Default.Username = "YOUR_USERNAME";
-            Configuration.Default.Password = "YOUR_PASSWORD";
+            // Configure OAuth2 access token for authorization: JWT
+            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ArtifactsApi(Configuration.Default);
             var owner = owner_example;  // string | 
@@ -202,9 +200,8 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure HTTP basic authorization: JWT
-            Configuration.Default.Username = "YOUR_USERNAME";
-            Configuration.Default.Password = "YOUR_PASSWORD";
+            // Configure OAuth2 access token for authorization: JWT
+            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ArtifactsApi(Configuration.Default);
             var owner = owner_example;  // string | 
