@@ -1,0 +1,38 @@
+name: CD
+
+on: 
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: "Checkout Master Branch"
+        uses: actions/checkout@v2
+
+      - name: Setup MSbuild
+        uses: microsoft/setup-msbuild@v1.0.0
+        
+      - name: Setup Nuget.exe
+        uses: nuget/setup-nuget@v1
+        
+      - name: Nuget Restore
+        run: |
+          nuget restore PollinationSDK.sln
+          nuget install NUnit.ConsoleRunner -Version 3.10.0 -OutputDirectory packages
+
+      - name: MSBuild
+        run: |
+          msbuild /p:Configuration=Release PollinationSDK.sln
+
+      - name: Run Unit Tests
+        run: |
+          ./packages/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe src/PollinationSDK.Test/bin/Release/PollinationSDK.Test.dll
+
+      - name: Deploy
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          python deploy.py
