@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// PatchProjectDto
     /// </summary>
     [DataContract]
-    public partial class PatchProjectDto : HoneybeeObject, IEquatable<PatchProjectDto>, IValidatableObject
+    public partial class PatchProjectDto :  IEquatable<PatchProjectDto>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PatchProjectDto" /> class.
         /// </summary>
@@ -44,8 +43,8 @@ namespace PollinationSDK
         /// <param name="_public">Whether or not a project is publicly viewable (default to true).</param>
         public PatchProjectDto
         (
-            , string name, , // Required parameters
-            , string description = "", bool _public = true// Optional parameters
+           string name, // Required parameters
+           string description = "", bool _public = true// Optional parameters
         )// BaseClass
         {
             // to ensure "name" is required (not null)
@@ -61,7 +60,7 @@ namespace PollinationSDK
             // use default value if no "description" provided
             if (description == null)
             {
-                this.Description = "";
+                this.Description ="";
             }
             else
             {
@@ -70,7 +69,7 @@ namespace PollinationSDK
             // use default value if no "_public" provided
             if (_public == null)
             {
-                this.Public = true;
+                this.Public =true;
             }
             else
             {
@@ -108,60 +107,24 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"PatchProjectDto {iDd.Identifier}";
-       
-            return "PatchProjectDto";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("PatchProjectDto:\n");
+            sb.Append("class PatchProjectDto {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Public: ").Append(Public).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>PatchProjectDto object</returns>
-        public static PatchProjectDto FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<PatchProjectDto>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>PatchProjectDto object</returns>
-        public PatchProjectDto DuplicatePatchProjectDto()
-        {
-            return Duplicate() as PatchProjectDto;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -229,5 +192,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

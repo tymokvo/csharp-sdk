@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// A Task Parameter Reference
     /// </summary>
     [DataContract]
-    public partial class TaskParameterReference : HoneybeeObject, IEquatable<TaskParameterReference>, IValidatableObject
+    public partial class TaskParameterReference :  IEquatable<TaskParameterReference>, IValidatableObject
     {
-
         /// <summary>
         /// Defines Type
         /// </summary>
@@ -49,7 +48,7 @@ namespace PollinationSDK
         /// Gets or Sets Type
         /// </summary>
         [DataMember(Name="type", EmitDefaultValue=false)]
-        public TypeEnum? Type { get; set; }   = TypeEnumEnum""TypeEnum.Tasks""Enum; 
+        public TypeEnum? Type { get; set; }   = TypeEnum.Tasks; 
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskParameterReference" /> class.
         /// </summary>
@@ -63,8 +62,8 @@ namespace PollinationSDK
         /// <param name="variable">The name of the task output variable (required).</param>
         public TaskParameterReference
         (
-            , string name, string variable, // Required parameters
-            , TypeEnum? type = TypeEnumEnum""TypeEnum.Tasks""Enum, // Optional parameters
+           string name, string variable, // Required parameters
+           TypeEnum? type = TypeEnum.Tasks // Optional parameters
         )// BaseClass
         {
             // to ensure "name" is required (not null)
@@ -90,7 +89,7 @@ namespace PollinationSDK
             // use default value if no "type" provided
             if (type == null)
             {
-                this.Type = TypeEnumEnum""TypeEnum.Tasks""Enum;
+                this.Type =TypeEnum.Tasks;
             }
             else
             {
@@ -121,60 +120,24 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"TaskParameterReference {iDd.Identifier}";
-       
-            return "TaskParameterReference";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("TaskParameterReference:\n");
+            sb.Append("class TaskParameterReference {\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Variable: ").Append(Variable).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>TaskParameterReference object</returns>
-        public static TaskParameterReference FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<TaskParameterReference>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>TaskParameterReference object</returns>
-        public TaskParameterReference DuplicateTaskParameterReference()
-        {
-            return Duplicate() as TaskParameterReference;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -242,5 +205,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

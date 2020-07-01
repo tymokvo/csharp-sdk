@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// RepositoryPermissions
     /// </summary>
     [DataContract]
-    public partial class RepositoryPermissions : HoneybeeObject, IEquatable<RepositoryPermissions>, IValidatableObject
+    public partial class RepositoryPermissions :  IEquatable<RepositoryPermissions>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="RepositoryPermissions" /> class.
         /// </summary>
@@ -44,8 +43,8 @@ namespace PollinationSDK
         /// <param name="read">read (required).</param>
         public RepositoryPermissions
         (
-            , bool admin, bool contribute, bool read// Required parameters
-            , // Optional parameters
+           bool admin, bool contribute, bool read// Required parameters
+           // Optional parameters
         )// BaseClass
         {
             // to ensure "admin" is required (not null)
@@ -107,60 +106,24 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"RepositoryPermissions {iDd.Identifier}";
-       
-            return "RepositoryPermissions";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("RepositoryPermissions:\n");
+            sb.Append("class RepositoryPermissions {\n");
             sb.Append("  Admin: ").Append(Admin).Append("\n");
             sb.Append("  Contribute: ").Append(Contribute).Append("\n");
             sb.Append("  Read: ").Append(Read).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>RepositoryPermissions object</returns>
-        public static RepositoryPermissions FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<RepositoryPermissions>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>RepositoryPermissions object</returns>
-        public RepositoryPermissions DuplicateRepositoryPermissions()
-        {
-            return Duplicate() as RepositoryPermissions;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -228,5 +191,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

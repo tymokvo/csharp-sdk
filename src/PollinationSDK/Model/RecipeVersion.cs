@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// Resource Version  A Metadata object to distinguish a specific resource version within a repository index.
     /// </summary>
     [DataContract]
-    public partial class RecipeVersion : HoneybeeObject, IEquatable<RecipeVersion>, IValidatableObject
+    public partial class RecipeVersion :  IEquatable<RecipeVersion>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="RecipeVersion" /> class.
         /// </summary>
@@ -54,8 +53,8 @@ namespace PollinationSDK
         /// <param name="digest">digest (required).</param>
         public RecipeVersion
         (
-            , string name, string tag, string url, DateTime created, string digest, // Required parameters
-            , List<string> keywords= default, List<QueenbeeRecipeMetadataMaintainer> maintainers= default, string home= default, List<string> sources= default, string icon= default, bool deprecated= default, string description= default, License license= default, // Optional parameters
+           string name, string tag, string url, DateTime created, string digest, // Required parameters
+           List<string> keywords= default, List<QueenbeeRecipeMetadataMaintainer> maintainers= default, string home= default, List<string> sources= default, string icon= default, bool deprecated= default, string description= default, License license= default // Optional parameters
         )// BaseClass
         {
             // to ensure "name" is required (not null)
@@ -215,23 +214,8 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"RecipeVersion {iDd.Identifier}";
-       
-            return "RecipeVersion";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("RecipeVersion:\n");
+            sb.Append("class RecipeVersion {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Tag: ").Append(Tag).Append("\n");
             sb.Append("  Keywords: ").Append(Keywords).Append("\n");
@@ -245,40 +229,19 @@ namespace PollinationSDK
             sb.Append("  Url: ").Append(Url).Append("\n");
             sb.Append("  Created: ").Append(Created).Append("\n");
             sb.Append("  Digest: ").Append(Digest).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>RecipeVersion object</returns>
-        public static RecipeVersion FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<RecipeVersion>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>RecipeVersion object</returns>
-        public RecipeVersion DuplicateRecipeVersion()
-        {
-            return Duplicate() as RecipeVersion;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -419,5 +382,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

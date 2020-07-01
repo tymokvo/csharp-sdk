@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// Operator metadata information
     /// </summary>
     [DataContract]
-    public partial class QueenbeeOperatorMetadataMetaData : HoneybeeObject, IEquatable<QueenbeeOperatorMetadataMetaData>, IValidatableObject
+    public partial class QueenbeeOperatorMetadataMetaData :  IEquatable<QueenbeeOperatorMetadataMetaData>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="QueenbeeOperatorMetadataMetaData" /> class.
         /// </summary>
@@ -51,8 +50,8 @@ namespace PollinationSDK
         /// <param name="description">A description of what this operator does.</param>
         public QueenbeeOperatorMetadataMetaData
         (
-            , string name, string tag, , // Required parameters
-            , string appVersion= default, List<string> keywords= default, List<QueenbeeOperatorMetadataMaintainer> maintainers= default, string home= default, List<string> sources= default, string icon= default, bool deprecated= default, string description= default// Optional parameters
+           string name, string tag, // Required parameters
+           string appVersion= default, List<string> keywords= default, List<QueenbeeOperatorMetadataMaintainer> maintainers= default, string home= default, List<string> sources= default, string icon= default, bool deprecated= default, string description= default// Optional parameters
         )// BaseClass
         {
             // to ensure "name" is required (not null)
@@ -164,23 +163,8 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"QueenbeeOperatorMetadataMetaData {iDd.Identifier}";
-       
-            return "QueenbeeOperatorMetadataMetaData";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("QueenbeeOperatorMetadataMetaData:\n");
+            sb.Append("class QueenbeeOperatorMetadataMetaData {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Tag: ").Append(Tag).Append("\n");
             sb.Append("  AppVersion: ").Append(AppVersion).Append("\n");
@@ -191,40 +175,19 @@ namespace PollinationSDK
             sb.Append("  Icon: ").Append(Icon).Append("\n");
             sb.Append("  Deprecated: ").Append(Deprecated).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>QueenbeeOperatorMetadataMetaData object</returns>
-        public static QueenbeeOperatorMetadataMetaData FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<QueenbeeOperatorMetadataMetaData>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>QueenbeeOperatorMetadataMetaData object</returns>
-        public QueenbeeOperatorMetadataMetaData DuplicateQueenbeeOperatorMetadataMetaData()
-        {
-            return Duplicate() as QueenbeeOperatorMetadataMetaData;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -344,5 +307,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

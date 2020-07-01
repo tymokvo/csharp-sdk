@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// RepositoryAbridgedDto
     /// </summary>
     [DataContract]
-    public partial class RepositoryAbridgedDto : HoneybeeObject, IEquatable<RepositoryAbridgedDto>, IValidatableObject
+    public partial class RepositoryAbridgedDto :  IEquatable<RepositoryAbridgedDto>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="RepositoryAbridgedDto" /> class.
         /// </summary>
@@ -49,8 +48,8 @@ namespace PollinationSDK
         /// <param name="slug">The repository slug.</param>
         public RepositoryAbridgedDto
         (
-            , string name, string latestTag, AccountPublic owner, , // Required parameters
-            , bool _public = true, List<string> keywords= default, string description= default, string icon= default, string slug= default// Optional parameters
+           string name, string latestTag, AccountPublic owner, // Required parameters
+           bool _public = true, List<string> keywords= default, string description= default, string icon= default, string slug= default// Optional parameters
         )// BaseClass
         {
             // to ensure "name" is required (not null)
@@ -86,7 +85,7 @@ namespace PollinationSDK
             // use default value if no "_public" provided
             if (_public == null)
             {
-                this.Public = true;
+                this.Public =true;
             }
             else
             {
@@ -163,23 +162,8 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"RepositoryAbridgedDto {iDd.Identifier}";
-       
-            return "RepositoryAbridgedDto";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("RepositoryAbridgedDto:\n");
+            sb.Append("class RepositoryAbridgedDto {\n");
             sb.Append("  Public: ").Append(Public).Append("\n");
             sb.Append("  Keywords: ").Append(Keywords).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
@@ -188,40 +172,19 @@ namespace PollinationSDK
             sb.Append("  LatestTag: ").Append(LatestTag).Append("\n");
             sb.Append("  Owner: ").Append(Owner).Append("\n");
             sb.Append("  Slug: ").Append(Slug).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>RepositoryAbridgedDto object</returns>
-        public static RepositoryAbridgedDto FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<RepositoryAbridgedDto>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>RepositoryAbridgedDto object</returns>
-        public RepositoryAbridgedDto DuplicateRepositoryAbridgedDto()
-        {
-            return Duplicate() as RepositoryAbridgedDto;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -325,5 +288,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

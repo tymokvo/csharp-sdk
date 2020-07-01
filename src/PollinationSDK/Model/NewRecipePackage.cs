@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// NewRecipePackage
     /// </summary>
     [DataContract]
-    public partial class NewRecipePackage : HoneybeeObject, IEquatable<NewRecipePackage>, IValidatableObject
+    public partial class NewRecipePackage :  IEquatable<NewRecipePackage>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="NewRecipePackage" /> class.
         /// </summary>
@@ -44,8 +43,8 @@ namespace PollinationSDK
         /// <param name="license">The license file to attach to this package (default to &quot;&quot;).</param>
         public NewRecipePackage
         (
-            , Recipe manifest, , // Required parameters
-            , string readme = "", string license = ""// Optional parameters
+           Recipe manifest, // Required parameters
+           string readme = "", string license = ""// Optional parameters
         )// BaseClass
         {
             // to ensure "manifest" is required (not null)
@@ -61,7 +60,7 @@ namespace PollinationSDK
             // use default value if no "readme" provided
             if (readme == null)
             {
-                this.Readme = "";
+                this.Readme ="";
             }
             else
             {
@@ -70,7 +69,7 @@ namespace PollinationSDK
             // use default value if no "license" provided
             if (license == null)
             {
-                this.License = "";
+                this.License ="";
             }
             else
             {
@@ -108,60 +107,24 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"NewRecipePackage {iDd.Identifier}";
-       
-            return "NewRecipePackage";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("NewRecipePackage:\n");
+            sb.Append("class NewRecipePackage {\n");
             sb.Append("  Manifest: ").Append(Manifest).Append("\n");
             sb.Append("  Readme: ").Append(Readme).Append("\n");
             sb.Append("  License: ").Append(License).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>NewRecipePackage object</returns>
-        public static NewRecipePackage FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<NewRecipePackage>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>NewRecipePackage object</returns>
-        public NewRecipePackage DuplicateNewRecipePackage()
-        {
-            return Duplicate() as NewRecipePackage;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -229,5 +192,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

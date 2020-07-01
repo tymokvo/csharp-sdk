@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// AccountPublic
     /// </summary>
     [DataContract]
-    public partial class AccountPublic : HoneybeeObject, IEquatable<AccountPublic>, IValidatableObject
+    public partial class AccountPublic :  IEquatable<AccountPublic>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AccountPublic" /> class.
         /// </summary>
@@ -44,8 +43,8 @@ namespace PollinationSDK
         /// <param name="name">name (required).</param>
         public AccountPublic
         (
-            , string id, string type, string name// Required parameters
-            , // Optional parameters
+           string id, string type, string name// Required parameters
+           // Optional parameters
         )// BaseClass
         {
             // to ensure "id" is required (not null)
@@ -107,60 +106,24 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"AccountPublic {iDd.Identifier}";
-       
-            return "AccountPublic";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("AccountPublic:\n");
+            sb.Append("class AccountPublic {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>AccountPublic object</returns>
-        public static AccountPublic FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<AccountPublic>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>AccountPublic object</returns>
-        public AccountPublic DuplicateAccountPublic()
-        {
-            return Duplicate() as AccountPublic;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -228,5 +191,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

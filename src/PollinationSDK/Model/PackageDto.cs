@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// PackageDto
     /// </summary>
     [DataContract]
-    public partial class PackageDto : HoneybeeObject, IEquatable<PackageDto>, IValidatableObject
+    public partial class PackageDto :  IEquatable<PackageDto>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PackageDto" /> class.
         /// </summary>
@@ -50,8 +49,8 @@ namespace PollinationSDK
         /// <param name="license">The Repository license (default to &quot;&quot;).</param>
         public PackageDto
         (
-            , string digest, string tag, Object manifest, , // Required parameters
-            , List<string> keywords= default, string description= default, string icon= default, DateTime createdAt= default, string readme = "", string license = ""// Optional parameters
+           string digest, string tag, Object manifest, // Required parameters
+           List<string> keywords= default, string description= default, string icon= default, DateTime createdAt= default, string readme = "", string license = ""// Optional parameters
         )// BaseClass
         {
             // to ensure "digest" is required (not null)
@@ -91,7 +90,7 @@ namespace PollinationSDK
             // use default value if no "readme" provided
             if (readme == null)
             {
-                this.Readme = "";
+                this.Readme ="";
             }
             else
             {
@@ -100,7 +99,7 @@ namespace PollinationSDK
             // use default value if no "license" provided
             if (license == null)
             {
-                this.License = "";
+                this.License ="";
             }
             else
             {
@@ -179,23 +178,8 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"PackageDto {iDd.Identifier}";
-       
-            return "PackageDto";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("PackageDto:\n");
+            sb.Append("class PackageDto {\n");
             sb.Append("  Digest: ").Append(Digest).Append("\n");
             sb.Append("  Tag: ").Append(Tag).Append("\n");
             sb.Append("  Keywords: ").Append(Keywords).Append("\n");
@@ -205,40 +189,19 @@ namespace PollinationSDK
             sb.Append("  Manifest: ").Append(Manifest).Append("\n");
             sb.Append("  Readme: ").Append(Readme).Append("\n");
             sb.Append("  License: ").Append(License).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>PackageDto object</returns>
-        public static PackageDto FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<PackageDto>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>PackageDto object</returns>
-        public PackageDto DuplicatePackageDto()
-        {
-            return Duplicate() as PackageDto;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -349,5 +312,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

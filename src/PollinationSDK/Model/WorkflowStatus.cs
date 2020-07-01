@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// Workflow Status
     /// </summary>
     [DataContract]
-    public partial class WorkflowStatus : HoneybeeObject, IEquatable<WorkflowStatus>, IValidatableObject
+    public partial class WorkflowStatus :  IEquatable<WorkflowStatus>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="WorkflowStatus" /> class.
         /// </summary>
@@ -48,8 +47,8 @@ namespace PollinationSDK
         /// <param name="tasks">tasks.</param>
         public WorkflowStatus
         (
-            , string status, DateTime startedAt, string id, , // Required parameters
-            , string message= default, DateTime finishedAt= default, string entrypoint= default, Dictionary<string, TaskStatus> tasks= default// Optional parameters
+           string status, DateTime startedAt, string id, // Required parameters
+           string message= default, DateTime finishedAt= default, string entrypoint= default, Dictionary<string, TaskStatus> tasks= default// Optional parameters
         )// BaseClass
         {
             // to ensure "status" is required (not null)
@@ -145,23 +144,8 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"WorkflowStatus {iDd.Identifier}";
-       
-            return "WorkflowStatus";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("WorkflowStatus:\n");
+            sb.Append("class WorkflowStatus {\n");
             sb.Append("  Status: ").Append(Status).Append("\n");
             sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("  StartedAt: ").Append(StartedAt).Append("\n");
@@ -169,40 +153,19 @@ namespace PollinationSDK
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Entrypoint: ").Append(Entrypoint).Append("\n");
             sb.Append("  Tasks: ").Append(Tasks).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>WorkflowStatus object</returns>
-        public static WorkflowStatus FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<WorkflowStatus>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>WorkflowStatus object</returns>
-        public WorkflowStatus DuplicateWorkflowStatus()
-        {
-            return Duplicate() as WorkflowStatus;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -299,5 +262,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

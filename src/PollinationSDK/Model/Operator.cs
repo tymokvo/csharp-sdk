@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// A Queenbee Operator.  An Operator contains runtime configuration for a Command Line Interface (CLI) and a list of functions that can be executed using this CLI tool.
     /// </summary>
     [DataContract]
-    public partial class Operator : HoneybeeObject, IEquatable<Operator>, IValidatableObject
+    public partial class Operator :  IEquatable<Operator>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Operator" /> class.
         /// </summary>
@@ -44,8 +43,8 @@ namespace PollinationSDK
         /// <param name="functions">List of Operator functions (required).</param>
         public Operator
         (
-            , QueenbeeOperatorMetadataMetaData metadata, Config config, List<Function> functions// Required parameters
-            , // Optional parameters
+           QueenbeeOperatorMetadataMetaData metadata, Config config, List<Function> functions// Required parameters
+           // Optional parameters
         )// BaseClass
         {
             // to ensure "metadata" is required (not null)
@@ -110,60 +109,24 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"Operator {iDd.Identifier}";
-       
-            return "Operator";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("Operator:\n");
+            sb.Append("class Operator {\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
             sb.Append("  Config: ").Append(Config).Append("\n");
             sb.Append("  Functions: ").Append(Functions).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>Operator object</returns>
-        public static Operator FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<Operator>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>Operator object</returns>
-        public Operator DuplicateOperator()
-        {
-            return Duplicate() as Operator;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -232,5 +195,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

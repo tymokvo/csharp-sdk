@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// An Item Parameter Reference
     /// </summary>
     [DataContract]
-    public partial class ItemParameterReference : HoneybeeObject, IEquatable<ItemParameterReference>, IValidatableObject
+    public partial class ItemParameterReference :  IEquatable<ItemParameterReference>, IValidatableObject
     {
-
         /// <summary>
         /// Defines Type
         /// </summary>
@@ -49,7 +48,7 @@ namespace PollinationSDK
         /// Gets or Sets Type
         /// </summary>
         [DataMember(Name="type", EmitDefaultValue=false)]
-        public TypeEnum? Type { get; set; }   = TypeEnumEnum""TypeEnum.Item""Enum; 
+        public TypeEnum? Type { get; set; }   = TypeEnum.Item; 
         /// <summary>
         /// Initializes a new instance of the <see cref="ItemParameterReference" /> class.
         /// </summary>
@@ -57,14 +56,14 @@ namespace PollinationSDK
         /// <param name="variable">The name of the looped item variable (use dot notation for nested json values).</param>
         public ItemParameterReference
         (
-            , // Required parameters
-            , TypeEnum? type = TypeEnumEnum""TypeEnum.Item""Enum, string variable= default// Optional parameters
+           // Required parameters
+           TypeEnum? type = TypeEnum.Item, string variable= default// Optional parameters
         )// BaseClass
         {
             // use default value if no "type" provided
             if (type == null)
             {
-                this.Type = TypeEnumEnum""TypeEnum.Item""Enum;
+                this.Type =TypeEnum.Item;
             }
             else
             {
@@ -89,59 +88,23 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"ItemParameterReference {iDd.Identifier}";
-       
-            return "ItemParameterReference";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("ItemParameterReference:\n");
+            sb.Append("class ItemParameterReference {\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  Variable: ").Append(Variable).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>ItemParameterReference object</returns>
-        public static ItemParameterReference FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<ItemParameterReference>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>ItemParameterReference object</returns>
-        public ItemParameterReference DuplicateItemParameterReference()
-        {
-            return Duplicate() as ItemParameterReference;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -202,5 +165,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

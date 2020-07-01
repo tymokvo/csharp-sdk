@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// A Queenbee Recipe
     /// </summary>
     [DataContract]
-    public partial class Recipe : HoneybeeObject, IEquatable<Recipe>, IValidatableObject
+    public partial class Recipe :  IEquatable<Recipe>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Recipe" /> class.
         /// </summary>
@@ -44,8 +43,8 @@ namespace PollinationSDK
         /// <param name="flow">A list of tasks to create a DAG recipe. (required).</param>
         public Recipe
         (
-            , List<DAG> flow, // Required parameters
-            , QueenbeeRecipeMetadataMetaData metadata= default, List<Dependency> dependencies= default, // Optional parameters
+           List<DAG> flow, // Required parameters
+           QueenbeeRecipeMetadataMetaData metadata= default, List<Dependency> dependencies= default // Optional parameters
         )// BaseClass
         {
             // to ensure "flow" is required (not null)
@@ -92,60 +91,24 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"Recipe {iDd.Identifier}";
-       
-            return "Recipe";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("Recipe:\n");
+            sb.Append("class Recipe {\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
             sb.Append("  Dependencies: ").Append(Dependencies).Append("\n");
             sb.Append("  Flow: ").Append(Flow).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>Recipe object</returns>
-        public static Recipe FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<Recipe>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>Recipe object</returns>
-        public Recipe DuplicateRecipe()
-        {
-            return Duplicate() as Recipe;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -215,5 +178,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

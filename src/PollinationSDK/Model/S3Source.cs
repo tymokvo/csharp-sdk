@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// S3Source  An S3 bucket artifact Source.
     /// </summary>
     [DataContract]
-    public partial class S3Source : HoneybeeObject, IEquatable<S3Source>, IValidatableObject
+    public partial class S3Source :  IEquatable<S3Source>, IValidatableObject
     {
-
         /// <summary>
         /// Defines Type
         /// </summary>
@@ -65,8 +64,8 @@ namespace PollinationSDK
         /// <param name="credentialsPath">Path to the file holding the AccessKey and SecretAccessKey to authenticate to the bucket. Assumes public bucket access if none are specified..</param>
         public S3Source
         (
-            , TypeEnum type, string key, string endpoint, string bucket, , // Required parameters
-            , string credentialsPath= default// Optional parameters
+           TypeEnum type, string key, string endpoint, string bucket, // Required parameters
+           string credentialsPath= default// Optional parameters
         )// BaseClass
         {
             // to ensure "type" is required (not null)
@@ -149,62 +148,26 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"S3Source {iDd.Identifier}";
-       
-            return "S3Source";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("S3Source:\n");
+            sb.Append("class S3Source {\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  Key: ").Append(Key).Append("\n");
             sb.Append("  Endpoint: ").Append(Endpoint).Append("\n");
             sb.Append("  Bucket: ").Append(Bucket).Append("\n");
             sb.Append("  CredentialsPath: ").Append(CredentialsPath).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>S3Source object</returns>
-        public static S3Source FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<S3Source>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>S3Source object</returns>
-        public S3Source DuplicateS3Source()
-        {
-            return Duplicate() as S3Source;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -286,5 +249,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

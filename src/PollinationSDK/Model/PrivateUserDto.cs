@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// PrivateUserDto
     /// </summary>
     [DataContract]
-    public partial class PrivateUserDto : HoneybeeObject, IEquatable<PrivateUserDto>, IValidatableObject
+    public partial class PrivateUserDto :  IEquatable<PrivateUserDto>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PrivateUserDto" /> class.
         /// </summary>
@@ -40,8 +39,8 @@ namespace PollinationSDK
         /// <param name="metadata">metadata.</param>
         public PrivateUserDto
         (
-            , // Required parameters
-            , string name= default, string username= default, string picture= default, UserMetadata metadata= default// Optional parameters
+           // Required parameters
+           string name= default, string username= default, string picture= default, UserMetadata metadata= default// Optional parameters
         )// BaseClass
         {
             this.Name = name;
@@ -83,61 +82,25 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"PrivateUserDto {iDd.Identifier}";
-       
-            return "PrivateUserDto";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("PrivateUserDto:\n");
+            sb.Append("class PrivateUserDto {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Username: ").Append(Username).Append("\n");
             sb.Append("  Picture: ").Append(Picture).Append("\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>PrivateUserDto object</returns>
-        public static PrivateUserDto FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<PrivateUserDto>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>PrivateUserDto object</returns>
-        public PrivateUserDto DuplicatePrivateUserDto()
-        {
-            return Duplicate() as PrivateUserDto;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -212,5 +175,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

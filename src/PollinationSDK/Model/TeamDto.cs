@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// TeamDto
     /// </summary>
     [DataContract]
-    public partial class TeamDto : HoneybeeObject, IEquatable<TeamDto>, IValidatableObject
+    public partial class TeamDto :  IEquatable<TeamDto>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="TeamDto" /> class.
         /// </summary>
@@ -47,8 +46,8 @@ namespace PollinationSDK
         /// <param name="memberCount">The number of members that are part of this org (default to 0).</param>
         public TeamDto
         (
-            , string name, string id, string slug, TeamOrg org, , // Required parameters
-            , string description= default, int memberCount = 0// Optional parameters
+           string name, string id, string slug, TeamOrg org, // Required parameters
+           string description= default, int memberCount = 0// Optional parameters
         )// BaseClass
         {
             // to ensure "name" is required (not null)
@@ -95,7 +94,7 @@ namespace PollinationSDK
             // use default value if no "memberCount" provided
             if (memberCount == null)
             {
-                this.MemberCount = 0;
+                this.MemberCount =0;
             }
             else
             {
@@ -149,63 +148,27 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"TeamDto {iDd.Identifier}";
-       
-            return "TeamDto";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("TeamDto:\n");
+            sb.Append("class TeamDto {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Slug: ").Append(Slug).Append("\n");
             sb.Append("  Org: ").Append(Org).Append("\n");
             sb.Append("  MemberCount: ").Append(MemberCount).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>TeamDto object</returns>
-        public static TeamDto FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<TeamDto>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>TeamDto object</returns>
-        public TeamDto DuplicateTeamDto()
-        {
-            return Duplicate() as TeamDto;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -294,5 +257,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

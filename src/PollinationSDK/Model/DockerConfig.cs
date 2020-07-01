@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// Operator Configuration to run in a Docker container
     /// </summary>
     [DataContract]
-    public partial class DockerConfig : HoneybeeObject, IEquatable<DockerConfig>, IValidatableObject
+    public partial class DockerConfig :  IEquatable<DockerConfig>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DockerConfig" /> class.
         /// </summary>
@@ -44,8 +43,8 @@ namespace PollinationSDK
         /// <param name="workdir">The working directory the entrypoint command of the container runsin. This is used to determine where to load artifacts when running in the container. (required).</param>
         public DockerConfig
         (
-            , string image, string workdir, // Required parameters
-            , string registry= default, // Optional parameters
+           string image, string workdir, // Required parameters
+           string registry= default // Optional parameters
         )// BaseClass
         {
             // to ensure "image" is required (not null)
@@ -101,60 +100,24 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"DockerConfig {iDd.Identifier}";
-       
-            return "DockerConfig";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("DockerConfig:\n");
+            sb.Append("class DockerConfig {\n");
             sb.Append("  Image: ").Append(Image).Append("\n");
             sb.Append("  Registry: ").Append(Registry).Append("\n");
             sb.Append("  Workdir: ").Append(Workdir).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>DockerConfig object</returns>
-        public static DockerConfig FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<DockerConfig>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>DockerConfig object</returns>
-        public DockerConfig DuplicateDockerConfig()
-        {
-            return Duplicate() as DockerConfig;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -222,5 +185,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

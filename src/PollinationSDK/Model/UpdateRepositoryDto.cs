@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// UpdateRepositoryDto
     /// </summary>
     [DataContract]
-    public partial class UpdateRepositoryDto : HoneybeeObject, IEquatable<UpdateRepositoryDto>, IValidatableObject
+    public partial class UpdateRepositoryDto :  IEquatable<UpdateRepositoryDto>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateRepositoryDto" /> class.
         /// </summary>
@@ -40,14 +39,14 @@ namespace PollinationSDK
         /// <param name="icon">icon.</param>
         public UpdateRepositoryDto
         (
-            , // Required parameters
-            , bool _public = true, List<string> keywords= default, string description= default, string icon= default// Optional parameters
+           // Required parameters
+           bool _public = true, List<string> keywords= default, string description= default, string icon= default// Optional parameters
         )// BaseClass
         {
             // use default value if no "_public" provided
             if (_public == null)
             {
-                this.Public = true;
+                this.Public =true;
             }
             else
             {
@@ -95,61 +94,25 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"UpdateRepositoryDto {iDd.Identifier}";
-       
-            return "UpdateRepositoryDto";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("UpdateRepositoryDto:\n");
+            sb.Append("class UpdateRepositoryDto {\n");
             sb.Append("  Public: ").Append(Public).Append("\n");
             sb.Append("  Keywords: ").Append(Keywords).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Icon: ").Append(Icon).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>UpdateRepositoryDto object</returns>
-        public static UpdateRepositoryDto FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<UpdateRepositoryDto>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>UpdateRepositoryDto object</returns>
-        public UpdateRepositoryDto DuplicateUpdateRepositoryDto()
-        {
-            return Duplicate() as UpdateRepositoryDto;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -225,5 +188,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

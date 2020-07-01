@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// ProjectPolicySubjectDto
     /// </summary>
     [DataContract]
-    public partial class ProjectPolicySubjectDto : HoneybeeObject, IEquatable<ProjectPolicySubjectDto>, IValidatableObject
+    public partial class ProjectPolicySubjectDto :  IEquatable<ProjectPolicySubjectDto>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectPolicySubjectDto" /> class.
         /// </summary>
@@ -44,8 +43,8 @@ namespace PollinationSDK
         /// <param name="role">The role within the policy subject that the access policy refers (required).</param>
         public ProjectPolicySubjectDto
         (
-            , string type, string id, string role// Required parameters
-            , // Optional parameters
+           string type, string id, string role// Required parameters
+           // Optional parameters
         )// BaseClass
         {
             // to ensure "type" is required (not null)
@@ -110,60 +109,24 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"ProjectPolicySubjectDto {iDd.Identifier}";
-       
-            return "ProjectPolicySubjectDto";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("ProjectPolicySubjectDto:\n");
+            sb.Append("class ProjectPolicySubjectDto {\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Role: ").Append(Role).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>ProjectPolicySubjectDto object</returns>
-        public static ProjectPolicySubjectDto FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<ProjectPolicySubjectDto>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>ProjectPolicySubjectDto object</returns>
-        public ProjectPolicySubjectDto DuplicateProjectPolicySubjectDto()
-        {
-            return Duplicate() as ProjectPolicySubjectDto;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -231,5 +194,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

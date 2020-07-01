@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// A workflow Parameter Argument
     /// </summary>
     [DataContract]
-    public partial class ArgumentParameter : HoneybeeObject, IEquatable<ArgumentParameter>, IValidatableObject
+    public partial class ArgumentParameter :  IEquatable<ArgumentParameter>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ArgumentParameter" /> class.
         /// </summary>
@@ -43,8 +42,8 @@ namespace PollinationSDK
         /// <param name="value">The value of the parameter (required).</param>
         public ArgumentParameter
         (
-            , string name, string value// Required parameters
-            , // Optional parameters
+           string name, string value// Required parameters
+           // Optional parameters
         )// BaseClass
         {
             // to ensure "name" is required (not null)
@@ -92,59 +91,23 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"ArgumentParameter {iDd.Identifier}";
-       
-            return "ArgumentParameter";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("ArgumentParameter:\n");
+            sb.Append("class ArgumentParameter {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Value: ").Append(Value).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>ArgumentParameter object</returns>
-        public static ArgumentParameter FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<ArgumentParameter>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>ArgumentParameter object</returns>
-        public ArgumentParameter DuplicateArgumentParameter()
-        {
-            return Duplicate() as ArgumentParameter;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -205,5 +168,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// CreateTokenDto
     /// </summary>
     [DataContract]
-    public partial class CreateTokenDto : HoneybeeObject, IEquatable<CreateTokenDto>, IValidatableObject
+    public partial class CreateTokenDto :  IEquatable<CreateTokenDto>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CreateTokenDto" /> class.
         /// </summary>
@@ -44,8 +43,8 @@ namespace PollinationSDK
         /// <param name="password">password (required).</param>
         public CreateTokenDto
         (
-            , string tokenName, string email, string password// Required parameters
-            , // Optional parameters
+           string tokenName, string email, string password// Required parameters
+           // Optional parameters
         )// BaseClass
         {
             // to ensure "tokenName" is required (not null)
@@ -107,60 +106,24 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"CreateTokenDto {iDd.Identifier}";
-       
-            return "CreateTokenDto";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("CreateTokenDto:\n");
+            sb.Append("class CreateTokenDto {\n");
             sb.Append("  TokenName: ").Append(TokenName).Append("\n");
             sb.Append("  Email: ").Append(Email).Append("\n");
             sb.Append("  Password: ").Append(Password).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>CreateTokenDto object</returns>
-        public static CreateTokenDto FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<CreateTokenDto>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>CreateTokenDto object</returns>
-        public CreateTokenDto DuplicateCreateTokenDto()
-        {
-            return Duplicate() as CreateTokenDto;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -228,5 +191,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

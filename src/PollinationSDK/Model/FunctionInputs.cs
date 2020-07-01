@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// The Inputs of a Function
     /// </summary>
     [DataContract]
-    public partial class FunctionInputs : HoneybeeObject, IEquatable<FunctionInputs>, IValidatableObject
+    public partial class FunctionInputs :  IEquatable<FunctionInputs>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="FunctionInputs" /> class.
         /// </summary>
@@ -38,8 +37,8 @@ namespace PollinationSDK
         /// <param name="artifacts">artifacts.</param>
         public FunctionInputs
         (
-            , // Required parameters
-            , List<FunctionParameterIn> parameters= default, List<FunctionArtifact> artifacts= default// Optional parameters
+           // Required parameters
+           List<FunctionParameterIn> parameters= default, List<FunctionArtifact> artifacts= default// Optional parameters
         )// BaseClass
         {
             this.Parameters = parameters;
@@ -67,59 +66,23 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"FunctionInputs {iDd.Identifier}";
-       
-            return "FunctionInputs";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("FunctionInputs:\n");
+            sb.Append("class FunctionInputs {\n");
             sb.Append("  Parameters: ").Append(Parameters).Append("\n");
             sb.Append("  Artifacts: ").Append(Artifacts).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>FunctionInputs object</returns>
-        public static FunctionInputs FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<FunctionInputs>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>FunctionInputs object</returns>
-        public FunctionInputs DuplicateFunctionInputs()
-        {
-            return Duplicate() as FunctionInputs;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -182,5 +145,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// OrgDto
     /// </summary>
     [DataContract]
-    public partial class OrgDto : HoneybeeObject, IEquatable<OrgDto>, IValidatableObject
+    public partial class OrgDto :  IEquatable<OrgDto>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="OrgDto" /> class.
         /// </summary>
@@ -49,8 +48,8 @@ namespace PollinationSDK
         /// <param name="teamCount">The number of teams that are part of this org (default to 0).</param>
         public OrgDto
         (
-            , string name, string picture, string contactEmail, string accountName, string id, , // Required parameters
-            , string description = "", int memberCount = 0, int teamCount = 0// Optional parameters
+           string name, string picture, string contactEmail, string accountName, string id, // Required parameters
+           string description = "", int memberCount = 0, int teamCount = 0// Optional parameters
         )// BaseClass
         {
             // to ensure "name" is required (not null)
@@ -106,7 +105,7 @@ namespace PollinationSDK
             // use default value if no "description" provided
             if (description == null)
             {
-                this.Description = "";
+                this.Description ="";
             }
             else
             {
@@ -115,7 +114,7 @@ namespace PollinationSDK
             // use default value if no "memberCount" provided
             if (memberCount == null)
             {
-                this.MemberCount = 0;
+                this.MemberCount =0;
             }
             else
             {
@@ -124,7 +123,7 @@ namespace PollinationSDK
             // use default value if no "teamCount" provided
             if (teamCount == null)
             {
-                this.TeamCount = 0;
+                this.TeamCount =0;
             }
             else
             {
@@ -197,23 +196,8 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"OrgDto {iDd.Identifier}";
-       
-            return "OrgDto";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("OrgDto:\n");
+            sb.Append("class OrgDto {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Picture: ").Append(Picture).Append("\n");
             sb.Append("  ContactEmail: ").Append(ContactEmail).Append("\n");
@@ -222,40 +206,19 @@ namespace PollinationSDK
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  MemberCount: ").Append(MemberCount).Append("\n");
             sb.Append("  TeamCount: ").Append(TeamCount).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>OrgDto object</returns>
-        public static OrgDto FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<OrgDto>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>OrgDto object</returns>
-        public OrgDto DuplicateOrgDto()
-        {
-            return Duplicate() as OrgDto;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -358,5 +321,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

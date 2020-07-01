@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// Loop configuration for the task.  This will run the template provided multiple times and in parallel relative to an input or task parameter which should be a list.
     /// </summary>
     [DataContract]
-    public partial class DAGTaskLoop : HoneybeeObject, IEquatable<DAGTaskLoop>, IValidatableObject
+    public partial class DAGTaskLoop :  IEquatable<DAGTaskLoop>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DAGTaskLoop" /> class.
         /// </summary>
@@ -39,8 +38,8 @@ namespace PollinationSDK
         /// <param name="control">Parameters to control some loop behavior for this task.</param>
         public DAGTaskLoop
         (
-            , // Required parameters
-            , Object from= default, List<Object> value= default, LoopControl control= default// Optional parameters
+           // Required parameters
+           Object from= default, List<Object> value= default, LoopControl control= default// Optional parameters
         )// BaseClass
         {
             this.From = from;
@@ -77,60 +76,24 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"DAGTaskLoop {iDd.Identifier}";
-       
-            return "DAGTaskLoop";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("DAGTaskLoop:\n");
+            sb.Append("class DAGTaskLoop {\n");
             sb.Append("  From: ").Append(From).Append("\n");
             sb.Append("  Value: ").Append(Value).Append("\n");
             sb.Append("  Control: ").Append(Control).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>DAGTaskLoop object</returns>
-        public static DAGTaskLoop FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<DAGTaskLoop>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>DAGTaskLoop object</returns>
-        public DAGTaskLoop DuplicateDAGTaskLoop()
-        {
-            return Duplicate() as DAGTaskLoop;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -199,5 +162,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

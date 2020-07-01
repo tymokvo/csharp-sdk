@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// RecipeSelection
     /// </summary>
     [DataContract]
-    public partial class RecipeSelection : HoneybeeObject, IEquatable<RecipeSelection>, IValidatableObject
+    public partial class RecipeSelection :  IEquatable<RecipeSelection>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="RecipeSelection" /> class.
         /// </summary>
@@ -44,8 +43,8 @@ namespace PollinationSDK
         /// <param name="tag">The specific tag of the recipe to use (default to &quot;latest&quot;).</param>
         public RecipeSelection
         (
-            , string owner, string name, , // Required parameters
-            , string tag = "latest"// Optional parameters
+           string owner, string name, // Required parameters
+           string tag = "latest"// Optional parameters
         )// BaseClass
         {
             // to ensure "owner" is required (not null)
@@ -71,7 +70,7 @@ namespace PollinationSDK
             // use default value if no "tag" provided
             if (tag == null)
             {
-                this.Tag = "latest";
+                this.Tag ="latest";
             }
             else
             {
@@ -109,60 +108,24 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"RecipeSelection {iDd.Identifier}";
-       
-            return "RecipeSelection";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("RecipeSelection:\n");
+            sb.Append("class RecipeSelection {\n");
             sb.Append("  Owner: ").Append(Owner).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Tag: ").Append(Tag).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>RecipeSelection object</returns>
-        public static RecipeSelection FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<RecipeSelection>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>RecipeSelection object</returns>
-        public RecipeSelection DuplicateRecipeSelection()
-        {
-            return Duplicate() as RecipeSelection;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -230,5 +193,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

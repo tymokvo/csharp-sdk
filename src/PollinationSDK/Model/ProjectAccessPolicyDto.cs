@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// ProjectAccessPolicyDto
     /// </summary>
     [DataContract]
-    public partial class ProjectAccessPolicyDto : HoneybeeObject, IEquatable<ProjectAccessPolicyDto>, IValidatableObject
+    public partial class ProjectAccessPolicyDto :  IEquatable<ProjectAccessPolicyDto>, IValidatableObject
     {
-
         /// <summary>
         /// The permission to associate with the policy subject. Can be one of &#x60;admin&#x60;, &#x60;contribute&#x60;, or &#x60;use&#x60;
         /// </summary>
@@ -76,8 +75,8 @@ namespace PollinationSDK
         /// <param name="permission">The permission to associate with the policy subject. Can be one of &#x60;admin&#x60;, &#x60;contribute&#x60;, or &#x60;use&#x60; (required).</param>
         public ProjectAccessPolicyDto
         (
-            , ProjectPolicySubjectDto subject, PermissionEnum permission// Required parameters
-            , // Optional parameters
+           ProjectPolicySubjectDto subject, PermissionEnum permission// Required parameters
+           // Optional parameters
         )// BaseClass
         {
             // to ensure "subject" is required (not null)
@@ -118,59 +117,23 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"ProjectAccessPolicyDto {iDd.Identifier}";
-       
-            return "ProjectAccessPolicyDto";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("ProjectAccessPolicyDto:\n");
+            sb.Append("class ProjectAccessPolicyDto {\n");
             sb.Append("  Subject: ").Append(Subject).Append("\n");
             sb.Append("  Permission: ").Append(Permission).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>ProjectAccessPolicyDto object</returns>
-        public static ProjectAccessPolicyDto FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<ProjectAccessPolicyDto>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>ProjectAccessPolicyDto object</returns>
-        public ProjectAccessPolicyDto DuplicateProjectAccessPolicyDto()
-        {
-            return Duplicate() as ProjectAccessPolicyDto;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -231,5 +194,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

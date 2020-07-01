@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// ProjectDto
     /// </summary>
     [DataContract]
-    public partial class ProjectDto : HoneybeeObject, IEquatable<ProjectDto>, IValidatableObject
+    public partial class ProjectDto :  IEquatable<ProjectDto>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectDto" /> class.
         /// </summary>
@@ -48,8 +47,8 @@ namespace PollinationSDK
         /// <param name="slug">The project name in slug format (required).</param>
         public ProjectDto
         (
-            , string name, string id, AccountPublic owner, ProjectPermissions permissions, string slug, // Required parameters
-            , string description = "", bool _public = true, // Optional parameters
+           string name, string id, AccountPublic owner, ProjectPermissions permissions, string slug, // Required parameters
+           string description = "", bool _public = true // Optional parameters
         )// BaseClass
         {
             // to ensure "name" is required (not null)
@@ -105,7 +104,7 @@ namespace PollinationSDK
             // use default value if no "description" provided
             if (description == null)
             {
-                this.Description = "";
+                this.Description ="";
             }
             else
             {
@@ -114,7 +113,7 @@ namespace PollinationSDK
             // use default value if no "_public" provided
             if (_public == null)
             {
-                this.Public = true;
+                this.Public =true;
             }
             else
             {
@@ -178,23 +177,8 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"ProjectDto {iDd.Identifier}";
-       
-            return "ProjectDto";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("ProjectDto:\n");
+            sb.Append("class ProjectDto {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Public: ").Append(Public).Append("\n");
@@ -202,40 +186,19 @@ namespace PollinationSDK
             sb.Append("  Owner: ").Append(Owner).Append("\n");
             sb.Append("  Permissions: ").Append(Permissions).Append("\n");
             sb.Append("  Slug: ").Append(Slug).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>ProjectDto object</returns>
-        public static ProjectDto FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<ProjectDto>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>ProjectDto object</returns>
-        public ProjectDto DuplicateProjectDto()
-        {
-            return Duplicate() as ProjectDto;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -331,5 +294,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

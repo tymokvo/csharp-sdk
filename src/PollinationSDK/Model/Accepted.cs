@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// Accepted request response.
     /// </summary>
     [DataContract]
-    public partial class Accepted : HoneybeeObject, IEquatable<Accepted>, IValidatableObject
+    public partial class Accepted :  IEquatable<Accepted>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Accepted" /> class.
         /// </summary>
@@ -43,8 +42,8 @@ namespace PollinationSDK
         /// <param name="message"> A human readable message (default to &quot;The request is accepted. Use url to access the resource once ready.&quot;).</param>
         public Accepted
         (
-            , string url, , // Required parameters
-            , string message = "The request is accepted. Use url to access the resource once ready."// Optional parameters
+           string url, // Required parameters
+           string message = "The request is accepted. Use url to access the resource once ready."// Optional parameters
         )// BaseClass
         {
             // to ensure "url" is required (not null)
@@ -60,7 +59,7 @@ namespace PollinationSDK
             // use default value if no "message" provided
             if (message == null)
             {
-                this.Message = "The request is accepted. Use url to access the resource once ready.";
+                this.Message ="The request is accepted. Use url to access the resource once ready.";
             }
             else
             {
@@ -91,59 +90,23 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"Accepted {iDd.Identifier}";
-       
-            return "Accepted";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("Accepted:\n");
+            sb.Append("class Accepted {\n");
             sb.Append("  Url: ").Append(Url).Append("\n");
             sb.Append("  Message: ").Append(Message).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>Accepted object</returns>
-        public static Accepted FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<Accepted>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>Accepted object</returns>
-        public Accepted DuplicateAccepted()
-        {
-            return Duplicate() as Accepted;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -216,5 +179,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

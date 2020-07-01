@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// An Input Parameter Reference
     /// </summary>
     [DataContract]
-    public partial class InputParameterReference : HoneybeeObject, IEquatable<InputParameterReference>, IValidatableObject
+    public partial class InputParameterReference :  IEquatable<InputParameterReference>, IValidatableObject
     {
-
         /// <summary>
         /// Defines Type
         /// </summary>
@@ -49,7 +48,7 @@ namespace PollinationSDK
         /// Gets or Sets Type
         /// </summary>
         [DataMember(Name="type", EmitDefaultValue=false)]
-        public TypeEnum? Type { get; set; }   = TypeEnumEnum""TypeEnum.Inputs""Enum; 
+        public TypeEnum? Type { get; set; }   = TypeEnum.Inputs; 
         /// <summary>
         /// Initializes a new instance of the <see cref="InputParameterReference" /> class.
         /// </summary>
@@ -62,8 +61,8 @@ namespace PollinationSDK
         /// <param name="variable">The name of the DAG input variable (required).</param>
         public InputParameterReference
         (
-            , string variable, // Required parameters
-            , TypeEnum? type = TypeEnumEnum""TypeEnum.Inputs""Enum, // Optional parameters
+           string variable, // Required parameters
+           TypeEnum? type = TypeEnum.Inputs // Optional parameters
         )// BaseClass
         {
             // to ensure "variable" is required (not null)
@@ -79,7 +78,7 @@ namespace PollinationSDK
             // use default value if no "type" provided
             if (type == null)
             {
-                this.Type = TypeEnumEnum""TypeEnum.Inputs""Enum;
+                this.Type =TypeEnum.Inputs;
             }
             else
             {
@@ -103,59 +102,23 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"InputParameterReference {iDd.Identifier}";
-       
-            return "InputParameterReference";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("InputParameterReference:\n");
+            sb.Append("class InputParameterReference {\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  Variable: ").Append(Variable).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>InputParameterReference object</returns>
-        public static InputParameterReference FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<InputParameterReference>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>InputParameterReference object</returns>
-        public InputParameterReference DuplicateInputParameterReference()
-        {
-            return Duplicate() as InputParameterReference;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -216,5 +179,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

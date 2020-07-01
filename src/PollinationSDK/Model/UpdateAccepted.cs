@@ -22,29 +22,28 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// Accepted request response for existing resource
     /// </summary>
     [DataContract]
-    public partial class UpdateAccepted : HoneybeeObject, IEquatable<UpdateAccepted>, IValidatableObject
+    public partial class UpdateAccepted :  IEquatable<UpdateAccepted>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateAccepted" /> class.
         /// </summary>
         /// <param name="status">status (default to &quot;accepted&quot;).</param>
         public UpdateAccepted
         (
-            , // Required parameters
-            , string status = "accepted"// Optional parameters
+           // Required parameters
+           string status = "accepted"// Optional parameters
         )// BaseClass
         {
             // use default value if no "status" provided
             if (status == null)
             {
-                this.Status = "accepted";
+                this.Status ="accepted";
             }
             else
             {
@@ -67,58 +66,22 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"UpdateAccepted {iDd.Identifier}";
-       
-            return "UpdateAccepted";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("UpdateAccepted:\n");
+            sb.Append("class UpdateAccepted {\n");
             sb.Append("  Status: ").Append(Status).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>UpdateAccepted object</returns>
-        public static UpdateAccepted FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<UpdateAccepted>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>UpdateAccepted object</returns>
-        public UpdateAccepted DuplicateUpdateAccepted()
-        {
-            return Duplicate() as UpdateAccepted;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -172,5 +135,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

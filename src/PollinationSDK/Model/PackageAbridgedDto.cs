@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// PackageAbridgedDto
     /// </summary>
     [DataContract]
-    public partial class PackageAbridgedDto : HoneybeeObject, IEquatable<PackageAbridgedDto>, IValidatableObject
+    public partial class PackageAbridgedDto :  IEquatable<PackageAbridgedDto>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PackageAbridgedDto" /> class.
         /// </summary>
@@ -47,8 +46,8 @@ namespace PollinationSDK
         /// <param name="createdAt">Creation Timestamp.</param>
         public PackageAbridgedDto
         (
-            , string digest, string tag, , // Required parameters
-            , List<string> keywords= default, string description= default, string icon= default, DateTime createdAt= default// Optional parameters
+           string digest, string tag, // Required parameters
+           List<string> keywords= default, string description= default, string icon= default, DateTime createdAt= default// Optional parameters
         )// BaseClass
         {
             // to ensure "digest" is required (not null)
@@ -128,63 +127,27 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"PackageAbridgedDto {iDd.Identifier}";
-       
-            return "PackageAbridgedDto";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("PackageAbridgedDto:\n");
+            sb.Append("class PackageAbridgedDto {\n");
             sb.Append("  Digest: ").Append(Digest).Append("\n");
             sb.Append("  Tag: ").Append(Tag).Append("\n");
             sb.Append("  Keywords: ").Append(Keywords).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Icon: ").Append(Icon).Append("\n");
             sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>PackageAbridgedDto object</returns>
-        public static PackageAbridgedDto FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<PackageAbridgedDto>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>PackageAbridgedDto object</returns>
-        public PackageAbridgedDto DuplicatePackageAbridgedDto()
-        {
-            return Duplicate() as PackageAbridgedDto;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -274,5 +237,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

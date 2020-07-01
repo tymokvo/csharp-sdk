@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// A version of an Operator
     /// </summary>
     [DataContract]
-    public partial class OperatorVersion : HoneybeeObject, IEquatable<OperatorVersion>, IValidatableObject
+    public partial class OperatorVersion :  IEquatable<OperatorVersion>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="OperatorVersion" /> class.
         /// </summary>
@@ -54,8 +53,8 @@ namespace PollinationSDK
         /// <param name="digest">digest (required).</param>
         public OperatorVersion
         (
-            , string name, string tag, string url, DateTime created, string digest, // Required parameters
-            , string appVersion= default, List<string> keywords= default, List<QueenbeeOperatorMetadataMaintainer> maintainers= default, string home= default, List<string> sources= default, string icon= default, bool deprecated= default, string description= default, // Optional parameters
+           string name, string tag, string url, DateTime created, string digest, // Required parameters
+           string appVersion= default, List<string> keywords= default, List<QueenbeeOperatorMetadataMaintainer> maintainers= default, string home= default, List<string> sources= default, string icon= default, bool deprecated= default, string description= default // Optional parameters
         )// BaseClass
         {
             // to ensure "name" is required (not null)
@@ -215,23 +214,8 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"OperatorVersion {iDd.Identifier}";
-       
-            return "OperatorVersion";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("OperatorVersion:\n");
+            sb.Append("class OperatorVersion {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Tag: ").Append(Tag).Append("\n");
             sb.Append("  AppVersion: ").Append(AppVersion).Append("\n");
@@ -245,40 +229,19 @@ namespace PollinationSDK
             sb.Append("  Url: ").Append(Url).Append("\n");
             sb.Append("  Created: ").Append(Created).Append("\n");
             sb.Append("  Digest: ").Append(Digest).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>OperatorVersion object</returns>
-        public static OperatorVersion FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<OperatorVersion>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>OperatorVersion object</returns>
-        public OperatorVersion DuplicateOperatorVersion()
-        {
-            return Duplicate() as OperatorVersion;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -419,5 +382,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

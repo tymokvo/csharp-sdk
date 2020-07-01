@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// The instance of a function template matched with DAG inputs and outputs.
     /// </summary>
     [DataContract]
-    public partial class DAGTask : HoneybeeObject, IEquatable<DAGTask>, IValidatableObject
+    public partial class DAGTask :  IEquatable<DAGTask>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DAGTask" /> class.
         /// </summary>
@@ -48,8 +47,8 @@ namespace PollinationSDK
         /// <param name="outputs">The outputs of this task.</param>
         public DAGTask
         (
-            , string name, string template, , // Required parameters
-            , DAGTaskArgument arguments= default, List<string> dependencies= default, DAGTaskLoop loop= default, string subFolder= default, DAGTaskOutputs outputs= default// Optional parameters
+           string name, string template, // Required parameters
+           DAGTaskArgument arguments= default, List<string> dependencies= default, DAGTaskLoop loop= default, string subFolder= default, DAGTaskOutputs outputs= default// Optional parameters
         )// BaseClass
         {
             // to ensure "name" is required (not null)
@@ -137,23 +136,8 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"DAGTask {iDd.Identifier}";
-       
-            return "DAGTask";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("DAGTask:\n");
+            sb.Append("class DAGTask {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Template: ").Append(Template).Append("\n");
             sb.Append("  Arguments: ").Append(Arguments).Append("\n");
@@ -161,40 +145,19 @@ namespace PollinationSDK
             sb.Append("  Loop: ").Append(Loop).Append("\n");
             sb.Append("  SubFolder: ").Append(SubFolder).Append("\n");
             sb.Append("  Outputs: ").Append(Outputs).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>DAGTask object</returns>
-        public static DAGTask FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<DAGTask>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>DAGTask object</returns>
-        public DAGTask DuplicateDAGTask()
-        {
-            return Duplicate() as DAGTask;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -291,5 +254,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

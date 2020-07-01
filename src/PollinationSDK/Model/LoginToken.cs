@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// LoginToken
     /// </summary>
     [DataContract]
-    public partial class LoginToken : HoneybeeObject, IEquatable<LoginToken>, IValidatableObject
+    public partial class LoginToken :  IEquatable<LoginToken>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="LoginToken" /> class.
         /// </summary>
@@ -46,8 +45,8 @@ namespace PollinationSDK
         /// <param name="expiresIn">expiresIn (required).</param>
         public LoginToken
         (
-            , string accessToken, string tokenType, int expiresIn, // Required parameters
-            , string idToken= default, string scope= default, // Optional parameters
+           string accessToken, string tokenType, int expiresIn, // Required parameters
+           string idToken= default, string scope= default // Optional parameters
         )// BaseClass
         {
             // to ensure "accessToken" is required (not null)
@@ -123,62 +122,26 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"LoginToken {iDd.Identifier}";
-       
-            return "LoginToken";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("LoginToken:\n");
+            sb.Append("class LoginToken {\n");
             sb.Append("  AccessToken: ").Append(AccessToken).Append("\n");
             sb.Append("  IdToken: ").Append(IdToken).Append("\n");
             sb.Append("  Scope: ").Append(Scope).Append("\n");
             sb.Append("  TokenType: ").Append(TokenType).Append("\n");
             sb.Append("  ExpiresIn: ").Append(ExpiresIn).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>LoginToken object</returns>
-        public static LoginToken FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<LoginToken>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>LoginToken object</returns>
-        public LoginToken DuplicateLoginToken()
-        {
-            return Duplicate() as LoginToken;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -260,5 +223,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

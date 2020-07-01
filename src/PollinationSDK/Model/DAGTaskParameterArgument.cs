@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// Input argument for a DAG task.  The name must correspond to an input parameter from the template function the task refers to.
     /// </summary>
     [DataContract]
-    public partial class DAGTaskParameterArgument : HoneybeeObject, IEquatable<DAGTaskParameterArgument>, IValidatableObject
+    public partial class DAGTaskParameterArgument :  IEquatable<DAGTaskParameterArgument>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DAGTaskParameterArgument" /> class.
         /// </summary>
@@ -44,8 +43,8 @@ namespace PollinationSDK
         /// <param name="value">The fixed value for this task argument.</param>
         public DAGTaskParameterArgument
         (
-            , string name, , // Required parameters
-            , Object from= default, string value= default// Optional parameters
+           string name, // Required parameters
+           Object from= default, string value= default// Optional parameters
         )// BaseClass
         {
             // to ensure "name" is required (not null)
@@ -91,60 +90,24 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"DAGTaskParameterArgument {iDd.Identifier}";
-       
-            return "DAGTaskParameterArgument";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("DAGTaskParameterArgument:\n");
+            sb.Append("class DAGTaskParameterArgument {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  From: ").Append(From).Append("\n");
             sb.Append("  Value: ").Append(Value).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>DAGTaskParameterArgument object</returns>
-        public static DAGTaskParameterArgument FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<DAGTaskParameterArgument>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>DAGTaskParameterArgument object</returns>
-        public DAGTaskParameterArgument DuplicateDAGTaskParameterArgument()
-        {
-            return Duplicate() as DAGTaskParameterArgument;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -212,5 +175,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

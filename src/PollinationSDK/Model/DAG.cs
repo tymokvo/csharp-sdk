@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// A Directed Acyclic Graph containing a list of tasks.
     /// </summary>
     [DataContract]
-    public partial class DAG : HoneybeeObject, IEquatable<DAG>, IValidatableObject
+    public partial class DAG :  IEquatable<DAG>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DAG" /> class.
         /// </summary>
@@ -46,8 +45,8 @@ namespace PollinationSDK
         /// <param name="outputs">Outputs of the DAG that can be used by other DAGs.</param>
         public DAG
         (
-            , string name, List<DAGTask> tasks, , // Required parameters
-            , DAGInputs inputs= default, bool failFast = true, DAGOutputs outputs= default// Optional parameters
+           string name, List<DAGTask> tasks, // Required parameters
+           DAGInputs inputs= default, bool failFast = true, DAGOutputs outputs= default// Optional parameters
         )// BaseClass
         {
             // to ensure "name" is required (not null)
@@ -74,7 +73,7 @@ namespace PollinationSDK
             // use default value if no "failFast" provided
             if (failFast == null)
             {
-                this.FailFast = true;
+                this.FailFast =true;
             }
             else
             {
@@ -127,62 +126,26 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"DAG {iDd.Identifier}";
-       
-            return "DAG";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("DAG:\n");
+            sb.Append("class DAG {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Inputs: ").Append(Inputs).Append("\n");
             sb.Append("  FailFast: ").Append(FailFast).Append("\n");
             sb.Append("  Tasks: ").Append(Tasks).Append("\n");
             sb.Append("  Outputs: ").Append(Outputs).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>DAG object</returns>
-        public static DAG FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<DAG>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>DAG object</returns>
-        public DAG DuplicateDAG()
-        {
-            return Duplicate() as DAG;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -265,5 +228,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

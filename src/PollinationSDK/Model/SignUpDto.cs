@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// SignUpDto
     /// </summary>
     [DataContract]
-    public partial class SignUpDto : HoneybeeObject, IEquatable<SignUpDto>, IValidatableObject
+    public partial class SignUpDto :  IEquatable<SignUpDto>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SignUpDto" /> class.
         /// </summary>
@@ -45,8 +44,8 @@ namespace PollinationSDK
         /// <param name="metadata">metadata (required).</param>
         public SignUpDto
         (
-            , string username, string email, string password, UserMetadata metadata// Required parameters
-            , // Optional parameters
+           string username, string email, string password, UserMetadata metadata// Required parameters
+           // Optional parameters
         )// BaseClass
         {
             // to ensure "username" is required (not null)
@@ -124,61 +123,25 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"SignUpDto {iDd.Identifier}";
-       
-            return "SignUpDto";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("SignUpDto:\n");
+            sb.Append("class SignUpDto {\n");
             sb.Append("  Username: ").Append(Username).Append("\n");
             sb.Append("  Email: ").Append(Email).Append("\n");
             sb.Append("  Password: ").Append(Password).Append("\n");
             sb.Append("  Metadata: ").Append(Metadata).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>SignUpDto object</returns>
-        public static SignUpDto FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<SignUpDto>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>SignUpDto object</returns>
-        public SignUpDto DuplicateSignUpDto()
-        {
-            return Duplicate() as SignUpDto;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -253,5 +216,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

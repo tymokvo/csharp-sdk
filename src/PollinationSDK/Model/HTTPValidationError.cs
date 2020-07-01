@@ -22,23 +22,22 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// HTTPValidationError
     /// </summary>
     [DataContract]
-    public partial class HTTPValidationError : HoneybeeObject, IEquatable<HTTPValidationError>, IValidatableObject
+    public partial class HTTPValidationError :  IEquatable<HTTPValidationError>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="HTTPValidationError" /> class.
         /// </summary>
         /// <param name="detail">detail.</param>
         public HTTPValidationError
         (
-            , // Required parameters
-            , List<ValidationError> detail= default// Optional parameters
+           // Required parameters
+           List<ValidationError> detail= default// Optional parameters
         )// BaseClass
         {
             this.Detail = detail;
@@ -59,58 +58,22 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"HTTPValidationError {iDd.Identifier}";
-       
-            return "HTTPValidationError";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("HTTPValidationError:\n");
+            sb.Append("class HTTPValidationError {\n");
             sb.Append("  Detail: ").Append(Detail).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>HTTPValidationError object</returns>
-        public static HTTPValidationError FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<HTTPValidationError>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HTTPValidationError object</returns>
-        public HTTPValidationError DuplicateHTTPValidationError()
-        {
-            return Duplicate() as HTTPValidationError;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -165,5 +128,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

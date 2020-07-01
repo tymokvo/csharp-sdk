@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// A Function Parameter  Parameter indicate a passed string parameter to a service template with an optional default value.
     /// </summary>
     [DataContract]
-    public partial class FunctionParameterIn : HoneybeeObject, IEquatable<FunctionParameterIn>, IValidatableObject
+    public partial class FunctionParameterIn :  IEquatable<FunctionParameterIn>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="FunctionParameterIn" /> class.
         /// </summary>
@@ -45,8 +44,8 @@ namespace PollinationSDK
         /// <param name="required">Whether this value must be specified in a task argument. (default to false).</param>
         public FunctionParameterIn
         (
-            , string name, , // Required parameters
-            , string _default= default, string description= default, bool required = false// Optional parameters
+           string name, // Required parameters
+           string _default= default, string description= default, bool required = false// Optional parameters
         )// BaseClass
         {
             // to ensure "name" is required (not null)
@@ -64,7 +63,7 @@ namespace PollinationSDK
             // use default value if no "required" provided
             if (required == null)
             {
-                this.Required = false;
+                this.Required =false;
             }
             else
             {
@@ -109,61 +108,25 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"FunctionParameterIn {iDd.Identifier}";
-       
-            return "FunctionParameterIn";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("FunctionParameterIn:\n");
+            sb.Append("class FunctionParameterIn {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Default: ").Append(Default).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Required: ").Append(Required).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>FunctionParameterIn object</returns>
-        public static FunctionParameterIn FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<FunctionParameterIn>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>FunctionParameterIn object</returns>
-        public FunctionParameterIn DuplicateFunctionParameterIn()
-        {
-            return Duplicate() as FunctionParameterIn;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -238,5 +201,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

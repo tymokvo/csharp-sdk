@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// SubmitSimulationDto
     /// </summary>
     [DataContract]
-    public partial class SubmitSimulationDto : HoneybeeObject, IEquatable<SubmitSimulationDto>, IValidatableObject
+    public partial class SubmitSimulationDto :  IEquatable<SubmitSimulationDto>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SubmitSimulationDto" /> class.
         /// </summary>
@@ -43,8 +42,8 @@ namespace PollinationSDK
         /// <param name="inputs">Simulation inputs.</param>
         public SubmitSimulationDto
         (
-            , RecipeSelection recipe, , // Required parameters
-            , Arguments inputs= default// Optional parameters
+           RecipeSelection recipe, // Required parameters
+           Arguments inputs= default// Optional parameters
         )// BaseClass
         {
             // to ensure "recipe" is required (not null)
@@ -83,59 +82,23 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"SubmitSimulationDto {iDd.Identifier}";
-       
-            return "SubmitSimulationDto";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("SubmitSimulationDto:\n");
+            sb.Append("class SubmitSimulationDto {\n");
             sb.Append("  Recipe: ").Append(Recipe).Append("\n");
             sb.Append("  Inputs: ").Append(Inputs).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>SubmitSimulationDto object</returns>
-        public static SubmitSimulationDto FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<SubmitSimulationDto>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>SubmitSimulationDto object</returns>
-        public SubmitSimulationDto DuplicateSubmitSimulationDto()
-        {
-            return Duplicate() as SubmitSimulationDto;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -196,5 +159,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

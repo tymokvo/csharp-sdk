@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// Operator configuration.  The config is used to schedule functions on a desktop or in other contexts (ie: Docker).
     /// </summary>
     [DataContract]
-    public partial class Config : HoneybeeObject, IEquatable<Config>, IValidatableObject
+    public partial class Config :  IEquatable<Config>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Config" /> class.
         /// </summary>
@@ -43,8 +42,8 @@ namespace PollinationSDK
         /// <param name="local">The configuration to use this operator locally.</param>
         public Config
         (
-            , DockerConfig docker, , // Required parameters
-            , Object local= default// Optional parameters
+           DockerConfig docker, // Required parameters
+           Object local= default// Optional parameters
         )// BaseClass
         {
             // to ensure "docker" is required (not null)
@@ -83,59 +82,23 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"Config {iDd.Identifier}";
-       
-            return "Config";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("Config:\n");
+            sb.Append("class Config {\n");
             sb.Append("  Docker: ").Append(Docker).Append("\n");
             sb.Append("  Local: ").Append(Local).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>Config object</returns>
-        public static Config FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<Config>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>Config object</returns>
-        public Config DuplicateConfig()
-        {
-            return Duplicate() as Config;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -196,5 +159,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

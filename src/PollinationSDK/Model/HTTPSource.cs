@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// HTTPSource  A web HTTP to an FTP server or an API for example.
     /// </summary>
     [DataContract]
-    public partial class HTTPSource : HoneybeeObject, IEquatable<HTTPSource>, IValidatableObject
+    public partial class HTTPSource :  IEquatable<HTTPSource>, IValidatableObject
     {
-
         /// <summary>
         /// Defines Type
         /// </summary>
@@ -62,8 +61,8 @@ namespace PollinationSDK
         /// <param name="url">For a HTTP endpoint this can be http://climate.onebuilding.org. (required).</param>
         public HTTPSource
         (
-            , TypeEnum type, string url// Required parameters
-            , // Optional parameters
+           TypeEnum type, string url// Required parameters
+           // Optional parameters
         )// BaseClass
         {
             // to ensure "type" is required (not null)
@@ -104,59 +103,23 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"HTTPSource {iDd.Identifier}";
-       
-            return "HTTPSource";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("HTTPSource:\n");
+            sb.Append("class HTTPSource {\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  Url: ").Append(Url).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>HTTPSource object</returns>
-        public static HTTPSource FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<HTTPSource>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HTTPSource object</returns>
-        public HTTPSource DuplicateHTTPSource()
-        {
-            return Duplicate() as HTTPSource;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -217,5 +180,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

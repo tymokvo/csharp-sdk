@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// Project Folder Source  This is the path to a folder where files and folders can be sourced. In the context of a desktop run Workflow this folder will correspond to a local folder. In the context of a workflow run on Pollination this folder will correspond to a Project scoped folder.
     /// </summary>
     [DataContract]
-    public partial class ProjectFolderSource : HoneybeeObject, IEquatable<ProjectFolderSource>, IValidatableObject
+    public partial class ProjectFolderSource :  IEquatable<ProjectFolderSource>, IValidatableObject
     {
-
         /// <summary>
         /// Defines Type
         /// </summary>
@@ -62,8 +61,8 @@ namespace PollinationSDK
         /// <param name="path">For a local filesystem this can be \&quot;C:\\Users\\me\\simulations\\test\&quot;. This will correspond to the run specific folder ..</param>
         public ProjectFolderSource
         (
-            , TypeEnum type, , // Required parameters
-            , string path= default// Optional parameters
+           TypeEnum type, // Required parameters
+           string path= default// Optional parameters
         )// BaseClass
         {
             // to ensure "type" is required (not null)
@@ -95,59 +94,23 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"ProjectFolderSource {iDd.Identifier}";
-       
-            return "ProjectFolderSource";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("ProjectFolderSource:\n");
+            sb.Append("class ProjectFolderSource {\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  Path: ").Append(Path).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>ProjectFolderSource object</returns>
-        public static ProjectFolderSource FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<ProjectFolderSource>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>ProjectFolderSource object</returns>
-        public ProjectFolderSource DuplicateProjectFolderSource()
-        {
-            return Duplicate() as ProjectFolderSource;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -208,5 +171,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

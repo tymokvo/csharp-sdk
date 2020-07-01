@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// An artifact sourced from within the DAG that is exposed as an output
     /// </summary>
     [DataContract]
-    public partial class DAGOutputArtifact : HoneybeeObject, IEquatable<DAGOutputArtifact>, IValidatableObject
+    public partial class DAGOutputArtifact :  IEquatable<DAGOutputArtifact>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DAGOutputArtifact" /> class.
         /// </summary>
@@ -43,8 +42,8 @@ namespace PollinationSDK
         /// <param name="from">The task reference to pull this output variable from. Note, this must be an output variable. (required).</param>
         public DAGOutputArtifact
         (
-            , string name, TaskArtifactReference from// Required parameters
-            , // Optional parameters
+           string name, TaskArtifactReference from// Required parameters
+           // Optional parameters
         )// BaseClass
         {
             // to ensure "name" is required (not null)
@@ -92,59 +91,23 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"DAGOutputArtifact {iDd.Identifier}";
-       
-            return "DAGOutputArtifact";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("DAGOutputArtifact:\n");
+            sb.Append("class DAGOutputArtifact {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  From: ").Append(From).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>DAGOutputArtifact object</returns>
-        public static DAGOutputArtifact FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<DAGOutputArtifact>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>DAGOutputArtifact object</returns>
-        public DAGOutputArtifact DuplicateDAGOutputArtifact()
-        {
-            return Duplicate() as DAGOutputArtifact;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -205,5 +168,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

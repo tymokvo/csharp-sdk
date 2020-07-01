@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// PatchOrgDto
     /// </summary>
     [DataContract]
-    public partial class PatchOrgDto : HoneybeeObject, IEquatable<PatchOrgDto>, IValidatableObject
+    public partial class PatchOrgDto :  IEquatable<PatchOrgDto>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PatchOrgDto" /> class.
         /// </summary>
@@ -45,8 +44,8 @@ namespace PollinationSDK
         /// <param name="description">A description of the org (default to &quot;&quot;).</param>
         public PatchOrgDto
         (
-            , string name, string picture, string contactEmail, , // Required parameters
-            , string description = ""// Optional parameters
+           string name, string picture, string contactEmail, // Required parameters
+           string description = ""// Optional parameters
         )// BaseClass
         {
             // to ensure "name" is required (not null)
@@ -82,7 +81,7 @@ namespace PollinationSDK
             // use default value if no "description" provided
             if (description == null)
             {
-                this.Description = "";
+                this.Description ="";
             }
             else
             {
@@ -127,61 +126,25 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"PatchOrgDto {iDd.Identifier}";
-       
-            return "PatchOrgDto";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("PatchOrgDto:\n");
+            sb.Append("class PatchOrgDto {\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Picture: ").Append(Picture).Append("\n");
             sb.Append("  ContactEmail: ").Append(ContactEmail).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>PatchOrgDto object</returns>
-        public static PatchOrgDto FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<PatchOrgDto>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>PatchOrgDto object</returns>
-        public PatchOrgDto DuplicatePatchOrgDto()
-        {
-            return Duplicate() as PatchOrgDto;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -256,5 +219,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

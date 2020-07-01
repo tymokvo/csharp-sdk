@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// Content for created response.
     /// </summary>
     [DataContract]
-    public partial class CreatedContent : HoneybeeObject, IEquatable<CreatedContent>, IValidatableObject
+    public partial class CreatedContent :  IEquatable<CreatedContent>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="CreatedContent" /> class.
         /// </summary>
@@ -43,8 +42,8 @@ namespace PollinationSDK
         /// <param name="message"> A human readable message.</param>
         public CreatedContent
         (
-            , Guid id, , // Required parameters
-            , string message= default// Optional parameters
+           Guid id, // Required parameters
+           string message= default// Optional parameters
         )// BaseClass
         {
             // to ensure "id" is required (not null)
@@ -83,59 +82,23 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"CreatedContent {iDd.Identifier}";
-       
-            return "CreatedContent";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("CreatedContent:\n");
+            sb.Append("class CreatedContent {\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Message: ").Append(Message).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>CreatedContent object</returns>
-        public static CreatedContent FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<CreatedContent>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>CreatedContent object</returns>
-        public CreatedContent DuplicateCreatedContent()
-        {
-            return Duplicate() as CreatedContent;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -196,5 +159,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

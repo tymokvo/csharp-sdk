@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// Workflow Status
     /// </summary>
     [DataContract]
-    public partial class SimulationStatus : HoneybeeObject, IEquatable<SimulationStatus>, IValidatableObject
+    public partial class SimulationStatus :  IEquatable<SimulationStatus>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="SimulationStatus" /> class.
         /// </summary>
@@ -54,8 +53,8 @@ namespace PollinationSDK
         /// <param name="parallelism">The max number of parallel tasks running for this simulation.</param>
         public SimulationStatus
         (
-            , string status, DateTime startedAt, string id, string ownerId, string projectId, string recipeId, string recipeOwnerId, string recipePackageId, , // Required parameters
-            , string message= default, DateTime finishedAt= default, string entrypoint= default, Dictionary<string, TaskStatus> tasks= default, int parallelism= default// Optional parameters
+           string status, DateTime startedAt, string id, string ownerId, string projectId, string recipeId, string recipeOwnerId, string recipePackageId, // Required parameters
+           string message= default, DateTime finishedAt= default, string entrypoint= default, Dictionary<string, TaskStatus> tasks= default, int parallelism= default// Optional parameters
         )// BaseClass
         {
             // to ensure "status" is required (not null)
@@ -244,23 +243,8 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"SimulationStatus {iDd.Identifier}";
-       
-            return "SimulationStatus";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("SimulationStatus:\n");
+            sb.Append("class SimulationStatus {\n");
             sb.Append("  Status: ").Append(Status).Append("\n");
             sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("  StartedAt: ").Append(StartedAt).Append("\n");
@@ -274,40 +258,19 @@ namespace PollinationSDK
             sb.Append("  RecipeOwnerId: ").Append(RecipeOwnerId).Append("\n");
             sb.Append("  RecipePackageId: ").Append(RecipePackageId).Append("\n");
             sb.Append("  Parallelism: ").Append(Parallelism).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>SimulationStatus object</returns>
-        public static SimulationStatus FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<SimulationStatus>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>SimulationStatus object</returns>
-        public SimulationStatus DuplicateSimulationStatus()
-        {
-            return Duplicate() as SimulationStatus;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -446,5 +409,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

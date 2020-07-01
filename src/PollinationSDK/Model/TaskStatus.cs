@@ -22,15 +22,14 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// The Status of a Workflow Task
     /// </summary>
     [DataContract]
-    public partial class TaskStatus : HoneybeeObject, IEquatable<TaskStatus>, IValidatableObject
+    public partial class TaskStatus :  IEquatable<TaskStatus>, IValidatableObject
     {
-
         /// <summary>
         /// The type of task this status is for. Can be \&quot;function\&quot;, \&quot;dag\&quot; or \&quot;loop\&quot;
         /// </summary>
@@ -88,8 +87,8 @@ namespace PollinationSDK
         /// <param name="outboundTasks">A list of the last tasks to ran in the context of this task. In the case of a DAG or a workflow this will be the last task that has been executed. It will remain empty for functions. (required).</param>
         public TaskStatus
         (
-            , string status, DateTime startedAt, string id, string name, TypeEnum type, string templateRef, Arguments inputs, Arguments outputs, List<string> children, List<string> outboundTasks, // Required parameters
-            , string message= default, DateTime finishedAt= default, string command= default, string boundaryId= default, // Optional parameters
+           string status, DateTime startedAt, string id, string name, TypeEnum type, string templateRef, Arguments inputs, Arguments outputs, List<string> children, List<string> outboundTasks, // Required parameters
+           string message= default, DateTime finishedAt= default, string command= default, string boundaryId= default // Optional parameters
         )// BaseClass
         {
             // to ensure "status" is required (not null)
@@ -298,23 +297,8 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"TaskStatus {iDd.Identifier}";
-       
-            return "TaskStatus";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("TaskStatus:\n");
+            sb.Append("class TaskStatus {\n");
             sb.Append("  Status: ").Append(Status).Append("\n");
             sb.Append("  Message: ").Append(Message).Append("\n");
             sb.Append("  StartedAt: ").Append(StartedAt).Append("\n");
@@ -329,40 +313,19 @@ namespace PollinationSDK
             sb.Append("  BoundaryId: ").Append(BoundaryId).Append("\n");
             sb.Append("  Children: ").Append(Children).Append("\n");
             sb.Append("  OutboundTasks: ").Append(OutboundTasks).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>TaskStatus object</returns>
-        public static TaskStatus FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<TaskStatus>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>TaskStatus object</returns>
-        public TaskStatus DuplicateTaskStatus()
-        {
-            return Duplicate() as TaskStatus;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -509,5 +472,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }

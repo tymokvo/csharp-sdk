@@ -22,23 +22,22 @@ using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace PollinationSDK
+namespace PollinationSDK.Model
 {
     /// <summary>
     /// Loop Control
     /// </summary>
     [DataContract]
-    public partial class LoopControl : HoneybeeObject, IEquatable<LoopControl>, IValidatableObject
+    public partial class LoopControl :  IEquatable<LoopControl>, IValidatableObject
     {
-
         /// <summary>
         /// Initializes a new instance of the <see cref="LoopControl" /> class.
         /// </summary>
         /// <param name="key">The loop control key determines how parameters and artifacts from a looped task can be identified.</param>
         public LoopControl
         (
-            , // Required parameters
-            , string key= default// Optional parameters
+           // Required parameters
+           string key= default// Optional parameters
         )// BaseClass
         {
             this.Key = key;
@@ -60,58 +59,22 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"LoopControl {iDd.Identifier}";
-       
-            return "LoopControl";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("LoopControl:\n");
+            sb.Append("class LoopControl {\n");
             sb.Append("  Key: ").Append(Key).Append("\n");
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>LoopControl object</returns>
-        public static LoopControl FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public virtual string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<LoopControl>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>LoopControl object</returns>
-        public LoopControl DuplicateLoopControl()
-        {
-            return Duplicate() as LoopControl;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
@@ -165,5 +128,4 @@ namespace PollinationSDK
             yield break;
         }
     }
-
 }
