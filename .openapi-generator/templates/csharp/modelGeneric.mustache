@@ -9,9 +9,8 @@
     {{#generatePropertyChanged}}
     [ImplementPropertyChanged]
     {{/generatePropertyChanged}}
-    {{>visibility}} partial class {{classname}} : {{#parent}}{{{parent}}}, {{/parent}}{{^parent}}HoneybeeObject, {{/parent}}IEquatable<{{classname}}>{{^netStandard}}{{#validatable}}, IValidatableObject{{/validatable}}{{/netStandard}}
+    {{>visibility}} partial class {{classname}} : {{#parent}}{{{parent}}}, {{/parent}} IEquatable<{{classname}}>{{^netStandard}}{{#validatable}}, IValidatableObject{{/validatable}}{{/netStandard}}
     {
-
         {{#vars}}
         {{#items.isEnum}}
         {{#items}}
@@ -33,7 +32,7 @@
         /// <value>{{description}}</value>
         {{/description}}
         [DataMember(Name="{{baseName}}", EmitDefaultValue={{#vendorExtensions.x-emit-default-value}}true{{/vendorExtensions.x-emit-default-value}}{{^vendorExtensions.x-emit-default-value}}{{#isNullable}}true{{/isNullable}}{{^isNullable}}false{{/isNullable}}{{/vendorExtensions.x-emit-default-value}})]
-        public {{#complexType}}{{{complexType}}}{{/complexType}}{{^complexType}}{{{datatypeWithEnum}}}{{/complexType}}{{^isContainer}}{{^required}}?{{/required}}{{/isContainer}} {{name}} { get; set; }  {{#defaultValue}} = {{#isEnum}}{{{datatypeWithEnum}}}Enum""{{{defaultValue}}}""Enum{{/isEnum}}{{^isEnum}}{{{defaultValue}}}{{/isEnum}};{{/defaultValue}} 
+        public {{#complexType}}{{{complexType}}}{{/complexType}}{{^complexType}}{{{datatypeWithEnum}}}{{/complexType}}{{^isContainer}}{{^required}}?{{/required}}{{/isContainer}} {{name}} { get; set; }  {{#defaultValue}} = {{{defaultValue}}};{{/defaultValue}} 
         {{/isEnum}}
         {{/vars}}
     {{#hasRequired}}
@@ -68,7 +67,7 @@
         public {{classname}}
         (
             {{#parent}}{{#parentModel}}{{#allVars}}{{^isReadOnly}}{{#required}}{{{datatypeWithEnum}}} {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}{{#hasMore}}, {{/hasMore}}{{/required}}{{/isReadOnly}}{{/allVars}}{{/parentModel}}{{/parent}}, {{#vars}}{{^isReadOnly}}{{#required}}{{{datatypeWithEnum}}} {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}{{#hasMore}}, {{/hasMore}}{{/required}}{{/isReadOnly}}{{/vars}}{{#hasRequired}}{{#hasOptional}}, {{/hasOptional}}{{/hasRequired}}// Required parameters
-            {{#parent}}{{#parentModel}}{{#allVars}}{{^isReadOnly}}{{^required}}{{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}?{{/isContainer}}{{/isEnum}} {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}{{#defaultValue}} = {{#isEnum}}{{{datatypeWithEnum}}}Enum""{{{defaultValue}}}""Enum{{/isEnum}}{{^isEnum}}{{{defaultValue}}}{{/isEnum}}{{/defaultValue}}{{^defaultValue}}= default{{/defaultValue}}{{#hasMore}}, {{/hasMore}}{{/required}}{{/isReadOnly}}{{/allVars}}{{/parentModel}}{{/parent}}, {{#vars}}{{^isReadOnly}}{{^required}}{{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}?{{/isContainer}}{{/isEnum}} {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}{{#defaultValue}} = {{#isEnum}}{{{datatypeWithEnum}}}Enum""{{{defaultValue}}}""Enum{{/isEnum}}{{^isEnum}}{{{defaultValue}}}{{/isEnum}}{{/defaultValue}}{{^defaultValue}}= default{{/defaultValue}}{{#hasMore}}, {{/hasMore}}{{/required}}{{/isReadOnly}}{{/vars}}// Optional parameters
+            {{#parent}}{{#parentModel}}{{#allVars}}{{^isReadOnly}}{{^required}}{{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}?{{/isContainer}}{{/isEnum}} {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}= default{{/defaultValue}}{{#hasMore}}, {{/hasMore}}{{/required}}{{/isReadOnly}}{{/allVars}}{{/parentModel}}{{/parent}}, {{#vars}}{{^isReadOnly}}{{^required}}{{{datatypeWithEnum}}}{{#isEnum}}{{^isContainer}}?{{/isContainer}}{{/isEnum}} {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}{{#defaultValue}} = {{{defaultValue}}}{{/defaultValue}}{{^defaultValue}}= default{{/defaultValue}}{{#hasMore}}, {{/hasMore}}{{/required}}{{/isReadOnly}}{{/vars}}// Optional parameters
         ){{#parent}} : base({{#parentModel}}{{#allVars}}{{^isReadOnly}}{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}: {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}{{#hasMore}}, {{/hasMore}}{{/isReadOnly}}{{/allVars}}{{/parentModel}}){{/parent}}// BaseClass
         {
             {{#vars}}
@@ -99,7 +98,7 @@
             {{#defaultValue}}// use default value if no "{{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}}" provided
             if ({{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}} == null)
             {
-                this.{{name}} = {{#isEnum}}{{{datatypeWithEnum}}}Enum""{{{defaultValue}}}""Enum{{/isEnum}}{{^isEnum}}{{{defaultValue}}}{{/isEnum}};
+                this.{{name}} ={{{defaultValue}}};
             }
             else
             {
@@ -153,60 +152,27 @@ this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            if (this is IIDdBase iDd)
-                return $"{{classname}} {iDd.Identifier}";
-       
-            return "{{classname}}";
-        }
-
-        /// <summary>
-        /// Returns the string presentation of the object
-        /// </summary>
-        /// <returns>String presentation of the object</returns>
-        public override string ToString(bool detailed)
-        {
-            if (!detailed)
-                return this.ToString();
-            
             var sb = new StringBuilder();
-            sb.Append("{{classname}}:\n");
-            {{#allVars}}
+            sb.Append("class {{classname}} {\n");
+            {{#parent}}
+            sb.Append("  ").Append(base.ToString().Replace("\n", "\n  ")).Append("\n");
+            {{/parent}}
+            {{#vars}}
             sb.Append("  {{name}}: ").Append({{name}}).Append("\n");
-            {{/allVars}}
+            {{/vars}}
+            sb.Append("}\n");
             return sb.ToString();
         }
   
         /// <summary>
-        /// Returns the object from JSON string
+        /// Returns the JSON string presentation of the object
         /// </summary>
-        /// <returns>{{classname}} object</returns>
-        public static {{classname}} FromJson(string json)
+        /// <returns>JSON string presentation of the object</returns>
+        public {{#parent}}{{^isArrayModel}}override {{/isArrayModel}}{{/parent}}{{^parent}}virtual {{/parent}}string ToJson()
         {
-            var obj = JsonConvert.DeserializeObject<{{classname}}>(json, JsonSetting.AnyOfConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>{{classname}} object</returns>
-        public {{classname}} Duplicate{{classname}}()
-        {
-            return Duplicate() as {{classname}};
-        }
-
-        /// <summary>
-        /// Creates a new instance with the same properties.
-        /// </summary>
-        /// <returns>HoneybeeObject</returns>
-        public override HoneybeeObject Duplicate()
-        {
-            return FromJson(this.ToJson());
+            return JsonConvert.SerializeObject(this, Formatting.Indented);
         }
      
-
         /// <summary>
         /// Returns true if objects are equal
         /// </summary>
