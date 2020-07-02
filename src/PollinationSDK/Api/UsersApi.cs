@@ -79,7 +79,7 @@ namespace PollinationSDK.Api
         /// <param name="username">Username of the user to search for (optional)</param>
         /// <param name="id">A list of users to search for by their user ID (optional)</param>
         /// <returns>List&lt;PublicUserDto&gt;</returns>
-        List<PublicUserDto> ListUsers (int page = default(int), int perPage = default(int), string name = default(string), string username = default(string), List<string> id = default(List<string>));
+        List<PublicUserDto> ListUsers (int page = 1, int perPage = 25, string name = default, string username = default, List<string> id = default);
 
         /// <summary>
         /// List Users
@@ -94,7 +94,7 @@ namespace PollinationSDK.Api
         /// <param name="username">Username of the user to search for (optional)</param>
         /// <param name="id">A list of users to search for by their user ID (optional)</param>
         /// <returns>ApiResponse of List&lt;PublicUserDto&gt;</returns>
-        ApiResponse<List<PublicUserDto>> ListUsersWithHttpInfo (int page = default(int), int perPage = default(int), string name = default(string), string username = default(string), List<string> id = default(List<string>));
+        ApiResponse<List<PublicUserDto>> ListUsersWithHttpInfo (int page = 1, int perPage = 25, string name = default, string username = default, List<string> id = default);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -152,7 +152,7 @@ namespace PollinationSDK.Api
         /// <param name="username">Username of the user to search for (optional)</param>
         /// <param name="id">A list of users to search for by their user ID (optional)</param>
         /// <returns>Task of List&lt;PublicUserDto&gt;</returns>
-        System.Threading.Tasks.Task<List<PublicUserDto>> ListUsersAsync (int page = default(int), int perPage = default(int), string name = default(string), string username = default(string), List<string> id = default(List<string>));
+        System.Threading.Tasks.Task<List<PublicUserDto>> ListUsersAsync (int page = 1, int perPage = 25, string name = default, string username = default, List<string> id = default);
 
         /// <summary>
         /// List Users
@@ -167,7 +167,7 @@ namespace PollinationSDK.Api
         /// <param name="username">Username of the user to search for (optional)</param>
         /// <param name="id">A list of users to search for by their user ID (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;PublicUserDto&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<PublicUserDto>>> ListUsersAsyncWithHttpInfo (int page = default(int), int perPage = default(int), string name = default(string), string username = default(string), List<string> id = default(List<string>));
+        System.Threading.Tasks.Task<ApiResponse<List<PublicUserDto>>> ListUsersAsyncWithHttpInfo (int page = 1, int perPage = 25, string name = default, string username = default, List<string> id = default);
         #endregion Asynchronous Operations
     }
 
@@ -555,7 +555,7 @@ namespace PollinationSDK.Api
         /// <param name="username">Username of the user to search for (optional)</param>
         /// <param name="id">A list of users to search for by their user ID (optional)</param>
         /// <returns>List&lt;PublicUserDto&gt;</returns>
-        public List<PublicUserDto> ListUsers (int page = default(int), int perPage = default(int), string name = default(string), string username = default(string), List<string> id = default(List<string>))
+        public List<PublicUserDto> ListUsers (int page = 1, int perPage = 25, string name = default, string username = default, List<string> id = default)
         {
              ApiResponse<List<PublicUserDto>> localVarResponse = ListUsersWithHttpInfo(page, perPage, name, username, id);
              return localVarResponse.Data;
@@ -571,7 +571,7 @@ namespace PollinationSDK.Api
         /// <param name="username">Username of the user to search for (optional)</param>
         /// <param name="id">A list of users to search for by their user ID (optional)</param>
         /// <returns>ApiResponse of List&lt;PublicUserDto&gt;</returns>
-        public ApiResponse<List<PublicUserDto>> ListUsersWithHttpInfo (int page = default(int), int perPage = default(int), string name = default(string), string username = default(string), List<string> id = default(List<string>))
+        public ApiResponse<List<PublicUserDto>> ListUsersWithHttpInfo (int page = 1, int perPage = 25, string name = default, string username = default, List<string> id = default)
         {
 
             var localVarPath = "/users";
@@ -630,7 +630,7 @@ namespace PollinationSDK.Api
         /// <param name="username">Username of the user to search for (optional)</param>
         /// <param name="id">A list of users to search for by their user ID (optional)</param>
         /// <returns>Task of List&lt;PublicUserDto&gt;</returns>
-        public async System.Threading.Tasks.Task<List<PublicUserDto>> ListUsersAsync (int page = default(int), int perPage = default(int), string name = default(string), string username = default(string), List<string> id = default(List<string>))
+        public async System.Threading.Tasks.Task<List<PublicUserDto>> ListUsersAsync (int page = 1, int perPage = 25, string name = default, string username = default, List<string> id = default)
         {
              ApiResponse<List<PublicUserDto>> localVarResponse = await ListUsersAsyncWithHttpInfo(page, perPage, name, username, id);
              return localVarResponse.Data;
@@ -647,7 +647,7 @@ namespace PollinationSDK.Api
         /// <param name="username">Username of the user to search for (optional)</param>
         /// <param name="id">A list of users to search for by their user ID (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;PublicUserDto&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<PublicUserDto>>> ListUsersAsyncWithHttpInfo (int page = default(int), int perPage = default(int), string name = default(string), string username = default(string), List<string> id = default(List<string>))
+        public async System.Threading.Tasks.Task<ApiResponse<List<PublicUserDto>>> ListUsersAsyncWithHttpInfo (int page = 1, int perPage = 25, string name = default, string username = default, List<string> id = default)
         {
 
             var localVarPath = "/users";

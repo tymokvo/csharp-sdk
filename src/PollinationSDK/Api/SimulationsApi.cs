@@ -36,7 +36,7 @@ namespace PollinationSDK.Api
         /// <param name="submitSimulationDto"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>CreatedContent</returns>
-        CreatedContent CreateSimulation (string owner, string name, SubmitSimulationDto submitSimulationDto, string authorization = default(string));
+        CreatedContent CreateSimulation (string owner, string name, SubmitSimulationDto submitSimulationDto, string authorization = default);
 
         /// <summary>
         /// Schedule a simulation
@@ -50,7 +50,7 @@ namespace PollinationSDK.Api
         /// <param name="submitSimulationDto"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of CreatedContent</returns>
-        ApiResponse<CreatedContent> CreateSimulationWithHttpInfo (string owner, string name, SubmitSimulationDto submitSimulationDto, string authorization = default(string));
+        ApiResponse<CreatedContent> CreateSimulationWithHttpInfo (string owner, string name, SubmitSimulationDto submitSimulationDto, string authorization = default);
         /// <summary>
         /// Get a Simulation
         /// </summary>
@@ -192,7 +192,7 @@ namespace PollinationSDK.Api
         /// <param name="id">The ID of a simulation to search for (optional)</param>
         /// <param name="status">The status of the simulation to filter by (optional)</param>
         /// <returns>SimulationList</returns>
-        SimulationList ListSimulations (string owner, string name, int page = default(int), int perPage = default(int), List<string> id = default(List<string>), List<string> status = default(List<string>));
+        SimulationList ListSimulations (string owner, string name, int page = 1, int perPage = 25, List<string> id = default, List<string> status = default);
 
         /// <summary>
         /// List simulations
@@ -208,7 +208,7 @@ namespace PollinationSDK.Api
         /// <param name="id">The ID of a simulation to search for (optional)</param>
         /// <param name="status">The status of the simulation to filter by (optional)</param>
         /// <returns>ApiResponse of SimulationList</returns>
-        ApiResponse<SimulationList> ListSimulationsWithHttpInfo (string owner, string name, int page = default(int), int perPage = default(int), List<string> id = default(List<string>), List<string> status = default(List<string>));
+        ApiResponse<SimulationList> ListSimulationsWithHttpInfo (string owner, string name, int page = 1, int perPage = 25, List<string> id = default, List<string> status = default);
         /// <summary>
         /// resume a simulation
         /// </summary>
@@ -273,7 +273,7 @@ namespace PollinationSDK.Api
         /// <param name="submitSimulationDto"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>Task of CreatedContent</returns>
-        System.Threading.Tasks.Task<CreatedContent> CreateSimulationAsync (string owner, string name, SubmitSimulationDto submitSimulationDto, string authorization = default(string));
+        System.Threading.Tasks.Task<CreatedContent> CreateSimulationAsync (string owner, string name, SubmitSimulationDto submitSimulationDto, string authorization = default);
 
         /// <summary>
         /// Schedule a simulation
@@ -287,7 +287,7 @@ namespace PollinationSDK.Api
         /// <param name="submitSimulationDto"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>Task of ApiResponse (CreatedContent)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CreatedContent>> CreateSimulationAsyncWithHttpInfo (string owner, string name, SubmitSimulationDto submitSimulationDto, string authorization = default(string));
+        System.Threading.Tasks.Task<ApiResponse<CreatedContent>> CreateSimulationAsyncWithHttpInfo (string owner, string name, SubmitSimulationDto submitSimulationDto, string authorization = default);
         /// <summary>
         /// Get a Simulation
         /// </summary>
@@ -429,7 +429,7 @@ namespace PollinationSDK.Api
         /// <param name="id">The ID of a simulation to search for (optional)</param>
         /// <param name="status">The status of the simulation to filter by (optional)</param>
         /// <returns>Task of SimulationList</returns>
-        System.Threading.Tasks.Task<SimulationList> ListSimulationsAsync (string owner, string name, int page = default(int), int perPage = default(int), List<string> id = default(List<string>), List<string> status = default(List<string>));
+        System.Threading.Tasks.Task<SimulationList> ListSimulationsAsync (string owner, string name, int page = 1, int perPage = 25, List<string> id = default, List<string> status = default);
 
         /// <summary>
         /// List simulations
@@ -445,7 +445,7 @@ namespace PollinationSDK.Api
         /// <param name="id">The ID of a simulation to search for (optional)</param>
         /// <param name="status">The status of the simulation to filter by (optional)</param>
         /// <returns>Task of ApiResponse (SimulationList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<SimulationList>> ListSimulationsAsyncWithHttpInfo (string owner, string name, int page = default(int), int perPage = default(int), List<string> id = default(List<string>), List<string> status = default(List<string>));
+        System.Threading.Tasks.Task<ApiResponse<SimulationList>> ListSimulationsAsyncWithHttpInfo (string owner, string name, int page = 1, int perPage = 25, List<string> id = default, List<string> status = default);
         /// <summary>
         /// resume a simulation
         /// </summary>
@@ -616,7 +616,7 @@ namespace PollinationSDK.Api
         /// <param name="submitSimulationDto"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>CreatedContent</returns>
-        public CreatedContent CreateSimulation (string owner, string name, SubmitSimulationDto submitSimulationDto, string authorization = default(string))
+        public CreatedContent CreateSimulation (string owner, string name, SubmitSimulationDto submitSimulationDto, string authorization = default)
         {
              ApiResponse<CreatedContent> localVarResponse = CreateSimulationWithHttpInfo(owner, name, submitSimulationDto, authorization);
              return localVarResponse.Data;
@@ -631,7 +631,7 @@ namespace PollinationSDK.Api
         /// <param name="submitSimulationDto"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of CreatedContent</returns>
-        public ApiResponse<CreatedContent> CreateSimulationWithHttpInfo (string owner, string name, SubmitSimulationDto submitSimulationDto, string authorization = default(string))
+        public ApiResponse<CreatedContent> CreateSimulationWithHttpInfo (string owner, string name, SubmitSimulationDto submitSimulationDto, string authorization = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -711,7 +711,7 @@ namespace PollinationSDK.Api
         /// <param name="submitSimulationDto"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>Task of CreatedContent</returns>
-        public async System.Threading.Tasks.Task<CreatedContent> CreateSimulationAsync (string owner, string name, SubmitSimulationDto submitSimulationDto, string authorization = default(string))
+        public async System.Threading.Tasks.Task<CreatedContent> CreateSimulationAsync (string owner, string name, SubmitSimulationDto submitSimulationDto, string authorization = default)
         {
              ApiResponse<CreatedContent> localVarResponse = await CreateSimulationAsyncWithHttpInfo(owner, name, submitSimulationDto, authorization);
              return localVarResponse.Data;
@@ -727,7 +727,7 @@ namespace PollinationSDK.Api
         /// <param name="submitSimulationDto"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>Task of ApiResponse (CreatedContent)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<CreatedContent>> CreateSimulationAsyncWithHttpInfo (string owner, string name, SubmitSimulationDto submitSimulationDto, string authorization = default(string))
+        public async System.Threading.Tasks.Task<ApiResponse<CreatedContent>> CreateSimulationAsyncWithHttpInfo (string owner, string name, SubmitSimulationDto submitSimulationDto, string authorization = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1666,7 +1666,7 @@ namespace PollinationSDK.Api
         /// <param name="id">The ID of a simulation to search for (optional)</param>
         /// <param name="status">The status of the simulation to filter by (optional)</param>
         /// <returns>SimulationList</returns>
-        public SimulationList ListSimulations (string owner, string name, int page = default(int), int perPage = default(int), List<string> id = default(List<string>), List<string> status = default(List<string>))
+        public SimulationList ListSimulations (string owner, string name, int page = 1, int perPage = 25, List<string> id = default, List<string> status = default)
         {
              ApiResponse<SimulationList> localVarResponse = ListSimulationsWithHttpInfo(owner, name, page, perPage, id, status);
              return localVarResponse.Data;
@@ -1683,7 +1683,7 @@ namespace PollinationSDK.Api
         /// <param name="id">The ID of a simulation to search for (optional)</param>
         /// <param name="status">The status of the simulation to filter by (optional)</param>
         /// <returns>ApiResponse of SimulationList</returns>
-        public ApiResponse<SimulationList> ListSimulationsWithHttpInfo (string owner, string name, int page = default(int), int perPage = default(int), List<string> id = default(List<string>), List<string> status = default(List<string>))
+        public ApiResponse<SimulationList> ListSimulationsWithHttpInfo (string owner, string name, int page = 1, int perPage = 25, List<string> id = default, List<string> status = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1756,7 +1756,7 @@ namespace PollinationSDK.Api
         /// <param name="id">The ID of a simulation to search for (optional)</param>
         /// <param name="status">The status of the simulation to filter by (optional)</param>
         /// <returns>Task of SimulationList</returns>
-        public async System.Threading.Tasks.Task<SimulationList> ListSimulationsAsync (string owner, string name, int page = default(int), int perPage = default(int), List<string> id = default(List<string>), List<string> status = default(List<string>))
+        public async System.Threading.Tasks.Task<SimulationList> ListSimulationsAsync (string owner, string name, int page = 1, int perPage = 25, List<string> id = default, List<string> status = default)
         {
              ApiResponse<SimulationList> localVarResponse = await ListSimulationsAsyncWithHttpInfo(owner, name, page, perPage, id, status);
              return localVarResponse.Data;
@@ -1774,7 +1774,7 @@ namespace PollinationSDK.Api
         /// <param name="id">The ID of a simulation to search for (optional)</param>
         /// <param name="status">The status of the simulation to filter by (optional)</param>
         /// <returns>Task of ApiResponse (SimulationList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<SimulationList>> ListSimulationsAsyncWithHttpInfo (string owner, string name, int page = default(int), int perPage = default(int), List<string> id = default(List<string>), List<string> status = default(List<string>))
+        public async System.Threading.Tasks.Task<ApiResponse<SimulationList>> ListSimulationsAsyncWithHttpInfo (string owner, string name, int page = 1, int perPage = 25, List<string> id = default, List<string> status = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)

@@ -106,7 +106,7 @@ namespace PollinationSDK.Api
         /// <param name="package"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>Object</returns>
-        Object PostRecipe (string owner, System.IO.Stream package, string authorization = default(string));
+        Object PostRecipe (string owner, System.IO.Stream package, string authorization = default);
 
         /// <summary>
         /// Push an Recipe to the registry
@@ -119,7 +119,7 @@ namespace PollinationSDK.Api
         /// <param name="package"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of Object</returns>
-        ApiResponse<Object> PostRecipeWithHttpInfo (string owner, System.IO.Stream package, string authorization = default(string));
+        ApiResponse<Object> PostRecipeWithHttpInfo (string owner, System.IO.Stream package, string authorization = default);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -204,7 +204,7 @@ namespace PollinationSDK.Api
         /// <param name="package"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>Task of Object</returns>
-        System.Threading.Tasks.Task<Object> PostRecipeAsync (string owner, System.IO.Stream package, string authorization = default(string));
+        System.Threading.Tasks.Task<Object> PostRecipeAsync (string owner, System.IO.Stream package, string authorization = default);
 
         /// <summary>
         /// Push an Recipe to the registry
@@ -217,7 +217,7 @@ namespace PollinationSDK.Api
         /// <param name="package"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>Task of ApiResponse (Object)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> PostRecipeAsyncWithHttpInfo (string owner, System.IO.Stream package, string authorization = default(string));
+        System.Threading.Tasks.Task<ApiResponse<Object>> PostRecipeAsyncWithHttpInfo (string owner, System.IO.Stream package, string authorization = default);
         #endregion Asynchronous Operations
     }
 
@@ -822,7 +822,7 @@ namespace PollinationSDK.Api
         /// <param name="package"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>Object</returns>
-        public Object PostRecipe (string owner, System.IO.Stream package, string authorization = default(string))
+        public Object PostRecipe (string owner, System.IO.Stream package, string authorization = default)
         {
              ApiResponse<Object> localVarResponse = PostRecipeWithHttpInfo(owner, package, authorization);
              return localVarResponse.Data;
@@ -836,7 +836,7 @@ namespace PollinationSDK.Api
         /// <param name="package"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of Object</returns>
-        public ApiResponse<Object> PostRecipeWithHttpInfo (string owner, System.IO.Stream package, string authorization = default(string))
+        public ApiResponse<Object> PostRecipeWithHttpInfo (string owner, System.IO.Stream package, string authorization = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -904,7 +904,7 @@ namespace PollinationSDK.Api
         /// <param name="package"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>Task of Object</returns>
-        public async System.Threading.Tasks.Task<Object> PostRecipeAsync (string owner, System.IO.Stream package, string authorization = default(string))
+        public async System.Threading.Tasks.Task<Object> PostRecipeAsync (string owner, System.IO.Stream package, string authorization = default)
         {
              ApiResponse<Object> localVarResponse = await PostRecipeAsyncWithHttpInfo(owner, package, authorization);
              return localVarResponse.Data;
@@ -919,7 +919,7 @@ namespace PollinationSDK.Api
         /// <param name="package"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>Task of ApiResponse (Object)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> PostRecipeAsyncWithHttpInfo (string owner, System.IO.Stream package, string authorization = default(string))
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> PostRecipeAsyncWithHttpInfo (string owner, System.IO.Stream package, string authorization = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)

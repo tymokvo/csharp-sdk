@@ -180,7 +180,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <returns>RepositoryListDto</returns>
-        RepositoryListDto ListOperators (int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> keyword = default(List<string>));
+        RepositoryListDto ListOperators (int page = 1, int perPage = 25, List<string> name = default, List<string> owner = default, bool _public = default, List<string> keyword = default);
 
         /// <summary>
         /// List operators
@@ -196,7 +196,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <returns>ApiResponse of RepositoryListDto</returns>
-        ApiResponse<RepositoryListDto> ListOperatorsWithHttpInfo (int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> keyword = default(List<string>));
+        ApiResponse<RepositoryListDto> ListOperatorsWithHttpInfo (int page = 1, int perPage = 25, List<string> name = default, List<string> owner = default, bool _public = default, List<string> keyword = default);
         /// <summary>
         /// Update an Operator
         /// </summary>
@@ -380,7 +380,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <returns>Task of RepositoryListDto</returns>
-        System.Threading.Tasks.Task<RepositoryListDto> ListOperatorsAsync (int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> keyword = default(List<string>));
+        System.Threading.Tasks.Task<RepositoryListDto> ListOperatorsAsync (int page = 1, int perPage = 25, List<string> name = default, List<string> owner = default, bool _public = default, List<string> keyword = default);
 
         /// <summary>
         /// List operators
@@ -396,7 +396,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <returns>Task of ApiResponse (RepositoryListDto)</returns>
-        System.Threading.Tasks.Task<ApiResponse<RepositoryListDto>> ListOperatorsAsyncWithHttpInfo (int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> keyword = default(List<string>));
+        System.Threading.Tasks.Task<ApiResponse<RepositoryListDto>> ListOperatorsAsyncWithHttpInfo (int page = 1, int perPage = 25, List<string> name = default, List<string> owner = default, bool _public = default, List<string> keyword = default);
         /// <summary>
         /// Update an Operator
         /// </summary>
@@ -1540,7 +1540,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <returns>RepositoryListDto</returns>
-        public RepositoryListDto ListOperators (int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> keyword = default(List<string>))
+        public RepositoryListDto ListOperators (int page = 1, int perPage = 25, List<string> name = default, List<string> owner = default, bool _public = default, List<string> keyword = default)
         {
              ApiResponse<RepositoryListDto> localVarResponse = ListOperatorsWithHttpInfo(page, perPage, name, owner, _public, keyword);
              return localVarResponse.Data;
@@ -1557,7 +1557,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <returns>ApiResponse of RepositoryListDto</returns>
-        public ApiResponse<RepositoryListDto> ListOperatorsWithHttpInfo (int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> keyword = default(List<string>))
+        public ApiResponse<RepositoryListDto> ListOperatorsWithHttpInfo (int page = 1, int perPage = 25, List<string> name = default, List<string> owner = default, bool _public = default, List<string> keyword = default)
         {
 
             var localVarPath = "/operators";
@@ -1624,7 +1624,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <returns>Task of RepositoryListDto</returns>
-        public async System.Threading.Tasks.Task<RepositoryListDto> ListOperatorsAsync (int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> keyword = default(List<string>))
+        public async System.Threading.Tasks.Task<RepositoryListDto> ListOperatorsAsync (int page = 1, int perPage = 25, List<string> name = default, List<string> owner = default, bool _public = default, List<string> keyword = default)
         {
              ApiResponse<RepositoryListDto> localVarResponse = await ListOperatorsAsyncWithHttpInfo(page, perPage, name, owner, _public, keyword);
              return localVarResponse.Data;
@@ -1642,7 +1642,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <returns>Task of ApiResponse (RepositoryListDto)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<RepositoryListDto>> ListOperatorsAsyncWithHttpInfo (int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> keyword = default(List<string>))
+        public async System.Threading.Tasks.Task<ApiResponse<RepositoryListDto>> ListOperatorsAsyncWithHttpInfo (int page = 1, int perPage = 25, List<string> name = default, List<string> owner = default, bool _public = default, List<string> keyword = default)
         {
 
             var localVarPath = "/operators";

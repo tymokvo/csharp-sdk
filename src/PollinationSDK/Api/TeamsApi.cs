@@ -154,7 +154,7 @@ namespace PollinationSDK.Api
         /// <param name="name">The account name (optional)</param>
         /// <param name="member">The ID of a user (optional)</param>
         /// <returns>List&lt;TeamDto&gt;</returns>
-        List<TeamDto> ListOrgTeams (string orgName, int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> member = default(List<string>));
+        List<TeamDto> ListOrgTeams (string orgName, int page = 1, int perPage = 25, List<string> name = default, List<string> member = default);
 
         /// <summary>
         /// List Teams
@@ -169,7 +169,7 @@ namespace PollinationSDK.Api
         /// <param name="name">The account name (optional)</param>
         /// <param name="member">The ID of a user (optional)</param>
         /// <returns>ApiResponse of List&lt;TeamDto&gt;</returns>
-        ApiResponse<List<TeamDto>> ListOrgTeamsWithHttpInfo (string orgName, int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> member = default(List<string>));
+        ApiResponse<List<TeamDto>> ListOrgTeamsWithHttpInfo (string orgName, int page = 1, int perPage = 25, List<string> name = default, List<string> member = default);
         /// <summary>
         /// Update a Team
         /// </summary>
@@ -354,7 +354,7 @@ namespace PollinationSDK.Api
         /// <param name="name">The account name (optional)</param>
         /// <param name="member">The ID of a user (optional)</param>
         /// <returns>Task of List&lt;TeamDto&gt;</returns>
-        System.Threading.Tasks.Task<List<TeamDto>> ListOrgTeamsAsync (string orgName, int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> member = default(List<string>));
+        System.Threading.Tasks.Task<List<TeamDto>> ListOrgTeamsAsync (string orgName, int page = 1, int perPage = 25, List<string> name = default, List<string> member = default);
 
         /// <summary>
         /// List Teams
@@ -369,7 +369,7 @@ namespace PollinationSDK.Api
         /// <param name="name">The account name (optional)</param>
         /// <param name="member">The ID of a user (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;TeamDto&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<TeamDto>>> ListOrgTeamsAsyncWithHttpInfo (string orgName, int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> member = default(List<string>));
+        System.Threading.Tasks.Task<ApiResponse<List<TeamDto>>> ListOrgTeamsAsyncWithHttpInfo (string orgName, int page = 1, int perPage = 25, List<string> name = default, List<string> member = default);
         /// <summary>
         /// Update a Team
         /// </summary>
@@ -1352,7 +1352,7 @@ namespace PollinationSDK.Api
         /// <param name="name">The account name (optional)</param>
         /// <param name="member">The ID of a user (optional)</param>
         /// <returns>List&lt;TeamDto&gt;</returns>
-        public List<TeamDto> ListOrgTeams (string orgName, int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> member = default(List<string>))
+        public List<TeamDto> ListOrgTeams (string orgName, int page = 1, int perPage = 25, List<string> name = default, List<string> member = default)
         {
              ApiResponse<List<TeamDto>> localVarResponse = ListOrgTeamsWithHttpInfo(orgName, page, perPage, name, member);
              return localVarResponse.Data;
@@ -1368,7 +1368,7 @@ namespace PollinationSDK.Api
         /// <param name="name">The account name (optional)</param>
         /// <param name="member">The ID of a user (optional)</param>
         /// <returns>ApiResponse of List&lt;TeamDto&gt;</returns>
-        public ApiResponse<List<TeamDto>> ListOrgTeamsWithHttpInfo (string orgName, int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> member = default(List<string>))
+        public ApiResponse<List<TeamDto>> ListOrgTeamsWithHttpInfo (string orgName, int page = 1, int perPage = 25, List<string> name = default, List<string> member = default)
         {
             // verify the required parameter 'orgName' is set
             if (orgName == null)
@@ -1436,7 +1436,7 @@ namespace PollinationSDK.Api
         /// <param name="name">The account name (optional)</param>
         /// <param name="member">The ID of a user (optional)</param>
         /// <returns>Task of List&lt;TeamDto&gt;</returns>
-        public async System.Threading.Tasks.Task<List<TeamDto>> ListOrgTeamsAsync (string orgName, int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> member = default(List<string>))
+        public async System.Threading.Tasks.Task<List<TeamDto>> ListOrgTeamsAsync (string orgName, int page = 1, int perPage = 25, List<string> name = default, List<string> member = default)
         {
              ApiResponse<List<TeamDto>> localVarResponse = await ListOrgTeamsAsyncWithHttpInfo(orgName, page, perPage, name, member);
              return localVarResponse.Data;
@@ -1453,7 +1453,7 @@ namespace PollinationSDK.Api
         /// <param name="name">The account name (optional)</param>
         /// <param name="member">The ID of a user (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;TeamDto&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<TeamDto>>> ListOrgTeamsAsyncWithHttpInfo (string orgName, int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> member = default(List<string>))
+        public async System.Threading.Tasks.Task<ApiResponse<List<TeamDto>>> ListOrgTeamsAsyncWithHttpInfo (string orgName, int page = 1, int perPage = 25, List<string> name = default, List<string> member = default)
         {
             // verify the required parameter 'orgName' is set
             if (orgName == null)

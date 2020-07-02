@@ -60,7 +60,7 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="path">The path to an artifact within a project folder (optional)</param>
         /// <returns>UpdateAccepted</returns>
-        UpdateAccepted DeleteArtifact (string owner, string name, List<string> path = default(List<string>));
+        UpdateAccepted DeleteArtifact (string owner, string name, List<string> path = default);
 
         /// <summary>
         /// Delete one or many artifacts by key/prefix
@@ -73,7 +73,7 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="path">The path to an artifact within a project folder (optional)</param>
         /// <returns>ApiResponse of UpdateAccepted</returns>
-        ApiResponse<UpdateAccepted> DeleteArtifactWithHttpInfo (string owner, string name, List<string> path = default(List<string>));
+        ApiResponse<UpdateAccepted> DeleteArtifactWithHttpInfo (string owner, string name, List<string> path = default);
         /// <summary>
         /// List artifacts in a project folder
         /// </summary>
@@ -87,7 +87,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="path">The path to an artifact within a project folder (optional)</param>
         /// <returns>List&lt;FileMeta&gt;</returns>
-        List<FileMeta> ListArtifacts (string owner, string name, int page = default(int), int perPage = default(int), List<string> path = default(List<string>));
+        List<FileMeta> ListArtifacts (string owner, string name, int page = 1, int perPage = 25, List<string> path = default);
 
         /// <summary>
         /// List artifacts in a project folder
@@ -102,7 +102,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="path">The path to an artifact within a project folder (optional)</param>
         /// <returns>ApiResponse of List&lt;FileMeta&gt;</returns>
-        ApiResponse<List<FileMeta>> ListArtifactsWithHttpInfo (string owner, string name, int page = default(int), int perPage = default(int), List<string> path = default(List<string>));
+        ApiResponse<List<FileMeta>> ListArtifactsWithHttpInfo (string owner, string name, int page = 1, int perPage = 25, List<string> path = default);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -141,7 +141,7 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="path">The path to an artifact within a project folder (optional)</param>
         /// <returns>Task of UpdateAccepted</returns>
-        System.Threading.Tasks.Task<UpdateAccepted> DeleteArtifactAsync (string owner, string name, List<string> path = default(List<string>));
+        System.Threading.Tasks.Task<UpdateAccepted> DeleteArtifactAsync (string owner, string name, List<string> path = default);
 
         /// <summary>
         /// Delete one or many artifacts by key/prefix
@@ -154,7 +154,7 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="path">The path to an artifact within a project folder (optional)</param>
         /// <returns>Task of ApiResponse (UpdateAccepted)</returns>
-        System.Threading.Tasks.Task<ApiResponse<UpdateAccepted>> DeleteArtifactAsyncWithHttpInfo (string owner, string name, List<string> path = default(List<string>));
+        System.Threading.Tasks.Task<ApiResponse<UpdateAccepted>> DeleteArtifactAsyncWithHttpInfo (string owner, string name, List<string> path = default);
         /// <summary>
         /// List artifacts in a project folder
         /// </summary>
@@ -168,7 +168,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="path">The path to an artifact within a project folder (optional)</param>
         /// <returns>Task of List&lt;FileMeta&gt;</returns>
-        System.Threading.Tasks.Task<List<FileMeta>> ListArtifactsAsync (string owner, string name, int page = default(int), int perPage = default(int), List<string> path = default(List<string>));
+        System.Threading.Tasks.Task<List<FileMeta>> ListArtifactsAsync (string owner, string name, int page = 1, int perPage = 25, List<string> path = default);
 
         /// <summary>
         /// List artifacts in a project folder
@@ -183,7 +183,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="path">The path to an artifact within a project folder (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;FileMeta&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<FileMeta>>> ListArtifactsAsyncWithHttpInfo (string owner, string name, int page = default(int), int perPage = default(int), List<string> path = default(List<string>));
+        System.Threading.Tasks.Task<ApiResponse<List<FileMeta>>> ListArtifactsAsyncWithHttpInfo (string owner, string name, int page = 1, int perPage = 25, List<string> path = default);
         #endregion Asynchronous Operations
     }
 
@@ -488,7 +488,7 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="path">The path to an artifact within a project folder (optional)</param>
         /// <returns>UpdateAccepted</returns>
-        public UpdateAccepted DeleteArtifact (string owner, string name, List<string> path = default(List<string>))
+        public UpdateAccepted DeleteArtifact (string owner, string name, List<string> path = default)
         {
              ApiResponse<UpdateAccepted> localVarResponse = DeleteArtifactWithHttpInfo(owner, name, path);
              return localVarResponse.Data;
@@ -502,7 +502,7 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="path">The path to an artifact within a project folder (optional)</param>
         /// <returns>ApiResponse of UpdateAccepted</returns>
-        public ApiResponse<UpdateAccepted> DeleteArtifactWithHttpInfo (string owner, string name, List<string> path = default(List<string>))
+        public ApiResponse<UpdateAccepted> DeleteArtifactWithHttpInfo (string owner, string name, List<string> path = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -569,7 +569,7 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="path">The path to an artifact within a project folder (optional)</param>
         /// <returns>Task of UpdateAccepted</returns>
-        public async System.Threading.Tasks.Task<UpdateAccepted> DeleteArtifactAsync (string owner, string name, List<string> path = default(List<string>))
+        public async System.Threading.Tasks.Task<UpdateAccepted> DeleteArtifactAsync (string owner, string name, List<string> path = default)
         {
              ApiResponse<UpdateAccepted> localVarResponse = await DeleteArtifactAsyncWithHttpInfo(owner, name, path);
              return localVarResponse.Data;
@@ -584,7 +584,7 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="path">The path to an artifact within a project folder (optional)</param>
         /// <returns>Task of ApiResponse (UpdateAccepted)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<UpdateAccepted>> DeleteArtifactAsyncWithHttpInfo (string owner, string name, List<string> path = default(List<string>))
+        public async System.Threading.Tasks.Task<ApiResponse<UpdateAccepted>> DeleteArtifactAsyncWithHttpInfo (string owner, string name, List<string> path = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -653,7 +653,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="path">The path to an artifact within a project folder (optional)</param>
         /// <returns>List&lt;FileMeta&gt;</returns>
-        public List<FileMeta> ListArtifacts (string owner, string name, int page = default(int), int perPage = default(int), List<string> path = default(List<string>))
+        public List<FileMeta> ListArtifacts (string owner, string name, int page = 1, int perPage = 25, List<string> path = default)
         {
              ApiResponse<List<FileMeta>> localVarResponse = ListArtifactsWithHttpInfo(owner, name, page, perPage, path);
              return localVarResponse.Data;
@@ -669,7 +669,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="path">The path to an artifact within a project folder (optional)</param>
         /// <returns>ApiResponse of List&lt;FileMeta&gt;</returns>
-        public ApiResponse<List<FileMeta>> ListArtifactsWithHttpInfo (string owner, string name, int page = default(int), int perPage = default(int), List<string> path = default(List<string>))
+        public ApiResponse<List<FileMeta>> ListArtifactsWithHttpInfo (string owner, string name, int page = 1, int perPage = 25, List<string> path = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -740,7 +740,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="path">The path to an artifact within a project folder (optional)</param>
         /// <returns>Task of List&lt;FileMeta&gt;</returns>
-        public async System.Threading.Tasks.Task<List<FileMeta>> ListArtifactsAsync (string owner, string name, int page = default(int), int perPage = default(int), List<string> path = default(List<string>))
+        public async System.Threading.Tasks.Task<List<FileMeta>> ListArtifactsAsync (string owner, string name, int page = 1, int perPage = 25, List<string> path = default)
         {
              ApiResponse<List<FileMeta>> localVarResponse = await ListArtifactsAsyncWithHttpInfo(owner, name, page, perPage, path);
              return localVarResponse.Data;
@@ -757,7 +757,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="path">The path to an artifact within a project folder (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;FileMeta&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<FileMeta>>> ListArtifactsAsyncWithHttpInfo (string owner, string name, int page = default(int), int perPage = default(int), List<string> path = default(List<string>))
+        public async System.Threading.Tasks.Task<ApiResponse<List<FileMeta>>> ListArtifactsAsyncWithHttpInfo (string owner, string name, int page = 1, int perPage = 25, List<string> path = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)

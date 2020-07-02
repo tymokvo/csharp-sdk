@@ -156,7 +156,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="_operator">Name of an operator to search workflows by (optional)</param>
         /// <returns>List&lt;ProjectDto&gt;</returns>
-        List<ProjectDto> ListProjects (int page = default(int), int perPage = default(int), List<string> id = default(List<string>), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> _operator = default(List<string>));
+        List<ProjectDto> ListProjects (int page = 1, int perPage = 25, List<string> id = default, List<string> name = default, List<string> owner = default, bool _public = default, List<string> _operator = default);
 
         /// <summary>
         /// List Projects
@@ -173,7 +173,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="_operator">Name of an operator to search workflows by (optional)</param>
         /// <returns>ApiResponse of List&lt;ProjectDto&gt;</returns>
-        ApiResponse<List<ProjectDto>> ListProjectsWithHttpInfo (int page = default(int), int perPage = default(int), List<string> id = default(List<string>), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> _operator = default(List<string>));
+        ApiResponse<List<ProjectDto>> ListProjectsWithHttpInfo (int page = 1, int perPage = 25, List<string> id = default, List<string> name = default, List<string> owner = default, bool _public = default, List<string> _operator = default);
         /// <summary>
         /// Update a Project
         /// </summary>
@@ -358,7 +358,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="_operator">Name of an operator to search workflows by (optional)</param>
         /// <returns>Task of List&lt;ProjectDto&gt;</returns>
-        System.Threading.Tasks.Task<List<ProjectDto>> ListProjectsAsync (int page = default(int), int perPage = default(int), List<string> id = default(List<string>), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> _operator = default(List<string>));
+        System.Threading.Tasks.Task<List<ProjectDto>> ListProjectsAsync (int page = 1, int perPage = 25, List<string> id = default, List<string> name = default, List<string> owner = default, bool _public = default, List<string> _operator = default);
 
         /// <summary>
         /// List Projects
@@ -375,7 +375,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="_operator">Name of an operator to search workflows by (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;ProjectDto&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<ProjectDto>>> ListProjectsAsyncWithHttpInfo (int page = default(int), int perPage = default(int), List<string> id = default(List<string>), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> _operator = default(List<string>));
+        System.Threading.Tasks.Task<ApiResponse<List<ProjectDto>>> ListProjectsAsyncWithHttpInfo (int page = 1, int perPage = 25, List<string> id = default, List<string> name = default, List<string> owner = default, bool _public = default, List<string> _operator = default);
         /// <summary>
         /// Update a Project
         /// </summary>
@@ -1374,7 +1374,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="_operator">Name of an operator to search workflows by (optional)</param>
         /// <returns>List&lt;ProjectDto&gt;</returns>
-        public List<ProjectDto> ListProjects (int page = default(int), int perPage = default(int), List<string> id = default(List<string>), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> _operator = default(List<string>))
+        public List<ProjectDto> ListProjects (int page = 1, int perPage = 25, List<string> id = default, List<string> name = default, List<string> owner = default, bool _public = default, List<string> _operator = default)
         {
              ApiResponse<List<ProjectDto>> localVarResponse = ListProjectsWithHttpInfo(page, perPage, id, name, owner, _public, _operator);
              return localVarResponse.Data;
@@ -1392,7 +1392,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="_operator">Name of an operator to search workflows by (optional)</param>
         /// <returns>ApiResponse of List&lt;ProjectDto&gt;</returns>
-        public ApiResponse<List<ProjectDto>> ListProjectsWithHttpInfo (int page = default(int), int perPage = default(int), List<string> id = default(List<string>), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> _operator = default(List<string>))
+        public ApiResponse<List<ProjectDto>> ListProjectsWithHttpInfo (int page = 1, int perPage = 25, List<string> id = default, List<string> name = default, List<string> owner = default, bool _public = default, List<string> _operator = default)
         {
 
             var localVarPath = "/projects";
@@ -1461,7 +1461,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="_operator">Name of an operator to search workflows by (optional)</param>
         /// <returns>Task of List&lt;ProjectDto&gt;</returns>
-        public async System.Threading.Tasks.Task<List<ProjectDto>> ListProjectsAsync (int page = default(int), int perPage = default(int), List<string> id = default(List<string>), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> _operator = default(List<string>))
+        public async System.Threading.Tasks.Task<List<ProjectDto>> ListProjectsAsync (int page = 1, int perPage = 25, List<string> id = default, List<string> name = default, List<string> owner = default, bool _public = default, List<string> _operator = default)
         {
              ApiResponse<List<ProjectDto>> localVarResponse = await ListProjectsAsyncWithHttpInfo(page, perPage, id, name, owner, _public, _operator);
              return localVarResponse.Data;
@@ -1480,7 +1480,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="_operator">Name of an operator to search workflows by (optional)</param>
         /// <returns>Task of ApiResponse (List&lt;ProjectDto&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<ProjectDto>>> ListProjectsAsyncWithHttpInfo (int page = default(int), int perPage = default(int), List<string> id = default(List<string>), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> _operator = default(List<string>))
+        public async System.Threading.Tasks.Task<ApiResponse<List<ProjectDto>>> ListProjectsAsyncWithHttpInfo (int page = 1, int perPage = 25, List<string> id = default, List<string> name = default, List<string> owner = default, bool _public = default, List<string> _operator = default)
         {
 
             var localVarPath = "/projects";

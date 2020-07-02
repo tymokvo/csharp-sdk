@@ -59,7 +59,7 @@ namespace PollinationSDK.Api
         /// <param name="newRecipePackage"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>Object</returns>
-        Object CreateRecipePackage (string owner, string name, NewRecipePackage newRecipePackage, string authorization = default(string));
+        Object CreateRecipePackage (string owner, string name, NewRecipePackage newRecipePackage, string authorization = default);
 
         /// <summary>
         /// Create a new Recipe package
@@ -73,7 +73,7 @@ namespace PollinationSDK.Api
         /// <param name="newRecipePackage"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of Object</returns>
-        ApiResponse<Object> CreateRecipePackageWithHttpInfo (string owner, string name, NewRecipePackage newRecipePackage, string authorization = default(string));
+        ApiResponse<Object> CreateRecipePackageWithHttpInfo (string owner, string name, NewRecipePackage newRecipePackage, string authorization = default);
         /// <summary>
         /// Delete a Recipe
         /// </summary>
@@ -182,7 +182,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <returns>RepositoryListDto</returns>
-        RepositoryListDto ListRecipes (int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> keyword = default(List<string>));
+        RepositoryListDto ListRecipes (int page = 1, int perPage = 25, List<string> name = default, List<string> owner = default, bool _public = default, List<string> keyword = default);
 
         /// <summary>
         /// List recipes
@@ -198,7 +198,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <returns>ApiResponse of RepositoryListDto</returns>
-        ApiResponse<RepositoryListDto> ListRecipesWithHttpInfo (int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> keyword = default(List<string>));
+        ApiResponse<RepositoryListDto> ListRecipesWithHttpInfo (int page = 1, int perPage = 25, List<string> name = default, List<string> owner = default, bool _public = default, List<string> keyword = default);
         /// <summary>
         /// Update a Recipe
         /// </summary>
@@ -261,7 +261,7 @@ namespace PollinationSDK.Api
         /// <param name="newRecipePackage"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>Task of Object</returns>
-        System.Threading.Tasks.Task<Object> CreateRecipePackageAsync (string owner, string name, NewRecipePackage newRecipePackage, string authorization = default(string));
+        System.Threading.Tasks.Task<Object> CreateRecipePackageAsync (string owner, string name, NewRecipePackage newRecipePackage, string authorization = default);
 
         /// <summary>
         /// Create a new Recipe package
@@ -275,7 +275,7 @@ namespace PollinationSDK.Api
         /// <param name="newRecipePackage"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>Task of ApiResponse (Object)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Object>> CreateRecipePackageAsyncWithHttpInfo (string owner, string name, NewRecipePackage newRecipePackage, string authorization = default(string));
+        System.Threading.Tasks.Task<ApiResponse<Object>> CreateRecipePackageAsyncWithHttpInfo (string owner, string name, NewRecipePackage newRecipePackage, string authorization = default);
         /// <summary>
         /// Delete a Recipe
         /// </summary>
@@ -384,7 +384,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <returns>Task of RepositoryListDto</returns>
-        System.Threading.Tasks.Task<RepositoryListDto> ListRecipesAsync (int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> keyword = default(List<string>));
+        System.Threading.Tasks.Task<RepositoryListDto> ListRecipesAsync (int page = 1, int perPage = 25, List<string> name = default, List<string> owner = default, bool _public = default, List<string> keyword = default);
 
         /// <summary>
         /// List recipes
@@ -400,7 +400,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <returns>Task of ApiResponse (RepositoryListDto)</returns>
-        System.Threading.Tasks.Task<ApiResponse<RepositoryListDto>> ListRecipesAsyncWithHttpInfo (int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> keyword = default(List<string>));
+        System.Threading.Tasks.Task<ApiResponse<RepositoryListDto>> ListRecipesAsyncWithHttpInfo (int page = 1, int perPage = 25, List<string> name = default, List<string> owner = default, bool _public = default, List<string> keyword = default);
         /// <summary>
         /// Update a Recipe
         /// </summary>
@@ -719,7 +719,7 @@ namespace PollinationSDK.Api
         /// <param name="newRecipePackage"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>Object</returns>
-        public Object CreateRecipePackage (string owner, string name, NewRecipePackage newRecipePackage, string authorization = default(string))
+        public Object CreateRecipePackage (string owner, string name, NewRecipePackage newRecipePackage, string authorization = default)
         {
              ApiResponse<Object> localVarResponse = CreateRecipePackageWithHttpInfo(owner, name, newRecipePackage, authorization);
              return localVarResponse.Data;
@@ -734,7 +734,7 @@ namespace PollinationSDK.Api
         /// <param name="newRecipePackage"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>ApiResponse of Object</returns>
-        public ApiResponse<Object> CreateRecipePackageWithHttpInfo (string owner, string name, NewRecipePackage newRecipePackage, string authorization = default(string))
+        public ApiResponse<Object> CreateRecipePackageWithHttpInfo (string owner, string name, NewRecipePackage newRecipePackage, string authorization = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -814,7 +814,7 @@ namespace PollinationSDK.Api
         /// <param name="newRecipePackage"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>Task of Object</returns>
-        public async System.Threading.Tasks.Task<Object> CreateRecipePackageAsync (string owner, string name, NewRecipePackage newRecipePackage, string authorization = default(string))
+        public async System.Threading.Tasks.Task<Object> CreateRecipePackageAsync (string owner, string name, NewRecipePackage newRecipePackage, string authorization = default)
         {
              ApiResponse<Object> localVarResponse = await CreateRecipePackageAsyncWithHttpInfo(owner, name, newRecipePackage, authorization);
              return localVarResponse.Data;
@@ -830,7 +830,7 @@ namespace PollinationSDK.Api
         /// <param name="newRecipePackage"></param>
         /// <param name="authorization"> (optional)</param>
         /// <returns>Task of ApiResponse (Object)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Object>> CreateRecipePackageAsyncWithHttpInfo (string owner, string name, NewRecipePackage newRecipePackage, string authorization = default(string))
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> CreateRecipePackageAsyncWithHttpInfo (string owner, string name, NewRecipePackage newRecipePackage, string authorization = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1550,7 +1550,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <returns>RepositoryListDto</returns>
-        public RepositoryListDto ListRecipes (int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> keyword = default(List<string>))
+        public RepositoryListDto ListRecipes (int page = 1, int perPage = 25, List<string> name = default, List<string> owner = default, bool _public = default, List<string> keyword = default)
         {
              ApiResponse<RepositoryListDto> localVarResponse = ListRecipesWithHttpInfo(page, perPage, name, owner, _public, keyword);
              return localVarResponse.Data;
@@ -1567,7 +1567,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <returns>ApiResponse of RepositoryListDto</returns>
-        public ApiResponse<RepositoryListDto> ListRecipesWithHttpInfo (int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> keyword = default(List<string>))
+        public ApiResponse<RepositoryListDto> ListRecipesWithHttpInfo (int page = 1, int perPage = 25, List<string> name = default, List<string> owner = default, bool _public = default, List<string> keyword = default)
         {
 
             var localVarPath = "/recipes";
@@ -1634,7 +1634,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <returns>Task of RepositoryListDto</returns>
-        public async System.Threading.Tasks.Task<RepositoryListDto> ListRecipesAsync (int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> keyword = default(List<string>))
+        public async System.Threading.Tasks.Task<RepositoryListDto> ListRecipesAsync (int page = 1, int perPage = 25, List<string> name = default, List<string> owner = default, bool _public = default, List<string> keyword = default)
         {
              ApiResponse<RepositoryListDto> localVarResponse = await ListRecipesAsyncWithHttpInfo(page, perPage, name, owner, _public, keyword);
              return localVarResponse.Data;
@@ -1652,7 +1652,7 @@ namespace PollinationSDK.Api
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <returns>Task of ApiResponse (RepositoryListDto)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<RepositoryListDto>> ListRecipesAsyncWithHttpInfo (int page = default(int), int perPage = default(int), List<string> name = default(List<string>), List<string> owner = default(List<string>), bool _public = default(bool), List<string> keyword = default(List<string>))
+        public async System.Threading.Tasks.Task<ApiResponse<RepositoryListDto>> ListRecipesAsyncWithHttpInfo (int page = 1, int perPage = 25, List<string> name = default, List<string> owner = default, bool _public = default, List<string> keyword = default)
         {
 
             var localVarPath = "/recipes";
