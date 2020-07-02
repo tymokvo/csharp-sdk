@@ -30,7 +30,9 @@ namespace PollinationSDK.Client
     {
         private JsonSerializerSettings serializerSettings = new JsonSerializerSettings
         {
-            ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
+            ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
+            MissingMemberHandling = MissingMemberHandling.Ignore,
+            NullValueHandling = NullValueHandling.Ignore
         };
 
         /// <summary>
