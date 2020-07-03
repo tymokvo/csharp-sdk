@@ -65,6 +65,21 @@ def fix_constructor(read_data):
     return data
 
 
+def fix_bool_parameters(read_data):
+    regexs = [
+        r"(bool)(?=\s\w*\s*=\s*default)"
+    ]
+
+    replace_new = [
+        "bool?"
+    ]
+    data = read_data
+    for i, rex in enumerate(regexs):
+        replace = replace_new[i]
+        if re.findall(rex, data) != []:
+            data = re.sub(rex, replace, data)
+    return data
+
 # def get_enums(mapperJson):
 #     if mapperJson.startswith('https:'):
 #         json_url = urllib.request.urlopen(mapperJson)
@@ -168,6 +183,27 @@ def check_csfiles(source_folder, anyof_types):
         f.close()
 
 
+def check_csfiles_bool_types(source_folder):
+    # go through all files and replce bool types
+    class_files = [x for x in os.listdir(source_folder) if x.endswith(".cs")]
+
+    for f in class_files:
+        cs_file = os.path.join(source_folder, f)
+       
+        print("\n-Checking %s" % cs_file)
+        # read data
+        f = open(cs_file, "rt", encoding='utf-8')
+        data = f.read()
+        # take care of bool type and make it nullable
+        data = fix_bool_parameters(data)
+        f.close()
+
+        # save data
+        f = open(cs_file, "wt", encoding='utf-8')
+        f.write(data)
+        f.close()
+
+
 def get_allof_types_from_json(source_json_url):
     # load schema json, and get all union types
     unitItem = []
@@ -198,6 +234,10 @@ def check_types(source_json_url):
     root = os.path.dirname(os.path.dirname(__file__))
     source_folder = os.path.join(root, 'src', name_space, 'Model')
     check_csfiles(source_folder, all_types)
+
+    # make bool type in api parameters to nullable bool
+    source_folder = os.path.join(root, 'src', name_space, 'Api')
+    check_csfiles_bool_types(source_folder)
 
 
 def cleanup(projectName):
