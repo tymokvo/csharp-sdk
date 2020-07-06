@@ -8,8 +8,8 @@ Method | HTTP request | Description
 [**CreateOperatorPackage**](OperatorsApi.md#createoperatorpackage) | **POST** /operators/{owner}/{name}/tags | Create a new Operator package
 [**DeleteOperator**](OperatorsApi.md#deleteoperator) | **DELETE** /operators/{owner}/{name} | Delete an Operator
 [**GetOperator**](OperatorsApi.md#getoperator) | **GET** /operators/{owner}/{name} | Get an operator
-[**GetOperatorTag**](OperatorsApi.md#getoperatortag) | **GET** /operators/{owner}/{name}/tags/{tag} | Get an operator tag
-[**GetOperatorTags**](OperatorsApi.md#getoperatortags) | **GET** /operators/{owner}/{name}/tags | Get an operator tags
+[**GetOperatorByTag**](OperatorsApi.md#getoperatorbytag) | **GET** /operators/{owner}/{name}/tags/{tag} | Get an operator tag
+[**ListOperatorTags**](OperatorsApi.md#listoperatortags) | **GET** /operators/{owner}/{name}/tags | Get an operator tags
 [**ListOperators**](OperatorsApi.md#listoperators) | **GET** /operators | List operators
 [**UpdateOperator**](OperatorsApi.md#updateoperator) | **PUT** /operators/{owner}/{name} | Update an Operator
 
@@ -39,7 +39,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new OperatorsApi(Configuration.Default);
@@ -77,7 +77,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 
@@ -102,7 +102,7 @@ Name | Type | Description  | Notes
 
 ## CreateOperatorPackage
 
-> Object CreateOperatorPackage (string owner, string name, NewOperatorPackage newOperatorPackage)
+> PackageDto CreateOperatorPackage (string owner, string name, NewOperatorPackage newOperatorPackage)
 
 Create a new Operator package
 
@@ -124,7 +124,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new OperatorsApi(Configuration.Default);
@@ -135,7 +135,7 @@ namespace Example
             try
             {
                 // Create a new Operator package
-                Object result = apiInstance.CreateOperatorPackage(owner, name, newOperatorPackage);
+                PackageDto result = apiInstance.CreateOperatorPackage(owner, name, newOperatorPackage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -160,11 +160,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**PackageDto**](PackageDto.md)
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 
@@ -177,8 +177,8 @@ Name | Type | Description  | Notes
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
-| **200** | Retrieved |  -  |
 | **404** | Not found |  -  |
+| **200** | Success |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -211,7 +211,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new OperatorsApi(Configuration.Default);
@@ -248,7 +248,7 @@ void (empty response body)
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 
@@ -272,7 +272,7 @@ void (empty response body)
 
 ## GetOperator
 
-> Object GetOperator (string owner, string name)
+> RepositoryDto GetOperator (string owner, string name)
 
 Get an operator
 
@@ -294,7 +294,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Optional Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new OperatorsApi(Configuration.Default);
@@ -304,7 +304,7 @@ namespace Example
             try
             {
                 // Get an operator
-                Object result = apiInstance.GetOperator(owner, name);
+                RepositoryDto result = apiInstance.GetOperator(owner, name);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -328,11 +328,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**RepositoryDto**](RepositoryDto.md)
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Optional Auth](../README.md#Optional Auth)
 
 ### HTTP request headers
 
@@ -345,8 +345,8 @@ Name | Type | Description  | Notes
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
-| **200** | Retrieved |  -  |
 | **404** | Not found |  -  |
+| **200** | Retrieved |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -355,9 +355,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetOperatorTag
+## GetOperatorByTag
 
-> Object GetOperatorTag (string owner, string name, string tag)
+> OperatorPackage GetOperatorByTag (string owner, string name, string tag)
 
 Get an operator tag
 
@@ -374,12 +374,12 @@ using PollinationSDK.Model;
 
 namespace Example
 {
-    public class GetOperatorTagExample
+    public class GetOperatorByTagExample
     {
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Optional Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new OperatorsApi(Configuration.Default);
@@ -390,12 +390,12 @@ namespace Example
             try
             {
                 // Get an operator tag
-                Object result = apiInstance.GetOperatorTag(owner, name, tag);
+                OperatorPackage result = apiInstance.GetOperatorByTag(owner, name, tag);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
             {
-                Debug.Print("Exception when calling OperatorsApi.GetOperatorTag: " + e.Message );
+                Debug.Print("Exception when calling OperatorsApi.GetOperatorByTag: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -415,11 +415,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**OperatorPackage**](OperatorPackage.md)
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Optional Auth](../README.md#Optional Auth)
 
 ### HTTP request headers
 
@@ -432,8 +432,8 @@ Name | Type | Description  | Notes
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
-| **200** | Retrieved |  -  |
 | **404** | Not found |  -  |
+| **200** | Retrieved |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -442,9 +442,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetOperatorTags
+## ListOperatorTags
 
-> Object GetOperatorTags (string owner, string name)
+> PackageListDto ListOperatorTags (string owner, string name)
 
 Get an operator tags
 
@@ -461,12 +461,12 @@ using PollinationSDK.Model;
 
 namespace Example
 {
-    public class GetOperatorTagsExample
+    public class ListOperatorTagsExample
     {
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Optional Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new OperatorsApi(Configuration.Default);
@@ -476,12 +476,12 @@ namespace Example
             try
             {
                 // Get an operator tags
-                Object result = apiInstance.GetOperatorTags(owner, name);
+                PackageListDto result = apiInstance.ListOperatorTags(owner, name);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
             {
-                Debug.Print("Exception when calling OperatorsApi.GetOperatorTags: " + e.Message );
+                Debug.Print("Exception when calling OperatorsApi.ListOperatorTags: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -500,11 +500,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**PackageListDto**](PackageListDto.md)
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Optional Auth](../README.md#Optional Auth)
 
 ### HTTP request headers
 
@@ -517,8 +517,8 @@ Name | Type | Description  | Notes
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
-| **200** | Retrieved |  -  |
 | **404** | Not found |  -  |
+| **200** | Retrieved |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -549,7 +549,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Optional Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new OperatorsApi(Configuration.Default);
@@ -595,7 +595,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Optional Auth](../README.md#Optional Auth)
 
 ### HTTP request headers
 
@@ -638,7 +638,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new OperatorsApi(Configuration.Default);
@@ -678,7 +678,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 

@@ -84,8 +84,8 @@ No authorization required
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
-| **200** | Retrieved |  -  |
 | **404** | Not found |  -  |
+| **200** | Successful Response |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -118,7 +118,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new UserApi(Configuration.Default);
@@ -150,7 +150,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 
@@ -190,7 +190,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new UserApi(Configuration.Default);
@@ -222,7 +222,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 

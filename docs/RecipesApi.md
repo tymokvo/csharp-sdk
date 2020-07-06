@@ -8,8 +8,8 @@ Method | HTTP request | Description
 [**CreateRecipePackage**](RecipesApi.md#createrecipepackage) | **POST** /recipes/{owner}/{name}/tags | Create a new Recipe package
 [**DeleteRecipe**](RecipesApi.md#deleterecipe) | **DELETE** /recipes/{owner}/{name} | Delete a Recipe
 [**GetRecipe**](RecipesApi.md#getrecipe) | **GET** /recipes/{owner}/{name} | Get a recipe
-[**GetRecipeTag**](RecipesApi.md#getrecipetag) | **GET** /recipes/{owner}/{name}/tags/{tag} | Get a recipe tag
-[**GetRecipeTags**](RecipesApi.md#getrecipetags) | **GET** /recipes/{owner}/{name}/tags | Get a recipe tags
+[**GetRecipeByTag**](RecipesApi.md#getrecipebytag) | **GET** /recipes/{owner}/{name}/tags/{tag} | Get a recipe tag
+[**ListRecipeTags**](RecipesApi.md#listrecipetags) | **GET** /recipes/{owner}/{name}/tags | Get a recipe tags
 [**ListRecipes**](RecipesApi.md#listrecipes) | **GET** /recipes | List recipes
 [**UpdateRecipe**](RecipesApi.md#updaterecipe) | **PUT** /recipes/{owner}/{name} | Update a Recipe
 
@@ -39,7 +39,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new RecipesApi(Configuration.Default);
@@ -77,7 +77,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 
@@ -102,7 +102,7 @@ Name | Type | Description  | Notes
 
 ## CreateRecipePackage
 
-> Object CreateRecipePackage (string owner, string name, NewRecipePackage newRecipePackage, string authorization = null)
+> PackageDto CreateRecipePackage (string owner, string name, NewRecipePackage newRecipePackage, string authorization = null)
 
 Create a new Recipe package
 
@@ -124,7 +124,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new RecipesApi(Configuration.Default);
@@ -136,7 +136,7 @@ namespace Example
             try
             {
                 // Create a new Recipe package
-                Object result = apiInstance.CreateRecipePackage(owner, name, newRecipePackage, authorization);
+                PackageDto result = apiInstance.CreateRecipePackage(owner, name, newRecipePackage, authorization);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -162,11 +162,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**PackageDto**](PackageDto.md)
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 
@@ -179,8 +179,8 @@ Name | Type | Description  | Notes
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
-| **200** | Retrieved |  -  |
 | **404** | Not found |  -  |
+| **200** | Success |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -213,7 +213,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new RecipesApi(Configuration.Default);
@@ -250,7 +250,7 @@ void (empty response body)
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 
@@ -274,7 +274,7 @@ void (empty response body)
 
 ## GetRecipe
 
-> Object GetRecipe (string owner, string name)
+> RepositoryDto GetRecipe (string owner, string name)
 
 Get a recipe
 
@@ -296,7 +296,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Optional Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new RecipesApi(Configuration.Default);
@@ -306,7 +306,7 @@ namespace Example
             try
             {
                 // Get a recipe
-                Object result = apiInstance.GetRecipe(owner, name);
+                RepositoryDto result = apiInstance.GetRecipe(owner, name);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -330,11 +330,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**RepositoryDto**](RepositoryDto.md)
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Optional Auth](../README.md#Optional Auth)
 
 ### HTTP request headers
 
@@ -347,8 +347,8 @@ Name | Type | Description  | Notes
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
-| **200** | Retrieved |  -  |
 | **404** | Not found |  -  |
+| **200** | Retrieved |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -357,9 +357,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetRecipeTag
+## GetRecipeByTag
 
-> Object GetRecipeTag (string owner, string name, string tag)
+> RecipePackage GetRecipeByTag (string owner, string name, string tag)
 
 Get a recipe tag
 
@@ -376,12 +376,12 @@ using PollinationSDK.Model;
 
 namespace Example
 {
-    public class GetRecipeTagExample
+    public class GetRecipeByTagExample
     {
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Optional Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new RecipesApi(Configuration.Default);
@@ -392,12 +392,12 @@ namespace Example
             try
             {
                 // Get a recipe tag
-                Object result = apiInstance.GetRecipeTag(owner, name, tag);
+                RecipePackage result = apiInstance.GetRecipeByTag(owner, name, tag);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
             {
-                Debug.Print("Exception when calling RecipesApi.GetRecipeTag: " + e.Message );
+                Debug.Print("Exception when calling RecipesApi.GetRecipeByTag: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -417,11 +417,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**RecipePackage**](RecipePackage.md)
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Optional Auth](../README.md#Optional Auth)
 
 ### HTTP request headers
 
@@ -434,8 +434,8 @@ Name | Type | Description  | Notes
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
-| **200** | Retrieved |  -  |
 | **404** | Not found |  -  |
+| **200** | Retrieved |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -444,9 +444,9 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetRecipeTags
+## ListRecipeTags
 
-> Object GetRecipeTags (string owner, string name)
+> PackageListDto ListRecipeTags (string owner, string name)
 
 Get a recipe tags
 
@@ -463,12 +463,12 @@ using PollinationSDK.Model;
 
 namespace Example
 {
-    public class GetRecipeTagsExample
+    public class ListRecipeTagsExample
     {
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Optional Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new RecipesApi(Configuration.Default);
@@ -478,12 +478,12 @@ namespace Example
             try
             {
                 // Get a recipe tags
-                Object result = apiInstance.GetRecipeTags(owner, name);
+                PackageListDto result = apiInstance.ListRecipeTags(owner, name);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
             {
-                Debug.Print("Exception when calling RecipesApi.GetRecipeTags: " + e.Message );
+                Debug.Print("Exception when calling RecipesApi.ListRecipeTags: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -502,11 +502,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**PackageListDto**](PackageListDto.md)
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Optional Auth](../README.md#Optional Auth)
 
 ### HTTP request headers
 
@@ -519,8 +519,8 @@ Name | Type | Description  | Notes
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
-| **200** | Retrieved |  -  |
 | **404** | Not found |  -  |
+| **200** | Retrieved |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -551,7 +551,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Optional Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new RecipesApi(Configuration.Default);
@@ -597,7 +597,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Optional Auth](../README.md#Optional Auth)
 
 ### HTTP request headers
 
@@ -640,7 +640,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new RecipesApi(Configuration.Default);
@@ -680,7 +680,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 

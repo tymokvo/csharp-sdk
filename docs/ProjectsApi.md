@@ -39,7 +39,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
@@ -77,7 +77,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 
@@ -124,7 +124,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
@@ -161,7 +161,7 @@ void (empty response body)
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 
@@ -207,7 +207,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
@@ -246,7 +246,7 @@ void (empty response body)
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 
@@ -270,7 +270,7 @@ void (empty response body)
 
 ## GetProject
 
-> Object GetProject (string owner, string name)
+> ProjectDto GetProject (string owner, string name)
 
 Get a project
 
@@ -292,7 +292,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Optional Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
@@ -302,7 +302,7 @@ namespace Example
             try
             {
                 // Get a project
-                Object result = apiInstance.GetProject(owner, name);
+                ProjectDto result = apiInstance.GetProject(owner, name);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -326,11 +326,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**ProjectDto**](ProjectDto.md)
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Optional Auth](../README.md#Optional Auth)
 
 ### HTTP request headers
 
@@ -343,8 +343,8 @@ Name | Type | Description  | Notes
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
-| **200** | Retrieved |  -  |
 | **404** | Not found |  -  |
+| **200** | Retrieved |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -377,7 +377,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
@@ -415,7 +415,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 
@@ -428,7 +428,7 @@ Name | Type | Description  | Notes
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
-| **200** | Retrieved |  * Link - The Link header with pagination information. For details see [link header](https://pollination.cloud/api/#section/Pagination/Link-header). <br>  |
+| **200** | Retrieved |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -461,7 +461,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Optional Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
@@ -509,7 +509,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Optional Auth](../README.md#Optional Auth)
 
 ### HTTP request headers
 
@@ -519,6 +519,9 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **403** | Access forbidden |  -  |
+| **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
 | **200** | Retrieved |  -  |
 | **422** | Validation Error |  -  |
 
@@ -552,7 +555,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
@@ -592,7 +595,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 
@@ -639,7 +642,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
@@ -679,7 +682,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 

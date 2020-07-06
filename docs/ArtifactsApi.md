@@ -34,7 +34,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ArtifactsApi(Configuration.Default);
@@ -74,7 +74,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 
@@ -117,7 +117,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ArtifactsApi(Configuration.Default);
@@ -157,7 +157,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 
@@ -200,7 +200,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Optional Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ArtifactsApi(Configuration.Default);
@@ -244,7 +244,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Optional Auth](../README.md#Optional Auth)
 
 ### HTTP request headers
 

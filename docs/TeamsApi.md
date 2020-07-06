@@ -39,7 +39,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new TeamsApi(Configuration.Default);
@@ -77,7 +77,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 
@@ -124,7 +124,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new TeamsApi(Configuration.Default);
@@ -163,7 +163,7 @@ void (empty response body)
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 
@@ -209,7 +209,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new TeamsApi(Configuration.Default);
@@ -246,7 +246,7 @@ void (empty response body)
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 
@@ -292,9 +292,6 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
-
             var apiInstance = new TeamsApi(Configuration.Default);
             var orgName = orgName_example;  // string | 
             var teamSlug = teamSlug_example;  // string | 
@@ -330,7 +327,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+No authorization required
 
 ### HTTP request headers
 
@@ -351,7 +348,7 @@ Name | Type | Description  | Notes
 
 ## GetTeam
 
-> Object GetTeam (string orgName, string teamSlug)
+> TeamDto GetTeam (string orgName, string teamSlug)
 
 Get a Team
 
@@ -373,9 +370,6 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
-
             var apiInstance = new TeamsApi(Configuration.Default);
             var orgName = orgName_example;  // string | 
             var teamSlug = teamSlug_example;  // string | 
@@ -383,7 +377,7 @@ namespace Example
             try
             {
                 // Get a Team
-                Object result = apiInstance.GetTeam(orgName, teamSlug);
+                TeamDto result = apiInstance.GetTeam(orgName, teamSlug);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -407,11 +401,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**TeamDto**](TeamDto.md)
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+No authorization required
 
 ### HTTP request headers
 
@@ -424,8 +418,8 @@ Name | Type | Description  | Notes
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
-| **200** | Retrieved |  -  |
 | **404** | Not found |  -  |
+| **200** | Retrieved |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -458,9 +452,6 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
-
             var apiInstance = new TeamsApi(Configuration.Default);
             var orgName = orgName_example;  // string | 
             var page = 56;  // int | Page number starting from 1 (optional)  (default to 1)
@@ -502,7 +493,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+No authorization required
 
 ### HTTP request headers
 
@@ -545,7 +536,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new TeamsApi(Configuration.Default);
@@ -585,7 +576,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 
@@ -632,7 +623,7 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: JWT
+            // Configure OAuth2 access token for authorization: Compulsory Auth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new TeamsApi(Configuration.Default);
@@ -674,7 +665,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[JWT](../README.md#JWT)
+[Compulsory Auth](../README.md#Compulsory Auth)
 
 ### HTTP request headers
 
