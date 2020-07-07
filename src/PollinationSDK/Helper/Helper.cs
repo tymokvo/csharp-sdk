@@ -31,13 +31,22 @@ namespace PollinationSDK
             return d;
         }
 
-        public static bool UploadDirectory(ProjectDto project, string directory)
+        public static async Task<bool> UploadDirectory(ProjectDto project, string directory, Action<int> progressAction)
         {
             var files = Directory.GetFiles(directory, "*", SearchOption.AllDirectories);
 
-            var tasks = files.AsParallel().Select(_ => UploadArtifaceAsync(project, _, _.Replace(directory, "")));
+            var tasks = files.Select(_ => Helper.UploadArtifaceAsync(project, _, _.Replace(directory, ""))).ToList();
+            var total = files.Count();
+            while (tasks.Count() > 0)
+            {
+                var left = tasks.Count();
+                var finishedTask = await Task.WhenAny(tasks);
+                //Console.WriteLine("done!");
 
-            Task.WaitAll(tasks.ToArray());
+                tasks.Remove(finishedTask);
+                var finishedPercent = (total - left) / (double)total * 100;
+                progressAction((int)finishedPercent);
+            }
             Console.WriteLine("Finished uploading directory");
             return true;
         }
