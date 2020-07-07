@@ -42,9 +42,9 @@ namespace ConsoleAppDemo
             Console.WriteLine($"Getting the project. \n Found this project ID: {proj.Id}");
 
 
-            Console.WriteLine("--------------------UploadArtifaces-------------------");
-            var dir = @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder";
-            UploadDirectory(proj, dir);
+            //Console.WriteLine("--------------------UploadArtifaces-------------------");
+            //var dir = @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder";
+            //UploadDirectory(proj, dir);
 
             //Console.WriteLine("--------------------Getting Recipe Params-------------------");
             //GetRecipeParameters();
@@ -77,6 +77,13 @@ namespace ConsoleAppDemo
 
             //Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
             //CreateSimulation(proj);
+
+            Console.WriteLine("--------------------Simulation status-------------------");
+            var id = "f13b6c0d-7c42-420a-884c-f6010e954b8b";
+            //CheckSimulationStatus(proj, id);
+            CheckOutputLogs(proj, id);
+
+
 
             Console.ReadKey();
 
@@ -163,7 +170,7 @@ namespace ConsoleAppDemo
 
             // Upload artifacts
             var dir = @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder";
-            UploadDirectory(proj, dir);
+            //UploadDirectory(proj, dir);
 
             // create a recipe argument
             var arg = new Arguments()
@@ -192,6 +199,11 @@ namespace ConsoleAppDemo
             Console.WriteLine(ret.Id);
             Console.WriteLine(ret.Message);
 
+
+            // check simulation status
+            var done = CheckSimulationStatus(proj, ret.Id.ToString()).Result;
+
+            var outputs = api.GetSimulationLogs(proj.Owner.Name, proj.Name, ret.Id.ToString());
 
             //return recipes;
         }
@@ -337,6 +349,37 @@ namespace ConsoleAppDemo
 
         }
 
+        private static async Task<bool> CheckSimulationStatus(ProjectDto proj, string simuId)
+        {
+            var api = new SimulationsApi();
+
+            var status = api.GetSimulation(proj.Owner.Name, proj.Name, simuId);
+            var startTime = status.StartedAt.ToUniversalTime();
+            while (status.Status == "Running")
+            {
+
+                await Task.Delay(1000);
+                var runseconds = Math.Round((DateTime.UtcNow - startTime).TotalSeconds);
+                Console.WriteLine($"{status.Status}: [{runseconds} s]");
+
+                // update status
+                status = api.GetSimulation(proj.Owner.Name, proj.Name, simuId);
+
+            }
+
+            var totalSeconds = Math.Round((DateTime.UtcNow - startTime).TotalSeconds);
+            Console.WriteLine($"{status.Status}: [{totalSeconds} s]");
+
+            return true;
+        }
+
+        private static void CheckOutputLogs(ProjectDto proj, string simuId)
+        {
+            var api = new SimulationsApi();
+            var outputs = api.GetSimulationLogs(proj.Owner.Name, proj.Name, simuId.ToString());
+            Console.WriteLine(outputs);
+        }
+
         private static void DownloadArtiface()
         {
             var api = new ArtifactsApi();
@@ -348,26 +391,5 @@ namespace ConsoleAppDemo
 
     }
 
-    //public class ArtifaceSourcePath
-    //{
-    //    //public enum SourceType
-    //    //{
-    //    //    http,
-    //    //    s3,
-    //    //    "project-folder"
-    //    //}
-    //    public string type => "project-folder";
-    //    public string path { get; set; }
-    //    public ArtifaceSourcePath(string relativePath)
-    //    {
-    //        // "type": "project-folder";
-    //        // "path": "project_folder/asset/grid/room.pts"
-    //        //this.type = type;
-    //        this.path = "project_folder/" + relativePath.Replace('\\','/');
-    //    }
-
-    //    public string ToJson() => JsonConvert.SerializeObject(this);
-
-    //    public override string ToString() => ToJson();
-    //}
+   
 }
