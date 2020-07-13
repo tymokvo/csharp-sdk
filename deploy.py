@@ -4,7 +4,7 @@ import os
 NUGET_API_KEY = os.getenv('NUGET_API_KEY')
 
 print("Getting PollinationSDK.dll version")
-outputs = subprocess.check_output("powershell (Get-Item src/PollinationSDK/binRelease/PollinationSDK.dll).VersionInfo.ProductVersion")
+outputs = subprocess.check_output("powershell (Get-Item src/PollinationSDK/bin/Release/PollinationSDK.dll).VersionInfo.ProductVersion")
 BUILD_VERSION = str(outputs)[2:-5]
 print("raw output of version checking: " + str(outputs))
 print("cleaned new build version: " + BUILD_VERSION)
