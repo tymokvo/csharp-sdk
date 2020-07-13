@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
+using RestSharp;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -90,23 +90,29 @@ namespace PollinationSDK
             // Request Tokens
             if (IsAuthorized)
             {
-                using (var httpClient = new HttpClient())
+                var restClient = new RestClient($"{Auth0URL}oauth/token");
+                var restRequest = new RestRequest( Method.POST);
+                //restRequest.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+                restRequest.AddParameter(
+                    "application/x-www-form-urlencoded", 
+                    $"grant_type=authorization_code&client_id={Auth0ClientID_GH}&code_verifier={verifier}&code={AUTHORIZATION_CODE}&redirect_uri={redirectUri}", 
+                    ParameterType.RequestBody
+                    );
+        
+                var restResponse = restClient.Execute(restRequest);
+                if (restResponse.StatusCode == HttpStatusCode.OK)
                 {
-                    var content = new StringContent($"grant_type=authorization_code&client_id={Auth0ClientID_GH}&code_verifier={verifier}&code={AUTHORIZATION_CODE}&redirect_uri={redirectUri}", Encoding.UTF8, "application/x-www-form-urlencoded");
-                    var restResponse = await httpClient.PostAsync($"{Auth0URL}oauth/token", content);
+                    var responseContent = restResponse.Content;
+                    var id_token = JsonConvert.DeserializeObject<Newtonsoft.Json.Linq.JObject>(responseContent)["id_token"].ToString();
+                    ID_TOKEN = id_token;
+                    Console.WriteLine("Successful login!");
+                    //Console.WriteLine("id_token: " + id_token);
+                    Console.WriteLine("-----------------------------------");
+                    responseMessage = "Signed in!. \n\nYou can close this window, and return to the Grasshopper.";
 
-                    if (restResponse.IsSuccessStatusCode)
-                    {
-                        var responseContent = await restResponse.Content.ReadAsStringAsync();
-                        var id_token = ((Newtonsoft.Json.Linq.JObject)JsonConvert.DeserializeObject(responseContent))["id_token"].ToString();
-                        ID_TOKEN = id_token;
-                        Console.WriteLine("Successful login!");
-                        //Console.WriteLine("id_token: " + id_token);
-                        Console.WriteLine("-----------------------------------");
-
-                        responseMessage = "Signed in!. \n\nYou can close this window, and return to the Grasshopper.";
-                    }
                 }
+
+
             }
 
             //sends an HTTP response to the browser.

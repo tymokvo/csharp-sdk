@@ -1,13 +1,11 @@
-﻿using Newtonsoft.Json;
-using PollinationSDK.Api;
+﻿using PollinationSDK.Api;
+using PollinationSDK.Client;
 using PollinationSDK.Model;
+using RestSharp;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PollinationSDK
@@ -23,15 +21,39 @@ namespace PollinationSDK
             var me = api.GetMe();
             return me;
         }
+
+        /// <summary>
+        /// Get a project by current user and name. If not found, then create a new project.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="projectName"></param>
+        /// <returns></returns>
         public static ProjectDto GetAProject(PrivateUserDto user, string projectName)
         {
             var api = new ProjectsApi();
-            var d = api.GetProject(user.Username, projectName);
+            try
+            {
+                var d = api.GetProject(user.Username, projectName);
+                return d;
+            }
+            catch (ApiException e)
+            {
+                // Project not found
+                if (e.ErrorCode == 404)
+                {
+                    var ifPublic = projectName == "unnamed";
+                    var res = api.CreateProject(user.Username, new PatchProjectDto(projectName, _public: ifPublic));
+                    return GetAProject(user, projectName);
+                }
+                throw e;
+            }
+           
+            
             //var d = GetProjects(user).FirstOrDefault(_ => _.Name == projectName);
-            return d;
+            //return d;
         }
 
-        public static async Task<bool> UploadDirectory(ProjectDto project, string directory, Action<int> progressAction)
+        public static async Task<bool> UploadDirectoryAsync(ProjectDto project, string directory, Action<int> progressAction)
         {
             var files = Directory.GetFiles(directory, "*", SearchOption.AllDirectories);
 
@@ -67,26 +89,25 @@ namespace PollinationSDK
 
             var url = artf.Url;
 
-            using (var client = new HttpClient())
+
+            //Use RestSharp
+            RestClient restClient = new RestClient(url);
+            RestRequest restRequest = new RestRequest();
+            restRequest.RequestFormat = DataFormat.Json;
+            restRequest.Method = Method.POST;
+            restRequest.AddHeader("Content-Type", "multipart/form-data");
+            restRequest.AddParameter("AWSAccessKeyId", artf.Fields["AWSAccessKeyId"]);
+            restRequest.AddParameter("policy", artf.Fields["policy"]);
+            restRequest.AddParameter("signature", artf.Fields["signature"]);
+            restRequest.AddParameter("key", artf.Fields["key"]);
+            restRequest.AddFile("file", filePath);
+            var response = restClient.Execute(restRequest);
+            if (response.StatusCode == HttpStatusCode.NoContent)
             {
-                var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath));
-
-                var content = new System.Net.Http.MultipartFormDataContent(){
-                    { new StringContent(artf.Fields["AWSAccessKeyId"]), "\"AWSAccessKeyId\""},
-                     { new StringContent(artf.Fields["policy"]), "\"policy\""},
-                      { new StringContent(artf.Fields["signature"]), "\"signature\""},
-                       { new StringContent(artf.Fields["key"]), "\"key\""},
-                        { byteArrayContent, "\"file\""}
-                };
-
-                var postResponse = await client.PostAsync(url, content);
-                if (postResponse.StatusCode == HttpStatusCode.NoContent)
-                {
-                    Console.WriteLine($"Done uploading: {relativePath}");
-                    return true;
-                }
-                return false;
+                Console.WriteLine($"Done uploading: {relativePath}");
+                return true;
             }
+            return false;
 
 
         }
