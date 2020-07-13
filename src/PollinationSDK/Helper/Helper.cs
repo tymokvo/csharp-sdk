@@ -53,11 +53,13 @@ namespace PollinationSDK
             //return d;
         }
 
-        public static async Task<bool> UploadDirectoryAsync(ProjectDto project, string directory, Action<int> progressAction)
+        public static async Task<bool> UploadDirectoryAsync(ProjectDto project, string directory, Action<int> reportProgressAction = default, bool ifParallel = false)
         {
             var files = Directory.GetFiles(directory, "*", SearchOption.AllDirectories);
+            var tasks = ifParallel ?
+                    files.AsParallel().Select(_ => UploadArtifaceAsync(project, _, _.Replace(directory, ""))).ToList() :
+                    files.Select(_ => UploadArtifaceAsync(project, _, _.Replace(directory, ""))).ToList();
 
-            var tasks = files.Select(_ => Helper.UploadArtifaceAsync(project, _, _.Replace(directory, ""))).ToList();
             var total = files.Count();
             while (tasks.Count() > 0)
             {
@@ -67,7 +69,8 @@ namespace PollinationSDK
 
                 tasks.Remove(finishedTask);
                 var finishedPercent = (total - left) / (double)total * 100;
-                progressAction((int)finishedPercent);
+                reportProgressAction?.Invoke((int)finishedPercent);
+
             }
             Console.WriteLine("Finished uploading directory");
             return true;

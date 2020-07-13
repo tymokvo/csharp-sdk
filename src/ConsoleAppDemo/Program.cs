@@ -4,14 +4,7 @@ using PollinationSDK.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using System.Net.Http;
-using System.IO;
-using System.Net;
-using System.Threading;
-using Newtonsoft.Json;
 using PollinationSDK;
 
 namespace ConsoleAppDemo
@@ -38,13 +31,9 @@ namespace ConsoleAppDemo
 
 
             Console.WriteLine("--------------------Get a project-------------------");
-            var proj = Helper.GetAProject(me, "My new project93659");
+            var proj = Helper.GetAProject(me, "unnamed");
             Console.WriteLine($"Getting the project. \n Found this project ID: {proj.Id}");
 
-
-            //Console.WriteLine("--------------------UploadArtifaces-------------------");
-            //var dir = @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder";
-            //UploadDirectory(proj, dir);
 
             //Console.WriteLine("--------------------Getting Recipe Params-------------------");
             //GetRecipeParameters();
@@ -54,10 +43,10 @@ namespace ConsoleAppDemo
             //Console.WriteLine("Creating a project");
             //var proj = CreateAProject(me);
 
-            //Console.WriteLine("--------------------Upload a directory-------------------");
-            //var dir = @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder";
-            ////var project = new ProjectDto()
-            //UploadDirectory(proj, dir);
+            Console.WriteLine("--------------------Upload a directory-------------------");
+            var dir = @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder";
+            var task = Helper.UploadDirectoryAsync(proj, dir);
+            task.Wait();
 
 
             //Console.WriteLine("---------------------------------------");
@@ -78,10 +67,10 @@ namespace ConsoleAppDemo
             //Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
             //CreateSimulation(proj);
 
-            Console.WriteLine("--------------------Simulation status-------------------");
-            var id = "f13b6c0d-7c42-420a-884c-f6010e954b8b";
-            //CheckSimulationStatus(proj, id);
-            CheckOutputLogs(proj, id);
+            //Console.WriteLine("--------------------Simulation status-------------------");
+            //var id = "f13b6c0d-7c42-420a-884c-f6010e954b8b";
+            ////CheckSimulationStatus(proj, id);
+            //CheckOutputLogs(proj, id);
 
 
 
@@ -209,15 +198,6 @@ namespace ConsoleAppDemo
         }
 
 
-        //private static ProjectDto GetAProject(PrivateUserDto user, string projectName)
-        //{
-        //    var api = new ProjectsApi();
-
-        //    var d = api.GetProject(user.Username, projectName);
-        //    //var d = GetProjects(user).FirstOrDefault(_ => _.Name == projectName);
-        //    return d;
-        //}
-
         private static IEnumerable<ProjectDto> GetProjects(PrivateUserDto user)
         {
             var api = new ProjectsApi();
@@ -254,98 +234,6 @@ namespace ConsoleAppDemo
             var userName = user.Username;
             var api = new ProjectsApi();
             api.DeleteProject(userName, projectName);
-
-        }
-
-        private static async void UploadDirectory(ProjectDto project , string directory)
-        {
-            var files = Directory.GetFiles(directory, "*", SearchOption.AllDirectories);
-            var tasks = files.Select(_ =>  Helper.UploadArtifaceAsync(project, _, _.Replace(directory, ""))).ToList();
-
-            while (tasks.Count() >0)
-            {
-                var finishedTask = await Task.WhenAny(tasks);
-                //Console.WriteLine("done!");
-                tasks.Remove(finishedTask);
-
-            }
-            //await Task.WaitAll(tasks.ToArray());
-
-            //var item = files.First();
-            //UploadArtiface(project, item, item.Replace(directory, ""));
-
-            //var tasks = new List<Task>();
-            //var ts = files.Select(_ => new Task( ()=> UploadArtiface(project, _, _.Replace(directory, "")))).ToArray();
-            //Task.WaitAll(ts);
-            //Console.WriteLine("Finished uploading directory");
-
-            //var tasks = files.AsParallel().Select(_ => UploadArtifaceAsync(project, _, _.Replace(directory, "")));
-
-            //foreach (var item in files)
-            //{
-            //    var relativePath = item.Replace(directory, "");
-            //    var t  = UploadArtifaceAsync(project, item, relativePath);
-            //    //tasks.Add(t);
-            //    //if (t.IsCompleted && t.Result)
-            //    //{
-            //    //    Console.WriteLine($"Done with {relativePath}");
-            //    //}
-            //    //var t = new Task(UploadArtiface(projectName, item, item.Replace(directory, "")))
-            //    //var t = UploadArtiface(projectName, item, item.Replace(directory, ""));
-
-            //    //Console.WriteLine(item);
-            //    //Console.WriteLine(Path.Combine(directory, "ddddd"));
-            //}
-
-            //Task.WaitAll(tasks.ToArray());
-            Console.WriteLine("Finished uploading directory");
-        }
-
-        //private static HttpClient _client;
-        //public static HttpClient Client { 
-        //    get {
-        //        if (_client == null)
-        //            new HttpClient();
-        //        return _client;
-        //    } 
-        //}
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="fullPath">something like: "C:\Users\mingo\Downloads\Compressed\project_folder\project_folder\model\grid\room.pts"</param>
-        /// <param name="relativePath">"model\grid\room.pts"</param>
-        private static async Task<bool> UploadArtifaceAsync(ProjectDto project, string fullPath, string relativePath)
-        {
-            var filePath = fullPath;
-            var fileRelativePath = "project_folder"+ relativePath.Replace('\\','/');
-
-            var api =new ArtifactsApi();
-            var artf = await api.CreateArtifactAsync(project.Owner.Name, project.Name, new KeyRequest(fileRelativePath));
-
-            var url = artf.Url;
-
-            using (var client = new HttpClient())
-            {
-                var byteArrayContent = new ByteArrayContent(File.ReadAllBytes(filePath));
-
-                var content = new System.Net.Http.MultipartFormDataContent(){
-                    { new StringContent(artf.Fields["AWSAccessKeyId"]), "\"AWSAccessKeyId\""},
-                     { new StringContent(artf.Fields["policy"]), "\"policy\""},
-                      { new StringContent(artf.Fields["signature"]), "\"signature\""},
-                       { new StringContent(artf.Fields["key"]), "\"key\""},
-                        { byteArrayContent, "\"file\""}
-                };
-               
-                var postResponse = await client.PostAsync(url, content);
-                if (postResponse.StatusCode == HttpStatusCode.NoContent)
-                {
-                    Console.WriteLine($"Done uploading: {relativePath}");
-                    return true;
-                }
-                return false;
-            }
-
 
         }
 
