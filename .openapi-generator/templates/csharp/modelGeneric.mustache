@@ -180,9 +180,7 @@ this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
         public static {{classname}} FromJson(string json)
         {
             var obj = JsonConvert.DeserializeObject<{{classname}}>(json, JsonSetting.ConvertSetting);
-            if (obj == null)
-                return null;
-            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
+            return obj;
         }
 
         /// <summary>
