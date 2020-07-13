@@ -15,13 +15,14 @@ jobs:
       - name: Setup MSbuild
         uses: microsoft/setup-msbuild@v1.0.0
         
-      - name: Setup Nuget.exe
-        uses: nuget/setup-nuget@v1
-        
       - name: Nuget Restore
         run: |
           nuget restore PollinationSDK.sln
           nuget install NUnit.ConsoleRunner -Version 3.10.0 -OutputDirectory packages
+
+      - name: Update Assembly Version
+        run: |
+          python .openapi-generator/update_assembly_version.py
 
       - name: MSBuild
         run: |

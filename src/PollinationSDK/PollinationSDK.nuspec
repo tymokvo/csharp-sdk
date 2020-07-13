@@ -3,25 +3,26 @@
     <metadata>
         <!-- The identifier that must be unique within the hosting gallery -->
         <id>$id$</id>
-        <title>OpenAPI Library</title>
+        <title>$title$</title>
 
         <!-- The package version number that is used when resolving dependencies -->
         <version>$version$</version>
 
         <!-- Authors contain text that appears directly on the gallery -->
-        <authors>$author$</authors>
+        <authors>Ladybug Tools</authors>
 
         <!-- Owners are typically nuget.org identities that allow gallery
              users to earily find other packages by the same owners.  -->
-        <owners>$author$</owners>
+        <owners>LadybugTools</owners>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <developmentDependency>false</developmentDependency>
+        <license type="expression">MIT</license>
 
         <!-- The description can be used in package manager UI. Note that the
              nuget.org gallery uses information you add in the portal. -->
-        <description>A library generated from a OpenAPI doc</description>
-        <licenseUrl>http://localhost</licenseUrl>
-
+        <description>This is the .Net version of PollinationSDK</description>
+        <projectUrl>https://github.com/pollination/csharp-sdk</projectUrl>
+        <copyright>Copyright © 2020 Ladybug Tools LLC</copyright>
         <!-- Dependencies are automatically installed when the package is installed -->
         <dependencies>
 
@@ -35,7 +36,6 @@
 
         <!-- A readme.txt will be displayed when the package is installed -->
         <file src="..\..\README.md" target="" />
-        <file src="..\..\docs\**\*.*" target="docs" />
 
     </files>
 </package>
