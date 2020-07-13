@@ -170,7 +170,28 @@ this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
         /// <returns>JSON string presentation of the object</returns>
         public {{#parent}}{{^isArrayModel}}override {{/isArrayModel}}{{/parent}}{{^parent}}virtual {{/parent}}string ToJson()
         {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
+            return JsonConvert.SerializeObject(this, Formatting.Indented, JsonSetting.ConvertSetting);
+        }
+
+        /// <summary>
+        /// Returns the object from JSON string
+        /// </summary>
+        /// <returns>{{classname}} object</returns>
+        public static {{classname}} FromJson(string json)
+        {
+            var obj = JsonConvert.DeserializeObject<{{classname}}>(json, JsonSetting.ConvertSetting);
+            if (obj == null)
+                return null;
+            return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
+        }
+
+        /// <summary>
+        /// Creates a new instance with the same properties.
+        /// </summary>
+        /// <returns>{{classname}} object</returns>
+        public {{classname}} Duplicate{{classname}}()
+        {
+            return FromJson(this.ToJson());
         }
      
         /// <summary>
