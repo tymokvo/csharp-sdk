@@ -129,16 +129,16 @@ namespace ConsoleAppDemo
         private static void GetRecipeParameters()
         {
             var api = new RecipesApi();
-            var d = api.ListRecipes(owner: new[]{ "ladybug-tools" }.ToList()).Resources.First(_ => _.Name == "daylight-factor");
+            var d = api.ListRecipes(owner: new[] { "ladybug-tools" }.ToList()).Resources.First(_ => _.Name == "daylight-factor");
 
-            
+
             var recTag = api.GetRecipeByTag(d.Owner.Name, d.Name, d.LatestTag);
             //TODO: ask Antoine to fix why Manifest returns Recipe 
             var mani = recTag.Manifest;
             //TODO: ask Antoine to fix why Flow returns DAG 
             var flow = mani.Flow.First();
             var inputs = flow.Inputs;
-            var ParamNames = inputs.Parameters.Select(_=>_.Name);
+            var ParamNames = inputs.Parameters.Select(_ => _.Name);
             Console.WriteLine("------------------Getting Recipe Input Params---------------------");
             Console.WriteLine(string.Join("\n", ParamNames));
 
@@ -159,7 +159,7 @@ namespace ConsoleAppDemo
             //Recipe
             var recipeApi = new RecipesApi();
             // why Recipe returns repository
-            RepositoryAbridgedDto recipe = recipeApi.ListRecipes(owner: new []{ "ladybug-tools" }.ToList(), _public: true).Resources.First(_ => _.Name == "daylight-factor");
+            RepositoryAbridgedDto recipe = recipeApi.ListRecipes(owner: new[] { "ladybug-tools" }.ToList(), _public: true).Resources.First(_ => _.Name == "daylight-factor");
 
 
             // create a recipeSelection
@@ -209,9 +209,9 @@ namespace ConsoleAppDemo
         private static IEnumerable<ProjectDto> GetProjects(PrivateUserDto user)
         {
             var api = new ProjectsApi();
-            var d = api.ListProjects(_public: true, owner: new List<string>() { user.Username});
+            var d = api.ListProjects(_public: true, owner: new List<string>() { user.Username });
             //var projectNames = d.Select(_ => $"<{_.Id}> {_.Name} ({_.Owner.Name})");
-            
+
             return d;
         }
 
@@ -301,7 +301,7 @@ namespace ConsoleAppDemo
             {
                 Console.WriteLine($"Finished downloading: {file}");
             }
-            
+
             //client.DownloadData(request).SaveAs(file);
 
         }
@@ -310,5 +310,5 @@ namespace ConsoleAppDemo
 
     }
 
-   
+
 }
