@@ -62,7 +62,12 @@ namespace PollinationSDK
 
             Console.WriteLine($"Start login URL: {loginURL}");
 
-            System.Diagnostics.Process.Start(loginURL);
+            var psi = new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = loginURL,
+                UseShellExecute = true
+            };
+            System.Diagnostics.Process.Start(psi);
 
             // wait for the authorization response.
             var context = await listener.GetContextAsync();
