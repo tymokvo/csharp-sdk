@@ -6,6 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PollinationSDK;
+using RestSharp;
+using System.Net;
+using RestSharp.Extensions;
+using System.IO;
 
 namespace ConsoleAppDemo
 {
@@ -43,10 +47,10 @@ namespace ConsoleAppDemo
             //Console.WriteLine("Creating a project");
             //var proj = CreateAProject(me);
 
-            Console.WriteLine("--------------------Upload a directory-------------------");
-            var dir = @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder";
-            var task = Helper.UploadDirectoryAsync(proj, dir);
-            task.Wait();
+            //Console.WriteLine("--------------------Upload a directory-------------------");
+            //var dir = @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder";
+            //var task = Helper.UploadDirectoryAsync(proj, dir);
+            //task.Wait();
 
 
             //Console.WriteLine("---------------------------------------");
@@ -72,6 +76,10 @@ namespace ConsoleAppDemo
             ////CheckSimulationStatus(proj, id);
             //CheckOutputLogs(proj, id);
 
+
+            //Console.WriteLine("--------------------Download simulation output-------------------");
+            //DownloadOutputs(proj, "e89ecadf-6844-4ca6-a02d-1c2382231f87");
+            //Console.WriteLine("Done downloading");
 
 
             Console.ReadKey();
@@ -268,10 +276,33 @@ namespace ConsoleAppDemo
             Console.WriteLine(outputs);
         }
 
-        private static void DownloadArtiface()
+        private async static void DownloadOutputs(ProjectDto proj, string simuId)
         {
-            var api = new ArtifactsApi();
-            //api.
+            var api = new PollinationSDK.Api.SimulationsApi();
+
+            var outputDownloadURL = api.GetSimulationOutputs(proj.Owner.Name, proj.Name, simuId).ToString();
+            //outputDownloadURL = "https://nyc3.digitaloceanspaces.com/pollination-bucket/accounts/9af569d8-1ce9-4bed-914b-32051b3b2d2d/projects/2d69dd8b-5a32-4fa9-a16f-5637c451c17e/simulations/e89ecadf-6844-4ca6-a02d-1c2382231f87/outputs.tgz?AWSAccessKeyId=ECHSSBKXTHZWSJ3UV4CU&Signature=m%2FLN3Rr%2FB6MUD6xnGWagHTl7YHI%3D&Expires=1594700427";
+            var fileName = Path.GetFileName(outputDownloadURL).Split(new[] { '?' })[0];
+
+            Console.WriteLine($"Simulation output link url: {outputDownloadURL}");
+            var request = new RestRequest(Method.GET);
+            var client = new RestClient(outputDownloadURL.ToString());
+            var response = await client.ExecuteTaskAsync(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new Exception($"Unable to download file");
+
+            Task.Delay(3000);
+
+
+            var file = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName(), fileName);
+            response.RawBytes.SaveAs(file);
+
+            if (File.Exists(file))
+            {
+                Console.WriteLine($"Finished downloading: {file}");
+            }
+            
+            //client.DownloadData(request).SaveAs(file);
 
         }
 
