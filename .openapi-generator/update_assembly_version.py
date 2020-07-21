@@ -1,22 +1,42 @@
 import re, os, json
-from datetime import datetime
+import urllib.request
 
-now = datetime.now()
-deltaTime = (int)((now - datetime(now.year, 1, 1, 0, 0, 0)).total_seconds())
-
-
+# Check the version from config
 config_file = os.path.join(os.getcwd(), '.openapi-generator', 'config.json')
-
 with open(config_file, "r") as jsonFile:
     config_data = json.load(jsonFile)
 
-schema_version = config_data["packageVersion"] + f'.{deltaTime}'
+schema_version = config_data["packageVersion"]
+print(f'Schema_version: {schema_version}')
+new_version = f'{schema_version}.0'
 
+# Check the version from nuget
+api = 'https://api.nuget.org/v3-flatcontainer/PollinationSDK/index.json'
+with urllib.request.urlopen(api) as r:
+    data = json.loads(r.read())
+    versions = [v for v in data['versions'] if v.startswith(schema_version)]
+    if versions != []:
+        versions.sort(reverse=True)
+        new_version = versions[0]
+        print(f'Found latest version on Nuget: {new_version}')
+
+
+# increment version
+version_digits = new_version.split('.')
+if version_digits[-1] != '0':
+    v = int(version_digits[-1]) + 1
+    version_digits = version_digits[0:-1]
+    version_digits.append(str(v))
+    new_version = '.'.join(version_digits)
+
+print(f'New version: {new_version}')
+
+# update the version
 assembly_file = os.path.join(os.getcwd(), 'src', 'PollinationSDK', 'PollinationSDK.csproj')
 
 with open(assembly_file, encoding='utf-8', mode='r') as csFile:
     s = csFile.read()
 with open(assembly_file, encoding='utf-8', mode='w') as f:
-    s = re.sub(r"(?<=\SVersion\>)\S+(?=\<\/)", schema_version, s)
-    print(f"Update AssemblyVersion to: {schema_version}")
+    s = re.sub(r"(?<=\SVersion\>)\S+(?=\<\/)", new_version, s)
+    print(f"Update AssemblyVersion to: {new_version}")
     f.write(s)
