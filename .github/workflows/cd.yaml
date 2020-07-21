@@ -22,9 +22,9 @@ jobs:
           dotnet build --configuration Release /nowarn:CS0472
           
       - name: Run Unit Tests
+        working-directory: src/PollinationSDK.Test
         run: |
-          nuget install NUnit.ConsoleRunner -Version 3.10.0 -OutputDirectory packages
-          ./packages/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe src/PollinationSDK.Test/bin/Release/netcoreapp3.1/PollinationSDK.Test.dll
+          dotnet test --configuration Release
 
       - name: Deploy
         working-directory: src/PollinationSDK
