@@ -12,28 +12,22 @@ jobs:
       - name: "Checkout Master Branch"
         uses: actions/checkout@v2
 
-      - name: Setup MSbuild
-        uses: microsoft/setup-msbuild@v1.0.0
-        
-      - name: Nuget Restore
-        run: |
-          nuget restore PollinationSDK.sln
-          nuget install NUnit.ConsoleRunner -Version 3.10.0 -OutputDirectory packages
-
       - name: Update Assembly Version
         run: |
           python .openapi-generator/update_assembly_version.py
 
-      - name: MSBuild
+      - name: Build
         run: |
-          msbuild /p:Configuration=Release PollinationSDK.sln
-
+          dotnet restore
+          dotnet build --configuration Release /nowarn:CS0472
+          
       - name: Run Unit Tests
         run: |
-          ./packages/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe src/PollinationSDK.Test/bin/Release/PollinationSDK.Test.dll
+          nuget install NUnit.ConsoleRunner -Version 3.10.0 -OutputDirectory packages
+          ./packages/NUnit.ConsoleRunner.3.10.0/tools/nunit3-console.exe src/PollinationSDK.Test/bin/Release/netcoreapp3.1/PollinationSDK.Test.dll
 
       - name: Deploy
-        env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        working-directory: src/PollinationSDK
         run: |
-          python deploy.py
+          dotnet pack --configuration Release
+          dotnet nuget push bin\Release\PollinationSDK.*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
