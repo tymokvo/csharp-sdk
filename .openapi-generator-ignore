@@ -23,3 +23,10 @@
 #!docs/README.md
 
 .travis.yml
+
+.gitignore
+
+build.bat
+build.sh
+git_push.sh
+mono_nunit_test.sh
