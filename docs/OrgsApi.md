@@ -587,7 +587,7 @@ Name | Type | Description  | Notes
 
 ## UpsertOrgMember
 
-> UpdateAccepted UpsertOrgMember (string name, string username, string role)
+> UpdateAccepted UpsertOrgMember (string name, string username, OrgRoleEnum role)
 
 Add or update the role of an Org Member
 
@@ -615,7 +615,7 @@ namespace Example
             var apiInstance = new OrgsApi(Configuration.Default);
             var name = name_example;  // string | 
             var username = username_example;  // string | 
-            var role = role_example;  // string | 
+            var role = new OrgRoleEnum(); // OrgRoleEnum | 
 
             try
             {
@@ -641,7 +641,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **string**|  | 
  **username** | **string**|  | 
- **role** | **string**|  | 
+ **role** | [**OrgRoleEnum**](OrgRoleEnum.md)|  | 
 
 ### Return type
 

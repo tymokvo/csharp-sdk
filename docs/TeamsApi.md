@@ -601,7 +601,7 @@ Name | Type | Description  | Notes
 
 ## UpsertOrgTeamMember
 
-> UpdateAccepted UpsertOrgTeamMember (string orgName, string teamSlug, string username, string role)
+> UpdateAccepted UpsertOrgTeamMember (string orgName, string teamSlug, string username, TeamRoleEnum role)
 
 Add or update the role of an Org Member
 
@@ -630,7 +630,7 @@ namespace Example
             var orgName = orgName_example;  // string | 
             var teamSlug = teamSlug_example;  // string | 
             var username = username_example;  // string | 
-            var role = role_example;  // string | 
+            var role = new TeamRoleEnum(); // TeamRoleEnum | 
 
             try
             {
@@ -657,7 +657,7 @@ Name | Type | Description  | Notes
  **orgName** | **string**|  | 
  **teamSlug** | **string**|  | 
  **username** | **string**|  | 
- **role** | **string**|  | 
+ **role** | [**TeamRoleEnum**](TeamRoleEnum.md)|  | 
 
 ### Return type
 

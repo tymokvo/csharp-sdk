@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Type** | **string** |  | 
+**Type** | **string** |  | [optional] [default to "s3"]
 **Key** | **string** | The path inside the bucket to source artifacts from. | 
 **Endpoint** | **string** | The HTTP endpoint to reach the S3 bucket. | 
 **Bucket** | **string** | The name of the S3 bucket on the host server. | 

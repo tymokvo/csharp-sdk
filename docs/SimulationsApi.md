@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**GetSimulation**](SimulationsApi.md#getsimulation) | **GET** /projects/{owner}/{name}/simulations/{simulation_id} | Get a Simulation
 [**GetSimulationInputs**](SimulationsApi.md#getsimulationinputs) | **GET** /projects/{owner}/{name}/simulations/{simulation_id}/inputs | Get simulation inputs
 [**GetSimulationLogs**](SimulationsApi.md#getsimulationlogs) | **GET** /projects/{owner}/{name}/simulations/{simulation_id}/logs | Get simulation logs
+[**GetSimulationOutputArtifact**](SimulationsApi.md#getsimulationoutputartifact) | **GET** /projects/{owner}/{name}/simulations/{simulation_id}/outputs/artifacts/{artifact_name} | Get simulation output artifact by name
 [**GetSimulationOutputs**](SimulationsApi.md#getsimulationoutputs) | **GET** /projects/{owner}/{name}/simulations/{simulation_id}/outputs | Get simulation outputs
 [**GetSimulationTaskLogs**](SimulationsApi.md#getsimulationtasklogs) | **GET** /projects/{owner}/{name}/simulations/{simulation_id}/task/{task_id}/logs | Get a simulation task&#39;s logs
 [**ListSimulations**](SimulationsApi.md#listsimulations) | **GET** /projects/{owner}/{name}/simulations | List simulations
@@ -328,6 +329,95 @@ Name | Type | Description  | Notes
  **owner** | **string**|  | 
  **name** | **string**|  | 
  **simulationId** | **string**|  | 
+
+### Return type
+
+**Object**
+
+### Authorization
+
+[Optional Auth](../README.md#Optional Auth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **403** | Access forbidden |  -  |
+| **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
+| **404** | Not found |  -  |
+| **200** | Retrieved |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#)
+[[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetSimulationOutputArtifact
+
+> Object GetSimulationOutputArtifact (string owner, string name, string simulationId, string artifactName)
+
+Get simulation output artifact by name
+
+get simulation output artifact
+
+### Example
+
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using PollinationSDK.Api;
+using PollinationSDK.Client;
+using PollinationSDK.Model;
+
+namespace Example
+{
+    public class GetSimulationOutputArtifactExample
+    {
+        public static void Main()
+        {
+            Configuration.Default.BasePath = "http://localhost";
+            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+
+            var apiInstance = new SimulationsApi(Configuration.Default);
+            var owner = owner_example;  // string | 
+            var name = name_example;  // string | 
+            var simulationId = simulationId_example;  // string | 
+            var artifactName = artifactName_example;  // string | 
+
+            try
+            {
+                // Get simulation output artifact by name
+                Object result = apiInstance.GetSimulationOutputArtifact(owner, name, simulationId, artifactName);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException e)
+            {
+                Debug.Print("Exception when calling SimulationsApi.GetSimulationOutputArtifact: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **string**|  | 
+ **name** | **string**|  | 
+ **simulationId** | **string**|  | 
+ **artifactName** | **string**|  | 
 
 ### Return type
 

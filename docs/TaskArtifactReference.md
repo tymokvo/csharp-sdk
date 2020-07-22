@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Type** | **string** |  | [optional] [default to TypeEnum.Tasks]
+**Type** | **TaskReference** |  | [optional] 
 **Name** | **string** | The name of the task to pull output data from | 
 **Variable** | **string** | The name of the task output variable | 
 
