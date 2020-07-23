@@ -53,12 +53,10 @@ namespace PollinationSDK
             //return d;
         }
 
-        public static async Task<bool> UploadDirectoryAsync(ProjectDto project, string directory, Action<int> reportProgressAction = default, bool ifParallel = false)
+        public static async Task<bool> UploadDirectoryAsync(ProjectDto project, string directory, Action<int> reportProgressAction = default)
         {
             var files = Directory.GetFiles(directory, "*", SearchOption.AllDirectories);
-            var tasks = ifParallel ?
-                    files.AsParallel().Select(_ => UploadArtifaceAsync(project, _, _.Replace(directory, ""))).ToList() :
-                    files.Select(_ => UploadArtifaceAsync(project, _, _.Replace(directory, ""))).ToList();
+            var tasks = files.Select(_ => UploadArtifaceAsync(project, _, _.Replace(directory, ""))).ToList();
 
             var total = files.Count();
             while (tasks.Count() > 0)
