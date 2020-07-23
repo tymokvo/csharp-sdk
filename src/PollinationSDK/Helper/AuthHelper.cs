@@ -77,12 +77,13 @@ namespace PollinationSDK
 
 
             Console.WriteLine("-----------------------------------");
-            Console.WriteLine($"AUTHORIZATION_CODE: ");
-            var returnUrl = request.RawUrl.Contains("?code=") ? request.RawUrl : request.UrlReferrer.PathAndQuery;
+            //Console.WriteLine($"AUTHORIZATION_CODE: ");
+            var returnUrl = request.RawUrl.Contains("?code=") ? request.RawUrl : request.UrlReferrer?.PathAndQuery;
+            if (string.IsNullOrEmpty(returnUrl)) throw new ArgumentException($"Failed to authorize the login: \n{request.RawUrl}");
             var AUTHORIZATION_CODE = returnUrl.Split('&').FirstOrDefault(_ => _.StartsWith("/?code=")).Split('=').Last().Trim();
             //Console.WriteLine(AUTHORIZATION_CODE);
 
-            Console.WriteLine($"State: ");
+            //Console.WriteLine($"State: ");
             var returnState = request.RawUrl.Split('&').FirstOrDefault(_ => _.StartsWith("state=")).Split('=').Last().Trim();
             //Console.WriteLine(returnState);
             var IsAuthorized = returnState.Equals(state);
