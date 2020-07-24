@@ -68,8 +68,8 @@ namespace ConsoleAppDemo
             //DeleteMyProjects(me, newProj);
 
 
-            //Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
-            //CreateSimulation(proj);
+            Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
+            CreateSimulation(proj);
 
             //Console.WriteLine("--------------------Simulation status-------------------");
             //var id = "f13b6c0d-7c42-420a-884c-f6010e954b8b";
@@ -91,7 +91,7 @@ namespace ConsoleAppDemo
         {
             //OutputMessage = string.Empty;
 
-            var token = await AuthHelper.SignIn();
+            var token = await AuthHelper.Auth0SignIn();
 
 
             //var config = new Configuration();
@@ -129,10 +129,10 @@ namespace ConsoleAppDemo
         private static void GetRecipeParameters()
         {
             var api = new RecipesApi();
-            var d = api.ListRecipes(owner: new[] { "ladybug-tools" }.ToList()).Resources.First(_ => _.Name == "daylight-factor");
+            //var d = api.ListRecipes(owner: new[] { "ladybug-tools" }.ToList()).Resources.First(_ => _.Name == "annual-energy-use");
 
-
-            var recTag = api.GetRecipeByTag(d.Owner.Name, d.Name, d.LatestTag);
+            var recTag = api.GetRecipeByTag("ladybug-tools", "annual-energy-use", "latest");
+            //var recTag = api.GetRecipeByTag("ladybug-tools", "annual-energy-use", "c2657adb0b13db6cd3ff706d9d6db59b98ef8f994d2809d23c3ed449c19b52ea");
             //TODO: ask Antoine to fix why Manifest returns Recipe 
             var mani = recTag.Manifest;
             //TODO: ask Antoine to fix why Flow returns DAG 
@@ -157,40 +157,57 @@ namespace ConsoleAppDemo
 
 
             //Recipe
-            var recipeApi = new RecipesApi();
+            //var recipeApi = new RecipesApi();
             // why Recipe returns repository
-            RepositoryAbridgedDto recipe = recipeApi.ListRecipes(owner: new[] { "ladybug-tools" }.ToList(), _public: true).Resources.First(_ => _.Name == "daylight-factor");
+            //RepositoryAbridgedDto recipe = recipeApi.ListRecipes(owner: new[] { "ladybug-tools" }.ToList(), _public: true).Resources.First(_ => _.Name == "daylight-factor");
 
 
             // create a recipeSelection
-            var rec = new RecipeSelection(recipe.Owner.Name, recipe.Name);
 
+            var rec = new RecipeSelection("ladybug-tools", "annual-energy-use", "latest");
+            //var rec = new RecipeSelection("ladybug-tools", "annual-energy-use", "c2657adb0b13db6cd3ff706d9d6db59b98ef8f994d2809d23c3ed449c19b52ea");
+             
             // Upload artifacts
-            var dir = @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder";
+            //var dir = @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder";
             //UploadDirectory(proj, dir);
 
             // create a recipe argument
+            // var arg = new Arguments()
+            // {
+            //     Parameters = new List<ArgumentParameter>()
+            //     {
+            //         new ArgumentParameter("radiance-parameters", "-I -ab 1 -h"),
+            //         new ArgumentParameter("sensor-grid-count", "10")
+            //     },
+            //     Artifacts = new List<ArgumentArtifact>()
+            //     {
+            //         new ArgumentArtifact("input-grid", new ArtifaceSourcePath("model/grid/room.pts")),
+            //         new ArgumentArtifact("model", new ArtifaceSourcePath("model/"))
+            //     }
+            // };
             var arg = new Arguments()
             {
                 Parameters = new List<ArgumentParameter>()
                 {
-                    new ArgumentParameter("radiance-parameters", "-I -ab 1 -h"),
-                    new ArgumentParameter("sensor-grid-count", "10")
+                    new ArgumentParameter("filter-design-days", "True")
                 },
                 Artifacts = new List<ArgumentArtifact>()
                 {
-                    new ArgumentArtifact("input-grid", new ArtifaceSourcePath("model/grid/room.pts")),
-                    new ArgumentArtifact("model", new ArtifaceSourcePath("model/"))
+                    new ArgumentArtifact("ddy-file", new ArtifaceSourcePath("USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3.ddy")),
+                    new ArgumentArtifact("epw-file", new ArtifaceSourcePath("USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3.epw")),
+                    new ArgumentArtifact("model-json", new ArtifaceSourcePath("unnamed.json"))
                 }
             };
 
-            Console.WriteLine("-------------------Arguments:-------------------------");
-            Console.WriteLine(arg.ToJson());
+            
 
 
             // create a new Simulation
             var api = new SimulationsApi();
             var simu = new SubmitSimulationDto(rec, arg);
+
+            Console.WriteLine("-------------------Arguments:-------------------------");
+            Console.WriteLine(simu.ToJson());
 
             var ret = api.CreateSimulation(proj.Owner.Name, proj.Name, simu);
             Console.WriteLine(ret.Id);
