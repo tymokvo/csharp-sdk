@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PollinationSDK.Client;
 using RestSharp;
 using System;
 using System.Linq;
@@ -15,10 +16,35 @@ namespace PollinationSDK
         /// <summary>
         /// Token from previous sign in if any, otherwise this is an empty string. Call SignIn() first for users to login from browser.
         /// </summary>
-        public static string ID_TOKEN { get; set; } = string.Empty;
+        private static string ID_TOKEN { get; set; } = string.Empty;
+        public static async void SignIn(Action ActionWhenDone = default)
+        {
+            //OutputMessage = string.Empty;
+            try
+            {
+                var token = await Auth0SignIn();
+                if (!string.IsNullOrEmpty(token))
+                {
+                    Configuration.Default.BasePath = "https://api.pollination.cloud/";
+                    Configuration.Default.AddDefaultHeader("Authorization", $"Bearer {token}");
+                    Helper.CurrentUser = Helper.GetUser();
+                }
+
+                if (ActionWhenDone != default)
+                {
+                    ActionWhenDone();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
 
-        public static async Task<string> SignIn()
+
+        }
+
+        public static async Task<string> Auth0SignIn()
         {
 
             // create a redirect URI using an available port on the loopback address.
