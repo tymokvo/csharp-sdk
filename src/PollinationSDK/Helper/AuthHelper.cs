@@ -2,6 +2,7 @@
 using PollinationSDK.Client;
 using RestSharp;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -20,9 +21,10 @@ namespace PollinationSDK
         public static async void SignIn(Action ActionWhenDone = default)
         {
             //OutputMessage = string.Empty;
+            var task = Auth0SignIn();
             try
             {
-                var token = await Auth0SignIn();
+                var token = await task;
                 if (!string.IsNullOrEmpty(token))
                 {
                     Configuration.Default.BasePath = "https://api.pollination.cloud/";
@@ -35,10 +37,12 @@ namespace PollinationSDK
                     ActionWhenDone();
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Debug.WriteLine(e.Message);
                 throw;
             }
+
 
 
 
@@ -57,11 +61,23 @@ namespace PollinationSDK
 
             // create an HttpListener to listen for requests on that redirect URI.
             var listener = new System.Net.HttpListener();
-            listener.Prefixes.Add(redirectUri);
-            Console.WriteLine("Listening..");
-            listener.Start();
+            try
+            {
+                listener.Prefixes.Add(redirectUri);
+                listener.Start(); 
+                Console.WriteLine($"Listening..{redirectUri}");
 
+            }
+            catch (HttpListenerException e)
+            {
+                listener.Stop();
+                //Console.WriteLine(e.Message);
+                Debug.WriteLine(e.Message);
+                return string.Empty;
+                //throw;
 
+            }
+           
 
 
             var verifier = GenVerifier();
