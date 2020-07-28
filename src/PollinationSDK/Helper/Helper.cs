@@ -3,6 +3,7 @@ using PollinationSDK.Client;
 using PollinationSDK.Model;
 using RestSharp;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -112,5 +113,181 @@ namespace PollinationSDK
 
 
         }
+
+        /// <summary>
+        /// check every file and files in dir, and move to temp folder.
+        /// </summary>
+        /// <param name="submitSimulationDto"></param>
+        /// <returns></returns>
+        private static string CheckArtifacts(SubmitSimulationDto submitSimulationDto)
+        {
+            var arg = submitSimulationDto.Inputs;
+
+            var artis = arg.Artifacts;
+            //var files = new List<string>();
+            //var folders = new List<string>();
+            var temp = string.Empty;
+
+            // remove old temp files first
+            var tempPollination = Path.Combine(Path.GetTempPath(), "Pollination");
+            Directory.CreateDirectory(tempPollination);
+            Directory.Delete(tempPollination, true);
+
+
+            if (artis != null)
+            {
+                temp = Path.Combine(tempPollination, Path.GetRandomFileName());
+                Directory.CreateDirectory(temp);
+
+                foreach (var item in artis)
+                {
+                    var fileOrFolder = item.Source.ToString();
+                    FileAttributes attr = File.GetAttributes(fileOrFolder);
+                    var isDir = attr.HasFlag(FileAttributes.Directory);
+                    var isExists = isDir ? Directory.Exists(fileOrFolder) : File.Exists(fileOrFolder);
+                    if (!isExists)
+                        throw new ArgumentException($"File or Folder does not exist: {fileOrFolder}");
+
+
+                    // copy to temp folder
+                    if (isDir)
+                    {
+                        var targetDir = Path.Combine(temp, Path.GetFileName(fileOrFolder));
+                        var subDirs = Directory.GetDirectories(fileOrFolder, "*", SearchOption.AllDirectories);
+                        foreach (var dir in subDirs)
+                        {
+                            Directory.CreateDirectory(dir.Replace(fileOrFolder, targetDir));
+                        }
+
+                        var subfiles = Directory.GetFiles(fileOrFolder, "*.*", SearchOption.AllDirectories);
+                        foreach (var f in subfiles)
+                        {
+                            var targetPath = f.Replace(fileOrFolder, targetDir);
+                            File.Copy(f, targetPath, true);
+                        }
+
+                        //folders.Add(fileOrFolder);
+                    }
+                    else
+                    {
+                        var f = fileOrFolder;
+                        var targetPath = Path.Combine(temp, Path.GetFileName(f));
+                        File.Copy(f, targetPath, true);
+                        //files.Add(fileOrFolder);
+                    }
+
+
+                }
+
+            }
+
+            return temp;
+
+        }
+
+
+        /// <summary>
+        /// Update artifact's absolute path to relative path to project-folder
+        /// </summary>
+        /// <param name="submitSimulationDto"></param>
+        /// <returns></returns>
+        public static SubmitSimulationDto UpdateArtifactPath(SubmitSimulationDto submitSimulationDto)
+        {
+            var simu = submitSimulationDto;
+
+            if (simu?.Inputs?.Artifacts == null)
+                return simu;
+
+            var artis = simu.Inputs.Artifacts;
+            var checkedArtis = new List<ArgumentArtifact>();
+            foreach (var item in artis)
+            {
+                // update artifact arguments
+                var newFileOrDirname = Path.GetFileName(item.Source.ToString());
+                checkedArtis.Add(new ArgumentArtifact(item.Name, new ArtifaceSourcePath(newFileOrDirname)));
+            }
+            var newArgs = new Arguments(simu.Inputs.Parameters, checkedArtis);
+            var newSimu = new SubmitSimulationDto(simu.Recipe, newArgs);
+
+            return newSimu;
+        }
+
+
+        /// <summary>
+        /// Run and monitor the simulation on Pollination
+        /// </summary>
+        /// <param name="project">Pollination project</param>
+        /// <param name="workflow">use </param>
+        /// <param name="progressLogAction"></param>
+        /// <param name="cancelFunc"></param>
+        /// <param name="actionWhenDone"></param>
+        /// <returns></returns>
+        public static async Task<Wrapper.Simulation> RunSimulationAsync(
+            ProjectDto project, 
+            SubmitSimulationDto workflow, 
+            Action<string> progressLogAction = default, 
+            Func<bool> cancelFunc = default,
+            Action actionWhenDone = default)
+        {
+            // Get project
+            var proj = project;
+
+
+            // Upload artifacts
+            //var dir = @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder";
+
+            // check artifacts 
+            var tempProjectDir = CheckArtifacts(workflow);
+            // upload artifacts
+            var newSubmitSimu = UpdateArtifactPath(workflow);
+            if (!string.IsNullOrEmpty(tempProjectDir))
+            {
+                Action<int> updateMessageProgress = (int p) => {
+                    progressLogAction?.Invoke($"Preparing: [{p}%]");
+                };
+                var doneUploading = await Helper.UploadDirectoryAsync(proj, tempProjectDir, updateMessageProgress);
+
+                // suspended by user
+                if (canceledByUser(cancelFunc)) return null;
+            }
+
+
+            // create a new Simulation
+            var api = new SimulationsApi();
+
+            //var simu = new SubmitSimulationDto(rec, arg);
+            //var simu = workflow;
+
+            try
+            {
+                // schedule a simulation on Pollination.Cloud
+                var ret = api.CreateSimulation(proj.Owner.Name, proj.Name, workflow);
+                var simuId = ret.Id;
+
+                // monitoring the running simulation
+                var runningSimulaiton = new Wrapper.Simulation(proj, simuId.ToString());
+                Action<string> updateMessageProgressForStatus = (string p) => { progressLogAction?.Invoke(p); };
+                runningSimulaiton.CheckStatus(proj, simuId.ToString(), updateMessageProgressForStatus);
+
+                actionWhenDone?.Invoke();
+
+                return runningSimulaiton;
+            }
+            catch (Exception)
+            {
+                //Eto.Forms.MessageBox.Show(e.Message, Eto.Forms.MessageBoxType.Error);
+                throw;
+            }
+
+       
+
+            // local method
+            bool canceledByUser(Func<bool> c = default)
+            {
+                var ifCancel = c?.Invoke();
+                return ifCancel.GetValueOrDefault(false);
+            }
+        }
+
     }
 }
