@@ -11,6 +11,7 @@ using System.Net;
 using RestSharp.Extensions;
 using System.IO;
 using PollinationSDK.Wrapper;
+using System.Threading;
 
 namespace ConsoleAppDemo
 {
@@ -71,11 +72,24 @@ namespace ConsoleAppDemo
 
             Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
             //CreateSimulation(proj);
+            var cts = new System.Threading.CancellationTokenSource();
+            var token = cts.Token;
+
             var workflow = CreateWorkflow();
-            var task = Helper.RunSimulationAsync(proj, workflow, Console.WriteLine);
+            
             try
             {
-                task.Wait();
+                runSimu(proj, workflow, Console.WriteLine, token);
+
+                cts.CancelAfter(10000);
+                Console.WriteLine($"Canceled check 1: {token.IsCancellationRequested}");
+                if (token.IsCancellationRequested)
+                {
+                    Console.WriteLine($"Canceled check 2: {token.IsCancellationRequested}");
+                    cts.Dispose();
+                }
+                
+
             }
             catch (Exception e)
             {
@@ -99,6 +113,21 @@ namespace ConsoleAppDemo
 
         }
 
+        private static async Task runSimu(ProjectDto proj, SubmitSimulationDto workflow, Action<string> msgAction, CancellationToken token)
+        {
+            try
+            {
+                await Helper.RunSimulationAsync(proj, workflow, msgAction, token);
+                Console.WriteLine($"Canceled by user: {token.IsCancellationRequested}");
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+           
+
+        }
 
         private static IEnumerable<string> GetRecipes()
         {

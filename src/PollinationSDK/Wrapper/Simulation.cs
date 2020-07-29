@@ -41,7 +41,7 @@ namespace PollinationSDK.Wrapper
             return FromJson(this.ToJson());
         }
 
-        public async Task CheckStatusAsync(Action<string> progressAction = default, Func<bool> cancelFunc = default)
+        public async Task CheckStatusAsync(Action<string> progressAction = default, System.Threading.CancellationToken cancelToken = default)
         {
             var api = new SimulationsApi();
             var proj = this.Project;
@@ -60,10 +60,10 @@ namespace PollinationSDK.Wrapper
                     progressAction?.Invoke($"{status.Status}: [{currentSeconds} s]");
 
                     // suspended by user
-                    if (canceledByUser(cancelFunc)) break;
+                    if (cancelToken.IsCancellationRequested) break;
                 }
                 // suspended by user
-                if (canceledByUser(cancelFunc)) break;
+                if (cancelToken.IsCancellationRequested) break;
 
 
                 // update status
@@ -71,7 +71,7 @@ namespace PollinationSDK.Wrapper
                 //_simulation = new Simulation(proj, simuId);
             }
             // suspended by user
-            if (canceledByUser(cancelFunc))
+            if (cancelToken.IsCancellationRequested)
             {
                 StopSimulaiton();
                 return;
@@ -81,18 +81,12 @@ namespace PollinationSDK.Wrapper
             progressAction?.Invoke($"{finishMessage}: [{totalSeconds} s]");
 
             // Only get simulation logs when run toggle is set to true by user
-            if (!canceledByUser(cancelFunc))
+            if (!cancelToken.IsCancellationRequested)
             {
                 var outputs = api.GetSimulationLogs(proj.Owner.Name, proj.Name, simuId.ToString());
                 this.Logs = outputs.ToString();
             }
 
-            // local method
-            bool canceledByUser(Func<bool> c = default)
-            {
-                var ifCancel = c?.Invoke();
-                return ifCancel.GetValueOrDefault(false);
-            }
         }
 
         public void StopSimulaiton()

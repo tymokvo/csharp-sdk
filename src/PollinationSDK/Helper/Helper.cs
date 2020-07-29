@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PollinationSDK
@@ -54,23 +55,48 @@ namespace PollinationSDK
             //return d;
         }
 
-        public static async Task<bool> UploadDirectoryAsync(ProjectDto project, string directory, Action<int> reportProgressAction = default)
+        public static async Task<bool> UploadDirectoryAsync(ProjectDto project, string directory, Action<int> reportProgressAction = default, CancellationToken cancellationToken = default)
         {
+
             var files = Directory.GetFiles(directory, "*", SearchOption.AllDirectories);
             var tasks = files.Select(_ => UploadArtifaceAsync(project, _, _.Replace(directory, ""))).ToList();
-
             var total = files.Count();
+
+
+            //var taskCompletionSource = new TaskCompletionSource<bool>();
+            //var cancelTask = taskCompletionSource.Task;
+            //if (cancellationToken != default)
+            //{
+            //    cancellationToken.Register(() => {
+            //        taskCompletionSource.TrySetCanceled();
+            //    });
+            //    tasks.Add(cancelTask);
+            //}
+
+            var finishedPercent = 0;
+            reportProgressAction?.Invoke(finishedPercent);
             while (tasks.Count() > 0)
             {
-                var left = tasks.Count();
+                // canceled by user
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    Console.WriteLine("Canceled uploading by user");
+                    break;
+                }
+
                 var finishedTask = await Task.WhenAny(tasks);
-                //Console.WriteLine("done!");
 
                 tasks.Remove(finishedTask);
-                var finishedPercent = (total - left) / (double)total * 100;
-                reportProgressAction?.Invoke((int)finishedPercent);
+
+                var unfinishedUploadTasksCount = tasks.Count();
+                finishedPercent = (int)((total - unfinishedUploadTasksCount) / (double)total * 100);
+                reportProgressAction?.Invoke(finishedPercent);
 
             }
+
+            // canceled by user
+            if (cancellationToken.IsCancellationRequested) return false;
+
             Console.WriteLine("Finished uploading directory");
             return true;
         }
@@ -225,10 +251,11 @@ namespace PollinationSDK
         public static async Task<Wrapper.Simulation> RunSimulationAsync(
             ProjectDto project, 
             SubmitSimulationDto workflow, 
-            Action<string> progressLogAction = default, 
-            Func<bool> cancelFunc = default,
+            Action<string> progressLogAction = default,
+            CancellationToken cancellationToken = default,
             Action actionWhenDone = default)
         {
+
             // Get project
             var proj = project;
 
@@ -236,7 +263,6 @@ namespace PollinationSDK
             // Upload artifacts
 
             // check artifacts 
-            progressLogAction?.Invoke($"Preparing: [0%]");
             var tempProjectDir = CheckArtifacts(workflow);
 
             // upload artifacts
@@ -245,18 +271,23 @@ namespace PollinationSDK
                 Action<int> updateMessageProgress = (int p) => {
                     progressLogAction?.Invoke($"Preparing: [{p}%]");
                 };
-                var doneUploading = await Helper.UploadDirectoryAsync(proj, tempProjectDir, updateMessageProgress);
-                progressLogAction?.Invoke($"Preparing: [100%]");
-                //progressLogAction?.Invoke($"Canceled: {canceledByUser(cancelFunc)}");
-                // suspended by user
-                if (canceledByUser(cancelFunc)) return null;
+                var doneUploading = await Helper.UploadDirectoryAsync(proj, tempProjectDir, updateMessageProgress, cancellationToken);
+                progressLogAction?.Invoke($"Preparing: done!");
             }
+
+            // suspended by user
+            if (cancellationToken.IsCancellationRequested)
+            {
+                progressLogAction?.Invoke($"Canceled: {cancellationToken.IsCancellationRequested}");
+                return null;
+            }
+
             // update Artifact to cloud's relative path after uploaded.
             var newWorkflow = UpdateArtifactPath(workflow);
 
             // create a new Simulation
             var api = new SimulationsApi();
-            progressLogAction?.Invoke($"Start running.");
+            progressLogAction?.Invoke($"Start running."); 
 
             try
             {
@@ -269,10 +300,17 @@ namespace PollinationSDK
                 Action<string> updateMessageProgressForStatus = (string p) => { progressLogAction?.Invoke(p); };
 
                 progressLogAction?.Invoke($"Start running...");
-                await runningSimulaiton.CheckStatusAsync(updateMessageProgressForStatus);
+                await runningSimulaiton.CheckStatusAsync(updateMessageProgressForStatus, cancellationToken);
+
+
+                // suspended by user
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    progressLogAction?.Invoke($"Canceled: {cancellationToken.IsCancellationRequested}");
+                    return null;
+                }
 
                 actionWhenDone?.Invoke();
-
                 return runningSimulaiton;
             }
             catch (Exception)
@@ -282,13 +320,7 @@ namespace PollinationSDK
             }
 
        
-
-            // local method
-            bool canceledByUser(Func<bool> c = default)
-            {
-                var ifCancel = c?.Invoke();
-                return ifCancel.GetValueOrDefault(false);
-            }
+           
         }
 
     }
