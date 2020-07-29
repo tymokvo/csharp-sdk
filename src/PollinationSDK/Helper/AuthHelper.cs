@@ -2,7 +2,6 @@
 using PollinationSDK.Client;
 using RestSharp;
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -18,7 +17,7 @@ namespace PollinationSDK
         /// Token from previous sign in if any, otherwise this is an empty string. Call SignIn() first for users to login from browser.
         /// </summary>
         private static string ID_TOKEN { get; set; } = string.Empty;
-        public static async void SignIn(Action ActionWhenDone = default)
+        public static async Task SignInAsync(Action ActionWhenDone = default)
         {
             //OutputMessage = string.Empty;
             var task = Auth0SignIn();
@@ -39,7 +38,7 @@ namespace PollinationSDK
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.Message);
+                Console.WriteLine(e.Message);
                 throw;
             }
 
@@ -70,11 +69,14 @@ namespace PollinationSDK
             }
             catch (HttpListenerException e)
             {
-                listener.Stop();
-                //Console.WriteLine(e.Message);
-                Debug.WriteLine(e.Message);
-                return string.Empty;
-                //throw;
+                // it is already listening the port, but users didn't login
+                if (e.ErrorCode == 183)
+                {
+                    Console.WriteLine(e.Message);
+                    return null;
+                }
+
+                throw;
 
             }
            

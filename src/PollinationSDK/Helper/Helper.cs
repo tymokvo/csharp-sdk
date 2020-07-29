@@ -234,12 +234,11 @@ namespace PollinationSDK
 
 
             // Upload artifacts
-            //var dir = @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder";
 
             // check artifacts 
             var tempProjectDir = CheckArtifacts(workflow);
+
             // upload artifacts
-            var newSubmitSimu = UpdateArtifactPath(workflow);
             if (!string.IsNullOrEmpty(tempProjectDir))
             {
                 Action<int> updateMessageProgress = (int p) => {
@@ -250,18 +249,17 @@ namespace PollinationSDK
                 // suspended by user
                 if (canceledByUser(cancelFunc)) return null;
             }
-
+            // update Artifact to cloud's relative path after uploaded.
+            var newWorkflow = UpdateArtifactPath(workflow);
 
             // create a new Simulation
             var api = new SimulationsApi();
 
-            //var simu = new SubmitSimulationDto(rec, arg);
-            //var simu = workflow;
 
             try
             {
                 // schedule a simulation on Pollination.Cloud
-                var ret = api.CreateSimulation(proj.Owner.Name, proj.Name, workflow);
+                var ret = api.CreateSimulation(proj.Owner.Name, proj.Name, newWorkflow);
                 var simuId = ret.Id;
 
                 // monitoring the running simulation
