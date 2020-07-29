@@ -41,11 +41,13 @@ namespace PollinationSDK.Wrapper
             return FromJson(this.ToJson());
         }
 
-        public void CheckStatus(ProjectDto proj, string simuId, Action<string> progressAction = default, Func<bool> cancelFunc = default)
+        public async Task CheckStatusAsync(Action<string> progressAction = default, Func<bool> cancelFunc = default)
         {
             var api = new SimulationsApi();
+            var proj = this.Project;
+            var simuId = this.SimulationID;
 
-            var status = api.GetSimulation(proj.Owner.Name, proj.Name, simuId);
+            var status =  await api.GetSimulationAsync(proj.Owner.Name, proj.Name, simuId);
             var startTime = status.StartedAt.ToUniversalTime();
             while (status.Status == "Running")
             {
@@ -53,7 +55,7 @@ namespace PollinationSDK.Wrapper
                 // wait 5 seconds before calling api to re-check the status
                 for (int i = 0; i < 5; i++)
                 {
-                    Task.Delay(1000).Wait();
+                    await Task.Delay(1000);
                     currentSeconds++;
                     progressAction?.Invoke($"{status.Status}: [{currentSeconds} s]");
 
@@ -65,7 +67,7 @@ namespace PollinationSDK.Wrapper
 
 
                 // update status
-                status = api.GetSimulation(proj.Owner.Name, proj.Name, simuId);
+                status = await api.GetSimulationAsync(proj.Owner.Name, proj.Name, simuId);
                 //_simulation = new Simulation(proj, simuId);
             }
             // suspended by user

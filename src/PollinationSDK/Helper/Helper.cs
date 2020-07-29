@@ -236,6 +236,7 @@ namespace PollinationSDK
             // Upload artifacts
 
             // check artifacts 
+            progressLogAction?.Invoke($"Preparing: [0%]");
             var tempProjectDir = CheckArtifacts(workflow);
 
             // upload artifacts
@@ -245,7 +246,8 @@ namespace PollinationSDK
                     progressLogAction?.Invoke($"Preparing: [{p}%]");
                 };
                 var doneUploading = await Helper.UploadDirectoryAsync(proj, tempProjectDir, updateMessageProgress);
-
+                progressLogAction?.Invoke($"Preparing: [100%]");
+                //progressLogAction?.Invoke($"Canceled: {canceledByUser(cancelFunc)}");
                 // suspended by user
                 if (canceledByUser(cancelFunc)) return null;
             }
@@ -254,18 +256,20 @@ namespace PollinationSDK
 
             // create a new Simulation
             var api = new SimulationsApi();
-
+            progressLogAction?.Invoke($"Start running.");
 
             try
             {
                 // schedule a simulation on Pollination.Cloud
-                var ret = api.CreateSimulation(proj.Owner.Name, proj.Name, newWorkflow);
+                var ret = await api.CreateSimulationAsync(proj.Owner.Name, proj.Name, newWorkflow);
                 var simuId = ret.Id;
-
+                progressLogAction?.Invoke($"Start running..");
                 // monitoring the running simulation
                 var runningSimulaiton = new Wrapper.Simulation(proj, simuId.ToString());
                 Action<string> updateMessageProgressForStatus = (string p) => { progressLogAction?.Invoke(p); };
-                runningSimulaiton.CheckStatus(proj, simuId.ToString(), updateMessageProgressForStatus);
+
+                progressLogAction?.Invoke($"Start running...");
+                await runningSimulaiton.CheckStatusAsync(updateMessageProgressForStatus);
 
                 actionWhenDone?.Invoke();
 
