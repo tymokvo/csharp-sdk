@@ -10,6 +10,7 @@ using RestSharp;
 using System.Net;
 using RestSharp.Extensions;
 using System.IO;
+using PollinationSDK.Wrapper;
 
 namespace ConsoleAppDemo
 {
@@ -27,9 +28,9 @@ namespace ConsoleAppDemo
             //var arg = new ArgumentArtifact("input-grid", a);
             ////var aj = JsonConvert.SerializeObject(a);
             //Console.WriteLine(arg.ToJson());
+          
+            AuthHelper.SignInAsync().Wait();
 
-            var runTask = SignIn();
-            runTask.Wait();
             var me = Helper.CurrentUser;
             Console.WriteLine($"You are: {me.Username}");
 
@@ -69,7 +70,19 @@ namespace ConsoleAppDemo
 
 
             Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
-            CreateSimulation(proj);
+            //CreateSimulation(proj);
+            var workflow = CreateWorkflow();
+            var task = Helper.RunSimulationAsync(proj, workflow, Console.WriteLine);
+            try
+            {
+                task.Wait();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.InnerException.Message);
+                //throw;
+            }
+           
 
             //Console.WriteLine("--------------------Simulation status-------------------");
             //var id = "f13b6c0d-7c42-420a-884c-f6010e954b8b";
@@ -86,36 +99,6 @@ namespace ConsoleAppDemo
 
         }
 
-
-        private static async Task<bool> SignIn()
-        {
-            //OutputMessage = string.Empty;
-
-            var token = await AuthHelper.Auth0SignIn();
-
-
-            //var config = new Configuration();
-            //config.AccessToken = token;
-            //config.BasePath = "https://api.pollination.cloud/";
-            //config.AddDefaultHeader("Bearer", token);
-
-
-            //Configuration.Default.AccessToken = token;
-            Configuration.Default.BasePath = "https://api.pollination.cloud/";
-            //Configuration.Default.AddDefaultHeader("Bearer", token);
-            Configuration.Default.AddDefaultHeader("Authorization", $"Bearer {token}");
-            Helper.CurrentUser = Helper.GetUser();
-
-            return true;
-
-        }
-        //private static PrivateUserDto GetUser()
-        //{
-        //    var api = new UserApi();
-        //    //var config = api.Configuration;
-        //    var me = api.GetMe();
-        //    return me;
-        //}
 
         private static IEnumerable<string> GetRecipes()
         {
@@ -148,6 +131,28 @@ namespace ConsoleAppDemo
 
             //return inputs.ToString();
             //return recipes;
+        }
+        private static Workflow CreateWorkflow()
+        {
+            var recipeApi = new RecipesApi();
+            var recOwner = "ladybug-tools";
+            var rec = recipeApi.GetRecipeByTag(recOwner, "annual-energy-use", "latest");
+            var arg = new Arguments()
+            {
+                Parameters = new List<ArgumentParameter>()
+                {
+                    new ArgumentParameter("filter-design-days", "True")
+                },
+                Artifacts = new List<ArgumentArtifact>()
+                {
+                    new ArgumentArtifact("ddy-file", @"C:\ladybug\USA_IL_Chicago-OHare.Intl.AP.725300_TMY3\USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.ddy"),
+                    new ArgumentArtifact("epw-file", @"C:\ladybug\USA_IL_Chicago-OHare.Intl.AP.725300_TMY3\USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw"),
+                    new ArgumentArtifact("model-json", @"D:\Dev\honeybee-schema\samples\model\model_complete_single_zone_office.json")
+                }
+            };
+            
+            var wf = new PollinationSDK.Wrapper.Workflow(recOwner, rec, arg);
+            return wf;
         }
 
         private static void CreateSimulation(ProjectDto project)
