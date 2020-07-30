@@ -1,6 +1,7 @@
 ﻿using PollinationSDK.Api;
 using PollinationSDK.Client;
 using PollinationSDK.Model;
+using PollinationSDK.Wrapper;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -311,6 +312,93 @@ namespace PollinationSDK
        
            
         }
+
+        /// <summary>
+        /// Download a list of OutputArtifacts from a simulation.
+        /// </summary>
+        /// <param name="simu"></param>
+        /// <param name="artifacts"></param>
+        /// <param name="saveAsDir"></param>
+        /// <param name="reportProgressAction"></param>
+        /// <returns></returns>
+        public static async Task<List<string>> DownloadOutputArtifactsAsync(Simulation simu, List<OutputArtifact> artifacts, string saveAsDir = default, Action<int> reportProgressAction = default)
+        {
+            //_filePaths = new List<string>();
+            var downloadedFiles = new List<string>();
+            try
+            {
+                var api = new PollinationSDK.Api.SimulationsApi();
+                var tasks = artifacts.Select(_ => DownloadArtifact(simu, _, saveAsDir)).ToList();
+        
+
+                var total = tasks.Count();
+                while (tasks.Count() > 0)
+                {
+                    var finishedTask = await Task.WhenAny(tasks);
+                    downloadedFiles.Add(finishedTask.Result);
+                    tasks.Remove(finishedTask);
+
+                    var left = tasks.Count();
+                    var finishedPercent = (total - left) / (double)total * 100;
+                    reportProgressAction?.Invoke((int)finishedPercent);
+
+                }
+
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            var artifactNames = artifacts.Select(_ => _.Name.ToUpper()).ToList();
+            var filePaths = downloadedFiles.OrderBy(_ => artifactNames.IndexOf(Path.GetFileNameWithoutExtension(_).ToUpper())).ToList();
+            return filePaths;
+            //return finished;
+        }
+
+        public static async Task<string> DownloadArtifact(Simulation simu, OutputArtifact artifact, string saveAsDir)
+        {
+            var file = string.Empty;
+
+            try
+            {
+                var api = new PollinationSDK.Api.SimulationsApi();
+                var url = api.GetSimulationOutputArtifact(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID, artifact.Name).ToString();
+
+
+
+                Console.WriteLine($"Simulation output link url: {url}");
+                var request = new RestRequest(Method.GET);
+                var client = new RestClient(url.ToString());
+                var response = await client.ExecuteAsync(request);
+                if (response.StatusCode != HttpStatusCode.OK)
+                    throw new Exception($"Unable to download file");
+
+                // prep file path
+                var fileName = Path.GetFileName(url).Split(new[] { '?' })[0];
+                var tempDir = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+                var dir = string.IsNullOrEmpty(saveAsDir) ? tempDir : saveAsDir;
+                Directory.CreateDirectory(dir);
+                file = Path.Combine(dir, fileName);
+
+                var b = response.RawBytes;
+                File.WriteAllBytes(file, b);
+
+                if (!File.Exists(file)) throw new ArgumentException($"Failed to download {fileName}");
+            }
+            catch (Exception)
+            {
+                //Eto.Forms.MessageBox.Show(e.Message, Eto.Forms.MessageBoxType.Error);
+                throw;
+            }
+
+
+            Console.WriteLine($"Finished downloading: {file}");
+            //_filePath = file;
+            return file;
+        }
+
 
     }
 }
