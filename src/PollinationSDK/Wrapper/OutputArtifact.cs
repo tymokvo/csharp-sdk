@@ -13,6 +13,11 @@ namespace PollinationSDK.Wrapper
             this.Name = outputArtifact.Name;
         }
 
+        public OutputArtifact(string name)
+        {
+            this.Name = name;
+        }
+
         public override string ToString()
         {
             return $"artifact: {this.Name}"; 
