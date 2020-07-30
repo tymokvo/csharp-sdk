@@ -63,16 +63,6 @@ namespace PollinationSDK
             var total = files.Count();
 
 
-            //var taskCompletionSource = new TaskCompletionSource<bool>();
-            //var cancelTask = taskCompletionSource.Task;
-            //if (cancellationToken != default)
-            //{
-            //    cancellationToken.Register(() => {
-            //        taskCompletionSource.TrySetCanceled();
-            //    });
-            //    tasks.Add(cancelTask);
-            //}
-
             var finishedPercent = 0;
             reportProgressAction?.Invoke(finishedPercent);
             while (tasks.Count() > 0)
@@ -271,8 +261,7 @@ namespace PollinationSDK
                 Action<int> updateMessageProgress = (int p) => {
                     progressLogAction?.Invoke($"Preparing: [{p}%]");
                 };
-                var doneUploading = await Helper.UploadDirectoryAsync(proj, tempProjectDir, updateMessageProgress, cancellationToken);
-                progressLogAction?.Invoke($"Preparing: done!");
+                await Helper.UploadDirectoryAsync(proj, tempProjectDir, updateMessageProgress, cancellationToken);
             }
 
             // suspended by user
