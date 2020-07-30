@@ -285,11 +285,16 @@ namespace PollinationSDK
                 var ret = await api.CreateSimulationAsync(proj.Owner.Name, proj.Name, newWorkflow);
                 var simuId = ret.Id;
                 progressLogAction?.Invoke($"Start running..");
+
+                // give server a moment to start the simulation after it's scheduled.
+                await Task.Delay(500);
+
                 // monitoring the running simulation
                 var runningSimulaiton = new Wrapper.Simulation(proj, simuId.ToString());
                 Action<string> updateMessageProgressForStatus = (string p) => { progressLogAction?.Invoke(p); };
 
                 progressLogAction?.Invoke($"Start running...");
+
                 await runningSimulaiton.CheckStatusAsync(updateMessageProgressForStatus, cancellationToken);
 
 
