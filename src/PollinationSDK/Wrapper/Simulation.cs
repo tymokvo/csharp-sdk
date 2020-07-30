@@ -11,8 +11,9 @@ namespace PollinationSDK.Wrapper
     /// </summary>
     public class Simulation
     {
-        public ProjectDto Project { get; private set; }
-        public string SimulationID { get; private set; }
+        // keep all setters public, so that JsonConvert can DeserializeObject it. 
+        public ProjectDto Project { get; set; }
+        public string SimulationID { get; set; }
         public string Logs { get; set; }
         public Simulation(ProjectDto proj, string simuId)
         {

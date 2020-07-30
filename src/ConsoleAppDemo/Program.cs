@@ -79,15 +79,13 @@ namespace ConsoleAppDemo
             
             try
             {
-                runSimu(proj, workflow, Console.WriteLine, token);
+                var task = runSimu(proj, workflow, Console.WriteLine, token);
 
-                cts.CancelAfter(10000);
-                Console.WriteLine($"Canceled check 1: {token.IsCancellationRequested}");
-                if (token.IsCancellationRequested)
-                {
-                    Console.WriteLine($"Canceled check 2: {token.IsCancellationRequested}");
-                    cts.Dispose();
-                }
+                cts.CancelAfter(60000);
+                task.Wait();
+
+                Console.WriteLine($"Canceled check: {token.IsCancellationRequested}");
+                cts.Dispose();
                 
 
             }
@@ -117,8 +115,15 @@ namespace ConsoleAppDemo
         {
             try
             {
-                await Helper.RunSimulationAsync(proj, workflow, msgAction, token);
+                var simu = await Helper.RunSimulationAsync(proj, workflow, msgAction, token);
+                if (!token.IsCancellationRequested)
+                {
+                    var dup = simu.Duplicate();
+                    Console.WriteLine($"Finished simulation: {dup.ToJson()}");
+                }
+
                 Console.WriteLine($"Canceled by user: {token.IsCancellationRequested}");
+
             }
             catch (Exception)
             {
