@@ -328,7 +328,8 @@ namespace PollinationSDK
             try
             {
                 var api = new PollinationSDK.Api.SimulationsApi();
-                var tasks = artifacts.Select(_ => DownloadArtifact(simu, _, saveAsDir)).ToList();
+                var tempDir = string.IsNullOrEmpty(saveAsDir)? Path.Combine(GenTempFolder(), simu.SimulationID, Path.GetRandomFileName()): saveAsDir;
+                var tasks = artifacts.Select(_ => DownloadArtifact(simu, _, tempDir)).ToList();
         
 
                 var total = tasks.Count();
@@ -377,7 +378,7 @@ namespace PollinationSDK
 
                 // prep file path
                 var fileName = Path.GetFileName(url).Split(new[] { '?' })[0];
-                var tempDir = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+                var tempDir = Path.Combine(GenTempFolder(), simu.SimulationID, Path.GetRandomFileName());
                 var dir = string.IsNullOrEmpty(saveAsDir) ? tempDir : saveAsDir;
                 Directory.CreateDirectory(dir);
                 file = Path.Combine(dir, fileName);
@@ -399,6 +400,16 @@ namespace PollinationSDK
             return file;
         }
 
+        /// <summary>
+        /// Return the Pollination directory saved in Temp folder
+        /// </summary>
+        /// <returns></returns>
+        public static string GenTempFolder()
+        {
+            var tempDir = Path.Combine(Path.GetTempPath(), "Pollination");
+            Directory.CreateDirectory(tempDir);
+            return tempDir;
+        }
 
     }
 }
