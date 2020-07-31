@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 ## GetPackage
 
-> void GetPackage (string owner, string type, string name, string digest)
+> Object GetPackage (string owner, string type, string name, string digest)
 
 Get Package
 
@@ -45,7 +45,8 @@ namespace Example
             try
             {
                 // Get Package
-                apiInstance.GetPackage(owner, type, name, digest);
+                Object result = apiInstance.GetPackage(owner, type, name, digest);
+                Debug.WriteLine(result);
             }
             catch (ApiException e)
             {
@@ -70,7 +71,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-void (empty response body)
+**Object**
 
 ### Authorization
 
@@ -79,7 +80,7 @@ void (empty response body)
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: application/x-tar, application/json
+- **Accept**: application/json, application/x-tar
 
 ### HTTP response details
 | Status code | Description | Response headers |

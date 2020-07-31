@@ -13,6 +13,7 @@ Method | HTTP request | Description
 [**GetSimulationTaskLogs**](SimulationsApi.md#getsimulationtasklogs) | **GET** /projects/{owner}/{name}/simulations/{simulation_id}/task/{task_id}/logs | Get a simulation task&#39;s logs
 [**ListSimulations**](SimulationsApi.md#listsimulations) | **GET** /projects/{owner}/{name}/simulations | List simulations
 [**ResumeSimulation**](SimulationsApi.md#resumesimulation) | **PUT** /projects/{owner}/{name}/simulations/{simulation_id}/resume | resume a simulation
+[**StopSimulation**](SimulationsApi.md#stopsimulation) | **PUT** /projects/{owner}/{name}/simulations/{simulation_id}/stop | Stop a simulation
 [**SuspendSimulation**](SimulationsApi.md#suspendsimulation) | **PUT** /projects/{owner}/{name}/simulations/{simulation_id}/suspend | Suspend a simulation
 
 
@@ -259,11 +260,11 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **200** | Retrieved |  -  |
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
 | **404** | Not found |  -  |
-| **200** | Retrieved |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -346,11 +347,11 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **200** | Retrieved |  -  |
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
 | **404** | Not found |  -  |
-| **200** | Retrieved |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -435,11 +436,11 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **200** | Retrieved |  -  |
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
 | **404** | Not found |  -  |
-| **200** | Retrieved |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -522,11 +523,11 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **200** | Retrieved |  -  |
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
 | **404** | Not found |  -  |
-| **200** | Retrieved |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -750,6 +751,89 @@ namespace Example
             catch (ApiException e)
             {
                 Debug.Print("Exception when calling SimulationsApi.ResumeSimulation: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **string**|  | 
+ **name** | **string**|  | 
+ **simulationId** | **string**|  | 
+
+### Return type
+
+[**Accepted**](Accepted.md)
+
+### Authorization
+
+[Compulsory Auth](../README.md#Compulsory Auth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **202** | Accepted |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#)
+[[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## StopSimulation
+
+> Accepted StopSimulation (string owner, string name, string simulationId)
+
+Stop a simulation
+
+Stop a simulation.
+
+### Example
+
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using PollinationSDK.Api;
+using PollinationSDK.Client;
+using PollinationSDK.Model;
+
+namespace Example
+{
+    public class StopSimulationExample
+    {
+        public static void Main()
+        {
+            Configuration.Default.BasePath = "http://localhost";
+            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+
+            var apiInstance = new SimulationsApi(Configuration.Default);
+            var owner = owner_example;  // string | 
+            var name = name_example;  // string | 
+            var simulationId = simulationId_example;  // string | 
+
+            try
+            {
+                // Stop a simulation
+                Accepted result = apiInstance.StopSimulation(owner, name, simulationId);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException e)
+            {
+                Debug.Print("Exception when calling SimulationsApi.StopSimulation: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }

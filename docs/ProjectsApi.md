@@ -87,11 +87,11 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **201** | Success |  -  |
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
-| **202** | Success |  -  |
-| **201** | Success |  -  |
+| **202** | Accepted |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -171,10 +171,10 @@ void (empty response body)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **204** | Accepted |  -  |
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
-| **204** | Success |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -256,10 +256,10 @@ void (empty response body)
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **204** | Accepted |  -  |
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
-| **204** | Success |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -340,11 +340,11 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **200** | Retrieved |  -  |
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
 | **404** | Not found |  -  |
-| **200** | Retrieved |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -425,10 +425,10 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **200** | Retrieved |  -  |
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
-| **200** | Retrieved |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -519,10 +519,10 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **200** | Retrieved |  -  |
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
-| **200** | Retrieved |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -605,10 +605,10 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **202** | Accepted |  -  |
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
-| **202** | Success |  -  |
 | **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
 
@@ -692,10 +692,10 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **202** | Accepted |  -  |
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
-| **202** | Success |  -  |
 | **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
 

@@ -81,11 +81,11 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **200** | Successful Response |  -  |
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
 | **404** | Not found |  -  |
-| **200** | Successful Response |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -457,11 +457,11 @@ No authorization required
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+| **201** | Successful Response |  -  |
 | **403** | Access forbidden |  -  |
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
-| **202** | Success |  -  |
-| **201** | Successful Response |  -  |
+| **202** | Accepted |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
