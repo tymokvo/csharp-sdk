@@ -25,15 +25,16 @@ with urllib.request.urlopen(api) as r:
 version_digits = new_version.split('.')
 
 
-if version_digits[-1] != '0':
+print(len(version_digits))
+if len(version_digits) == 3:
+    new_version = f'{new_version}.1'
+elif version_digits[-1] != '0':
     v = int(version_digits[-1]) + 1
     version_digits = version_digits[0:-1]
     version_digits.append(str(v))
     new_version = '.'.join(version_digits)
 
-print(len(version_digits))
-if len(version_digits) == 3:
-    new_version = f'{new_version}.1'
+
 
 print(f'New version: {new_version}')
 
