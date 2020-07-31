@@ -95,7 +95,7 @@ namespace PollinationSDK.Wrapper
             var proj = this.Project;
             var simuId = this.SimulationID;
             var api = new SimulationsApi();
-            api.SuspendSimulationAsync(proj.Owner.Name, proj.Name, simuId);
+            api.StopSimulationAsync(proj.Owner.Name, proj.Name, simuId);
         }
     }
 }
