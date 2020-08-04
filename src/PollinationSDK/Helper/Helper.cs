@@ -291,11 +291,10 @@ namespace PollinationSDK
 
                 // monitoring the running simulation
                 var runningSimulaiton = new Wrapper.Simulation(proj, simuId.ToString());
-                Action<string> updateMessageProgressForStatus = (string p) => { progressLogAction?.Invoke(p); };
-
                 progressLogAction?.Invoke($"Start running...");
 
-                await runningSimulaiton.CheckStatusAsync(updateMessageProgressForStatus, cancellationToken);
+                //Action<string> updateMessageProgressForStatus = (string p) => { progressLogAction?.Invoke(p); };
+                //await runningSimulaiton.CheckStatusAsync(updateMessageProgressForStatus, cancellationToken);
 
 
                 // suspended by user
