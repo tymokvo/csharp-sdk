@@ -1,4 +1,6 @@
-﻿using PollinationSDK.Api;
+﻿using ICSharpCode.SharpZipLib.GZip;
+using ICSharpCode.SharpZipLib.Tar;
+using PollinationSDK.Api;
 using PollinationSDK.Client;
 using PollinationSDK.Model;
 using PollinationSDK.Wrapper;
@@ -413,6 +415,25 @@ namespace PollinationSDK
             var tempDir = Path.Combine(Path.GetTempPath(), "Pollination");
             Directory.CreateDirectory(tempDir);
             return tempDir;
+        }
+
+        internal static string UnzipTGZ(string tgzFilePath, string saveAsDir)
+        {
+            if (File.Exists(tgzFilePath)) throw new ArgumentException($"Input file {Path.GetFileName(tgzFilePath)} does not exist!");
+
+            // https://github.com/icsharpcode/SharpZipLib/wiki/GZip-and-Tar-Samples#anchorTGZ
+            Stream inStream = File.OpenRead(tgzFilePath);
+            Stream gzipStream = new GZipInputStream(inStream);
+
+            TarArchive tarArchive = TarArchive.CreateInputTarArchive(gzipStream);
+
+            var saveAsSubDir = Path.Combine(saveAsDir, Path.GetFileNameWithoutExtension(tgzFilePath));
+            tarArchive.ExtractContents(saveAsSubDir);
+            tarArchive.Close();
+            gzipStream.Close();
+            inStream.Close();
+            return saveAsSubDir;
+
         }
 
     }

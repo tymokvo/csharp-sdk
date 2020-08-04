@@ -140,16 +140,8 @@ namespace PollinationSDK.Wrapper
             //unzip file 
             if (cancelToken.IsCancellationRequested) return string.Empty;
             progressAction?.Invoke($"Reading logs");
-
-            // https://github.com/icsharpcode/SharpZipLib/wiki/GZip-and-Tar-Samples#anchorTGZ
-            Stream inStream = File.OpenRead(downloadfile);
-            Stream gzipStream = new GZipInputStream(inStream);
-
-            TarArchive tarArchive = TarArchive.CreateInputTarArchive(gzipStream);
-            tarArchive.ExtractContents(dir);
-            tarArchive.Close();
-            gzipStream.Close();
-            inStream.Close();
+            Helper.UnzipTGZ(downloadfile, dir);
+           
 
 
             //read logs
