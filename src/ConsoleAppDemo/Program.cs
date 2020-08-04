@@ -76,17 +76,17 @@ namespace ConsoleAppDemo
             var token = cts.Token;
 
             var workflow = CreateWorkflow();
-            
+
             try
             {
                 var task = runSimu(proj, workflow, Console.WriteLine, token);
 
-                cts.CancelAfter(60000);
+                //cts.CancelAfter(60000);
                 task.Wait();
 
                 Console.WriteLine($"Canceled check: {token.IsCancellationRequested}");
                 cts.Dispose();
-                
+
 
             }
             catch (Exception e)
@@ -94,17 +94,21 @@ namespace ConsoleAppDemo
                 Console.WriteLine(e.InnerException.Message);
                 //throw;
             }
-           
 
-            //Console.WriteLine("--------------------Simulation status-------------------");
-            //var id = "f13b6c0d-7c42-420a-884c-f6010e954b8b";
-            ////CheckSimulationStatus(proj, id);
-            //CheckOutputLogs(proj, id);
 
 
             //Console.WriteLine("--------------------Download simulation output-------------------");
             //DownloadOutputs(proj, "e89ecadf-6844-4ca6-a02d-1c2382231f87");
             //Console.WriteLine("Done downloading");
+
+            //Console.WriteLine("--------------------Download simulation log-------------------");
+            ////@"C:\\Users\\mingo\\AppData\\Local\\Temp\\Pollination\\9936f815-25f1-40b8-a298-71091dd6b71a\\re4veore.tvs\\logs.tgz"
+            //var simu = new Simulation(proj, "9936f815-25f1-40b8-a298-71091dd6b71a");
+            //var simuLog = simu.GetSimulationOutputLogAsync(Console.WriteLine).Result;
+
+            //Console.WriteLine("Done downloading");
+            //Console.WriteLine(simuLog);
+
 
 
             Console.ReadKey();
@@ -116,13 +120,17 @@ namespace ConsoleAppDemo
             try
             {
                 var simu = await Helper.RunSimulationAsync(proj, workflow, msgAction, token);
+                await simu.CheckStatusAndGetLogsAsync(msgAction, token);
+
+                msgAction(simu.Logs);
+
                 if (!token.IsCancellationRequested)
                 {
                     var dup = simu.Duplicate();
-                    Console.WriteLine($"Finished simulation: {dup.ToJson()}");
+                    msgAction($"Finished simulation: {dup.ToJson()}");
                 }
 
-                Console.WriteLine($"Canceled by user: {token.IsCancellationRequested}");
+                msgAction($"Canceled by user: {token.IsCancellationRequested}");
 
             }
             catch (Exception)
@@ -179,8 +187,8 @@ namespace ConsoleAppDemo
                 },
                 Artifacts = new List<ArgumentArtifact>()
                 {
-                    new ArgumentArtifact("ddy-file", @"C:\ladybug\USA_IL_Chicago-OHare.Intl.AP.725300_TMY3\USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.ddy"),
-                    new ArgumentArtifact("epw-file", @"C:\ladybug\USA_IL_Chicago-OHare.Intl.AP.725300_TMY3\USA_IL_Chicago-OHare.Intl.AP.725300_TMY3.epw"),
+                    new ArgumentArtifact("ddy-file", @"C:\ladybug\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3.ddy"),
+                    new ArgumentArtifact("epw-file", @"C:\ladybug\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3.epw"),
                     new ArgumentArtifact("model-json", @"D:\Dev\honeybee-schema\samples\model\model_complete_single_zone_office.json")
                 }
             };
