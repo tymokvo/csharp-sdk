@@ -148,7 +148,7 @@ namespace PollinationSDK
             var temp = string.Empty;
 
             // remove old temp files first
-            var tempPollination = Path.Combine(Path.GetTempPath(), "Pollination");
+            var tempPollination = Path.Combine(GenTempFolder(), "prepareArtifacts");
             Directory.CreateDirectory(tempPollination);
             Directory.Delete(tempPollination, true);
 
