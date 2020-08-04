@@ -396,9 +396,11 @@ namespace PollinationSDK
                 if (file.ToLower().EndsWith(".tgz"))
                 {
                     outputDirOrFile = Helper.UnzipTGZ(file, dir);
-                    var files = Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories);
+                    var files = Directory.GetFiles(outputDirOrFile, "*.*", SearchOption.AllDirectories);
                     // return the file path if there is only one in zipped file
                     if (files.Count()==1) outputDirOrFile = files.First();
+
+                    //throw new ArgumentException($"[{files.Count()}]: {string.Join(",", files)}");
                 }
             }
             catch (Exception)
