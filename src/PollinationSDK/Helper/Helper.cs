@@ -367,7 +367,7 @@ namespace PollinationSDK
         public static async Task<string> DownloadArtifact(Simulation simu, OutputArtifact artifact, string saveAsDir)
         {
             var file = string.Empty;
-
+            var outputDirOrFile = string.Empty;
             try
             {
                 var api = new PollinationSDK.Api.SimulationsApi();
@@ -393,6 +393,13 @@ namespace PollinationSDK
                 File.WriteAllBytes(file, b);
 
                 if (!File.Exists(file)) throw new ArgumentException($"Failed to download {fileName}");
+                if (file.ToLower().EndsWith(".tgz"))
+                {
+                    outputDirOrFile = Helper.UnzipTGZ(file, dir);
+                    var files = Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories);
+                    // return the file path if there is only one in zipped file
+                    if (files.Count()==1) outputDirOrFile = files.First();
+                }
             }
             catch (Exception)
             {
@@ -401,9 +408,9 @@ namespace PollinationSDK
             }
 
 
-            Console.WriteLine($"Finished downloading: {file}");
+            Console.WriteLine($"Finished downloading: {file} to {outputDirOrFile}");
             //_filePath = file;
-            return file;
+            return outputDirOrFile;
         }
 
         /// <summary>
@@ -419,7 +426,7 @@ namespace PollinationSDK
 
         internal static string UnzipTGZ(string tgzFilePath, string saveAsDir)
         {
-            if (File.Exists(tgzFilePath)) throw new ArgumentException($"Input file {Path.GetFileName(tgzFilePath)} does not exist!");
+            if (!File.Exists(tgzFilePath)) throw new ArgumentException($"{Path.GetFileName(tgzFilePath)} does not exist!");
 
             // https://github.com/icsharpcode/SharpZipLib/wiki/GZip-and-Tar-Samples#anchorTGZ
             Stream inStream = File.OpenRead(tgzFilePath);

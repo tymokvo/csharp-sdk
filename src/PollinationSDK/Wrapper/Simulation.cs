@@ -133,7 +133,7 @@ namespace PollinationSDK.Wrapper
             
             var url = api.GetSimulationLogs(proj.Owner.Name, proj.Name, simuId).ToString();
             if (string.IsNullOrEmpty(url)) throw new ArgumentNullException("Failed to call GetSimulationLogs");
-            var dir = Path.Combine(Path.GetTempPath(), "Pollination", simuId, Path.GetRandomFileName());
+            var dir = Path.Combine(Helper.GenTempFolder(), simuId);
             var downloadfile = await DownloadFile(url, dir);
 
 
