@@ -334,8 +334,10 @@ namespace PollinationSDK
             try
             {
                 var api = new PollinationSDK.Api.SimulationsApi();
-                var tempDir = string.IsNullOrEmpty(saveAsDir)? Path.Combine(GenTempFolder(), simu.SimulationID, Path.GetRandomFileName()): saveAsDir;
-                var tasks = artifacts.Select(_ => DownloadArtifact(simu, _, tempDir)).ToList();
+
+
+                saveAsDir = string.IsNullOrEmpty(saveAsDir)? GenTempFolder() : saveAsDir;
+                var tasks = artifacts.Select(_ => DownloadArtifact(simu, _, saveAsDir)).ToList();
         
 
                 var total = tasks.Count();
@@ -384,8 +386,11 @@ namespace PollinationSDK
 
                 // prep file path
                 var fileName = Path.GetFileName(url).Split(new[] { '?' })[0];
-                var tempDir = Path.Combine(GenTempFolder(), simu.SimulationID, Path.GetRandomFileName());
-                var dir = string.IsNullOrEmpty(saveAsDir) ? tempDir : saveAsDir;
+                
+                var dir = string.IsNullOrEmpty(saveAsDir) ? GenTempFolder() : saveAsDir;
+                dir = Path.Combine(dir, simu.SimulationID.Substring(0, 8));
+
+
                 Directory.CreateDirectory(dir);
                 file = Path.Combine(dir, fileName);
 
@@ -393,20 +398,20 @@ namespace PollinationSDK
                 File.WriteAllBytes(file, b);
 
                 if (!File.Exists(file)) throw new ArgumentException($"Failed to download {fileName}");
-                if (file.ToLower().EndsWith(".tgz"))
-                {
-                    outputDirOrFile = Helper.UnzipTGZ(file, dir);
-                    var files = Directory.GetFiles(outputDirOrFile, "*.*", SearchOption.AllDirectories);
-                    // return the file path if there is only one in zipped file
-                    if (files.Count()==1) outputDirOrFile = files.First();
 
-                    //throw new ArgumentException($"[{files.Count()}]: {string.Join(",", files)}");
+                // unzip
+                try
+                {
+                    if (file.ToLower().EndsWith(".tgz")) outputDirOrFile = Helper.UnzipTGZ(file, dir);
+                }
+                catch (Exception e)
+                {
+                    throw new ArgumentException($"Failed to unzip file {fileName}.\n -{e.Message}");
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                //Eto.Forms.MessageBox.Show(e.Message, Eto.Forms.MessageBoxType.Error);
-                throw;
+                throw new ArgumentException($"Failed to download artifact {artifact.Name}.\n -{e.Message}");
             }
 
 
@@ -430,20 +435,88 @@ namespace PollinationSDK
         {
             if (!File.Exists(tgzFilePath)) throw new ArgumentException($"{Path.GetFileName(tgzFilePath)} does not exist!");
 
+            var tempDir = new DirectoryInfo(Path.Combine(GenTempFolder(), Path.GetRandomFileName()));
+            //var dir = string.IsNullOrEmpty(saveAsDir) ? tempDir : saveAsDir;
+
+
             // https://github.com/icsharpcode/SharpZipLib/wiki/GZip-and-Tar-Samples#anchorTGZ
             Stream inStream = File.OpenRead(tgzFilePath);
             Stream gzipStream = new GZipInputStream(inStream);
-
             TarArchive tarArchive = TarArchive.CreateInputTarArchive(gzipStream);
 
-            var saveAsSubDir = Path.Combine(saveAsDir, Path.GetFileNameWithoutExtension(tgzFilePath));
-            tarArchive.ExtractContents(saveAsSubDir);
+
+            //var tempSubDir = Path.Combine(tempDir, Path.GetFileNameWithoutExtension(tgzFilePath));
+            tarArchive.ExtractContents(tempDir.FullName);
             tarArchive.Close();
             gzipStream.Close();
             inStream.Close();
-            return saveAsSubDir;
+
+
+            //copy folder
+            try
+            {
+                CopyDirectory(tempDir.FullName, saveAsDir);
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException($"Failed to save files to: {saveAsDir}.\n -{e.Message}");
+            }
+           
+            var outputDirOrFile = saveAsDir;
+
+
+            var files = tempDir.GetFiles("*.*", SearchOption.TopDirectoryOnly);
+            var dirs = tempDir.GetDirectories("*", SearchOption.TopDirectoryOnly);
+            
+            if (files.Count() == 1) 
+            {
+                // if there is only one file inside
+                var f = files.First();
+                if (f.Exists) outputDirOrFile = Path.Combine(saveAsDir, f.Name);
+            }
+            else if (dirs.Count() == 1)
+            {
+                // if there is only one subfolder inside
+                var d = dirs.First();
+                if (d.Exists) outputDirOrFile = Path.Combine(saveAsDir, d.Name);
+            }
+            else
+            {
+                outputDirOrFile = saveAsDir;
+            }
+            //throw new ArgumentException($"[{files.Count()}]: {string.Join(",", files)}");
+
+
+            return outputDirOrFile;
 
         }
+
+        //https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-copy-directories?redirectedfrom=MSDN
+        private static void CopyDirectory(string sDir, string dDir)
+        {
+            if (!Directory.Exists(sDir)) return;
+            var dir = new DirectoryInfo(sDir);
+
+            if (!Directory.Exists(dDir)) Directory.CreateDirectory(dDir);
+
+            // copy files
+            var files = dir.GetFiles();
+            foreach (var f in files)
+            {
+                string t = Path.Combine(dDir, f.Name);
+                f.CopyTo(t, true);
+            }
+
+            // copy dirs
+            var dirs = dir.GetDirectories();
+            foreach (var subdir in dirs)
+            {
+                string t = Path.Combine(dDir, subdir.Name);
+                if (Directory.Exists(t)) Directory.Delete(t, true);
+                CopyDirectory(subdir.FullName, t);
+            }
+        }
+
 
     }
 }
