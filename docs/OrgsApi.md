@@ -420,7 +420,7 @@ No authorization required
 
 ## ListOrgs
 
-> List&lt;OrgDto&gt; ListOrgs (int page = null, int perPage = null, List<string> name = null, List<string> member = null)
+> List&lt;OrgDto&gt; ListOrgs (int? page = null, int? perPage = null, List<string> name = null, List<string> member = null)
 
 List Orgs
 
@@ -443,8 +443,8 @@ namespace Example
         {
             Configuration.Default.BasePath = "http://localhost";
             var apiInstance = new OrgsApi(Configuration.Default);
-            var page = 56;  // int | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int | Number of items per page (optional)  (default to 25)
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
             var name = new List<string>(); // List<string> | The account name (optional) 
             var member = new List<string>(); // List<string> | The ID of a user (optional) 
 
@@ -470,8 +470,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int**| Number of items per page | [optional] [default to 25]
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
  **name** | [**List&lt;string&gt;**](string.md)| The account name | [optional] 
  **member** | [**List&lt;string&gt;**](string.md)| The ID of a user | [optional] 
 
@@ -615,7 +615,7 @@ namespace Example
             var apiInstance = new OrgsApi(Configuration.Default);
             var name = name_example;  // string | 
             var username = username_example;  // string | 
-            var role = new OrgRoleEnum(); // OrgRoleEnum | 
+            var role = ;  // OrgRoleEnum | 
 
             try
             {
@@ -641,7 +641,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **string**|  | 
  **username** | **string**|  | 
- **role** | [**OrgRoleEnum**](OrgRoleEnum.md)|  | 
+ **role** | **OrgRoleEnum**|  | 
 
 ### Return type
 

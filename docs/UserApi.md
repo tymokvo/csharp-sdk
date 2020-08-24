@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 ## ChangePassword
 
-> Object ChangePassword (EmailRequest emailRequest)
+> AnyType ChangePassword (EmailRequest emailRequest)
 
 Make a password change request
 
@@ -44,7 +44,7 @@ namespace Example
             try
             {
                 // Make a password change request
-                Object result = apiInstance.ChangePassword(emailRequest);
+                AnyType result = apiInstance.ChangePassword(emailRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -67,7 +67,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**AnyType**](AnyType.md)
 
 ### Authorization
 
@@ -392,7 +392,7 @@ No authorization required
 
 ## Signup
 
-> Object Signup (SignUpDto signUpDto)
+> AnyType Signup (SignUpDto signUpDto)
 
 Sign Up to the platform!
 
@@ -420,7 +420,7 @@ namespace Example
             try
             {
                 // Sign Up to the platform!
-                Object result = apiInstance.Signup(signUpDto);
+                AnyType result = apiInstance.Signup(signUpDto);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -443,7 +443,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**AnyType**](AnyType.md)
 
 ### Authorization
 

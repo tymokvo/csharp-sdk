@@ -439,7 +439,7 @@ Name | Type | Description  | Notes
 
 ## ListProjects
 
-> List&lt;ProjectDto&gt; ListProjects (int page = null, int perPage = null, List<string> id = null, List<string> name = null, List<string> owner = null, bool _public = null, List<string> _operator = null)
+> List&lt;ProjectDto&gt; ListProjects (int? page = null, int? perPage = null, List<string> id = null, List<string> name = null, List<string> owner = null, bool? _public = null, List<string> _operator = null)
 
 List Projects
 
@@ -465,12 +465,12 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
-            var page = 56;  // int | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int | Number of items per page (optional)  (default to 25)
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
             var id = new List<string>(); // List<string> | The ID of a project to search for (optional) 
             var name = new List<string>(); // List<string> | The account name (optional) 
             var owner = new List<string>(); // List<string> | Owner of the project (optional) 
-            var _public = true;  // bool | Boolean check for public/private projects (optional) 
+            var _public = true;  // bool? | Boolean check for public/private projects (optional) 
             var _operator = new List<string>(); // List<string> | Name of an operator to search workflows by (optional) 
 
             try
@@ -495,12 +495,12 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int**| Number of items per page | [optional] [default to 25]
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
  **id** | [**List&lt;string&gt;**](string.md)| The ID of a project to search for | [optional] 
  **name** | [**List&lt;string&gt;**](string.md)| The account name | [optional] 
  **owner** | [**List&lt;string&gt;**](string.md)| Owner of the project | [optional] 
- **_public** | **bool**| Boolean check for public/private projects | [optional] 
+ **_public** | **bool?**| Boolean check for public/private projects | [optional] 
  **_operator** | [**List&lt;string&gt;**](string.md)| Name of an operator to search workflows by | [optional] 
 
 ### Return type

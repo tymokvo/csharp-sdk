@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateArtifact**](ArtifactsApi.md#createartifact) | **POST** /projects/{owner}/{name}/artifacts | Get an Artifact upload link.
 [**DeleteArtifact**](ArtifactsApi.md#deleteartifact) | **DELETE** /projects/{owner}/{name}/artifacts | Delete one or many artifacts by key/prefix
+[**DownloadArtifact**](ArtifactsApi.md#downloadartifact) | **GET** /projects/{owner}/{name}/artifacts/download | Download an artifact from the project folder
 [**ListArtifacts**](ArtifactsApi.md#listartifacts) | **GET** /projects/{owner}/{name}/artifacts | List artifacts in a project folder
 
 
@@ -123,7 +124,7 @@ namespace Example
             var apiInstance = new ArtifactsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var path = new List<string>(); // List<string> | The path to an artifact within a project folder (optional) 
+            var path = new List<string>(); // List<string> | The path to an file within a project folder (optional) 
 
             try
             {
@@ -149,7 +150,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **path** | [**List&lt;string&gt;**](string.md)| The path to an artifact within a project folder | [optional] 
+ **path** | [**List&lt;string&gt;**](string.md)| The path to an file within a project folder | [optional] 
 
 ### Return type
 
@@ -176,9 +177,96 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
+## DownloadArtifact
+
+> AnyType DownloadArtifact (string owner, string name, string path = null)
+
+Download an artifact from the project folder
+
+Retrieve a list of artifacts.
+
+### Example
+
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using PollinationSDK.Api;
+using PollinationSDK.Client;
+using PollinationSDK.Model;
+
+namespace Example
+{
+    public class DownloadArtifactExample
+    {
+        public static void Main()
+        {
+            Configuration.Default.BasePath = "http://localhost";
+            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+
+            var apiInstance = new ArtifactsApi(Configuration.Default);
+            var owner = owner_example;  // string | 
+            var name = name_example;  // string | 
+            var path = path_example;  // string | The path to an file within a project folder (optional) 
+
+            try
+            {
+                // Download an artifact from the project folder
+                AnyType result = apiInstance.DownloadArtifact(owner, name, path);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException e)
+            {
+                Debug.Print("Exception when calling ArtifactsApi.DownloadArtifact: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **string**|  | 
+ **name** | **string**|  | 
+ **path** | **string**| The path to an file within a project folder | [optional] 
+
+### Return type
+
+[**AnyType**](AnyType.md)
+
+### Authorization
+
+[Optional Auth](../README.md#Optional Auth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Retrieved |  -  |
+| **403** | Access forbidden |  -  |
+| **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
+| **404** | Not found |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#)
+[[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## ListArtifacts
 
-> List&lt;FileMeta&gt; ListArtifacts (string owner, string name, int page = null, int perPage = null, List<string> path = null)
+> List&lt;FileMeta&gt; ListArtifacts (string owner, string name, int? page = null, int? perPage = null, List<string> path = null)
 
 List artifacts in a project folder
 
@@ -206,9 +294,9 @@ namespace Example
             var apiInstance = new ArtifactsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var page = 56;  // int | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int | Number of items per page (optional)  (default to 25)
-            var path = new List<string>(); // List<string> | The path to an artifact within a project folder (optional) 
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
+            var path = new List<string>(); // List<string> | The path to an file within a project folder (optional) 
 
             try
             {
@@ -234,9 +322,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **page** | **int**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int**| Number of items per page | [optional] [default to 25]
- **path** | [**List&lt;string&gt;**](string.md)| The path to an artifact within a project folder | [optional] 
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
+ **path** | [**List&lt;string&gt;**](string.md)| The path to an file within a project folder | [optional] 
 
 ### Return type
 

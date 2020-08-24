@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 ## GetPackage
 
-> Object GetPackage (string owner, string type, string name, string digest)
+> AnyType GetPackage (string owner, string type, string name, string digest)
 
 Get Package
 
@@ -45,7 +45,7 @@ namespace Example
             try
             {
                 // Get Package
-                Object result = apiInstance.GetPackage(owner, type, name, digest);
+                AnyType result = apiInstance.GetPackage(owner, type, name, digest);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -71,7 +71,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**AnyType**](AnyType.md)
 
 ### Authorization
 
@@ -173,7 +173,7 @@ Name | Type | Description  | Notes
 
 ## PostOperator
 
-> Object PostOperator (string owner, System.IO.Stream package)
+> AnyType PostOperator (string owner, System.IO.Stream package)
 
 Push an Operator to the registry
 
@@ -203,7 +203,7 @@ namespace Example
             try
             {
                 // Push an Operator to the registry
-                Object result = apiInstance.PostOperator(owner, package);
+                AnyType result = apiInstance.PostOperator(owner, package);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -227,7 +227,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**AnyType**](AnyType.md)
 
 ### Authorization
 
@@ -252,7 +252,7 @@ Name | Type | Description  | Notes
 
 ## PostRecipe
 
-> Object PostRecipe (string owner, System.IO.Stream package, string authorization = null)
+> AnyType PostRecipe (string owner, System.IO.Stream package, string authorization = null)
 
 Push an Recipe to the registry
 
@@ -283,7 +283,7 @@ namespace Example
             try
             {
                 // Push an Recipe to the registry
-                Object result = apiInstance.PostRecipe(owner, package, authorization);
+                AnyType result = apiInstance.PostRecipe(owner, package, authorization);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -308,7 +308,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**AnyType**](AnyType.md)
 
 ### Authorization
 

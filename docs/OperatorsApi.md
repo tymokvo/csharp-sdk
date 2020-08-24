@@ -529,7 +529,7 @@ Name | Type | Description  | Notes
 
 ## ListOperators
 
-> RepositoryListDto ListOperators (int page = null, int perPage = null, List<string> name = null, List<string> owner = null, bool _public = null, List<string> keyword = null)
+> RepositoryListDto ListOperators (int? page = null, int? perPage = null, List<string> name = null, List<string> owner = null, bool? _public = null, List<string> keyword = null)
 
 List operators
 
@@ -553,11 +553,11 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new OperatorsApi(Configuration.Default);
-            var page = 56;  // int | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int | Number of items per page (optional)  (default to 25)
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
             var name = new List<string>(); // List<string> | The account name (optional) 
             var owner = new List<string>(); // List<string> | Owner of the project (optional) 
-            var _public = true;  // bool | Boolean check for public/private projects (optional) 
+            var _public = true;  // bool? | Boolean check for public/private projects (optional) 
             var keyword = new List<string>(); // List<string> | A keyword to index the repository by (optional) 
 
             try
@@ -582,11 +582,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int**| Number of items per page | [optional] [default to 25]
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
  **name** | [**List&lt;string&gt;**](string.md)| The account name | [optional] 
  **owner** | [**List&lt;string&gt;**](string.md)| Owner of the project | [optional] 
- **_public** | **bool**| Boolean check for public/private projects | [optional] 
+ **_public** | **bool?**| Boolean check for public/private projects | [optional] 
  **keyword** | [**List&lt;string&gt;**](string.md)| A keyword to index the repository by | [optional] 
 
 ### Return type
