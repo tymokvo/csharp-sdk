@@ -32,8 +32,8 @@ namespace PollinationSDK.Api
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username"></param>
-        /// <returns>AnyType</returns>
-        AnyType CheckUsername (string username);
+        /// <returns>object</returns>
+        object CheckUsername (string username);
 
         /// <summary>
         /// Check if a username is already taken
@@ -43,8 +43,8 @@ namespace PollinationSDK.Api
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username"></param>
-        /// <returns>ApiResponse of AnyType</returns>
-        ApiResponse<AnyType> CheckUsernameWithHttpInfo (string username);
+        /// <returns>ApiResponse of object</returns>
+        ApiResponse<object> CheckUsernameWithHttpInfo (string username);
         /// <summary>
         /// Get a specific user profile
         /// </summary>
@@ -105,8 +105,8 @@ namespace PollinationSDK.Api
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username"></param>
-        /// <returns>Task of AnyType</returns>
-        System.Threading.Tasks.Task<AnyType> CheckUsernameAsync (string username);
+        /// <returns>Task of object</returns>
+        System.Threading.Tasks.Task<object> CheckUsernameAsync (string username);
 
         /// <summary>
         /// Check if a username is already taken
@@ -116,8 +116,8 @@ namespace PollinationSDK.Api
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username"></param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AnyType>> CheckUsernameAsyncWithHttpInfo (string username);
+        /// <returns>Task of ApiResponse (object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<object>> CheckUsernameAsyncWithHttpInfo (string username);
         /// <summary>
         /// Get a specific user profile
         /// </summary>
@@ -253,10 +253,10 @@ namespace PollinationSDK.Api
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username"></param>
-        /// <returns>AnyType</returns>
-        public AnyType CheckUsername (string username)
+        /// <returns>object</returns>
+        public object CheckUsername (string username)
         {
-             ApiResponse<AnyType> localVarResponse = CheckUsernameWithHttpInfo(username);
+             ApiResponse<object> localVarResponse = CheckUsernameWithHttpInfo(username);
              return localVarResponse.Data;
         }
 
@@ -265,8 +265,8 @@ namespace PollinationSDK.Api
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username"></param>
-        /// <returns>ApiResponse of AnyType</returns>
-        public ApiResponse<AnyType> CheckUsernameWithHttpInfo (string username)
+        /// <returns>ApiResponse of object</returns>
+        public ApiResponse<object> CheckUsernameWithHttpInfo (string username)
         {
             // verify the required parameter 'username' is set
             if (username == null)
@@ -309,9 +309,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>
@@ -319,10 +319,10 @@ namespace PollinationSDK.Api
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username"></param>
-        /// <returns>Task of AnyType</returns>
-        public async System.Threading.Tasks.Task<AnyType> CheckUsernameAsync (string username)
+        /// <returns>Task of object</returns>
+        public async System.Threading.Tasks.Task<object> CheckUsernameAsync (string username)
         {
-             ApiResponse<AnyType> localVarResponse = await CheckUsernameAsyncWithHttpInfo(username);
+             ApiResponse<object> localVarResponse = await CheckUsernameAsyncWithHttpInfo(username);
              return localVarResponse.Data;
 
         }
@@ -332,8 +332,8 @@ namespace PollinationSDK.Api
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="username"></param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<AnyType>> CheckUsernameAsyncWithHttpInfo (string username)
+        /// <returns>Task of ApiResponse (object)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<object>> CheckUsernameAsyncWithHttpInfo (string username)
         {
             // verify the required parameter 'username' is set
             if (username == null)
@@ -376,9 +376,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>

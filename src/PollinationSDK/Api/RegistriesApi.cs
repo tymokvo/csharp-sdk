@@ -35,8 +35,8 @@ namespace PollinationSDK.Api
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="digest"></param>
-        /// <returns>AnyType</returns>
-        AnyType GetPackage (string owner, string type, string name, string digest);
+        /// <returns>object</returns>
+        object GetPackage (string owner, string type, string name, string digest);
 
         /// <summary>
         /// Get Package
@@ -49,8 +49,8 @@ namespace PollinationSDK.Api
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="digest"></param>
-        /// <returns>ApiResponse of AnyType</returns>
-        ApiResponse<AnyType> GetPackageWithHttpInfo (string owner, string type, string name, string digest);
+        /// <returns>ApiResponse of object</returns>
+        ApiResponse<object> GetPackageWithHttpInfo (string owner, string type, string name, string digest);
         /// <summary>
         /// Get Registry Index
         /// </summary>
@@ -81,8 +81,8 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="package"></param>
-        /// <returns>AnyType</returns>
-        AnyType PostOperator (string owner, System.IO.Stream package);
+        /// <returns>object</returns>
+        object PostOperator (string owner, System.IO.Stream package);
 
         /// <summary>
         /// Push an Operator to the registry
@@ -93,8 +93,8 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="package"></param>
-        /// <returns>ApiResponse of AnyType</returns>
-        ApiResponse<AnyType> PostOperatorWithHttpInfo (string owner, System.IO.Stream package);
+        /// <returns>ApiResponse of object</returns>
+        ApiResponse<object> PostOperatorWithHttpInfo (string owner, System.IO.Stream package);
         /// <summary>
         /// Push an Recipe to the registry
         /// </summary>
@@ -105,8 +105,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="package"></param>
         /// <param name="authorization"> (optional)</param>
-        /// <returns>AnyType</returns>
-        AnyType PostRecipe (string owner, System.IO.Stream package, string authorization = default);
+        /// <returns>object</returns>
+        object PostRecipe (string owner, System.IO.Stream package, string authorization = default);
 
         /// <summary>
         /// Push an Recipe to the registry
@@ -118,8 +118,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="package"></param>
         /// <param name="authorization"> (optional)</param>
-        /// <returns>ApiResponse of AnyType</returns>
-        ApiResponse<AnyType> PostRecipeWithHttpInfo (string owner, System.IO.Stream package, string authorization = default);
+        /// <returns>ApiResponse of object</returns>
+        ApiResponse<object> PostRecipeWithHttpInfo (string owner, System.IO.Stream package, string authorization = default);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -133,8 +133,8 @@ namespace PollinationSDK.Api
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="digest"></param>
-        /// <returns>Task of AnyType</returns>
-        System.Threading.Tasks.Task<AnyType> GetPackageAsync (string owner, string type, string name, string digest);
+        /// <returns>Task of object</returns>
+        System.Threading.Tasks.Task<object> GetPackageAsync (string owner, string type, string name, string digest);
 
         /// <summary>
         /// Get Package
@@ -147,8 +147,8 @@ namespace PollinationSDK.Api
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="digest"></param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AnyType>> GetPackageAsyncWithHttpInfo (string owner, string type, string name, string digest);
+        /// <returns>Task of ApiResponse (object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<object>> GetPackageAsyncWithHttpInfo (string owner, string type, string name, string digest);
         /// <summary>
         /// Get Registry Index
         /// </summary>
@@ -179,8 +179,8 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="package"></param>
-        /// <returns>Task of AnyType</returns>
-        System.Threading.Tasks.Task<AnyType> PostOperatorAsync (string owner, System.IO.Stream package);
+        /// <returns>Task of object</returns>
+        System.Threading.Tasks.Task<object> PostOperatorAsync (string owner, System.IO.Stream package);
 
         /// <summary>
         /// Push an Operator to the registry
@@ -191,8 +191,8 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="package"></param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AnyType>> PostOperatorAsyncWithHttpInfo (string owner, System.IO.Stream package);
+        /// <returns>Task of ApiResponse (object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<object>> PostOperatorAsyncWithHttpInfo (string owner, System.IO.Stream package);
         /// <summary>
         /// Push an Recipe to the registry
         /// </summary>
@@ -203,8 +203,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="package"></param>
         /// <param name="authorization"> (optional)</param>
-        /// <returns>Task of AnyType</returns>
-        System.Threading.Tasks.Task<AnyType> PostRecipeAsync (string owner, System.IO.Stream package, string authorization = default);
+        /// <returns>Task of object</returns>
+        System.Threading.Tasks.Task<object> PostRecipeAsync (string owner, System.IO.Stream package, string authorization = default);
 
         /// <summary>
         /// Push an Recipe to the registry
@@ -216,8 +216,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="package"></param>
         /// <param name="authorization"> (optional)</param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AnyType>> PostRecipeAsyncWithHttpInfo (string owner, System.IO.Stream package, string authorization = default);
+        /// <returns>Task of ApiResponse (object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<object>> PostRecipeAsyncWithHttpInfo (string owner, System.IO.Stream package, string authorization = default);
         #endregion Asynchronous Operations
     }
 
@@ -306,10 +306,10 @@ namespace PollinationSDK.Api
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="digest"></param>
-        /// <returns>AnyType</returns>
-        public AnyType GetPackage (string owner, string type, string name, string digest)
+        /// <returns>object</returns>
+        public object GetPackage (string owner, string type, string name, string digest)
         {
-             ApiResponse<AnyType> localVarResponse = GetPackageWithHttpInfo(owner, type, name, digest);
+             ApiResponse<object> localVarResponse = GetPackageWithHttpInfo(owner, type, name, digest);
              return localVarResponse.Data;
         }
 
@@ -321,8 +321,8 @@ namespace PollinationSDK.Api
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="digest"></param>
-        /// <returns>ApiResponse of AnyType</returns>
-        public ApiResponse<AnyType> GetPackageWithHttpInfo (string owner, string type, string name, string digest)
+        /// <returns>ApiResponse of object</returns>
+        public ApiResponse<object> GetPackageWithHttpInfo (string owner, string type, string name, string digest)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -384,9 +384,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>
@@ -397,10 +397,10 @@ namespace PollinationSDK.Api
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="digest"></param>
-        /// <returns>Task of AnyType</returns>
-        public async System.Threading.Tasks.Task<AnyType> GetPackageAsync (string owner, string type, string name, string digest)
+        /// <returns>Task of object</returns>
+        public async System.Threading.Tasks.Task<object> GetPackageAsync (string owner, string type, string name, string digest)
         {
-             ApiResponse<AnyType> localVarResponse = await GetPackageAsyncWithHttpInfo(owner, type, name, digest);
+             ApiResponse<object> localVarResponse = await GetPackageAsyncWithHttpInfo(owner, type, name, digest);
              return localVarResponse.Data;
 
         }
@@ -413,8 +413,8 @@ namespace PollinationSDK.Api
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="digest"></param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<AnyType>> GetPackageAsyncWithHttpInfo (string owner, string type, string name, string digest)
+        /// <returns>Task of ApiResponse (object)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<object>> GetPackageAsyncWithHttpInfo (string owner, string type, string name, string digest)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -476,9 +476,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>
@@ -632,10 +632,10 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="package"></param>
-        /// <returns>AnyType</returns>
-        public AnyType PostOperator (string owner, System.IO.Stream package)
+        /// <returns>object</returns>
+        public object PostOperator (string owner, System.IO.Stream package)
         {
-             ApiResponse<AnyType> localVarResponse = PostOperatorWithHttpInfo(owner, package);
+             ApiResponse<object> localVarResponse = PostOperatorWithHttpInfo(owner, package);
              return localVarResponse.Data;
         }
 
@@ -645,8 +645,8 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="package"></param>
-        /// <returns>ApiResponse of AnyType</returns>
-        public ApiResponse<AnyType> PostOperatorWithHttpInfo (string owner, System.IO.Stream package)
+        /// <returns>ApiResponse of object</returns>
+        public ApiResponse<object> PostOperatorWithHttpInfo (string owner, System.IO.Stream package)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -700,9 +700,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>
@@ -711,10 +711,10 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="package"></param>
-        /// <returns>Task of AnyType</returns>
-        public async System.Threading.Tasks.Task<AnyType> PostOperatorAsync (string owner, System.IO.Stream package)
+        /// <returns>Task of object</returns>
+        public async System.Threading.Tasks.Task<object> PostOperatorAsync (string owner, System.IO.Stream package)
         {
-             ApiResponse<AnyType> localVarResponse = await PostOperatorAsyncWithHttpInfo(owner, package);
+             ApiResponse<object> localVarResponse = await PostOperatorAsyncWithHttpInfo(owner, package);
              return localVarResponse.Data;
 
         }
@@ -725,8 +725,8 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="package"></param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<AnyType>> PostOperatorAsyncWithHttpInfo (string owner, System.IO.Stream package)
+        /// <returns>Task of ApiResponse (object)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<object>> PostOperatorAsyncWithHttpInfo (string owner, System.IO.Stream package)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -780,9 +780,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>
@@ -792,10 +792,10 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="package"></param>
         /// <param name="authorization"> (optional)</param>
-        /// <returns>AnyType</returns>
-        public AnyType PostRecipe (string owner, System.IO.Stream package, string authorization = default)
+        /// <returns>object</returns>
+        public object PostRecipe (string owner, System.IO.Stream package, string authorization = default)
         {
-             ApiResponse<AnyType> localVarResponse = PostRecipeWithHttpInfo(owner, package, authorization);
+             ApiResponse<object> localVarResponse = PostRecipeWithHttpInfo(owner, package, authorization);
              return localVarResponse.Data;
         }
 
@@ -806,8 +806,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="package"></param>
         /// <param name="authorization"> (optional)</param>
-        /// <returns>ApiResponse of AnyType</returns>
-        public ApiResponse<AnyType> PostRecipeWithHttpInfo (string owner, System.IO.Stream package, string authorization = default)
+        /// <returns>ApiResponse of object</returns>
+        public ApiResponse<object> PostRecipeWithHttpInfo (string owner, System.IO.Stream package, string authorization = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -862,9 +862,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>
@@ -874,10 +874,10 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="package"></param>
         /// <param name="authorization"> (optional)</param>
-        /// <returns>Task of AnyType</returns>
-        public async System.Threading.Tasks.Task<AnyType> PostRecipeAsync (string owner, System.IO.Stream package, string authorization = default)
+        /// <returns>Task of object</returns>
+        public async System.Threading.Tasks.Task<object> PostRecipeAsync (string owner, System.IO.Stream package, string authorization = default)
         {
-             ApiResponse<AnyType> localVarResponse = await PostRecipeAsyncWithHttpInfo(owner, package, authorization);
+             ApiResponse<object> localVarResponse = await PostRecipeAsyncWithHttpInfo(owner, package, authorization);
              return localVarResponse.Data;
 
         }
@@ -889,8 +889,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="package"></param>
         /// <param name="authorization"> (optional)</param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<AnyType>> PostRecipeAsyncWithHttpInfo (string owner, System.IO.Stream package, string authorization = default)
+        /// <returns>Task of ApiResponse (object)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<object>> PostRecipeAsyncWithHttpInfo (string owner, System.IO.Stream package, string authorization = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -945,9 +945,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
     }

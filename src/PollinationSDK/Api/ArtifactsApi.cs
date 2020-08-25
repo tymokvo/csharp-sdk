@@ -84,8 +84,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="path">The path to an file within a project folder (optional)</param>
-        /// <returns>AnyType</returns>
-        AnyType DownloadArtifact (string owner, string name, string path = default);
+        /// <returns>object</returns>
+        object DownloadArtifact (string owner, string name, string path = default);
 
         /// <summary>
         /// Download an artifact from the project folder
@@ -97,8 +97,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="path">The path to an file within a project folder (optional)</param>
-        /// <returns>ApiResponse of AnyType</returns>
-        ApiResponse<AnyType> DownloadArtifactWithHttpInfo (string owner, string name, string path = default);
+        /// <returns>ApiResponse of object</returns>
+        ApiResponse<object> DownloadArtifactWithHttpInfo (string owner, string name, string path = default);
         /// <summary>
         /// List artifacts in a project folder
         /// </summary>
@@ -190,8 +190,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="path">The path to an file within a project folder (optional)</param>
-        /// <returns>Task of AnyType</returns>
-        System.Threading.Tasks.Task<AnyType> DownloadArtifactAsync (string owner, string name, string path = default);
+        /// <returns>Task of object</returns>
+        System.Threading.Tasks.Task<object> DownloadArtifactAsync (string owner, string name, string path = default);
 
         /// <summary>
         /// Download an artifact from the project folder
@@ -203,8 +203,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="path">The path to an file within a project folder (optional)</param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AnyType>> DownloadArtifactAsyncWithHttpInfo (string owner, string name, string path = default);
+        /// <returns>Task of ApiResponse (object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<object>> DownloadArtifactAsyncWithHttpInfo (string owner, string name, string path = default);
         /// <summary>
         /// List artifacts in a project folder
         /// </summary>
@@ -669,10 +669,10 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="path">The path to an file within a project folder (optional)</param>
-        /// <returns>AnyType</returns>
-        public AnyType DownloadArtifact (string owner, string name, string path = default)
+        /// <returns>object</returns>
+        public object DownloadArtifact (string owner, string name, string path = default)
         {
-             ApiResponse<AnyType> localVarResponse = DownloadArtifactWithHttpInfo(owner, name, path);
+             ApiResponse<object> localVarResponse = DownloadArtifactWithHttpInfo(owner, name, path);
              return localVarResponse.Data;
         }
 
@@ -683,8 +683,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="path">The path to an file within a project folder (optional)</param>
-        /// <returns>ApiResponse of AnyType</returns>
-        public ApiResponse<AnyType> DownloadArtifactWithHttpInfo (string owner, string name, string path = default)
+        /// <returns>ApiResponse of object</returns>
+        public ApiResponse<object> DownloadArtifactWithHttpInfo (string owner, string name, string path = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -738,9 +738,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>
@@ -750,10 +750,10 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="path">The path to an file within a project folder (optional)</param>
-        /// <returns>Task of AnyType</returns>
-        public async System.Threading.Tasks.Task<AnyType> DownloadArtifactAsync (string owner, string name, string path = default)
+        /// <returns>Task of object</returns>
+        public async System.Threading.Tasks.Task<object> DownloadArtifactAsync (string owner, string name, string path = default)
         {
-             ApiResponse<AnyType> localVarResponse = await DownloadArtifactAsyncWithHttpInfo(owner, name, path);
+             ApiResponse<object> localVarResponse = await DownloadArtifactAsyncWithHttpInfo(owner, name, path);
              return localVarResponse.Data;
 
         }
@@ -765,8 +765,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="path">The path to an file within a project folder (optional)</param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<AnyType>> DownloadArtifactAsyncWithHttpInfo (string owner, string name, string path = default)
+        /// <returns>Task of ApiResponse (object)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<object>> DownloadArtifactAsyncWithHttpInfo (string owner, string name, string path = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -820,9 +820,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>

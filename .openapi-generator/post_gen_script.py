@@ -123,13 +123,13 @@ def fix_enums(read_data, enumTypes):
     return data
 
 
-def replace_decimal(read_data):
+def replace_AnyType(read_data):
     data = read_data
-    replace_source = ['decimal', '1M', '2M', '3M', '4M', '5M', '6M', '7M', '8M', '9M', '0M']
-    replace_new = ['double', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+    replace_source = ['AnyType']
+    replace_new = ['object']
     for s, n in zip(replace_source, replace_new):
         data = data.replace(s, n)
-    print("|---Replacing %s to %s" % ('decimal', 'double'))
+    print("|---Replacing %s to %s" % ('AnyType', 'object'))
     return data
 
 
@@ -171,6 +171,7 @@ def check_csfiles(source_folder, anyof_types):
         data = f.read()
         # take care of anyof type
         data = replace_anyof_type(data, anyof_types)
+        data = replace_AnyType(data)
         # replace decimal/number to double
         # data = replace_decimal(data)
         data = fix_constructor(data)
@@ -237,6 +238,7 @@ def check_types(source_json_url):
 
     # make bool type in api parameters to nullable bool
     source_folder = os.path.join(root, 'src', name_space, 'Api')
+    check_csfiles(source_folder, all_types)
     check_csfiles_bool_types(source_folder)
 
 

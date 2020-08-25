@@ -86,8 +86,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>AnyType</returns>
-        AnyType GetSimulationInputs (string owner, string name, string simulationId);
+        /// <returns>object</returns>
+        object GetSimulationInputs (string owner, string name, string simulationId);
 
         /// <summary>
         /// Get simulation inputs
@@ -99,8 +99,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>ApiResponse of AnyType</returns>
-        ApiResponse<AnyType> GetSimulationInputsWithHttpInfo (string owner, string name, string simulationId);
+        /// <returns>ApiResponse of object</returns>
+        ApiResponse<object> GetSimulationInputsWithHttpInfo (string owner, string name, string simulationId);
         /// <summary>
         /// Get simulation logs
         /// </summary>
@@ -111,8 +111,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>AnyType</returns>
-        AnyType GetSimulationLogs (string owner, string name, string simulationId);
+        /// <returns>object</returns>
+        object GetSimulationLogs (string owner, string name, string simulationId);
 
         /// <summary>
         /// Get simulation logs
@@ -124,8 +124,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>ApiResponse of AnyType</returns>
-        ApiResponse<AnyType> GetSimulationLogsWithHttpInfo (string owner, string name, string simulationId);
+        /// <returns>ApiResponse of object</returns>
+        ApiResponse<object> GetSimulationLogsWithHttpInfo (string owner, string name, string simulationId);
         /// <summary>
         /// Get simulation output artifact by name
         /// </summary>
@@ -137,8 +137,8 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
         /// <param name="artifactName"></param>
-        /// <returns>AnyType</returns>
-        AnyType GetSimulationOutputArtifact (string owner, string name, string simulationId, string artifactName);
+        /// <returns>object</returns>
+        object GetSimulationOutputArtifact (string owner, string name, string simulationId, string artifactName);
 
         /// <summary>
         /// Get simulation output artifact by name
@@ -151,8 +151,8 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
         /// <param name="artifactName"></param>
-        /// <returns>ApiResponse of AnyType</returns>
-        ApiResponse<AnyType> GetSimulationOutputArtifactWithHttpInfo (string owner, string name, string simulationId, string artifactName);
+        /// <returns>ApiResponse of object</returns>
+        ApiResponse<object> GetSimulationOutputArtifactWithHttpInfo (string owner, string name, string simulationId, string artifactName);
         /// <summary>
         /// Get simulation outputs
         /// </summary>
@@ -163,8 +163,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>AnyType</returns>
-        AnyType GetSimulationOutputs (string owner, string name, string simulationId);
+        /// <returns>object</returns>
+        object GetSimulationOutputs (string owner, string name, string simulationId);
 
         /// <summary>
         /// Get simulation outputs
@@ -176,8 +176,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>ApiResponse of AnyType</returns>
-        ApiResponse<AnyType> GetSimulationOutputsWithHttpInfo (string owner, string name, string simulationId);
+        /// <returns>ApiResponse of object</returns>
+        ApiResponse<object> GetSimulationOutputsWithHttpInfo (string owner, string name, string simulationId);
         /// <summary>
         /// Get a simulation task&#39;s logs
         /// </summary>
@@ -375,8 +375,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>Task of AnyType</returns>
-        System.Threading.Tasks.Task<AnyType> GetSimulationInputsAsync (string owner, string name, string simulationId);
+        /// <returns>Task of object</returns>
+        System.Threading.Tasks.Task<object> GetSimulationInputsAsync (string owner, string name, string simulationId);
 
         /// <summary>
         /// Get simulation inputs
@@ -388,8 +388,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AnyType>> GetSimulationInputsAsyncWithHttpInfo (string owner, string name, string simulationId);
+        /// <returns>Task of ApiResponse (object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<object>> GetSimulationInputsAsyncWithHttpInfo (string owner, string name, string simulationId);
         /// <summary>
         /// Get simulation logs
         /// </summary>
@@ -400,8 +400,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>Task of AnyType</returns>
-        System.Threading.Tasks.Task<AnyType> GetSimulationLogsAsync (string owner, string name, string simulationId);
+        /// <returns>Task of object</returns>
+        System.Threading.Tasks.Task<object> GetSimulationLogsAsync (string owner, string name, string simulationId);
 
         /// <summary>
         /// Get simulation logs
@@ -413,8 +413,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AnyType>> GetSimulationLogsAsyncWithHttpInfo (string owner, string name, string simulationId);
+        /// <returns>Task of ApiResponse (object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<object>> GetSimulationLogsAsyncWithHttpInfo (string owner, string name, string simulationId);
         /// <summary>
         /// Get simulation output artifact by name
         /// </summary>
@@ -426,8 +426,8 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
         /// <param name="artifactName"></param>
-        /// <returns>Task of AnyType</returns>
-        System.Threading.Tasks.Task<AnyType> GetSimulationOutputArtifactAsync (string owner, string name, string simulationId, string artifactName);
+        /// <returns>Task of object</returns>
+        System.Threading.Tasks.Task<object> GetSimulationOutputArtifactAsync (string owner, string name, string simulationId, string artifactName);
 
         /// <summary>
         /// Get simulation output artifact by name
@@ -440,8 +440,8 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
         /// <param name="artifactName"></param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AnyType>> GetSimulationOutputArtifactAsyncWithHttpInfo (string owner, string name, string simulationId, string artifactName);
+        /// <returns>Task of ApiResponse (object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<object>> GetSimulationOutputArtifactAsyncWithHttpInfo (string owner, string name, string simulationId, string artifactName);
         /// <summary>
         /// Get simulation outputs
         /// </summary>
@@ -452,8 +452,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>Task of AnyType</returns>
-        System.Threading.Tasks.Task<AnyType> GetSimulationOutputsAsync (string owner, string name, string simulationId);
+        /// <returns>Task of object</returns>
+        System.Threading.Tasks.Task<object> GetSimulationOutputsAsync (string owner, string name, string simulationId);
 
         /// <summary>
         /// Get simulation outputs
@@ -465,8 +465,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AnyType>> GetSimulationOutputsAsyncWithHttpInfo (string owner, string name, string simulationId);
+        /// <returns>Task of ApiResponse (object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<object>> GetSimulationOutputsAsyncWithHttpInfo (string owner, string name, string simulationId);
         /// <summary>
         /// Get a simulation task&#39;s logs
         /// </summary>
@@ -1047,10 +1047,10 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>AnyType</returns>
-        public AnyType GetSimulationInputs (string owner, string name, string simulationId)
+        /// <returns>object</returns>
+        public object GetSimulationInputs (string owner, string name, string simulationId)
         {
-             ApiResponse<AnyType> localVarResponse = GetSimulationInputsWithHttpInfo(owner, name, simulationId);
+             ApiResponse<object> localVarResponse = GetSimulationInputsWithHttpInfo(owner, name, simulationId);
              return localVarResponse.Data;
         }
 
@@ -1061,8 +1061,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>ApiResponse of AnyType</returns>
-        public ApiResponse<AnyType> GetSimulationInputsWithHttpInfo (string owner, string name, string simulationId)
+        /// <returns>ApiResponse of object</returns>
+        public ApiResponse<object> GetSimulationInputsWithHttpInfo (string owner, string name, string simulationId)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1119,9 +1119,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>
@@ -1131,10 +1131,10 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>Task of AnyType</returns>
-        public async System.Threading.Tasks.Task<AnyType> GetSimulationInputsAsync (string owner, string name, string simulationId)
+        /// <returns>Task of object</returns>
+        public async System.Threading.Tasks.Task<object> GetSimulationInputsAsync (string owner, string name, string simulationId)
         {
-             ApiResponse<AnyType> localVarResponse = await GetSimulationInputsAsyncWithHttpInfo(owner, name, simulationId);
+             ApiResponse<object> localVarResponse = await GetSimulationInputsAsyncWithHttpInfo(owner, name, simulationId);
              return localVarResponse.Data;
 
         }
@@ -1146,8 +1146,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<AnyType>> GetSimulationInputsAsyncWithHttpInfo (string owner, string name, string simulationId)
+        /// <returns>Task of ApiResponse (object)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<object>> GetSimulationInputsAsyncWithHttpInfo (string owner, string name, string simulationId)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1204,9 +1204,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>
@@ -1216,10 +1216,10 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>AnyType</returns>
-        public AnyType GetSimulationLogs (string owner, string name, string simulationId)
+        /// <returns>object</returns>
+        public object GetSimulationLogs (string owner, string name, string simulationId)
         {
-             ApiResponse<AnyType> localVarResponse = GetSimulationLogsWithHttpInfo(owner, name, simulationId);
+             ApiResponse<object> localVarResponse = GetSimulationLogsWithHttpInfo(owner, name, simulationId);
              return localVarResponse.Data;
         }
 
@@ -1230,8 +1230,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>ApiResponse of AnyType</returns>
-        public ApiResponse<AnyType> GetSimulationLogsWithHttpInfo (string owner, string name, string simulationId)
+        /// <returns>ApiResponse of object</returns>
+        public ApiResponse<object> GetSimulationLogsWithHttpInfo (string owner, string name, string simulationId)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1288,9 +1288,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>
@@ -1300,10 +1300,10 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>Task of AnyType</returns>
-        public async System.Threading.Tasks.Task<AnyType> GetSimulationLogsAsync (string owner, string name, string simulationId)
+        /// <returns>Task of object</returns>
+        public async System.Threading.Tasks.Task<object> GetSimulationLogsAsync (string owner, string name, string simulationId)
         {
-             ApiResponse<AnyType> localVarResponse = await GetSimulationLogsAsyncWithHttpInfo(owner, name, simulationId);
+             ApiResponse<object> localVarResponse = await GetSimulationLogsAsyncWithHttpInfo(owner, name, simulationId);
              return localVarResponse.Data;
 
         }
@@ -1315,8 +1315,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<AnyType>> GetSimulationLogsAsyncWithHttpInfo (string owner, string name, string simulationId)
+        /// <returns>Task of ApiResponse (object)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<object>> GetSimulationLogsAsyncWithHttpInfo (string owner, string name, string simulationId)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1373,9 +1373,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>
@@ -1386,10 +1386,10 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
         /// <param name="artifactName"></param>
-        /// <returns>AnyType</returns>
-        public AnyType GetSimulationOutputArtifact (string owner, string name, string simulationId, string artifactName)
+        /// <returns>object</returns>
+        public object GetSimulationOutputArtifact (string owner, string name, string simulationId, string artifactName)
         {
-             ApiResponse<AnyType> localVarResponse = GetSimulationOutputArtifactWithHttpInfo(owner, name, simulationId, artifactName);
+             ApiResponse<object> localVarResponse = GetSimulationOutputArtifactWithHttpInfo(owner, name, simulationId, artifactName);
              return localVarResponse.Data;
         }
 
@@ -1401,8 +1401,8 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
         /// <param name="artifactName"></param>
-        /// <returns>ApiResponse of AnyType</returns>
-        public ApiResponse<AnyType> GetSimulationOutputArtifactWithHttpInfo (string owner, string name, string simulationId, string artifactName)
+        /// <returns>ApiResponse of object</returns>
+        public ApiResponse<object> GetSimulationOutputArtifactWithHttpInfo (string owner, string name, string simulationId, string artifactName)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1463,9 +1463,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>
@@ -1476,10 +1476,10 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
         /// <param name="artifactName"></param>
-        /// <returns>Task of AnyType</returns>
-        public async System.Threading.Tasks.Task<AnyType> GetSimulationOutputArtifactAsync (string owner, string name, string simulationId, string artifactName)
+        /// <returns>Task of object</returns>
+        public async System.Threading.Tasks.Task<object> GetSimulationOutputArtifactAsync (string owner, string name, string simulationId, string artifactName)
         {
-             ApiResponse<AnyType> localVarResponse = await GetSimulationOutputArtifactAsyncWithHttpInfo(owner, name, simulationId, artifactName);
+             ApiResponse<object> localVarResponse = await GetSimulationOutputArtifactAsyncWithHttpInfo(owner, name, simulationId, artifactName);
              return localVarResponse.Data;
 
         }
@@ -1492,8 +1492,8 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
         /// <param name="artifactName"></param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<AnyType>> GetSimulationOutputArtifactAsyncWithHttpInfo (string owner, string name, string simulationId, string artifactName)
+        /// <returns>Task of ApiResponse (object)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<object>> GetSimulationOutputArtifactAsyncWithHttpInfo (string owner, string name, string simulationId, string artifactName)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1554,9 +1554,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>
@@ -1566,10 +1566,10 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>AnyType</returns>
-        public AnyType GetSimulationOutputs (string owner, string name, string simulationId)
+        /// <returns>object</returns>
+        public object GetSimulationOutputs (string owner, string name, string simulationId)
         {
-             ApiResponse<AnyType> localVarResponse = GetSimulationOutputsWithHttpInfo(owner, name, simulationId);
+             ApiResponse<object> localVarResponse = GetSimulationOutputsWithHttpInfo(owner, name, simulationId);
              return localVarResponse.Data;
         }
 
@@ -1580,8 +1580,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>ApiResponse of AnyType</returns>
-        public ApiResponse<AnyType> GetSimulationOutputsWithHttpInfo (string owner, string name, string simulationId)
+        /// <returns>ApiResponse of object</returns>
+        public ApiResponse<object> GetSimulationOutputsWithHttpInfo (string owner, string name, string simulationId)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1638,9 +1638,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>
@@ -1650,10 +1650,10 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>Task of AnyType</returns>
-        public async System.Threading.Tasks.Task<AnyType> GetSimulationOutputsAsync (string owner, string name, string simulationId)
+        /// <returns>Task of object</returns>
+        public async System.Threading.Tasks.Task<object> GetSimulationOutputsAsync (string owner, string name, string simulationId)
         {
-             ApiResponse<AnyType> localVarResponse = await GetSimulationOutputsAsyncWithHttpInfo(owner, name, simulationId);
+             ApiResponse<object> localVarResponse = await GetSimulationOutputsAsyncWithHttpInfo(owner, name, simulationId);
              return localVarResponse.Data;
 
         }
@@ -1665,8 +1665,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="simulationId"></param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<AnyType>> GetSimulationOutputsAsyncWithHttpInfo (string owner, string name, string simulationId)
+        /// <returns>Task of ApiResponse (object)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<object>> GetSimulationOutputsAsyncWithHttpInfo (string owner, string name, string simulationId)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1723,9 +1723,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>

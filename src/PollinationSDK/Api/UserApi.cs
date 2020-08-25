@@ -32,8 +32,8 @@ namespace PollinationSDK.Api
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="emailRequest"></param>
-        /// <returns>AnyType</returns>
-        AnyType ChangePassword (EmailRequest emailRequest);
+        /// <returns>object</returns>
+        object ChangePassword (EmailRequest emailRequest);
 
         /// <summary>
         /// Make a password change request
@@ -43,8 +43,8 @@ namespace PollinationSDK.Api
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="emailRequest"></param>
-        /// <returns>ApiResponse of AnyType</returns>
-        ApiResponse<AnyType> ChangePasswordWithHttpInfo (EmailRequest emailRequest);
+        /// <returns>ApiResponse of object</returns>
+        ApiResponse<object> ChangePasswordWithHttpInfo (EmailRequest emailRequest);
         /// <summary>
         /// Get authenticated user profile.
         /// </summary>
@@ -131,8 +131,8 @@ namespace PollinationSDK.Api
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="signUpDto"></param>
-        /// <returns>AnyType</returns>
-        AnyType Signup (SignUpDto signUpDto);
+        /// <returns>object</returns>
+        object Signup (SignUpDto signUpDto);
 
         /// <summary>
         /// Sign Up to the platform!
@@ -142,8 +142,8 @@ namespace PollinationSDK.Api
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="signUpDto"></param>
-        /// <returns>ApiResponse of AnyType</returns>
-        ApiResponse<AnyType> SignupWithHttpInfo (SignUpDto signUpDto);
+        /// <returns>ApiResponse of object</returns>
+        ApiResponse<object> SignupWithHttpInfo (SignUpDto signUpDto);
         /// <summary>
         /// Get refresh token and delete previous one if it exists
         /// </summary>
@@ -175,8 +175,8 @@ namespace PollinationSDK.Api
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="emailRequest"></param>
-        /// <returns>Task of AnyType</returns>
-        System.Threading.Tasks.Task<AnyType> ChangePasswordAsync (EmailRequest emailRequest);
+        /// <returns>Task of object</returns>
+        System.Threading.Tasks.Task<object> ChangePasswordAsync (EmailRequest emailRequest);
 
         /// <summary>
         /// Make a password change request
@@ -186,8 +186,8 @@ namespace PollinationSDK.Api
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="emailRequest"></param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AnyType>> ChangePasswordAsyncWithHttpInfo (EmailRequest emailRequest);
+        /// <returns>Task of ApiResponse (object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<object>> ChangePasswordAsyncWithHttpInfo (EmailRequest emailRequest);
         /// <summary>
         /// Get authenticated user profile.
         /// </summary>
@@ -274,8 +274,8 @@ namespace PollinationSDK.Api
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="signUpDto"></param>
-        /// <returns>Task of AnyType</returns>
-        System.Threading.Tasks.Task<AnyType> SignupAsync (SignUpDto signUpDto);
+        /// <returns>Task of object</returns>
+        System.Threading.Tasks.Task<object> SignupAsync (SignUpDto signUpDto);
 
         /// <summary>
         /// Sign Up to the platform!
@@ -285,8 +285,8 @@ namespace PollinationSDK.Api
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="signUpDto"></param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AnyType>> SignupAsyncWithHttpInfo (SignUpDto signUpDto);
+        /// <returns>Task of ApiResponse (object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<object>> SignupAsyncWithHttpInfo (SignUpDto signUpDto);
         /// <summary>
         /// Get refresh token and delete previous one if it exists
         /// </summary>
@@ -393,10 +393,10 @@ namespace PollinationSDK.Api
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="emailRequest"></param>
-        /// <returns>AnyType</returns>
-        public AnyType ChangePassword (EmailRequest emailRequest)
+        /// <returns>object</returns>
+        public object ChangePassword (EmailRequest emailRequest)
         {
-             ApiResponse<AnyType> localVarResponse = ChangePasswordWithHttpInfo(emailRequest);
+             ApiResponse<object> localVarResponse = ChangePasswordWithHttpInfo(emailRequest);
              return localVarResponse.Data;
         }
 
@@ -405,8 +405,8 @@ namespace PollinationSDK.Api
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="emailRequest"></param>
-        /// <returns>ApiResponse of AnyType</returns>
-        public ApiResponse<AnyType> ChangePasswordWithHttpInfo (EmailRequest emailRequest)
+        /// <returns>ApiResponse of object</returns>
+        public ApiResponse<object> ChangePasswordWithHttpInfo (EmailRequest emailRequest)
         {
             // verify the required parameter 'emailRequest' is set
             if (emailRequest == null)
@@ -457,9 +457,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>
@@ -467,10 +467,10 @@ namespace PollinationSDK.Api
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="emailRequest"></param>
-        /// <returns>Task of AnyType</returns>
-        public async System.Threading.Tasks.Task<AnyType> ChangePasswordAsync (EmailRequest emailRequest)
+        /// <returns>Task of object</returns>
+        public async System.Threading.Tasks.Task<object> ChangePasswordAsync (EmailRequest emailRequest)
         {
-             ApiResponse<AnyType> localVarResponse = await ChangePasswordAsyncWithHttpInfo(emailRequest);
+             ApiResponse<object> localVarResponse = await ChangePasswordAsyncWithHttpInfo(emailRequest);
              return localVarResponse.Data;
 
         }
@@ -480,8 +480,8 @@ namespace PollinationSDK.Api
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="emailRequest"></param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<AnyType>> ChangePasswordAsyncWithHttpInfo (EmailRequest emailRequest)
+        /// <returns>Task of ApiResponse (object)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<object>> ChangePasswordAsyncWithHttpInfo (EmailRequest emailRequest)
         {
             // verify the required parameter 'emailRequest' is set
             if (emailRequest == null)
@@ -532,9 +532,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>
@@ -1090,10 +1090,10 @@ namespace PollinationSDK.Api
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="signUpDto"></param>
-        /// <returns>AnyType</returns>
-        public AnyType Signup (SignUpDto signUpDto)
+        /// <returns>object</returns>
+        public object Signup (SignUpDto signUpDto)
         {
-             ApiResponse<AnyType> localVarResponse = SignupWithHttpInfo(signUpDto);
+             ApiResponse<object> localVarResponse = SignupWithHttpInfo(signUpDto);
              return localVarResponse.Data;
         }
 
@@ -1102,8 +1102,8 @@ namespace PollinationSDK.Api
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="signUpDto"></param>
-        /// <returns>ApiResponse of AnyType</returns>
-        public ApiResponse<AnyType> SignupWithHttpInfo (SignUpDto signUpDto)
+        /// <returns>ApiResponse of object</returns>
+        public ApiResponse<object> SignupWithHttpInfo (SignUpDto signUpDto)
         {
             // verify the required parameter 'signUpDto' is set
             if (signUpDto == null)
@@ -1154,9 +1154,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>
@@ -1164,10 +1164,10 @@ namespace PollinationSDK.Api
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="signUpDto"></param>
-        /// <returns>Task of AnyType</returns>
-        public async System.Threading.Tasks.Task<AnyType> SignupAsync (SignUpDto signUpDto)
+        /// <returns>Task of object</returns>
+        public async System.Threading.Tasks.Task<object> SignupAsync (SignUpDto signUpDto)
         {
-             ApiResponse<AnyType> localVarResponse = await SignupAsyncWithHttpInfo(signUpDto);
+             ApiResponse<object> localVarResponse = await SignupAsyncWithHttpInfo(signUpDto);
              return localVarResponse.Data;
 
         }
@@ -1177,8 +1177,8 @@ namespace PollinationSDK.Api
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="signUpDto"></param>
-        /// <returns>Task of ApiResponse (AnyType)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<AnyType>> SignupAsyncWithHttpInfo (SignUpDto signUpDto)
+        /// <returns>Task of ApiResponse (object)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<object>> SignupAsyncWithHttpInfo (SignUpDto signUpDto)
         {
             // verify the required parameter 'signUpDto' is set
             if (signUpDto == null)
@@ -1229,9 +1229,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<AnyType>(localVarStatusCode,
+            return new ApiResponse<object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (AnyType) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(AnyType)));
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>
