@@ -1,6 +1,4 @@
-﻿using ICSharpCode.SharpZipLib.GZip;
-using ICSharpCode.SharpZipLib.Tar;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using PollinationSDK.Api;
 using PollinationSDK.Model;
 using RestSharp;
@@ -140,7 +138,7 @@ namespace PollinationSDK.Wrapper
             //unzip file 
             if (cancelToken.IsCancellationRequested) return string.Empty;
             progressAction?.Invoke($"Reading logs");
-            Helper.UnzipTGZ(downloadfile, dir);
+            Helper.Unzip(downloadfile, dir);
            
 
 

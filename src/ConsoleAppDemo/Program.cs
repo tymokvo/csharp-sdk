@@ -103,7 +103,7 @@ namespace ConsoleAppDemo
 
             Console.WriteLine("--------------------Download simulation log-------------------");
             //@"C:\\Users\\mingo\\AppData\\Local\\Temp\\Pollination\\9936f815-25f1-40b8-a298-71091dd6b71a\\re4veore.tvs\\logs.tgz"
-            var simu = new Simulation(proj, "d830d947-813b-4a92-8ff5-aabbd1dbdbf8");
+            var simu = new Simulation(proj, "419f600f-3f31-4dda-a7f5-1cdcd2bab08d");
             var simuLog = simu.GetSimulationOutputLogAsync(Console.WriteLine).Result;
 
             Console.WriteLine("Done downloading");

@@ -1,6 +1,4 @@
-﻿using ICSharpCode.SharpZipLib.GZip;
-using ICSharpCode.SharpZipLib.Tar;
-using PollinationSDK.Api;
+﻿using PollinationSDK.Api;
 using PollinationSDK.Client;
 using PollinationSDK.Model;
 using PollinationSDK.Wrapper;
@@ -8,6 +6,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Threading;
@@ -402,7 +401,7 @@ namespace PollinationSDK
                 // unzip
                 try
                 {
-                    if (file.ToLower().EndsWith(".tgz")) outputDirOrFile = Helper.UnzipTGZ(file, dir);
+                    if (file.ToLower().EndsWith(".tgz")) outputDirOrFile = Helper.Unzip(file, dir);
                 }
                 catch (Exception e)
                 {
@@ -431,25 +430,12 @@ namespace PollinationSDK
             return tempDir;
         }
 
-        internal static string UnzipTGZ(string tgzFilePath, string saveAsDir)
+        internal static string Unzip(string zipFilePath, string saveAsDir)
         {
-            if (!File.Exists(tgzFilePath)) throw new ArgumentException($"{Path.GetFileName(tgzFilePath)} does not exist!");
-
+            if (!File.Exists(zipFilePath)) throw new ArgumentException($"{Path.GetFileName(zipFilePath)} does not exist!");
             var tempDir = new DirectoryInfo(Path.Combine(GenTempFolder(), Path.GetRandomFileName()));
-            //var dir = string.IsNullOrEmpty(saveAsDir) ? tempDir : saveAsDir;
-
-
-            // https://github.com/icsharpcode/SharpZipLib/wiki/GZip-and-Tar-Samples#anchorTGZ
-            Stream inStream = File.OpenRead(tgzFilePath);
-            Stream gzipStream = new GZipInputStream(inStream);
-            TarArchive tarArchive = TarArchive.CreateInputTarArchive(gzipStream);
-
-
-            //var tempSubDir = Path.Combine(tempDir, Path.GetFileNameWithoutExtension(tgzFilePath));
-            tarArchive.ExtractContents(tempDir.FullName);
-            tarArchive.Close();
-            gzipStream.Close();
-            inStream.Close();
+            // Directory.CreateDirectory(tempDir.FullName);
+            ZipFile.ExtractToDirectory(zipFilePath, tempDir.FullName);
 
 
             //copy folder
@@ -461,14 +447,14 @@ namespace PollinationSDK
             {
                 throw new ArgumentException($"Failed to save files to: {saveAsDir}.\n -{e.Message}");
             }
-           
+
             var outputDirOrFile = saveAsDir;
 
 
             var files = tempDir.GetFiles("*.*", SearchOption.TopDirectoryOnly);
             var dirs = tempDir.GetDirectories("*", SearchOption.TopDirectoryOnly);
-            
-            if (files.Count() == 1) 
+
+            if (files.Count() == 1)
             {
                 // if there is only one file inside
                 var f = files.First();
@@ -488,7 +474,6 @@ namespace PollinationSDK
 
 
             return outputDirOrFile;
-
         }
 
         //https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-copy-directories?redirectedfrom=MSDN
