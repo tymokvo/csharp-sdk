@@ -70,30 +70,30 @@ namespace ConsoleAppDemo
             //DeleteMyProjects(me, newProj);
 
 
-            Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
-            //CreateSimulation(proj);
-            var cts = new System.Threading.CancellationTokenSource();
-            var token = cts.Token;
+            //Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
+            ////CreateSimulation(proj);
+            //var cts = new System.Threading.CancellationTokenSource();
+            //var token = cts.Token;
 
-            var workflow = CreateWorkflow();
+            //var workflow = CreateWorkflow();
 
-            try
-            {
-                var task = runSimu(proj, workflow, Console.WriteLine, token);
+            //try
+            //{
+            //    var task = runSimu(proj, workflow, Console.WriteLine, token);
 
-                //cts.CancelAfter(60000);
-                task.Wait();
+            //    //cts.CancelAfter(60000);
+            //    task.Wait();
 
-                Console.WriteLine($"Canceled check: {token.IsCancellationRequested}");
-                cts.Dispose();
+            //    Console.WriteLine($"Canceled check: {token.IsCancellationRequested}");
+            //    cts.Dispose();
 
 
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.InnerException.Message);
-                //throw;
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e.InnerException.Message);
+            //    //throw;
+            //}
 
 
 
@@ -101,13 +101,13 @@ namespace ConsoleAppDemo
             //DownloadOutputs(proj, "e89ecadf-6844-4ca6-a02d-1c2382231f87");
             //Console.WriteLine("Done downloading");
 
-            //Console.WriteLine("--------------------Download simulation log-------------------");
-            ////@"C:\\Users\\mingo\\AppData\\Local\\Temp\\Pollination\\9936f815-25f1-40b8-a298-71091dd6b71a\\re4veore.tvs\\logs.tgz"
-            //var simu = new Simulation(proj, "9936f815-25f1-40b8-a298-71091dd6b71a");
-            //var simuLog = simu.GetSimulationOutputLogAsync(Console.WriteLine).Result;
+            Console.WriteLine("--------------------Download simulation log-------------------");
+            //@"C:\\Users\\mingo\\AppData\\Local\\Temp\\Pollination\\9936f815-25f1-40b8-a298-71091dd6b71a\\re4veore.tvs\\logs.tgz"
+            var simu = new Simulation(proj, "d830d947-813b-4a92-8ff5-aabbd1dbdbf8");
+            var simuLog = simu.GetSimulationOutputLogAsync(Console.WriteLine).Result;
 
-            //Console.WriteLine("Done downloading");
-            //Console.WriteLine(simuLog);
+            Console.WriteLine("Done downloading");
+            Console.WriteLine(simuLog);
 
 
 
