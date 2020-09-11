@@ -401,7 +401,7 @@ namespace PollinationSDK
                 // unzip
                 try
                 {
-                    if (file.ToLower().EndsWith(".tgz")) outputDirOrFile = Helper.Unzip(file, dir);
+                    if (file.ToLower().EndsWith(".zip")) outputDirOrFile = Helper.Unzip(file, dir);
                 }
                 catch (Exception e)
                 {
