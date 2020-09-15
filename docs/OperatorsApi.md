@@ -102,7 +102,7 @@ Name | Type | Description  | Notes
 
 ## CreateOperatorPackage
 
-> PackageDto CreateOperatorPackage (string owner, string name, NewOperatorPackage newOperatorPackage)
+> CreatedContent CreateOperatorPackage (string owner, string name, NewOperatorPackage newOperatorPackage)
 
 Create a new Operator package
 
@@ -135,7 +135,7 @@ namespace Example
             try
             {
                 // Create a new Operator package
-                PackageDto result = apiInstance.CreateOperatorPackage(owner, name, newOperatorPackage);
+                CreatedContent result = apiInstance.CreateOperatorPackage(owner, name, newOperatorPackage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -160,7 +160,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PackageDto**](PackageDto.md)
+[**CreatedContent**](CreatedContent.md)
 
 ### Authorization
 

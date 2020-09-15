@@ -5,12 +5,14 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateSimulation**](SimulationsApi.md#createsimulation) | **POST** /projects/{owner}/{name}/simulations | Schedule a simulation
+[**DownloadSimulationArtifact**](SimulationsApi.md#downloadsimulationartifact) | **GET** /projects/{owner}/{name}/simulations/{simulation_id}/artifacts/download | Download an artifact from the simulation folder
 [**GetSimulation**](SimulationsApi.md#getsimulation) | **GET** /projects/{owner}/{name}/simulations/{simulation_id} | Get a Simulation
 [**GetSimulationInputs**](SimulationsApi.md#getsimulationinputs) | **GET** /projects/{owner}/{name}/simulations/{simulation_id}/inputs | Get simulation inputs
 [**GetSimulationLogs**](SimulationsApi.md#getsimulationlogs) | **GET** /projects/{owner}/{name}/simulations/{simulation_id}/logs | Get simulation logs
 [**GetSimulationOutputArtifact**](SimulationsApi.md#getsimulationoutputartifact) | **GET** /projects/{owner}/{name}/simulations/{simulation_id}/outputs/artifacts/{artifact_name} | Get simulation output artifact by name
 [**GetSimulationOutputs**](SimulationsApi.md#getsimulationoutputs) | **GET** /projects/{owner}/{name}/simulations/{simulation_id}/outputs | Get simulation outputs
 [**GetSimulationTaskLogs**](SimulationsApi.md#getsimulationtasklogs) | **GET** /projects/{owner}/{name}/simulations/{simulation_id}/task/{task_id}/logs | Get a simulation task&#39;s logs
+[**ListSimulationArtifacts**](SimulationsApi.md#listsimulationartifacts) | **GET** /projects/{owner}/{name}/simulations/{simulation_id}/artifacts | List artifacts in a simulation folder
 [**ListSimulations**](SimulationsApi.md#listsimulations) | **GET** /projects/{owner}/{name}/simulations | List simulations
 [**ResumeSimulation**](SimulationsApi.md#resumesimulation) | **PUT** /projects/{owner}/{name}/simulations/{simulation_id}/resume | resume a simulation
 [**StopSimulation**](SimulationsApi.md#stopsimulation) | **PUT** /projects/{owner}/{name}/simulations/{simulation_id}/stop | Stop a simulation
@@ -95,6 +97,95 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Successful Response |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#)
+[[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DownloadSimulationArtifact
+
+> AnyType DownloadSimulationArtifact (string owner, string name, string simulationId, string path = null)
+
+Download an artifact from the simulation folder
+
+Get a download link for an artifact in a simulation folder
+
+### Example
+
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using PollinationSDK.Api;
+using PollinationSDK.Client;
+using PollinationSDK.Model;
+
+namespace Example
+{
+    public class DownloadSimulationArtifactExample
+    {
+        public static void Main()
+        {
+            Configuration.Default.BasePath = "http://localhost";
+            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+
+            var apiInstance = new SimulationsApi(Configuration.Default);
+            var owner = owner_example;  // string | 
+            var name = name_example;  // string | 
+            var simulationId = simulationId_example;  // string | 
+            var path = path_example;  // string | The path to an file within a project folder (optional) 
+
+            try
+            {
+                // Download an artifact from the simulation folder
+                AnyType result = apiInstance.DownloadSimulationArtifact(owner, name, simulationId, path);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException e)
+            {
+                Debug.Print("Exception when calling SimulationsApi.DownloadSimulationArtifact: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **string**|  | 
+ **name** | **string**|  | 
+ **simulationId** | **string**|  | 
+ **path** | **string**| The path to an file within a project folder | [optional] 
+
+### Return type
+
+[**AnyType**](AnyType.md)
+
+### Authorization
+
+[Optional Auth](../README.md#Optional Auth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Retrieved |  -  |
+| **403** | Access forbidden |  -  |
+| **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
+| **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -599,6 +690,95 @@ Name | Type | Description  | Notes
 ### Return type
 
 **string**
+
+### Authorization
+
+[Optional Auth](../README.md#Optional Auth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Retrieved |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#)
+[[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListSimulationArtifacts
+
+> List&lt;FileMeta&gt; ListSimulationArtifacts (string owner, string name, string simulationId, int? page = null, int? perPage = null, List<string> path = null)
+
+List artifacts in a simulation folder
+
+Retrieve a list of artifacts in a simulation folder
+
+### Example
+
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using PollinationSDK.Api;
+using PollinationSDK.Client;
+using PollinationSDK.Model;
+
+namespace Example
+{
+    public class ListSimulationArtifactsExample
+    {
+        public static void Main()
+        {
+            Configuration.Default.BasePath = "http://localhost";
+            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+
+            var apiInstance = new SimulationsApi(Configuration.Default);
+            var owner = owner_example;  // string | 
+            var name = name_example;  // string | 
+            var simulationId = simulationId_example;  // string | 
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
+            var path = new List<string>(); // List<string> | The path to an file within a project folder (optional) 
+
+            try
+            {
+                // List artifacts in a simulation folder
+                List<FileMeta> result = apiInstance.ListSimulationArtifacts(owner, name, simulationId, page, perPage, path);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException e)
+            {
+                Debug.Print("Exception when calling SimulationsApi.ListSimulationArtifacts: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **string**|  | 
+ **name** | **string**|  | 
+ **simulationId** | **string**|  | 
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
+ **path** | [**List&lt;string&gt;**](string.md)| The path to an file within a project folder | [optional] 
+
+### Return type
+
+[**List&lt;FileMeta&gt;**](FileMeta.md)
 
 ### Authorization
 

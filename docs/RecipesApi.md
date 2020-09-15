@@ -102,7 +102,7 @@ Name | Type | Description  | Notes
 
 ## CreateRecipePackage
 
-> PackageDto CreateRecipePackage (string owner, string name, NewRecipePackage newRecipePackage, string authorization = null)
+> CreatedContent CreateRecipePackage (string owner, string name, NewRecipePackage newRecipePackage, string authorization = null)
 
 Create a new Recipe package
 
@@ -136,7 +136,7 @@ namespace Example
             try
             {
                 // Create a new Recipe package
-                PackageDto result = apiInstance.CreateRecipePackage(owner, name, newRecipePackage, authorization);
+                CreatedContent result = apiInstance.CreateRecipePackage(owner, name, newRecipePackage, authorization);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -162,7 +162,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PackageDto**](PackageDto.md)
+[**CreatedContent**](CreatedContent.md)
 
 ### Authorization
 
