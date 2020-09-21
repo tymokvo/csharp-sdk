@@ -1,32 +1,14 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PollinationSDK.Model;
 
 namespace PollinationSDK
 {
 
-    public class ArtifaceSourcePath
+    public class ArtifaceSourcePath: ProjectFolderSource
     {
-        //public enum SourceType
-        //{
-        //    http,
-        //    s3,
-        //    "project-folder"
-        //}
-        public string type => "project-folder";
-        public string path { get; set; }
-        public ArtifaceSourcePath(string relativePath)
+     
+        public ArtifaceSourcePath(string relativePath):base(path:"project_folder/" + relativePath.Replace('\\', '/'))
         {
-            // "type": "project-folder";
-            // "path": "project_folder/asset/grid/room.pts"
-            //this.type = type;
-            this.path = "project_folder/" + relativePath.Replace('\\', '/');
         }
-
-        public string ToJson() => JsonConvert.SerializeObject(this);
 
         public override string ToString() => ToJson();
     }

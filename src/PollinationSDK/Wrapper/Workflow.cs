@@ -9,7 +9,7 @@ namespace PollinationSDK.Wrapper
     /// </summary>
     public class Workflow: SubmitSimulationDto
     {
-        public Workflow(string recipeOwner, RecipePackage recipe, Arguments args)
+        public Workflow(string recipeOwner, RecipePackage recipe, AppModulesProjectsDtoSimulationArguments args)
             : base(PackageToRecipeSel(recipeOwner, recipe), args)
         {
         }
