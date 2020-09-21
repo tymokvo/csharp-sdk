@@ -179,94 +179,22 @@ namespace ConsoleAppDemo
             var recipeApi = new RecipesApi();
             var recOwner = "ladybug-tools";
             var rec = recipeApi.GetRecipeByTag(recOwner, "annual-energy-use", "latest");
-            var arg = new Arguments()
+            var arg = new AppModulesProjectsDtoSimulationArguments()
             {
                 Parameters = new List<ArgumentParameter>()
                 {
                     new ArgumentParameter("filter-design-days", "True")
                 },
-                Artifacts = new List<ArgumentArtifact>()
+                Artifacts = new List<AppModulesProjectsDtoSimulationArgumentArtifact>()
                 {
-                    new ArgumentArtifact("ddy-file", @"C:\ladybug\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3.ddy"),
-                    new ArgumentArtifact("epw-file", @"C:\ladybug\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3.epw"),
-                    new ArgumentArtifact("model-json", @"D:\Dev\honeybee-schema\samples\model\model_complete_single_zone_office.json")
+                    new AppModulesProjectsDtoSimulationArgumentArtifact("ddy-file", new ArtifaceSourcePath(@"C:\ladybug\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3.ddy")),
+                    new AppModulesProjectsDtoSimulationArgumentArtifact("epw-file", new ArtifaceSourcePath(@"C:\ladybug\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3.epw")),
+                    new AppModulesProjectsDtoSimulationArgumentArtifact("model-json", new ArtifaceSourcePath(@"D:\Dev\honeybee-schema\samples\model\model_complete_single_zone_office.json"))
                 }
             };
             
             var wf = new PollinationSDK.Wrapper.Workflow(recOwner, rec, arg);
             return wf;
-        }
-
-        private static void CreateSimulation(ProjectDto project)
-        {
-            // Get project
-            var proj = project;
-
-
-            //Recipe
-            //var recipeApi = new RecipesApi();
-            // why Recipe returns repository
-            //RepositoryAbridgedDto recipe = recipeApi.ListRecipes(owner: new[] { "ladybug-tools" }.ToList(), _public: true).Resources.First(_ => _.Name == "daylight-factor");
-
-
-            // create a recipeSelection
-
-            var rec = new RecipeSelection("ladybug-tools", "annual-energy-use", "latest");
-            //var rec = new RecipeSelection("ladybug-tools", "annual-energy-use", "c2657adb0b13db6cd3ff706d9d6db59b98ef8f994d2809d23c3ed449c19b52ea");
-             
-            // Upload artifacts
-            //var dir = @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder";
-            //UploadDirectory(proj, dir);
-
-            // create a recipe argument
-            // var arg = new Arguments()
-            // {
-            //     Parameters = new List<ArgumentParameter>()
-            //     {
-            //         new ArgumentParameter("radiance-parameters", "-I -ab 1 -h"),
-            //         new ArgumentParameter("sensor-grid-count", "10")
-            //     },
-            //     Artifacts = new List<ArgumentArtifact>()
-            //     {
-            //         new ArgumentArtifact("input-grid", new ArtifaceSourcePath("model/grid/room.pts")),
-            //         new ArgumentArtifact("model", new ArtifaceSourcePath("model/"))
-            //     }
-            // };
-            var arg = new Arguments()
-            {
-                Parameters = new List<ArgumentParameter>()
-                {
-                    new ArgumentParameter("filter-design-days", "True")
-                },
-                Artifacts = new List<ArgumentArtifact>()
-                {
-                    new ArgumentArtifact("ddy-file", new ArtifaceSourcePath("USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3.ddy")),
-                    new ArgumentArtifact("epw-file", new ArtifaceSourcePath("USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3.epw")),
-                    new ArgumentArtifact("model-json", new ArtifaceSourcePath("unnamed.json"))
-                }
-            };
-
-            
-
-
-            // create a new Simulation
-            var api = new SimulationsApi();
-            var simu = new SubmitSimulationDto(rec, arg);
-
-            Console.WriteLine("-------------------Arguments:-------------------------");
-            Console.WriteLine(simu.ToJson());
-
-            var ret = api.CreateSimulation(proj.Owner.Name, proj.Name, simu);
-            Console.WriteLine(ret.Id);
-            Console.WriteLine(ret.Message);
-
-
-            // check simulation status
-            var done = CheckSimulationStatus(proj, ret.Id.ToString()).Result;
-
-            var outputs = api.GetSimulationLogs(proj.Owner.Name, proj.Name, ret.Id.ToString());
-
-            //return recipes;
         }
 
 
