@@ -339,7 +339,7 @@ namespace PollinationSDK.Client
         {
             try
             {
-                return obj != null ? JsonConvert.SerializeObject(obj) : null;
+                return obj != null ? JsonConvert.SerializeObject(obj, JsonSetting.ConvertSetting) : null;
             }
             catch (Exception e)
             {
