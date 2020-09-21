@@ -102,8 +102,11 @@ namespace PollinationSDK
         public static async Task<bool> UploadArtifaceAsync(ProjectDto project, string fullPath, string relativePath)
         {
             var filePath = fullPath;
-            var fileRelativePath = "project_folder" + relativePath.Replace('\\', '/');
+            var fileRelativePath = relativePath.Replace('\\', '/');
+            if (fileRelativePath.StartsWith("/")) 
+                fileRelativePath = fileRelativePath.Substring(1);
 
+            //fileRelativePath = "project_folder/" + fileRelativePath;
             var api = new ArtifactsApi();
             var artf = await api.CreateArtifactAsync(project.Owner.Name, project.Name, new KeyRequest(fileRelativePath));
 
@@ -124,7 +127,7 @@ namespace PollinationSDK
             var response = restClient.Execute(restRequest);
             if (response.StatusCode == HttpStatusCode.NoContent)
             {
-                Console.WriteLine($"Done uploading: {relativePath}");
+                Console.WriteLine($"Done uploading: {fileRelativePath}");
                 return true;
             }
             return false;
@@ -159,7 +162,11 @@ namespace PollinationSDK
 
                 foreach (var item in artis)
                 {
-                    var fileOrFolder = item.Source.ToString();
+                    //ProjectFolderSource only
+                    var source = item.Source.Obj as ProjectFolderSource;
+                    if (source == null) continue;
+
+                    var fileOrFolder = source.Path;
                     FileAttributes attr = File.GetAttributes(fileOrFolder);
                     var isDir = attr.HasFlag(FileAttributes.Directory);
                     var isExists = isDir ? Directory.Exists(fileOrFolder) : File.Exists(fileOrFolder);
@@ -221,8 +228,12 @@ namespace PollinationSDK
             foreach (var item in artis)
             {
                 // update artifact arguments
-                var newFileOrDirname = Path.GetFileName(item.Source.ToString());
-                checkedArtis.Add(new AppModulesProjectsDtoSimulationArgumentArtifact(item.Name, new ArtifaceSourcePath(newFileOrDirname)));
+                // ProjectFolderSource only
+                var source = item.Source.Obj as ProjectFolderSource;
+                if (source == null) continue;
+
+                var newFileOrDirname = Path.GetFileName(source.Path);
+                checkedArtis.Add(new AppModulesProjectsDtoSimulationArgumentArtifact(item.Name, new ProjectFolderSource(newFileOrDirname)));
             }
             var newArgs = new AppModulesProjectsDtoSimulationArguments(simu.Inputs.Parameters, checkedArtis);
             var newSimu = new SubmitSimulationDto(simu.Recipe, newArgs);
@@ -275,6 +286,7 @@ namespace PollinationSDK
 
             // update Artifact to cloud's relative path after uploaded.
             var newWorkflow = UpdateArtifactPath(workflow);
+            var json = newWorkflow.ToJson();
 
             // create a new Simulation
             var api = new SimulationsApi();
