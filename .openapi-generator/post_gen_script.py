@@ -137,8 +137,8 @@ def replace_anyof_type(read_data, anyof_types):
     data = read_data
     for items in anyof_types:
         if len(items) > 0:
-            replace_source = "AnyOf%s" % ("".join(items).replace('number', 'double'))
-            replace_new = "AnyOf<%s>" % (",".join(items).replace('number', 'double'))
+            replace_source = "AnyOf%s" % ("".join(items))
+            replace_new = "AnyOf<%s>" % (",".join(items).replace('number', 'double').replace('integer', 'int'))
             rex = "(%s)(?=[ >])" % replace_source # find replace_source only with " "(space) or ">" follows
             if re.findall(rex, data) != []:
                 data = re.sub(rex, replace_new, data)
