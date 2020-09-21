@@ -17,7 +17,8 @@ namespace PollinationSDK.Model
 					_setting = new JsonSerializerSettings
 					{
 						NullValueHandling = NullValueHandling.Ignore,
-						MissingMemberHandling = MissingMemberHandling.Ignore
+						MissingMemberHandling = MissingMemberHandling.Ignore,
+						Converters = new List<JsonConverter>() { new AnyOfJsonConverter() }
 					};
 				}
 				return _setting; 

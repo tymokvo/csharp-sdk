@@ -30,9 +30,10 @@ namespace PollinationSDK.Model
             }
         }
 
-        internal void CheckType(object Object)
+        internal void CheckType(object obj)
         {
-            var objType = Object.GetType();
+            if (obj == null) return;
+            var objType = obj.GetType();
             var isValidType = this.AllValidTypes.Contains(objType);
             if (!isValidType)
             {
@@ -40,7 +41,7 @@ namespace PollinationSDK.Model
             }
             else
             {
-                this.Obj = Object;
+                this.Obj = obj;
             }
 
         }
