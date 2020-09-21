@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PollinationSDK.Model
+namespace PollinationSDK
 {
 
     public static class JsonSetting

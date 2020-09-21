@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Linq;
 
-namespace PollinationSDK.Model
+namespace PollinationSDK
 {
     public class AnyOfJsonConverter : JsonConverter<AnyOf>
     {
