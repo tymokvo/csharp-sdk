@@ -39,11 +39,11 @@ namespace PollinationSDK.Model
         /// Initializes a new instance of the <see cref="DAGTaskArtifactArgument" /> class.
         /// </summary>
         /// <param name="name">Name of the argument variable (required).</param>
-        /// <param name="from">from (required).</param>
+        /// <param name="from">The previous task or global workflow variable to pull this argument from (required).</param>
         /// <param name="subpath">Specify this value if your source artifact is a repository and you want to source an artifact from within that directory..</param>
         public DAGTaskArtifactArgument
         (
-           string name, Object from, // Required parameters
+           string name, AnyOf<InputArtifactReference,TaskArtifactReference,FolderArtifactReference> from, // Required parameters
            string subpath= default// Optional parameters
         )// BaseClass
         {
@@ -80,11 +80,12 @@ namespace PollinationSDK.Model
         [JsonProperty("name")]
         public string Name { get; set; } 
         /// <summary>
-        /// Gets or Sets From
+        /// The previous task or global workflow variable to pull this argument from
         /// </summary>
+        /// <value>The previous task or global workflow variable to pull this argument from</value>
         [DataMember(Name="from", EmitDefaultValue=false)]
         [JsonProperty("from")]
-        public Object From { get; set; } 
+        public AnyOf<InputArtifactReference,TaskArtifactReference,FolderArtifactReference> From { get; set; } 
         /// <summary>
         /// Specify this value if your source artifact is a repository and you want to source an artifact from within that directory.
         /// </summary>

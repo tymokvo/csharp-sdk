@@ -39,12 +39,12 @@ namespace PollinationSDK.Model
         /// Initializes a new instance of the <see cref="DAGTaskParameterArgument" /> class.
         /// </summary>
         /// <param name="name">Name of the argument variable (required).</param>
-        /// <param name="from">from.</param>
+        /// <param name="from">The previous task or global workflow variable to pull this argument from.</param>
         /// <param name="value">The fixed value for this task argument.</param>
         public DAGTaskParameterArgument
         (
            string name, // Required parameters
-           Object from= default, string value= default// Optional parameters
+           AnyOf<InputParameterReference,TaskParameterReference,ItemParameterReference> from= default, string value= default// Optional parameters
         )// BaseClass
         {
             // to ensure "name" is required (not null)
@@ -71,11 +71,12 @@ namespace PollinationSDK.Model
         [JsonProperty("name")]
         public string Name { get; set; } 
         /// <summary>
-        /// Gets or Sets From
+        /// The previous task or global workflow variable to pull this argument from
         /// </summary>
+        /// <value>The previous task or global workflow variable to pull this argument from</value>
         [DataMember(Name="from", EmitDefaultValue=false)]
         [JsonProperty("from")]
-        public Object From { get; set; } 
+        public AnyOf<InputParameterReference,TaskParameterReference,ItemParameterReference> From { get; set; } 
         /// <summary>
         /// The fixed value for this task argument
         /// </summary>

@@ -41,12 +41,12 @@ namespace PollinationSDK.Model
         /// <param name="annotations">Optional annotations for Queenbee objects..</param>
         /// <param name="name">The name of the artifact within the scope of the DAG (required).</param>
         /// <param name="description">Optional description for the input artifact.</param>
-        /// <param name="_default">_default.</param>
+        /// <param name="_default">If no artifact is specified then pull it from this source location..</param>
         /// <param name="required">Whether this value must be specified in a task argument..</param>
         public DAGInputArtifact
         (
            string name, // Required parameters
-           Dictionary<string, string> annotations= default, string description= default, Object _default= default, bool required= default// Optional parameters
+           Dictionary<string, string> annotations= default, string description= default, AnyOf<HTTPSource,S3Source,ProjectFolderSource> _default= default, bool required= default// Optional parameters
         )// BaseClass
         {
             // to ensure "name" is required (not null)
@@ -89,11 +89,12 @@ namespace PollinationSDK.Model
         [JsonProperty("description")]
         public string Description { get; set; } 
         /// <summary>
-        /// Gets or Sets Default
+        /// If no artifact is specified then pull it from this source location.
         /// </summary>
+        /// <value>If no artifact is specified then pull it from this source location.</value>
         [DataMember(Name="default", EmitDefaultValue=false)]
         [JsonProperty("default")]
-        public Object Default { get; set; } 
+        public AnyOf<HTTPSource,S3Source,ProjectFolderSource> Default { get; set; } 
         /// <summary>
         /// Whether this value must be specified in a task argument.
         /// </summary>

@@ -39,10 +39,10 @@ namespace PollinationSDK.Model
         /// Initializes a new instance of the <see cref="QueenbeeWorkflowArgumentsArgumentArtifact" /> class.
         /// </summary>
         /// <param name="name">The name of the artifact (required).</param>
-        /// <param name="source">source (required).</param>
+        /// <param name="source">The source to pull the artifact from (required).</param>
         public QueenbeeWorkflowArgumentsArgumentArtifact
         (
-           string name, Object source// Required parameters
+           string name, AnyOf<HTTPSource,S3Source,ProjectFolderSource> source// Required parameters
            // Optional parameters
         )// BaseClass
         {
@@ -78,11 +78,12 @@ namespace PollinationSDK.Model
         [JsonProperty("name")]
         public string Name { get; set; } 
         /// <summary>
-        /// Gets or Sets Source
+        /// The source to pull the artifact from
         /// </summary>
+        /// <value>The source to pull the artifact from</value>
         [DataMember(Name="source", EmitDefaultValue=false)]
         [JsonProperty("source")]
-        public Object Source { get; set; } 
+        public AnyOf<HTTPSource,S3Source,ProjectFolderSource> Source { get; set; } 
         
         /// <summary>
         /// Returns the string presentation of the object

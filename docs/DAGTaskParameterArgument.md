@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | Name of the argument variable | 
-**From** | [**Object**](.md) |  | [optional] 
+**From** | [**AnyOfInputParameterReferenceTaskParameterReferenceItemParameterReference**](AnyOfInputParameterReferenceTaskParameterReferenceItemParameterReference.md) | The previous task or global workflow variable to pull this argument from | [optional] 
 **Value** | **string** | The fixed value for this task argument | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models)

@@ -39,10 +39,10 @@ namespace PollinationSDK.Model
         /// Initializes a new instance of the <see cref="DAGOutputArtifact" /> class.
         /// </summary>
         /// <param name="name">The name of the output variable (required).</param>
-        /// <param name="from">from (required).</param>
+        /// <param name="from">The task reference to pull this output variable from. Note, this must be an output variable. (required).</param>
         public DAGOutputArtifact
         (
-           string name, Object from// Required parameters
+           string name, AnyOf<TaskArtifactReference,FolderArtifactReference> from// Required parameters
            // Optional parameters
         )// BaseClass
         {
@@ -78,11 +78,12 @@ namespace PollinationSDK.Model
         [JsonProperty("name")]
         public string Name { get; set; } 
         /// <summary>
-        /// Gets or Sets From
+        /// The task reference to pull this output variable from. Note, this must be an output variable.
         /// </summary>
+        /// <value>The task reference to pull this output variable from. Note, this must be an output variable.</value>
         [DataMember(Name="from", EmitDefaultValue=false)]
         [JsonProperty("from")]
-        public Object From { get; set; } 
+        public AnyOf<TaskArtifactReference,FolderArtifactReference> From { get; set; } 
         
         /// <summary>
         /// Returns the string presentation of the object

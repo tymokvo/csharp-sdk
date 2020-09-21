@@ -33,12 +33,12 @@ namespace PollinationSDK.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="DAGTaskLoop" /> class.
         /// </summary>
-        /// <param name="from">from.</param>
+        /// <param name="from">The task or DAG parameter to loop over (must be iterable)..</param>
         /// <param name="value">A list of values or JSON objects to loop over..</param>
         public DAGTaskLoop
         (
            // Required parameters
-           Object from= default, List<Object> value= default// Optional parameters
+           AnyOf<InputParameterReference,TaskParameterReference> from= default, List<AnyOfstringintegernumberobject> value= default// Optional parameters
         )// BaseClass
         {
             this.From = from;
@@ -48,18 +48,19 @@ namespace PollinationSDK.Model
         }
         
         /// <summary>
-        /// Gets or Sets From
+        /// The task or DAG parameter to loop over (must be iterable).
         /// </summary>
+        /// <value>The task or DAG parameter to loop over (must be iterable).</value>
         [DataMember(Name="from", EmitDefaultValue=false)]
         [JsonProperty("from")]
-        public Object From { get; set; } 
+        public AnyOf<InputParameterReference,TaskParameterReference> From { get; set; } 
         /// <summary>
         /// A list of values or JSON objects to loop over.
         /// </summary>
         /// <value>A list of values or JSON objects to loop over.</value>
         [DataMember(Name="value", EmitDefaultValue=false)]
         [JsonProperty("value")]
-        public List<Object> Value { get; set; } 
+        public List<AnyOfstringintegernumberobject> Value { get; set; } 
         
         /// <summary>
         /// Returns the string presentation of the object
