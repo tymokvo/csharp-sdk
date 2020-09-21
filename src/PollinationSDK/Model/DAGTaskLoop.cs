@@ -38,7 +38,7 @@ namespace PollinationSDK.Model
         public DAGTaskLoop
         (
            // Required parameters
-           AnyOf<InputParameterReference,TaskParameterReference> from= default, List<AnyOfstringintegernumberobject> value= default// Optional parameters
+           AnyOf<InputParameterReference,TaskParameterReference> from= default, List<AnyOf<string,int,double,object>> value= default// Optional parameters
         )// BaseClass
         {
             this.From = from;
@@ -60,7 +60,7 @@ namespace PollinationSDK.Model
         /// <value>A list of values or JSON objects to loop over.</value>
         [DataMember(Name="value", EmitDefaultValue=false)]
         [JsonProperty("value")]
-        public List<AnyOfstringintegernumberobject> Value { get; set; } 
+        public List<AnyOf<string,int,double,object>> Value { get; set; } 
         
         /// <summary>
         /// Returns the string presentation of the object
