@@ -39,13 +39,13 @@ namespace PollinationSDK
             {
                 var d = api.GetProject(user.Username, projectName);
                 return d;
-            }
+            } 
             catch (ApiException e)
             {
                 // Project not found
                 if (e.ErrorCode == 404)
                 {
-                    var ifPublic = projectName == "unnamed";
+                    var ifPublic = projectName == "demo";
                     var res = api.CreateProject(user.Username, new PatchProjectDto(projectName, _public: ifPublic));
                     return GetAProject(user, projectName);
                 }
@@ -163,7 +163,7 @@ namespace PollinationSDK
                 foreach (var item in artis)
                 {
                     //ProjectFolderSource only
-                    var source = item.Source.Obj as ProjectFolderSource;
+                    var source = item.Source as ProjectFolderSource;
                     if (source == null) continue;
 
                     var fileOrFolder = source.Path;
@@ -229,7 +229,7 @@ namespace PollinationSDK
             {
                 // update artifact arguments
                 // ProjectFolderSource only
-                var source = item.Source.Obj as ProjectFolderSource;
+                var source = item.Source as ProjectFolderSource;
                 if (source == null) continue;
 
                 var newFileOrDirname = Path.GetFileName(source.Path);
@@ -344,11 +344,8 @@ namespace PollinationSDK
             var downloadedFiles = new List<string>();
             try
             {
-                var api = new PollinationSDK.Api.SimulationsApi();
-
-
                 saveAsDir = string.IsNullOrEmpty(saveAsDir)? GenTempFolder() : saveAsDir;
-                var tasks = artifacts.Select(_ => DownloadArtifact(simu, _, saveAsDir)).ToList();
+                var tasks = artifacts.SelectMany(_ => DownloadArtifact(simu, _, saveAsDir)).ToList();
         
 
                 var total = tasks.Count();
@@ -377,58 +374,105 @@ namespace PollinationSDK
             //return finished;
         }
 
-        public static async Task<string> DownloadArtifact(Simulation simu, OutputArtifact artifact, string saveAsDir)
+      
+        public static async Task<string> DownloadFromUrlAsync(string url, string saveAsDir)
+        {
+            var file = string.Empty;
+            var outputDirOrFile = string.Empty;
+
+            Console.WriteLine($"Simulation output link url: {url}");
+            var request = new RestRequest(Method.GET);
+            var client = new RestClient(url.ToString());
+            var response = await client.ExecuteAsync(request);
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new Exception($"Unable to download file");
+
+            // prep file path
+            var fileName = Path.GetFileName(url).Split(new[] { '?' })[0];
+
+            Directory.CreateDirectory(saveAsDir);
+            file = Path.Combine(saveAsDir, fileName);
+
+            var b = response.RawBytes;
+            File.WriteAllBytes(file, b);
+
+            if (!File.Exists(file)) throw new ArgumentException($"Failed to download {fileName}");
+            outputDirOrFile = file;
+
+            // unzip
+            try
+            {
+                if (file.ToLower().EndsWith(".zip")) outputDirOrFile = Helper.Unzip(file, saveAsDir);
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException($"Failed to unzip file {Path.GetFileName(file)}.\n -{e.Message}");
+            }
+
+            Console.WriteLine($"Finished downloading: {url} to {outputDirOrFile}");
+            return outputDirOrFile;
+
+        }
+        public static List<Task<string>> DownloadArtifact(Simulation simu, OutputArtifact artifact, string saveAsDir)
         {
             var file = string.Empty;
             var outputDirOrFile = string.Empty;
             try
             {
                 var api = new PollinationSDK.Api.SimulationsApi();
-                var url = api.GetSimulationOutputArtifact(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID, artifact.Name).ToString();
+                var files = api.ListSimulationArtifacts(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID);
+                var found = files.FirstOrDefault(_ => _.FileName == artifact.Name);
+                if (found == null) throw new ArgumentException($"{artifact.Name} doesn't exist in {simu.Project.Owner.Name}/{simu.Project.Name}/{simu.SimulationID}");
 
-
-
-                Console.WriteLine($"Simulation output link url: {url}");
-                var request = new RestRequest(Method.GET);
-                var client = new RestClient(url.ToString());
-                var response = await client.ExecuteAsync(request);
-                if (response.StatusCode != HttpStatusCode.OK)
-                    throw new Exception($"Unable to download file");
-
-                // prep file path
-                var fileName = Path.GetFileName(url).Split(new[] { '?' })[0];
-                
                 var dir = string.IsNullOrEmpty(saveAsDir) ? GenTempFolder() : saveAsDir;
-                dir = Path.Combine(dir, simu.SimulationID.Substring(0, 8));
+                var simuID = simu.SimulationID.Substring(0, 8);
 
+                var tasks = new List<Task<string>>();
+                dir = Path.Combine(dir, simuID);
+                ListFilesFromFolder(ref tasks, dir, simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID, found, api);
 
-                Directory.CreateDirectory(dir);
-                file = Path.Combine(dir, fileName);
+                return tasks;
 
-                var b = response.RawBytes;
-                File.WriteAllBytes(file, b);
+               
 
-                if (!File.Exists(file)) throw new ArgumentException($"Failed to download {fileName}");
-
-                // unzip
-                try
-                {
-                    if (file.ToLower().EndsWith(".zip")) outputDirOrFile = Helper.Unzip(file, dir);
-                }
-                catch (Exception e)
-                {
-                    throw new ArgumentException($"Failed to unzip file {fileName}.\n -{e.Message}");
-                }
             }
             catch (Exception e)
             {
                 throw new ArgumentException($"Failed to download artifact {artifact.Name}.\n -{e.Message}");
             }
 
+            // loop through files in folder
+            void ListFilesFromFolder(ref List<Task<string>> ts, string saveDir, string owner, string projName, string simuID,  FileMeta artfact, SimulationsApi simulationsApi )
+            {
+                var dir = saveDir;
+                var api = simulationsApi;
+                if (artfact.Type == "file")
+                {
+                    var url = api.DownloadSimulationArtifact(owner, projName, simuID, artfact.Key).ToString();
+                    var task = DownloadFromUrlAsync(url, dir);
+                    ts.Add(task);
+                }
+                else if (artfact.Type == "folder")
+                {
+                    dir = Path.Combine(dir, artfact.FileName);
+                    var files = api.ListSimulationArtifacts(owner, projName, simuID, path: new[] { artifact.Name }.ToList());
+                    foreach (var item in files)
+                    {
+                        // get all files in folder
+                        if (item.Type == "folder")
+                        {
+                            ListFilesFromFolder(ref ts, dir, owner, projName, simuID, item, api);
+                            continue;
+                        }
+                        // item is file
+                        var url = api.DownloadSimulationArtifact(owner, projName, simuID, item.Key).ToString();
+                        var task = DownloadFromUrlAsync(url, dir);
 
-            Console.WriteLine($"Finished downloading: {file} to {outputDirOrFile}");
-            //_filePath = file;
-            return outputDirOrFile;
+                        ts.Add(task);
+                    }
+                }
+            }
+
         }
 
         /// <summary>
