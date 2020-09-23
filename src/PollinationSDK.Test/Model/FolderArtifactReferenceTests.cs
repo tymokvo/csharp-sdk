@@ -44,7 +44,12 @@ namespace PollinationSDK.Test
         public void Init()
         {
             // TODO uncomment below to create an instance of FolderArtifactReference
-            //instance = new FolderArtifactReference();
+            //var aa = new
+            //{
+            //    type: "FolderArtifactReference",
+            //    path: "initial_results/{{item}}/final"
+            //    };
+        //instance = new FolderArtifactReference();
         }
 
         /// <summary>

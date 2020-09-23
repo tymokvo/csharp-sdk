@@ -1,0 +1,934 @@
+﻿{
+    "digest": "0193dab1b245f55861677e7302749f1fcbc4c6a9b3593140d2158b09e62b5fd6",
+    "tag": "latest",
+    "keywords": [
+        "ladybug-tools",
+        "radiance",
+        "annual daylight",
+        "daylight autonomy",
+        "useful daylight illuminance"
+    ],
+    "description": "Run annual daylight simulation. This recipe uses an enhanced 2-Phase method for\nmodeling annual daylight.\n",
+    "icon": "https://raw.githubusercontent.com/ladybug-tools/artwork/master/icons_components/honeybee/png/annualrecipe.png",
+    "created_at": "2020-09-10T00:27:34.905617",
+    "manifest": {
+        "metadata": {
+            "name": "annual-daylight",
+            "tag": "latest",
+            "keywords": [
+                "ladybug-tools",
+                "radiance",
+                "annual daylight",
+                "daylight autonomy",
+                "useful daylight illuminance"
+            ],
+            "maintainers": [
+                {
+                    "name": "mostapha",
+                    "email": "mostapha@ladybug.tools"
+                }
+            ],
+            "home": null,
+            "sources": null,
+            "icon": "https://raw.githubusercontent.com/ladybug-tools/artwork/master/icons_components/honeybee/png/annualrecipe.png",
+            "deprecated": null,
+            "description": "Run annual daylight simulation. This recipe uses an enhanced 2-Phase method for\nmodeling annual daylight.\n",
+            "license": null
+        },
+        "dependencies": [
+            {
+                "type": "operator",
+                "name": "honeybee-radiance",
+                "hash": null,
+                "alias": null,
+                "tag": "0.3.4",
+                "source": "https://api.pollination.cloud/registries/ladybug-tools"
+            }
+        ],
+        "flow": [
+            {
+                "name": "annual-daylight-entry",
+                "inputs": {
+                    "parameters": [
+                        {
+                            "annotations": {
+                                "type": "string"
+                            },
+                            "name": "radiance-parameters",
+                            "default": " ",
+                            "description": "The radiance parameters for ray tracing",
+                            "required": null
+                        },
+                        {
+                            "annotations": {
+                                "type": "integer"
+                            },
+                            "name": "sensor-count",
+                            "default": "200",
+                            "description": "The maximum number of grid points per parallel execution",
+                            "required": null
+                        }
+                    ],
+                    "artifacts": [
+                        {
+                            "annotations": {
+                                "type": "file"
+                            },
+                            "name": "octree-file",
+                            "description": "Scene file as an octree file.",
+                            "default": null,
+                            "required": true
+                        },
+                        {
+                            "annotations": {},
+                            "name": "sensor-grid",
+                            "description": "Sensor grid file",
+                            "default": null,
+                            "required": true
+                        },
+                        {
+                            "annotations": {
+                                "type": "file"
+                            },
+                            "name": "sky-dome",
+                            "description": "Path to sky dome file.",
+                            "default": null,
+                            "required": true
+                        },
+                        {
+                            "annotations": {
+                                "type": "file"
+                            },
+                            "name": "sky-matrix",
+                            "description": "Path to skymtx file.",
+                            "default": null,
+                            "required": true
+                        },
+                        {
+                            "annotations": {
+                                "type": "file"
+                            },
+                            "name": "sky-matrix-direct",
+                            "description": "Path to direct skymtx file (i.e. gendaymtx -d).",
+                            "default": null,
+                            "required": true
+                        },
+                        {
+                            "annotations": {
+                                "type": "file"
+                            },
+                            "name": "sun-modifiers",
+                            "description": "A file with sun modifiers.",
+                            "default": null,
+                            "required": true
+                        }
+                    ]
+                },
+                "fail_fast": true,
+                "tasks": [
+                    {
+                        "name": "direct-sky",
+                        "template": "honeybee-radiance/daylight-coefficient",
+                        "arguments": {
+                            "parameters": [
+                                {
+                                    "name": "fixed-radiance-parameters",
+                                    "from": null,
+                                    "value": "-aa 0.0 -I -ab 1 -c 1 -fad"
+                                },
+                                {
+                                    "name": "radiance-parameters",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "radiance-parameters"
+                                    },
+                                    "value": null
+                                },
+                                {
+                                    "name": "sensor-count",
+                                    "from": null,
+                                    "value": "{{item.count}}"
+                                }
+                            ],
+                            "artifacts": [
+                                {
+                                    "name": "scene-file",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "octree-file"
+                                    },
+                                    "subpath": null
+                                },
+                                {
+                                    "name": "sensor-grid",
+                                    "from": {
+                                        "type": "tasks",
+                                        "name": "split-grid",
+                                        "variable": "output-grids-folder"
+                                    },
+                                    "subpath": "{{item.path}}"
+                                },
+                                {
+                                    "name": "sky-dome",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "sky-dome"
+                                    },
+                                    "subpath": null
+                                },
+                                {
+                                    "name": "sky-matrix",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "sky-matrix-direct"
+                                    },
+                                    "subpath": null
+                                }
+                            ]
+                        },
+                        "dependencies": [
+                            "split-grid"
+                        ],
+                        "loop": {
+                            "from": {
+                                "type": "tasks",
+                                "name": "split-grid",
+                                "variable": "grid-list"
+                            },
+                            "value": null
+                        },
+                        "sub_folder": "direct_sky",
+                        "outputs": {
+                            "parameters": [],
+                            "artifacts": [
+                                {
+                                    "name": "results-file",
+                                    "path": "{{item.name}}.ill"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "direct-sunlight",
+                        "template": "honeybee-radiance/daylight-contribution",
+                        "arguments": {
+                            "parameters": [
+                                {
+                                    "name": "fixed-radiance-parameters",
+                                    "from": null,
+                                    "value": "-aa 0.0 -I -fad -ab 0 -dc 1.0 -dt 0.0 -dj 0.0 -dr 0"
+                                },
+                                {
+                                    "name": "radiance-parameters",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "radiance-parameters"
+                                    },
+                                    "value": null
+                                },
+                                {
+                                    "name": "sensor-count",
+                                    "from": null,
+                                    "value": "{{item.count}}"
+                                }
+                            ],
+                            "artifacts": [
+                                {
+                                    "name": "modifiers",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "sun-modifiers"
+                                    },
+                                    "subpath": null
+                                },
+                                {
+                                    "name": "scene-file",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "octree-file"
+                                    },
+                                    "subpath": null
+                                },
+                                {
+                                    "name": "sensor-grid",
+                                    "from": {
+                                        "type": "tasks",
+                                        "name": "split-grid",
+                                        "variable": "output-grids-folder"
+                                    },
+                                    "subpath": "{{item.path}}"
+                                }
+                            ]
+                        },
+                        "dependencies": [
+                            "split-grid"
+                        ],
+                        "loop": {
+                            "from": {
+                                "type": "tasks",
+                                "name": "split-grid",
+                                "variable": "grid-list"
+                            },
+                            "value": null
+                        },
+                        "sub_folder": "direct_sunlight",
+                        "outputs": {
+                            "parameters": [],
+                            "artifacts": [
+                                {
+                                    "name": "results-file",
+                                    "path": "{{item.name}}.ill"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "output-matrix-math",
+                        "template": "honeybee-radiance/add-remove-matrix",
+                        "arguments": {
+                            "parameters": [],
+                            "artifacts": [
+                                {
+                                    "name": "direct-sky-matrix",
+                                    "from": {
+                                        "type": "folder",
+                                        "path": "direct_sky/{{item.name}}.ill"
+                                    },
+                                    "subpath": null
+                                },
+                                {
+                                    "name": "sunlight-matrix",
+                                    "from": {
+                                        "type": "folder",
+                                        "path": "direct_sunlight/{{item.name}}.ill"
+                                    },
+                                    "subpath": null
+                                },
+                                {
+                                    "name": "total-sky-matrix",
+                                    "from": {
+                                        "type": "folder",
+                                        "path": "total_sky/{{item.name}}.ill"
+                                    },
+                                    "subpath": null
+                                }
+                            ]
+                        },
+                        "dependencies": [
+                            "split-grid",
+                            "direct-sunlight",
+                            "total-sky",
+                            "direct-sky"
+                        ],
+                        "loop": {
+                            "from": {
+                                "type": "tasks",
+                                "name": "split-grid",
+                                "variable": "grid-list"
+                            },
+                            "value": null
+                        },
+                        "sub_folder": "final",
+                        "outputs": {
+                            "parameters": [],
+                            "artifacts": [
+                                {
+                                    "name": "results-file",
+                                    "path": "{{item.name}}.ill"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "split-grid",
+                        "template": "honeybee-radiance/split-grid",
+                        "arguments": {
+                            "parameters": [
+                                {
+                                    "name": "sensor-count",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "sensor-count"
+                                    },
+                                    "value": null
+                                }
+                            ],
+                            "artifacts": [
+                                {
+                                    "name": "grid",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "sensor-grid"
+                                    },
+                                    "subpath": null
+                                }
+                            ]
+                        },
+                        "dependencies": null,
+                        "loop": null,
+                        "sub_folder": null,
+                        "outputs": {
+                            "parameters": [
+                                {
+                                    "name": "grid-list"
+                                }
+                            ],
+                            "artifacts": [
+                                {
+                                    "name": "output-grids-folder",
+                                    "path": "sub_grids"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "total-sky",
+                        "template": "honeybee-radiance/daylight-coefficient",
+                        "arguments": {
+                            "parameters": [
+                                {
+                                    "name": "fixed-radiance-parameters",
+                                    "from": null,
+                                    "value": "-aa 0.0 -I -c 1 -fad"
+                                },
+                                {
+                                    "name": "radiance-parameters",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "radiance-parameters"
+                                    },
+                                    "value": null
+                                },
+                                {
+                                    "name": "sensor-count",
+                                    "from": null,
+                                    "value": "{{item.count}}"
+                                }
+                            ],
+                            "artifacts": [
+                                {
+                                    "name": "scene-file",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "octree-file"
+                                    },
+                                    "subpath": null
+                                },
+                                {
+                                    "name": "sensor-grid",
+                                    "from": {
+                                        "type": "tasks",
+                                        "name": "split-grid",
+                                        "variable": "output-grids-folder"
+                                    },
+                                    "subpath": "{{item.path}}"
+                                },
+                                {
+                                    "name": "sky-dome",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "sky-dome"
+                                    },
+                                    "subpath": null
+                                },
+                                {
+                                    "name": "sky-matrix",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "sky-matrix"
+                                    },
+                                    "subpath": null
+                                }
+                            ]
+                        },
+                        "dependencies": [
+                            "split-grid"
+                        ],
+                        "loop": {
+                            "from": {
+                                "type": "tasks",
+                                "name": "split-grid",
+                                "variable": "grid-list"
+                            },
+                            "value": null
+                        },
+                        "sub_folder": "total_sky",
+                        "outputs": {
+                            "parameters": [],
+                            "artifacts": [
+                                {
+                                    "name": "results-file",
+                                    "path": "{{item.name}}.ill"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "outputs": {
+                    "parameters": [],
+                    "artifacts": [
+                        {
+                            "name": "results",
+                            "from": {
+                                "type": "folder",
+                                "path": "final"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "main",
+                "inputs": {
+                    "parameters": [
+                        {
+                            "annotations": {
+                                "type": "number"
+                            },
+                            "name": "north",
+                            "default": "0",
+                            "description": "A number for rotation from north.",
+                            "required": null
+                        },
+                        {
+                            "annotations": {
+                                "type": "string"
+                            },
+                            "name": "radiance-parameters",
+                            "default": "-ab 2",
+                            "description": "The radiance parameters for ray tracing. The value for ambient bounces will be set to 0 and 1 for direct sunlight and direct sky steps.",
+                            "required": null
+                        },
+                        {
+                            "annotations": {
+                                "type": "integer"
+                            },
+                            "name": "sensor-count",
+                            "default": "200",
+                            "description": "The maximum number of grid points per parallel execution",
+                            "required": null
+                        },
+                        {
+                            "annotations": {
+                                "type": "array",
+                                "items": "string"
+                            },
+                            "name": "sensor-grids",
+                            "default": null,
+                            "description": "A list of input grid names (e.g. room). These grids must be available under\nmodel/grids folder.\n",
+                            "required": true
+                        }
+                    ],
+                    "artifacts": [
+                        {
+                            "annotations": {
+                                "type": "folder"
+                            },
+                            "name": "model",
+                            "description": "Radiance model folder.",
+                            "default": null,
+                            "required": true
+                        },
+                        {
+                            "annotations": {
+                                "type": "file",
+                                "extension": "wea"
+                            },
+                            "name": "wea",
+                            "description": "Wea file.",
+                            "default": null,
+                            "required": true
+                        }
+                    ]
+                },
+                "fail_fast": true,
+                "tasks": [
+                    {
+                        "name": "aggregate-results",
+                        "template": "honeybee-radiance/merge-files",
+                        "arguments": {
+                            "parameters": [
+                                {
+                                    "name": "extension",
+                                    "from": null,
+                                    "value": ".ill"
+                                },
+                                {
+                                    "name": "name",
+                                    "from": null,
+                                    "value": "grid"
+                                }
+                            ],
+                            "artifacts": [
+                                {
+                                    "name": "results-folder",
+                                    "from": {
+                                        "type": "folder",
+                                        "path": "initial_results/{{item}}/final"
+                                    },
+                                    "subpath": null
+                                }
+                            ]
+                        },
+                        "dependencies": [
+                            "annual-daylight-simulation"
+                        ],
+                        "loop": {
+                            "from": {
+                                "type": "inputs",
+                                "variable": "sensor-grids"
+                            },
+                            "value": null
+                        },
+                        "sub_folder": null,
+                        "outputs": {
+                            "parameters": [],
+                            "artifacts": [
+                                {
+                                    "name": "result-file",
+                                    "path": "results/{{item}}.ill"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "annual-daylight-simulation",
+                        "template": "annual-daylight-entry",
+                        "arguments": {
+                            "parameters": [
+                                {
+                                    "name": "radiance-parameters",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "radiance-parameters"
+                                    },
+                                    "value": null
+                                },
+                                {
+                                    "name": "sensor-count",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "sensor-count"
+                                    },
+                                    "value": null
+                                }
+                            ],
+                            "artifacts": [
+                                {
+                                    "name": "octree-file",
+                                    "from": {
+                                        "type": "tasks",
+                                        "name": "create-octree",
+                                        "variable": "scene-file"
+                                    },
+                                    "subpath": null
+                                },
+                                {
+                                    "name": "sensor-grid",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "model"
+                                    },
+                                    "subpath": "grid/{{item}}.pts"
+                                },
+                                {
+                                    "name": "sky-dome",
+                                    "from": {
+                                        "type": "tasks",
+                                        "name": "create-sky-dome",
+                                        "variable": "sky-dome"
+                                    },
+                                    "subpath": null
+                                },
+                                {
+                                    "name": "sky-matrix",
+                                    "from": {
+                                        "type": "tasks",
+                                        "name": "create-total-sky",
+                                        "variable": "sky-matrix"
+                                    },
+                                    "subpath": null
+                                },
+                                {
+                                    "name": "sky-matrix-direct",
+                                    "from": {
+                                        "type": "tasks",
+                                        "name": "create-direct-sky",
+                                        "variable": "sky-matrix"
+                                    },
+                                    "subpath": null
+                                },
+                                {
+                                    "name": "sun-modifiers",
+                                    "from": {
+                                        "type": "tasks",
+                                        "name": "create-sunpath",
+                                        "variable": "sun-modifiers"
+                                    },
+                                    "subpath": null
+                                },
+                                {
+                                    "name": "sunpath",
+                                    "from": {
+                                        "type": "tasks",
+                                        "name": "create-sunpath",
+                                        "variable": "sunpath"
+                                    },
+                                    "subpath": null
+                                }
+                            ]
+                        },
+                        "dependencies": [
+                            "create-sky-dome",
+                            "create-octree",
+                            "create-sunpath",
+                            "create-total-sky",
+                            "create-direct-sky"
+                        ],
+                        "loop": {
+                            "from": {
+                                "type": "inputs",
+                                "variable": "sensor-grids"
+                            },
+                            "value": null
+                        },
+                        "sub_folder": "initial_results/{{item}}",
+                        "outputs": {
+                            "parameters": [],
+                            "artifacts": []
+                        }
+                    },
+                    {
+                        "name": "create-direct-sky",
+                        "template": "honeybee-radiance/create-sky-matrix",
+                        "arguments": {
+                            "parameters": [
+                                {
+                                    "name": "north",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "north"
+                                    },
+                                    "value": null
+                                },
+                                {
+                                    "name": "sky-component",
+                                    "from": null,
+                                    "value": "-d"
+                                }
+                            ],
+                            "artifacts": [
+                                {
+                                    "name": "wea",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "wea"
+                                    },
+                                    "subpath": null
+                                }
+                            ]
+                        },
+                        "dependencies": null,
+                        "loop": null,
+                        "sub_folder": null,
+                        "outputs": {
+                            "parameters": [],
+                            "artifacts": [
+                                {
+                                    "name": "sky-matrix",
+                                    "path": "resources/sky_direct.mtx"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "create-octree",
+                        "template": "honeybee-radiance/create-octree-with-sky",
+                        "arguments": {
+                            "parameters": [],
+                            "artifacts": [
+                                {
+                                    "name": "model",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "model"
+                                    },
+                                    "subpath": null
+                                },
+                                {
+                                    "name": "sky",
+                                    "from": {
+                                        "type": "tasks",
+                                        "name": "create-sunpath",
+                                        "variable": "sunpath"
+                                    },
+                                    "subpath": null
+                                }
+                            ]
+                        },
+                        "dependencies": [
+                            "create-sunpath"
+                        ],
+                        "loop": null,
+                        "sub_folder": null,
+                        "outputs": {
+                            "parameters": [],
+                            "artifacts": [
+                                {
+                                    "name": "scene-file",
+                                    "path": "resources/scene.oct"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "create-sky-dome",
+                        "template": "honeybee-radiance/create-sky-dome",
+                        "arguments": {
+                            "parameters": [],
+                            "artifacts": []
+                        },
+                        "dependencies": null,
+                        "loop": null,
+                        "sub_folder": null,
+                        "outputs": {
+                            "parameters": [],
+                            "artifacts": [
+                                {
+                                    "name": "sky-dome",
+                                    "path": "resources/sky.dome"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "create-sunpath",
+                        "template": "honeybee-radiance/create-sun-matrix",
+                        "arguments": {
+                            "parameters": [
+                                {
+                                    "name": "north",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "north"
+                                    },
+                                    "value": null
+                                }
+                            ],
+                            "artifacts": [
+                                {
+                                    "name": "wea",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "wea"
+                                    },
+                                    "subpath": null
+                                }
+                            ]
+                        },
+                        "dependencies": null,
+                        "loop": null,
+                        "sub_folder": null,
+                        "outputs": {
+                            "parameters": [],
+                            "artifacts": [
+                                {
+                                    "name": "sun-modifiers",
+                                    "path": "resources/suns.mod"
+                                },
+                                {
+                                    "name": "sunpath",
+                                    "path": "resources/sunpath.mtx"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "create-total-sky",
+                        "template": "honeybee-radiance/create-sky-matrix",
+                        "arguments": {
+                            "parameters": [
+                                {
+                                    "name": "north",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "north"
+                                    },
+                                    "value": null
+                                }
+                            ],
+                            "artifacts": [
+                                {
+                                    "name": "wea",
+                                    "from": {
+                                        "type": "inputs",
+                                        "variable": "wea"
+                                    },
+                                    "subpath": null
+                                }
+                            ]
+                        },
+                        "dependencies": null,
+                        "loop": null,
+                        "sub_folder": null,
+                        "outputs": {
+                            "parameters": [],
+                            "artifacts": [
+                                {
+                                    "name": "sky-matrix",
+                                    "path": "resources/sky.mtx"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "parse-sun-up-hours",
+                        "template": "honeybee-radiance/parse-sun-up-hours",
+                        "arguments": {
+                            "parameters": [],
+                            "artifacts": [
+                                {
+                                    "name": "sun-modifiers",
+                                    "from": {
+                                        "type": "tasks",
+                                        "name": "create-sunpath",
+                                        "variable": "sun-modifiers"
+                                    },
+                                    "subpath": null
+                                }
+                            ]
+                        },
+                        "dependencies": [
+                            "create-sunpath"
+                        ],
+                        "loop": null,
+                        "sub_folder": null,
+                        "outputs": {
+                            "parameters": [],
+                            "artifacts": [
+                                {
+                                    "name": "sun-up-hours",
+                                    "path": "results/sun-up-hours.txt"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "outputs": {
+                    "parameters": [],
+                    "artifacts": [
+                        {
+                            "name": "results",
+                            "from": {
+                                "type": "folder",
+                                "path": "results"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "readme": "# annual-daylight Recipe\n\nUse this recipe to run annual daylight simulation. This recipe uses an enhanced 2-phase\nmethod for daylight simulation.\n",
+    "license": ""
+}

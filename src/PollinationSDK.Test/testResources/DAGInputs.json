@@ -1,0 +1,62 @@
+﻿{
+    "parameters": [
+        {
+            "annotations": {
+                "type": "number"
+            },
+            "name": "north",
+            "default": "0",
+            "description": "A number for rotation from north.",
+            "required": null
+        },
+        {
+            "annotations": {
+                "type": "string"
+            },
+            "name": "radiance-parameters",
+            "default": "-ab 2",
+            "description": "The radiance parameters for ray tracing. The value for ambient bounces will be set to 0 and 1 for direct sunlight and direct sky steps.",
+            "required": null
+        },
+        {
+            "annotations": {
+                "type": "integer"
+            },
+            "name": "sensor-count",
+            "default": "200",
+            "description": "The maximum number of grid points per parallel execution",
+            "required": null
+        },
+        {
+            "annotations": {
+                "type": "array",
+                "items": "string"
+            },
+            "name": "sensor-grids",
+            "default": null,
+            "description": "A list of input grid names (e.g. room). These grids must be available under\nmodel/grids folder.\n",
+            "required": true
+        }
+    ],
+    "artifacts": [
+        {
+            "annotations": {
+                "type": "folder"
+            },
+            "name": "model",
+            "description": "Radiance model folder.",
+            "default": null,
+            "required": true
+        },
+        {
+            "annotations": {
+                "type": "file",
+                "extension": "wea"
+            },
+            "name": "wea",
+            "description": "Wea file.",
+            "default": null,
+            "required": true
+        }
+    ]
+}

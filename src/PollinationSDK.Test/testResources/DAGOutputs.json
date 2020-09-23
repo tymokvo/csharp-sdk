@@ -1,0 +1,12 @@
+﻿{
+    "parameters": [],
+    "artifacts": [
+        {
+            "name": "results",
+            "from": {
+                "type": "folder",
+                "path": "results"
+            }
+        }
+    ]
+}

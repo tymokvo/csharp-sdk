@@ -35,7 +35,7 @@ namespace PollinationSDK.Test
     public class RecipePackageTests
     {
         // TODO uncomment below to declare an instance variable for RecipePackage
-        //private RecipePackage instance;
+        private RecipePackage instance;
 
         /// <summary>
         /// Setup before each test
@@ -44,7 +44,9 @@ namespace PollinationSDK.Test
         public void Init()
         {
             // TODO uncomment below to create an instance of RecipePackage
-            //instance = new RecipePackage();
+            var path = @"..\..\..\testResources\RecipePackage.json";
+            string text = System.IO.File.ReadAllText(path);
+            instance = RecipePackage.FromJson(text);
         }
 
         /// <summary>
@@ -63,7 +65,7 @@ namespace PollinationSDK.Test
         public void RecipePackageInstanceTest()
         {
             // TODO uncomment below to test "IsInstanceOf" RecipePackage
-            //Assert.IsInstanceOf(typeof(RecipePackage), instance);
+            Assert.IsInstanceOf(typeof(RecipePackage), instance);
         }
 
 
@@ -138,6 +140,15 @@ namespace PollinationSDK.Test
         public void LicenseTest()
         {
             // TODO unit test for the property 'License'
+        }
+
+        [Test]
+        public void DuplicateTest()
+        {
+            // TODO unit test for the property 'License'
+            var dupJson = this.instance.DuplicateRecipePackage().ToJson() ;
+            var current = this.instance.ToJson();
+            Assert.IsTrue(dupJson.Equals(current));
         }
 
     }

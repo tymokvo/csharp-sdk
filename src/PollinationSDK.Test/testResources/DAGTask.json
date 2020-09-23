@@ -1,0 +1,48 @@
+﻿ {
+    "name": "aggregate-results",
+    "template": "honeybee-radiance/merge-files",
+    "arguments": {
+        "parameters": [
+            {
+                "name": "extension",
+                "from": null,
+                "value": ".ill"
+            },
+            {
+                "name": "name",
+                "from": null,
+                "value": "grid"
+            }
+        ],
+        "artifacts": [
+            {
+                "name": "results-folder",
+                "from": {
+                    "type": "FolderArtifactReference",
+                    "path": "initial_results/{{item}}/final"
+                },
+                "subpath": null
+            }
+        ]
+    },
+    "dependencies": [
+        "annual-daylight-simulation"
+    ],
+    "loop": {
+        "from": {
+            "type": "inputs",
+            "variable": "sensor-grids"
+        },
+        "value": null
+    },
+    "sub_folder": null,
+    "outputs": {
+        "parameters": [],
+        "artifacts": [
+            {
+                "name": "result-file",
+                "path": "results/{{item}}.ill"
+            }
+        ]
+    }
+}
