@@ -115,7 +115,7 @@ namespace ConsoleAppDemo
 
         }
 
-        private static async Task runSimu(ProjectDto proj, SubmitSimulationDto workflow, Action<string> msgAction, CancellationToken token)
+        private static async Task runSimu(Project proj, SubmitSimulation workflow, Action<string> msgAction, CancellationToken token)
         {
             try
             {
@@ -179,17 +179,17 @@ namespace ConsoleAppDemo
             var recipeApi = new RecipesApi();
             var recOwner = "ladybug-tools";
             var rec = recipeApi.GetRecipeByTag(recOwner, "annual-energy-use", "latest");
-            var arg = new AppModulesProjectsDtoSimulationArguments()
+            var arg = new SimulationInputs()
             {
                 Parameters = new List<ArgumentParameter>()
                 {
                     new ArgumentParameter("filter-design-days", "True")
                 },
-                Artifacts = new List<AppModulesProjectsDtoSimulationArgumentArtifact>()
+                Artifacts = new List<SimulationInputArtifact>()
                 {
-                    new AppModulesProjectsDtoSimulationArgumentArtifact("ddy-file", new ArtifaceSourcePath(@"C:\ladybug\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3.ddy")),
-                    new AppModulesProjectsDtoSimulationArgumentArtifact("epw-file", new ArtifaceSourcePath(@"C:\ladybug\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3.epw")),
-                    new AppModulesProjectsDtoSimulationArgumentArtifact("model-json", new ArtifaceSourcePath(@"D:\Dev\honeybee-schema\samples\model\model_complete_single_zone_office.json"))
+                    new SimulationInputArtifact("ddy-file", new ProjectFolderSource(@"C:\ladybug\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3.ddy")),
+                    new SimulationInputArtifact("epw-file", new ProjectFolderSource(@"C:\ladybug\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3.epw")),
+                    new SimulationInputArtifact("model-json", new ProjectFolderSource(@"D:\Dev\honeybee-schema\samples\model\model_complete_single_zone_office.json"))
                 }
             };
             
@@ -198,7 +198,7 @@ namespace ConsoleAppDemo
         }
 
 
-        private static IEnumerable<ProjectDto> GetProjects(PrivateUserDto user)
+        private static ProjectList GetProjects(PrivateUserDto user)
         {
             var api = new ProjectsApi();
             var d = api.ListProjects(_public: true, owner: new List<string>() { user.Username });
@@ -207,7 +207,7 @@ namespace ConsoleAppDemo
             return d;
         }
 
-        private static ProjectDto CreateAProject(PrivateUserDto user)
+        private static Project CreateAProject(UserPrivate user)
         {
             var userName = user.Username;
             //var userName = "mingbo";
@@ -216,7 +216,7 @@ namespace ConsoleAppDemo
             var api = new ProjectsApi();
 
             var name = "My new project " + Guid.NewGuid().ToString().Substring(0, 5);
-            var proj = new PatchProjectDto(name, "A new project from GH");
+            var proj = new ProjectCreate(name, "A new project from GH");
 
             Console.WriteLine("---------------------------------------");
             Console.WriteLine($"Creating project: {name}");
@@ -237,7 +237,7 @@ namespace ConsoleAppDemo
 
         }
 
-        private static async Task<bool> CheckSimulationStatus(ProjectDto proj, string simuId)
+        private static async Task<bool> CheckSimulationStatus(Project proj, string simuId)
         {
             var api = new SimulationsApi();
 
@@ -261,14 +261,14 @@ namespace ConsoleAppDemo
             return true;
         }
 
-        private static void CheckOutputLogs(ProjectDto proj, string simuId)
+        private static void CheckOutputLogs(Project proj, string simuId)
         {
             var api = new SimulationsApi();
             var outputs = api.GetSimulationLogs(proj.Owner.Name, proj.Name, simuId.ToString());
             Console.WriteLine(outputs);
         }
 
-        private async static void DownloadOutputs(ProjectDto proj, string simuId)
+        private async static void DownloadOutputs(Project proj, string simuId)
         {
             var api = new PollinationSDK.Api.SimulationsApi();
 
