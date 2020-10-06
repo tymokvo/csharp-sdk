@@ -16,9 +16,9 @@ namespace PollinationSDK
 {
     public static class Helper
     {
-        public static PrivateUserDto CurrentUser { get; set; }
+        public static UserPrivate CurrentUser { get; set; }
 
-        public static PrivateUserDto GetUser()
+        public static UserPrivate GetUser()
         {
             var api = new UserApi();
             //var config = api.Configuration;
@@ -32,7 +32,7 @@ namespace PollinationSDK
         /// <param name="user"></param>
         /// <param name="projectName"></param>
         /// <returns></returns>
-        public static ProjectDto GetAProject(PrivateUserDto user, string projectName)
+        public static Project GetAProject(UserPrivate user, string projectName)
         {
             var api = new ProjectsApi();
             try
@@ -45,8 +45,8 @@ namespace PollinationSDK
                 // Project not found
                 if (e.ErrorCode == 404)
                 {
-                    var ifPublic = projectName == "demo";
-                    var res = api.CreateProject(user.Username, new PatchProjectDto(projectName, _public: ifPublic));
+                    var ifPublic = projectName == "unnamed";
+                    var res = api.CreateProject(user.Username, new ProjectCreate(projectName, _public: ifPublic));
                     return GetAProject(user, projectName);
                 }
                 throw e;
@@ -57,7 +57,7 @@ namespace PollinationSDK
             //return d;
         }
 
-        public static async Task<bool> UploadDirectoryAsync(ProjectDto project, string directory, Action<int> reportProgressAction = default, CancellationToken cancellationToken = default)
+        public static async Task<bool> UploadDirectoryAsync(Project project, string directory, Action<int> reportProgressAction = default, CancellationToken cancellationToken = default)
         {
 
             var files = Directory.GetFiles(directory, "*", SearchOption.AllDirectories);
@@ -99,7 +99,7 @@ namespace PollinationSDK
         /// </summary>
         /// <param name="fullPath">something like: "C:\Users\mingo\Downloads\Compressed\project_folder\project_folder\model\grid\room.pts"</param>
         /// <param name="relativePath">"model\grid\room.pts"</param>
-        public static async Task<bool> UploadArtifaceAsync(ProjectDto project, string fullPath, string relativePath)
+        public static async Task<bool> UploadArtifaceAsync(Project project, string fullPath, string relativePath)
         {
             var filePath = fullPath;
             var fileRelativePath = relativePath.Replace('\\', '/');
@@ -138,11 +138,11 @@ namespace PollinationSDK
         /// <summary>
         /// check every file and files in dir, and move to temp folder.
         /// </summary>
-        /// <param name="submitSimulationDto"></param>
+        /// <param name="SubmitSimulation"></param>
         /// <returns></returns>
-        private static string CheckArtifacts(SubmitSimulationDto submitSimulationDto)
+        private static string CheckArtifacts(SubmitSimulation SubmitSimulation)
         {
-            var arg = submitSimulationDto.Inputs;
+            var arg = SubmitSimulation.Inputs;
 
             var artis = arg.Artifacts;
             //var files = new List<string>();
@@ -163,7 +163,7 @@ namespace PollinationSDK
                 foreach (var item in artis)
                 {
                     //ProjectFolderSource only
-                    var source = item.Source as ProjectFolderSource;
+                    var source = item.Source.Obj as ProjectFolderSource;
                     if (source == null) continue;
 
                     var fileOrFolder = source.Path;
@@ -214,29 +214,26 @@ namespace PollinationSDK
         /// <summary>
         /// Update artifact's absolute path to relative path to project-folder
         /// </summary>
-        /// <param name="submitSimulationDto"></param>
+        /// <param name="SubmitSimulation"></param>
         /// <returns></returns>
-        public static SubmitSimulationDto UpdateArtifactPath(SubmitSimulationDto submitSimulationDto)
+        public static SubmitSimulation UpdateArtifactPath(SubmitSimulation SubmitSimulation)
         {
-            var simu = submitSimulationDto;
+            var simu = SubmitSimulation;
 
             if (simu?.Inputs?.Artifacts == null)
                 return simu;
 
             var artis = simu.Inputs.Artifacts;
-            var checkedArtis = new List<AppModulesProjectsDtoSimulationArgumentArtifact>();
+            var checkedArtis = new List<SimulationInputArtifact>();
             foreach (var item in artis)
             {
                 // update artifact arguments
-                // ProjectFolderSource only
-                var source = item.Source as ProjectFolderSource;
-                if (source == null) continue;
-
-                var newFileOrDirname = Path.GetFileName(source.Path);
-                checkedArtis.Add(new AppModulesProjectsDtoSimulationArgumentArtifact(item.Name, new ProjectFolderSource(newFileOrDirname)));
+                var newFileOrDirname = Path.GetFileName(item.Source.ToString());
+                checkedArtis.Add(new SimulationInputArtifact(item.Name, new ProjectFolderSource(newFileOrDirname)));
             }
-            var newArgs = new AppModulesProjectsDtoSimulationArguments(simu.Inputs.Parameters, checkedArtis);
-            var newSimu = new SubmitSimulationDto(simu.Recipe, newArgs);
+            var simuInputs = new SimulationInputs(simu.Inputs.Parameters, checkedArtis);
+
+            var newSimu = new SubmitSimulation(simu.Recipe, simuInputs);
 
             return newSimu;
         }
@@ -252,8 +249,8 @@ namespace PollinationSDK
         /// <param name="actionWhenDone"></param>
         /// <returns></returns>
         public static async Task<Wrapper.Simulation> RunSimulationAsync(
-            ProjectDto project, 
-            SubmitSimulationDto workflow, 
+            Project project, 
+            SubmitSimulation workflow, 
             Action<string> progressLogAction = default,
             CancellationToken cancellationToken = default,
             Action actionWhenDone = default)

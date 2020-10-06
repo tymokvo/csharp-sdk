@@ -7,9 +7,9 @@ namespace PollinationSDK.Wrapper
     /// <summary>
     /// A Wrapper for SubmitSimulationDto, which overrides the ToString() to provide a human readable format.
     /// </summary>
-    public class Workflow: SubmitSimulationDto
+    public class Workflow: SubmitSimulation
     {
-        public Workflow(string recipeOwner, RecipePackage recipe, AppModulesProjectsDtoSimulationArguments args)
+        public Workflow(string recipeOwner, RecipePackage recipe, SimulationInputs args)
             : base(PackageToRecipeSel(recipeOwner, recipe), args)
         {
         }
