@@ -1,6 +1,6 @@
 # PollinationSDK.Api.ArtifactsApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://api.pollination.cloud*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -34,8 +34,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ArtifactsApi(Configuration.Default);
@@ -75,7 +75,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -117,8 +117,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ArtifactsApi(Configuration.Default);
@@ -158,7 +158,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -200,8 +200,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: OptionalAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ArtifactsApi(Configuration.Default);
@@ -241,7 +241,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Optional Auth](../README.md#Optional Auth)
+[OptionalAuth](../README.md#OptionalAuth)
 
 ### HTTP request headers
 
@@ -287,8 +287,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: OptionalAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ArtifactsApi(Configuration.Default);
@@ -332,7 +332,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Optional Auth](../README.md#Optional Auth)
+[OptionalAuth](../README.md#OptionalAuth)
 
 ### HTTP request headers
 

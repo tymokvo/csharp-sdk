@@ -1,14 +1,18 @@
 # PollinationSDK.Api.ProjectsApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://api.pollination.cloud*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateProject**](ProjectsApi.md#createproject) | **POST** /projects/{owner} | Create a Project
+[**CreateProjectRecipeFilter**](ProjectsApi.md#createprojectrecipefilter) | **POST** /projects/{owner}/{name}/recipes/filters | Upsert a recipe filter to a project
 [**DeleteProject**](ProjectsApi.md#deleteproject) | **DELETE** /projects/{owner}/{name} | Delete a Project
 [**DeleteProjectOrgPermission**](ProjectsApi.md#deleteprojectorgpermission) | **DELETE** /projects/{owner}/{name}/permissions | Remove a Project permissions
+[**DeleteProjectRecipeFilter**](ProjectsApi.md#deleteprojectrecipefilter) | **DELETE** /projects/{owner}/{name}/recipes/filters | Remove a Project permissions
 [**GetProject**](ProjectsApi.md#getproject) | **GET** /projects/{owner}/{name} | Get a project
-[**GetProjectAccessPermissions**](ProjectsApi.md#getprojectaccesspermissions) | **GET** /projects/{owner}/{name}/permissions | Get a project&#39;s access permissions
+[**GetProjectAccessPermissions**](ProjectsApi.md#getprojectaccesspermissions) | **GET** /projects/{owner}/{name}/permissions | Get project access permissions
+[**GetProjectRecipeFilters**](ProjectsApi.md#getprojectrecipefilters) | **GET** /projects/{owner}/{name}/recipes/filters | Get project recipe filters
+[**GetProjectRecipes**](ProjectsApi.md#getprojectrecipes) | **GET** /projects/{owner}/{name}/recipes | Get project recipes
 [**ListProjects**](ProjectsApi.md#listprojects) | **GET** /projects | List Projects
 [**Update**](ProjectsApi.md#update) | **PUT** /projects/{owner}/{name} | Update a Project
 [**UpsertProjectPermission**](ProjectsApi.md#upsertprojectpermission) | **PATCH** /projects/{owner}/{name}/permissions | Upsert a new permission to a project
@@ -17,7 +21,7 @@ Method | HTTP request | Description
 
 ## CreateProject
 
-> CreatedContent CreateProject (string owner, PatchProjectDto patchProjectDto)
+> CreatedContent CreateProject (string owner, ProjectCreate projectCreate)
 
 Create a Project
 
@@ -38,18 +42,18 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
             var owner = owner_example;  // string | 
-            var patchProjectDto = new PatchProjectDto(); // PatchProjectDto | 
+            var projectCreate = new ProjectCreate(); // ProjectCreate | 
 
             try
             {
                 // Create a Project
-                CreatedContent result = apiInstance.CreateProject(owner, patchProjectDto);
+                CreatedContent result = apiInstance.CreateProject(owner, projectCreate);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -69,7 +73,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
- **patchProjectDto** | [**PatchProjectDto**](PatchProjectDto.md)|  | 
+ **projectCreate** | [**ProjectCreate**](ProjectCreate.md)|  | 
 
 ### Return type
 
@@ -77,7 +81,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -92,6 +96,93 @@ Name | Type | Description  | Notes
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
 | **202** | Accepted |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#)
+[[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## CreateProjectRecipeFilter
+
+> UpdateAccepted CreateProjectRecipeFilter (string owner, string name, ProjectRecipeFilter projectRecipeFilter)
+
+Upsert a recipe filter to a project
+
+Upsert a project's access policy (must have `admin` permission)
+
+### Example
+
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using PollinationSDK.Api;
+using PollinationSDK.Client;
+using PollinationSDK.Model;
+
+namespace Example
+{
+    public class CreateProjectRecipeFilterExample
+    {
+        public static void Main()
+        {
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
+            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+
+            var apiInstance = new ProjectsApi(Configuration.Default);
+            var owner = owner_example;  // string | 
+            var name = name_example;  // string | 
+            var projectRecipeFilter = new ProjectRecipeFilter(); // ProjectRecipeFilter | 
+
+            try
+            {
+                // Upsert a recipe filter to a project
+                UpdateAccepted result = apiInstance.CreateProjectRecipeFilter(owner, name, projectRecipeFilter);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException e)
+            {
+                Debug.Print("Exception when calling ProjectsApi.CreateProjectRecipeFilter: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **string**|  | 
+ **name** | **string**|  | 
+ **projectRecipeFilter** | [**ProjectRecipeFilter**](ProjectRecipeFilter.md)|  | 
+
+### Return type
+
+[**UpdateAccepted**](UpdateAccepted.md)
+
+### Authorization
+
+[CompulsoryAuth](../README.md#CompulsoryAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **202** | Accepted |  -  |
+| **403** | Access forbidden |  -  |
+| **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
+| **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -123,8 +214,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
@@ -161,7 +252,7 @@ void (empty response body)
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -185,7 +276,7 @@ void (empty response body)
 
 ## DeleteProjectOrgPermission
 
-> void DeleteProjectOrgPermission (string owner, string name, ProjectPolicySubjectDto projectPolicySubjectDto)
+> void DeleteProjectOrgPermission (string owner, string name, ProjectPolicySubject projectPolicySubject)
 
 Remove a Project permissions
 
@@ -206,19 +297,19 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var projectPolicySubjectDto = new ProjectPolicySubjectDto(); // ProjectPolicySubjectDto | 
+            var projectPolicySubject = new ProjectPolicySubject(); // ProjectPolicySubject | 
 
             try
             {
                 // Remove a Project permissions
-                apiInstance.DeleteProjectOrgPermission(owner, name, projectPolicySubjectDto);
+                apiInstance.DeleteProjectOrgPermission(owner, name, projectPolicySubject);
             }
             catch (ApiException e)
             {
@@ -238,7 +329,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **projectPolicySubjectDto** | [**ProjectPolicySubjectDto**](ProjectPolicySubjectDto.md)|  | 
+ **projectPolicySubject** | [**ProjectPolicySubject**](ProjectPolicySubject.md)|  | 
 
 ### Return type
 
@@ -246,7 +337,92 @@ void (empty response body)
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Accepted |  -  |
+| **403** | Access forbidden |  -  |
+| **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#)
+[[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeleteProjectRecipeFilter
+
+> void DeleteProjectRecipeFilter (string owner, string name, ProjectRecipeFilter projectRecipeFilter)
+
+Remove a Project permissions
+
+Delete a project's access policy (must have `admin` permission)
+
+### Example
+
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using PollinationSDK.Api;
+using PollinationSDK.Client;
+using PollinationSDK.Model;
+
+namespace Example
+{
+    public class DeleteProjectRecipeFilterExample
+    {
+        public static void Main()
+        {
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
+            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+
+            var apiInstance = new ProjectsApi(Configuration.Default);
+            var owner = owner_example;  // string | 
+            var name = name_example;  // string | 
+            var projectRecipeFilter = new ProjectRecipeFilter(); // ProjectRecipeFilter | 
+
+            try
+            {
+                // Remove a Project permissions
+                apiInstance.DeleteProjectRecipeFilter(owner, name, projectRecipeFilter);
+            }
+            catch (ApiException e)
+            {
+                Debug.Print("Exception when calling ProjectsApi.DeleteProjectRecipeFilter: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **string**|  | 
+ **name** | **string**|  | 
+ **projectRecipeFilter** | [**ProjectRecipeFilter**](ProjectRecipeFilter.md)|  | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -270,7 +446,7 @@ void (empty response body)
 
 ## GetProject
 
-> ProjectDto GetProject (string owner, string name)
+> Project GetProject (string owner, string name)
 
 Get a project
 
@@ -291,8 +467,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: OptionalAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
@@ -302,7 +478,7 @@ namespace Example
             try
             {
                 // Get a project
-                ProjectDto result = apiInstance.GetProject(owner, name);
+                Project result = apiInstance.GetProject(owner, name);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -326,11 +502,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ProjectDto**](ProjectDto.md)
+[**Project**](Project.md)
 
 ### Authorization
 
-[Optional Auth](../README.md#Optional Auth)
+[OptionalAuth](../README.md#OptionalAuth)
 
 ### HTTP request headers
 
@@ -355,9 +531,9 @@ Name | Type | Description  | Notes
 
 ## GetProjectAccessPermissions
 
-> List&lt;ProjectAccessPolicyDto&gt; GetProjectAccessPermissions (string owner, string name)
+> ProjectAccessPolicyList GetProjectAccessPermissions (string owner, string name, int? page = null, int? perPage = null, List<string> subjectType = null, List<string> permission = null)
 
-Get a project's access permissions
+Get project access permissions
 
 Retrieve a project's access permissions (must have `contribute` permission)
 
@@ -376,18 +552,22 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
+            var subjectType = new List<string>(); // List<string> | The type of access policy subject (optional) 
+            var permission = new List<string>(); // List<string> | An access policy permission string (optional) 
 
             try
             {
-                // Get a project's access permissions
-                List<ProjectAccessPolicyDto> result = apiInstance.GetProjectAccessPermissions(owner, name);
+                // Get project access permissions
+                ProjectAccessPolicyList result = apiInstance.GetProjectAccessPermissions(owner, name, page, perPage, subjectType, permission);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -408,14 +588,190 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
+ **subjectType** | [**List&lt;string&gt;**](string.md)| The type of access policy subject | [optional] 
+ **permission** | [**List&lt;string&gt;**](string.md)| An access policy permission string | [optional] 
 
 ### Return type
 
-[**List&lt;ProjectAccessPolicyDto&gt;**](ProjectAccessPolicyDto.md)
+[**ProjectAccessPolicyList**](ProjectAccessPolicyList.md)
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Retrieved |  -  |
+| **403** | Access forbidden |  -  |
+| **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#)
+[[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetProjectRecipeFilters
+
+> ProjectRecipeFilterList GetProjectRecipeFilters (string owner, string name)
+
+Get project recipe filters
+
+Retrieve a project's access permissions (must have `read` permission)
+
+### Example
+
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using PollinationSDK.Api;
+using PollinationSDK.Client;
+using PollinationSDK.Model;
+
+namespace Example
+{
+    public class GetProjectRecipeFiltersExample
+    {
+        public static void Main()
+        {
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: OptionalAuth
+            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+
+            var apiInstance = new ProjectsApi(Configuration.Default);
+            var owner = owner_example;  // string | 
+            var name = name_example;  // string | 
+
+            try
+            {
+                // Get project recipe filters
+                ProjectRecipeFilterList result = apiInstance.GetProjectRecipeFilters(owner, name);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException e)
+            {
+                Debug.Print("Exception when calling ProjectsApi.GetProjectRecipeFilters: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **string**|  | 
+ **name** | **string**|  | 
+
+### Return type
+
+[**ProjectRecipeFilterList**](ProjectRecipeFilterList.md)
+
+### Authorization
+
+[OptionalAuth](../README.md#OptionalAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Retrieved |  -  |
+| **403** | Access forbidden |  -  |
+| **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#)
+[[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetProjectRecipes
+
+> RepositoryList GetProjectRecipes (string owner, string name, int? page = null, int? perPage = null)
+
+Get project recipes
+
+Retrieve a project's access permissions (must have `read` permission)
+
+### Example
+
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using PollinationSDK.Api;
+using PollinationSDK.Client;
+using PollinationSDK.Model;
+
+namespace Example
+{
+    public class GetProjectRecipesExample
+    {
+        public static void Main()
+        {
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: OptionalAuth
+            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+
+            var apiInstance = new ProjectsApi(Configuration.Default);
+            var owner = owner_example;  // string | 
+            var name = name_example;  // string | 
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
+
+            try
+            {
+                // Get project recipes
+                RepositoryList result = apiInstance.GetProjectRecipes(owner, name, page, perPage);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException e)
+            {
+                Debug.Print("Exception when calling ProjectsApi.GetProjectRecipes: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **string**|  | 
+ **name** | **string**|  | 
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
+
+### Return type
+
+[**RepositoryList**](RepositoryList.md)
+
+### Authorization
+
+[OptionalAuth](../README.md#OptionalAuth)
 
 ### HTTP request headers
 
@@ -439,7 +795,7 @@ Name | Type | Description  | Notes
 
 ## ListProjects
 
-> List&lt;ProjectDto&gt; ListProjects (int? page = null, int? perPage = null, List<string> id = null, List<string> name = null, List<string> owner = null, bool? _public = null, List<string> _operator = null)
+> ProjectList ListProjects (int? page = null, int? perPage = null, List<string> id = null, List<string> name = null, List<string> owner = null, bool? _public = null, List<string> _operator = null)
 
 List Projects
 
@@ -460,8 +816,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: OptionalAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
@@ -476,7 +832,7 @@ namespace Example
             try
             {
                 // List Projects
-                List<ProjectDto> result = apiInstance.ListProjects(page, perPage, id, name, owner, _public, _operator);
+                ProjectList result = apiInstance.ListProjects(page, perPage, id, name, owner, _public, _operator);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -505,11 +861,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List&lt;ProjectDto&gt;**](ProjectDto.md)
+[**ProjectList**](ProjectList.md)
 
 ### Authorization
 
-[Optional Auth](../README.md#Optional Auth)
+[OptionalAuth](../README.md#OptionalAuth)
 
 ### HTTP request headers
 
@@ -533,7 +889,7 @@ Name | Type | Description  | Notes
 
 ## Update
 
-> UpdateAccepted Update (string owner, string name, PatchProjectDto patchProjectDto)
+> UpdateAccepted Update (string owner, string name, ProjectUpdate projectUpdate)
 
 Update a Project
 
@@ -554,19 +910,19 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var patchProjectDto = new PatchProjectDto(); // PatchProjectDto | 
+            var projectUpdate = new ProjectUpdate(); // ProjectUpdate | 
 
             try
             {
                 // Update a Project
-                UpdateAccepted result = apiInstance.Update(owner, name, patchProjectDto);
+                UpdateAccepted result = apiInstance.Update(owner, name, projectUpdate);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -587,7 +943,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **patchProjectDto** | [**PatchProjectDto**](PatchProjectDto.md)|  | 
+ **projectUpdate** | [**ProjectUpdate**](ProjectUpdate.md)|  | 
 
 ### Return type
 
@@ -595,7 +951,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -620,7 +976,7 @@ Name | Type | Description  | Notes
 
 ## UpsertProjectPermission
 
-> UpdateAccepted UpsertProjectPermission (string owner, string name, ProjectAccessPolicyDto projectAccessPolicyDto)
+> UpdateAccepted UpsertProjectPermission (string owner, string name, ProjectAccessPolicy projectAccessPolicy)
 
 Upsert a new permission to a project
 
@@ -641,19 +997,19 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var projectAccessPolicyDto = new ProjectAccessPolicyDto(); // ProjectAccessPolicyDto | 
+            var projectAccessPolicy = new ProjectAccessPolicy(); // ProjectAccessPolicy | 
 
             try
             {
                 // Upsert a new permission to a project
-                UpdateAccepted result = apiInstance.UpsertProjectPermission(owner, name, projectAccessPolicyDto);
+                UpdateAccepted result = apiInstance.UpsertProjectPermission(owner, name, projectAccessPolicy);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -674,7 +1030,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **projectAccessPolicyDto** | [**ProjectAccessPolicyDto**](ProjectAccessPolicyDto.md)|  | 
+ **projectAccessPolicy** | [**ProjectAccessPolicy**](ProjectAccessPolicy.md)|  | 
 
 ### Return type
 
@@ -682,7 +1038,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 

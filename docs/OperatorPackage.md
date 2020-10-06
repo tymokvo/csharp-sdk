@@ -12,8 +12,8 @@ Name | Type | Description | Notes
 **Icon** | **string** | icon | [optional] 
 **CreatedAt** | **DateTime** | Creation Timestamp | [optional] 
 **Manifest** | [**Operator**](Operator.md) | The operator manifest | 
-**Readme** | **string** | The Repository Readme | [optional] [default to ""]
-**License** | **string** | The Repository license | [optional] [default to ""]
+**Readme** | **string** | The Repository Readme | [optional] 
+**License** | **string** | The Repository license | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)

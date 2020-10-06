@@ -1,6 +1,6 @@
 # PollinationSDK.Api.SimulationsApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://api.pollination.cloud*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -11,7 +11,7 @@ Method | HTTP request | Description
 [**GetSimulationLogs**](SimulationsApi.md#getsimulationlogs) | **GET** /projects/{owner}/{name}/simulations/{simulation_id}/logs | Get simulation logs
 [**GetSimulationOutputArtifact**](SimulationsApi.md#getsimulationoutputartifact) | **GET** /projects/{owner}/{name}/simulations/{simulation_id}/outputs/artifacts/{artifact_name} | Get simulation output artifact by name
 [**GetSimulationOutputs**](SimulationsApi.md#getsimulationoutputs) | **GET** /projects/{owner}/{name}/simulations/{simulation_id}/outputs | Get simulation outputs
-[**GetSimulationTaskLogs**](SimulationsApi.md#getsimulationtasklogs) | **GET** /projects/{owner}/{name}/simulations/{simulation_id}/task/{task_id}/logs | Get a simulation task&#39;s logs
+[**GetSimulationTaskLogs**](SimulationsApi.md#getsimulationtasklogs) | **GET** /projects/{owner}/{name}/simulations/{simulation_id}/task/{task_id}/logs | Get simulation logs
 [**ListSimulationArtifacts**](SimulationsApi.md#listsimulationartifacts) | **GET** /projects/{owner}/{name}/simulations/{simulation_id}/artifacts | List artifacts in a simulation folder
 [**ListSimulations**](SimulationsApi.md#listsimulations) | **GET** /projects/{owner}/{name}/simulations | List simulations
 [**ResumeSimulation**](SimulationsApi.md#resumesimulation) | **PUT** /projects/{owner}/{name}/simulations/{simulation_id}/resume | resume a simulation
@@ -22,7 +22,7 @@ Method | HTTP request | Description
 
 ## CreateSimulation
 
-> CreatedContent CreateSimulation (string owner, string name, SubmitSimulationDto submitSimulationDto, string authorization = null)
+> CreatedContent CreateSimulation (string owner, string name, SubmitSimulation submitSimulation, string authorization = null)
 
 Schedule a simulation
 
@@ -43,20 +43,20 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new SimulationsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var submitSimulationDto = new SubmitSimulationDto(); // SubmitSimulationDto | 
+            var submitSimulation = new SubmitSimulation(); // SubmitSimulation | 
             var authorization = authorization_example;  // string |  (optional) 
 
             try
             {
                 // Schedule a simulation
-                CreatedContent result = apiInstance.CreateSimulation(owner, name, submitSimulationDto, authorization);
+                CreatedContent result = apiInstance.CreateSimulation(owner, name, submitSimulation, authorization);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -77,7 +77,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **submitSimulationDto** | [**SubmitSimulationDto**](SubmitSimulationDto.md)|  | 
+ **submitSimulation** | [**SubmitSimulation**](SubmitSimulation.md)|  | 
  **authorization** | **string**|  | [optional] 
 
 ### Return type
@@ -86,7 +86,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -128,8 +128,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: OptionalAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new SimulationsApi(Configuration.Default);
@@ -171,7 +171,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Optional Auth](../README.md#Optional Auth)
+[OptionalAuth](../README.md#OptionalAuth)
 
 ### HTTP request headers
 
@@ -217,8 +217,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: OptionalAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new SimulationsApi(Configuration.Default);
@@ -258,7 +258,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Optional Auth](../README.md#Optional Auth)
+[OptionalAuth](../README.md#OptionalAuth)
 
 ### HTTP request headers
 
@@ -300,8 +300,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: OptionalAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new SimulationsApi(Configuration.Default);
@@ -341,7 +341,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Optional Auth](../README.md#Optional Auth)
+[OptionalAuth](../README.md#OptionalAuth)
 
 ### HTTP request headers
 
@@ -387,8 +387,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: OptionalAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new SimulationsApi(Configuration.Default);
@@ -428,7 +428,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Optional Auth](../README.md#Optional Auth)
+[OptionalAuth](../README.md#OptionalAuth)
 
 ### HTTP request headers
 
@@ -474,8 +474,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: OptionalAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new SimulationsApi(Configuration.Default);
@@ -517,7 +517,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Optional Auth](../README.md#Optional Auth)
+[OptionalAuth](../README.md#OptionalAuth)
 
 ### HTTP request headers
 
@@ -563,8 +563,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: OptionalAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new SimulationsApi(Configuration.Default);
@@ -604,7 +604,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Optional Auth](../README.md#Optional Auth)
+[OptionalAuth](../README.md#OptionalAuth)
 
 ### HTTP request headers
 
@@ -631,7 +631,7 @@ Name | Type | Description  | Notes
 
 > string GetSimulationTaskLogs (string owner, string name, string simulationId, string taskId)
 
-Get a simulation task's logs
+Get simulation logs
 
 get simulation task logs
 
@@ -650,8 +650,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: OptionalAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new SimulationsApi(Configuration.Default);
@@ -662,7 +662,7 @@ namespace Example
 
             try
             {
-                // Get a simulation task's logs
+                // Get simulation logs
                 string result = apiInstance.GetSimulationTaskLogs(owner, name, simulationId, taskId);
                 Debug.WriteLine(result);
             }
@@ -693,7 +693,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Optional Auth](../README.md#Optional Auth)
+[OptionalAuth](../README.md#OptionalAuth)
 
 ### HTTP request headers
 
@@ -735,8 +735,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: OptionalAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new SimulationsApi(Configuration.Default);
@@ -782,7 +782,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Optional Auth](../README.md#Optional Auth)
+[OptionalAuth](../README.md#OptionalAuth)
 
 ### HTTP request headers
 
@@ -824,8 +824,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: OptionalAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new SimulationsApi(Configuration.Default);
@@ -871,7 +871,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Optional Auth](../README.md#Optional Auth)
+[OptionalAuth](../README.md#OptionalAuth)
 
 ### HTTP request headers
 
@@ -913,8 +913,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new SimulationsApi(Configuration.Default);
@@ -954,7 +954,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -996,8 +996,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new SimulationsApi(Configuration.Default);
@@ -1037,7 +1037,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -1079,8 +1079,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new SimulationsApi(Configuration.Default);
@@ -1120,7 +1120,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 

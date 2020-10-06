@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Metadata** | [**QueenbeeRecipeMetadataMetaData**](QueenbeeRecipeMetadataMetaData.md) | Recipe metadata information. | [optional] 
+**Metadata** | [**MetaData**](MetaData.md) | Recipe metadata information. | [optional] 
 **Dependencies** | [**List&lt;Dependency&gt;**](Dependency.md) | A list of operators and other recipes this recipe depends on. | [optional] 
 **Flow** | [**List&lt;DAG&gt;**](DAG.md) | A list of tasks to create a DAG recipe. | 
 

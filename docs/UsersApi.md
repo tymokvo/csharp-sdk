@@ -1,6 +1,6 @@
 # PollinationSDK.Api.UsersApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://api.pollination.cloud*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -33,7 +33,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new UsersApi(Configuration.Default);
             var username = username_example;  // string | 
 
@@ -88,7 +88,7 @@ No authorization required
 
 ## GetOneUser
 
-> PublicUserDto GetOneUser (string name)
+> UserPublic GetOneUser (string name)
 
 Get a specific user profile
 
@@ -109,14 +109,14 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new UsersApi(Configuration.Default);
             var name = name_example;  // string | 
 
             try
             {
                 // Get a specific user profile
-                PublicUserDto result = apiInstance.GetOneUser(name);
+                UserPublic result = apiInstance.GetOneUser(name);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -139,7 +139,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PublicUserDto**](PublicUserDto.md)
+[**UserPublic**](UserPublic.md)
 
 ### Authorization
 
@@ -164,7 +164,7 @@ No authorization required
 
 ## ListUsers
 
-> List&lt;PublicUserDto&gt; ListUsers (int? page = null, int? perPage = null, string name = null, string username = null, List<string> id = null)
+> UserPublicList ListUsers (int? page = null, int? perPage = null, string name = null, string username = null, List<string> id = null)
 
 List Users
 
@@ -183,7 +183,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new UsersApi(Configuration.Default);
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
@@ -194,7 +194,7 @@ namespace Example
             try
             {
                 // List Users
-                List<PublicUserDto> result = apiInstance.ListUsers(page, perPage, name, username, id);
+                UserPublicList result = apiInstance.ListUsers(page, perPage, name, username, id);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -221,7 +221,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List&lt;PublicUserDto&gt;**](PublicUserDto.md)
+[**UserPublicList**](UserPublicList.md)
 
 ### Authorization
 

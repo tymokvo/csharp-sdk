@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Metadata** | [**QueenbeeOperatorMetadataMetaData**](QueenbeeOperatorMetadataMetaData.md) | The Operator metadata information | 
+**Metadata** | [**MetaData**](MetaData.md) | The Operator metadata information | 
 **Config** | [**Config**](Config.md) | The configuration information to run this operator | 
 **Functions** | [**List&lt;Function&gt;**](Function.md) | List of Operator functions | 
 

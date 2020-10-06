@@ -1,6 +1,6 @@
 # PollinationSDK.Api.UserApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://api.pollination.cloud*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -37,7 +37,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new UserApi(Configuration.Default);
             var emailRequest = new EmailRequest(); // EmailRequest | 
 
@@ -96,7 +96,7 @@ No authorization required
 
 ## GetMe
 
-> PrivateUserDto GetMe ()
+> UserPrivate GetMe ()
 
 Get authenticated user profile.
 
@@ -117,8 +117,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new UserApi(Configuration.Default);
@@ -126,7 +126,7 @@ namespace Example
             try
             {
                 // Get authenticated user profile.
-                PrivateUserDto result = apiInstance.GetMe();
+                UserPrivate result = apiInstance.GetMe();
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -146,11 +146,11 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**PrivateUserDto**](PrivateUserDto.md)
+[**UserPrivate**](UserPrivate.md)
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -189,8 +189,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new UserApi(Configuration.Default);
@@ -222,7 +222,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -242,7 +242,7 @@ This endpoint does not need any parameter.
 
 ## ListRefreshTokens
 
-> List&lt;RefreshTokenDto&gt; ListRefreshTokens ()
+> List&lt;RefreshToken&gt; ListRefreshTokens ()
 
 Get a list of token names
 
@@ -263,7 +263,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
             // Configure OAuth2 access token for authorization: JWT
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
@@ -272,7 +272,7 @@ namespace Example
             try
             {
                 // Get a list of token names
-                List<RefreshTokenDto> result = apiInstance.ListRefreshTokens();
+                List<RefreshToken> result = apiInstance.ListRefreshTokens();
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -292,7 +292,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**List&lt;RefreshTokenDto&gt;**](RefreshTokenDto.md)
+[**List&lt;RefreshToken&gt;**](RefreshToken.md)
 
 ### Authorization
 
@@ -316,7 +316,7 @@ This endpoint does not need any parameter.
 
 ## Login
 
-> LoginToken Login (LoginDto loginDto)
+> LoginToken Login (Login login)
 
 Login to the platform and get a JWT back
 
@@ -337,14 +337,14 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new UserApi(Configuration.Default);
-            var loginDto = new LoginDto(); // LoginDto | 
+            var login = new Login(); // Login | 
 
             try
             {
                 // Login to the platform and get a JWT back
-                LoginToken result = apiInstance.Login(loginDto);
+                LoginToken result = apiInstance.Login(login);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -363,7 +363,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **loginDto** | [**LoginDto**](LoginDto.md)|  | 
+ **login** | [**Login**](Login.md)|  | 
 
 ### Return type
 
@@ -392,7 +392,7 @@ No authorization required
 
 ## Signup
 
-> AnyType Signup (SignUpDto signUpDto)
+> AnyType Signup (SignUp signUp)
 
 Sign Up to the platform!
 
@@ -413,14 +413,14 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new UserApi(Configuration.Default);
-            var signUpDto = new SignUpDto(); // SignUpDto | 
+            var signUp = new SignUp(); // SignUp | 
 
             try
             {
                 // Sign Up to the platform!
-                AnyType result = apiInstance.Signup(signUpDto);
+                AnyType result = apiInstance.Signup(signUp);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -439,7 +439,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **signUpDto** | [**SignUpDto**](SignUpDto.md)|  | 
+ **signUp** | [**SignUp**](SignUp.md)|  | 
 
 ### Return type
 
@@ -472,7 +472,7 @@ No authorization required
 
 ## UpsertRefreshToken
 
-> string UpsertRefreshToken (CreateTokenDto createTokenDto)
+> string UpsertRefreshToken (RefreshTokenCreate refreshTokenCreate)
 
 Get refresh token and delete previous one if it exists
 
@@ -493,14 +493,14 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new UserApi(Configuration.Default);
-            var createTokenDto = new CreateTokenDto(); // CreateTokenDto | 
+            var refreshTokenCreate = new RefreshTokenCreate(); // RefreshTokenCreate | 
 
             try
             {
                 // Get refresh token and delete previous one if it exists
-                string result = apiInstance.UpsertRefreshToken(createTokenDto);
+                string result = apiInstance.UpsertRefreshToken(refreshTokenCreate);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -519,7 +519,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **createTokenDto** | [**CreateTokenDto**](CreateTokenDto.md)|  | 
+ **refreshTokenCreate** | [**RefreshTokenCreate**](RefreshTokenCreate.md)|  | 
 
 ### Return type
 

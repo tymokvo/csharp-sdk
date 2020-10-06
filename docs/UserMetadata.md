@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Company** | **string** |  | [optional] 
-**Description** | **string** |  | [optional] 
+**Company** | **string** | The company the user works for | [optional] 
+**Description** | **string** | A short description of the user | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)

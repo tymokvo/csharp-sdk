@@ -1,23 +1,23 @@
 # PollinationSDK.Api.TeamsApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://api.pollination.cloud*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateTeam**](TeamsApi.md#createteam) | **POST** /orgs/{org_name}/teams | Create a Team
 [**DeleteOrgTeamMember**](TeamsApi.md#deleteorgteammember) | **DELETE** /orgs/{org_name}/teams/{team_slug}/members/{username} | Remove a team member
 [**DeleteTeam**](TeamsApi.md#deleteteam) | **DELETE** /orgs/{org_name}/teams/{team_slug} | Delete a Team
-[**GetOrgTeamMembers**](TeamsApi.md#getorgteammembers) | **GET** /orgs/{org_name}/teams/{team_slug}/members | List a team&#39;s members
+[**GetOrgTeamMembers**](TeamsApi.md#getorgteammembers) | **GET** /orgs/{org_name}/teams/{team_slug}/members | List team members
 [**GetTeam**](TeamsApi.md#getteam) | **GET** /orgs/{org_name}/teams/{team_slug} | Get a Team
 [**ListOrgTeams**](TeamsApi.md#listorgteams) | **GET** /orgs/{org_name}/teams | List Teams
 [**UpdateTeam**](TeamsApi.md#updateteam) | **PUT** /orgs/{org_name}/teams/{team_slug} | Update a Team
-[**UpsertOrgTeamMember**](TeamsApi.md#upsertorgteammember) | **PATCH** /orgs/{org_name}/teams/{team_slug}/members/{username}/{role} | Add or update the role of an Org Member
+[**UpsertOrgTeamMember**](TeamsApi.md#upsertorgteammember) | **PATCH** /orgs/{org_name}/teams/{team_slug}/members/{username}/{role} | Add or update the role of an Team Member
 
 
 
 ## CreateTeam
 
-> CreatedContent CreateTeam (string orgName, PatchTeamDto patchTeamDto)
+> CreatedContent CreateTeam (string orgName, TeamCreate teamCreate)
 
 Create a Team
 
@@ -38,18 +38,18 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new TeamsApi(Configuration.Default);
             var orgName = orgName_example;  // string | 
-            var patchTeamDto = new PatchTeamDto(); // PatchTeamDto | 
+            var teamCreate = new TeamCreate(); // TeamCreate | 
 
             try
             {
                 // Create a Team
-                CreatedContent result = apiInstance.CreateTeam(orgName, patchTeamDto);
+                CreatedContent result = apiInstance.CreateTeam(orgName, teamCreate);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -69,7 +69,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgName** | **string**|  | 
- **patchTeamDto** | [**PatchTeamDto**](PatchTeamDto.md)|  | 
+ **teamCreate** | [**TeamCreate**](TeamCreate.md)|  | 
 
 ### Return type
 
@@ -77,7 +77,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -123,8 +123,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new TeamsApi(Configuration.Default);
@@ -163,7 +163,7 @@ void (empty response body)
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -208,8 +208,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new TeamsApi(Configuration.Default);
@@ -246,7 +246,7 @@ void (empty response body)
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -270,9 +270,9 @@ void (empty response body)
 
 ## GetOrgTeamMembers
 
-> List&lt;TeamMemberDto&gt; GetOrgTeamMembers (string orgName, string teamSlug)
+> TeamMemberList GetOrgTeamMembers (string orgName, string teamSlug, int? page = null, int? perPage = null)
 
-List a team's members
+List team members
 
 Retrieve a tean's members
 
@@ -291,15 +291,17 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new TeamsApi(Configuration.Default);
             var orgName = orgName_example;  // string | 
             var teamSlug = teamSlug_example;  // string | 
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
-                // List a team's members
-                List<TeamMemberDto> result = apiInstance.GetOrgTeamMembers(orgName, teamSlug);
+                // List team members
+                TeamMemberList result = apiInstance.GetOrgTeamMembers(orgName, teamSlug, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -320,10 +322,12 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgName** | **string**|  | 
  **teamSlug** | **string**|  | 
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
 ### Return type
 
-[**List&lt;TeamMemberDto&gt;**](TeamMemberDto.md)
+[**TeamMemberList**](TeamMemberList.md)
 
 ### Authorization
 
@@ -348,7 +352,7 @@ No authorization required
 
 ## GetTeam
 
-> TeamDto GetTeam (string orgName, string teamSlug)
+> Team GetTeam (string orgName, string teamSlug)
 
 Get a Team
 
@@ -369,7 +373,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new TeamsApi(Configuration.Default);
             var orgName = orgName_example;  // string | 
             var teamSlug = teamSlug_example;  // string | 
@@ -377,7 +381,7 @@ namespace Example
             try
             {
                 // Get a Team
-                TeamDto result = apiInstance.GetTeam(orgName, teamSlug);
+                Team result = apiInstance.GetTeam(orgName, teamSlug);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -401,7 +405,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**TeamDto**](TeamDto.md)
+[**Team**](Team.md)
 
 ### Authorization
 
@@ -430,7 +434,7 @@ No authorization required
 
 ## ListOrgTeams
 
-> List&lt;TeamDto&gt; ListOrgTeams (string orgName, int? page = null, int? perPage = null, List<string> name = null, List<string> member = null)
+> TeamList ListOrgTeams (string orgName, int? page = null, int? perPage = null, List<string> name = null, List<string> member = null)
 
 List Teams
 
@@ -451,7 +455,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new TeamsApi(Configuration.Default);
             var orgName = orgName_example;  // string | 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
@@ -462,7 +466,7 @@ namespace Example
             try
             {
                 // List Teams
-                List<TeamDto> result = apiInstance.ListOrgTeams(orgName, page, perPage, name, member);
+                TeamList result = apiInstance.ListOrgTeams(orgName, page, perPage, name, member);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -489,7 +493,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List&lt;TeamDto&gt;**](TeamDto.md)
+[**TeamList**](TeamList.md)
 
 ### Authorization
 
@@ -514,7 +518,7 @@ No authorization required
 
 ## UpdateTeam
 
-> UpdateAccepted UpdateTeam (string orgName, string teamSlug, PatchTeamDto patchTeamDto)
+> UpdateAccepted UpdateTeam (string orgName, string teamSlug, TeamUpdate teamUpdate)
 
 Update a Team
 
@@ -535,19 +539,19 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new TeamsApi(Configuration.Default);
             var orgName = orgName_example;  // string | 
             var teamSlug = teamSlug_example;  // string | 
-            var patchTeamDto = new PatchTeamDto(); // PatchTeamDto | 
+            var teamUpdate = new TeamUpdate(); // TeamUpdate | 
 
             try
             {
                 // Update a Team
-                UpdateAccepted result = apiInstance.UpdateTeam(orgName, teamSlug, patchTeamDto);
+                UpdateAccepted result = apiInstance.UpdateTeam(orgName, teamSlug, teamUpdate);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -568,7 +572,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **orgName** | **string**|  | 
  **teamSlug** | **string**|  | 
- **patchTeamDto** | [**PatchTeamDto**](PatchTeamDto.md)|  | 
+ **teamUpdate** | [**TeamUpdate**](TeamUpdate.md)|  | 
 
 ### Return type
 
@@ -576,7 +580,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -603,7 +607,7 @@ Name | Type | Description  | Notes
 
 > UpdateAccepted UpsertOrgTeamMember (string orgName, string teamSlug, string username, TeamRoleEnum role)
 
-Add or update the role of an Org Member
+Add or update the role of an Team Member
 
 Upsert a member role to the team (must have org or team `owner` role)
 
@@ -622,8 +626,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new TeamsApi(Configuration.Default);
@@ -634,7 +638,7 @@ namespace Example
 
             try
             {
-                // Add or update the role of an Org Member
+                // Add or update the role of an Team Member
                 UpdateAccepted result = apiInstance.UpsertOrgTeamMember(orgName, teamSlug, username, role);
                 Debug.WriteLine(result);
             }
@@ -665,7 +669,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 

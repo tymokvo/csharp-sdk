@@ -1,6 +1,6 @@
 # PollinationSDK.Api.OrgsApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://api.pollination.cloud*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -8,7 +8,7 @@ Method | HTTP request | Description
 [**DeleteOrg**](OrgsApi.md#deleteorg) | **DELETE** /orgs/{name} | Delete an Org
 [**DeleteOrgMember**](OrgsApi.md#deleteorgmember) | **DELETE** /orgs/{name}/members/{username} | Remove an Org member
 [**GetOrg**](OrgsApi.md#getorg) | **GET** /orgs/{name} | Get an Org
-[**GetOrgMembers**](OrgsApi.md#getorgmembers) | **GET** /orgs/{name}/members | List an Org&#39;s members
+[**GetOrgMembers**](OrgsApi.md#getorgmembers) | **GET** /orgs/{name}/members | List organization members
 [**ListOrgs**](OrgsApi.md#listorgs) | **GET** /orgs | List Orgs
 [**UpdateOrg**](OrgsApi.md#updateorg) | **PUT** /orgs/{name} | Update an Org
 [**UpsertOrgMember**](OrgsApi.md#upsertorgmember) | **PATCH** /orgs/{name}/members/{username}/{role} | Add or update the role of an Org Member
@@ -17,7 +17,7 @@ Method | HTTP request | Description
 
 ## CreateOrg
 
-> CreatedContent CreateOrg (CreateOrgDto createOrgDto)
+> CreatedContent CreateOrg (OrganizationCreate organizationCreate)
 
 Create an Org
 
@@ -38,17 +38,17 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new OrgsApi(Configuration.Default);
-            var createOrgDto = new CreateOrgDto(); // CreateOrgDto | 
+            var organizationCreate = new OrganizationCreate(); // OrganizationCreate | 
 
             try
             {
                 // Create an Org
-                CreatedContent result = apiInstance.CreateOrg(createOrgDto);
+                CreatedContent result = apiInstance.CreateOrg(organizationCreate);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -67,7 +67,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **createOrgDto** | [**CreateOrgDto**](CreateOrgDto.md)|  | 
+ **organizationCreate** | [**OrganizationCreate**](OrganizationCreate.md)|  | 
 
 ### Return type
 
@@ -75,7 +75,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -121,8 +121,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new OrgsApi(Configuration.Default);
@@ -157,7 +157,7 @@ void (empty response body)
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -202,8 +202,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new OrgsApi(Configuration.Default);
@@ -240,7 +240,7 @@ void (empty response body)
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -264,7 +264,7 @@ void (empty response body)
 
 ## GetOrg
 
-> OrgDto GetOrg (string name)
+> Organization GetOrg (string name)
 
 Get an Org
 
@@ -285,14 +285,14 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new OrgsApi(Configuration.Default);
             var name = name_example;  // string | 
 
             try
             {
                 // Get an Org
-                OrgDto result = apiInstance.GetOrg(name);
+                Organization result = apiInstance.GetOrg(name);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -315,7 +315,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**OrgDto**](OrgDto.md)
+[**Organization**](Organization.md)
 
 ### Authorization
 
@@ -344,9 +344,9 @@ No authorization required
 
 ## GetOrgMembers
 
-> List&lt;OrgMemberDto&gt; GetOrgMembers (string name)
+> OrganizationMemberList GetOrgMembers (string name, int? page = null, int? perPage = null)
 
-List an Org's members
+List organization members
 
 Retrieve a org's members
 
@@ -365,14 +365,16 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new OrgsApi(Configuration.Default);
             var name = name_example;  // string | 
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
-                // List an Org's members
-                List<OrgMemberDto> result = apiInstance.GetOrgMembers(name);
+                // List organization members
+                OrganizationMemberList result = apiInstance.GetOrgMembers(name, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -392,10 +394,12 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **string**|  | 
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
 ### Return type
 
-[**List&lt;OrgMemberDto&gt;**](OrgMemberDto.md)
+[**OrganizationMemberList**](OrganizationMemberList.md)
 
 ### Authorization
 
@@ -420,7 +424,7 @@ No authorization required
 
 ## ListOrgs
 
-> List&lt;OrgDto&gt; ListOrgs (int? page = null, int? perPage = null, List<string> name = null, List<string> member = null)
+> OrganizationList ListOrgs (int? page = null, int? perPage = null, List<string> name = null, List<string> member = null)
 
 List Orgs
 
@@ -441,7 +445,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new OrgsApi(Configuration.Default);
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
@@ -451,7 +455,7 @@ namespace Example
             try
             {
                 // List Orgs
-                List<OrgDto> result = apiInstance.ListOrgs(page, perPage, name, member);
+                OrganizationList result = apiInstance.ListOrgs(page, perPage, name, member);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -477,7 +481,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List&lt;OrgDto&gt;**](OrgDto.md)
+[**OrganizationList**](OrganizationList.md)
 
 ### Authorization
 
@@ -502,7 +506,7 @@ No authorization required
 
 ## UpdateOrg
 
-> UpdateAccepted UpdateOrg (string name, PatchOrgDto patchOrgDto)
+> UpdateAccepted UpdateOrg (string name, OrganizationUpdate organizationUpdate)
 
 Update an Org
 
@@ -523,18 +527,18 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new OrgsApi(Configuration.Default);
             var name = name_example;  // string | 
-            var patchOrgDto = new PatchOrgDto(); // PatchOrgDto | 
+            var organizationUpdate = new OrganizationUpdate(); // OrganizationUpdate | 
 
             try
             {
                 // Update an Org
-                UpdateAccepted result = apiInstance.UpdateOrg(name, patchOrgDto);
+                UpdateAccepted result = apiInstance.UpdateOrg(name, organizationUpdate);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -554,7 +558,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **string**|  | 
- **patchOrgDto** | [**PatchOrgDto**](PatchOrgDto.md)|  | 
+ **organizationUpdate** | [**OrganizationUpdate**](OrganizationUpdate.md)|  | 
 
 ### Return type
 
@@ -562,7 +566,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -587,7 +591,7 @@ Name | Type | Description  | Notes
 
 ## UpsertOrgMember
 
-> UpdateAccepted UpsertOrgMember (string name, string username, OrgRoleEnum role)
+> UpdateAccepted UpsertOrgMember (string name, string username, OrganizationRoleEnum role)
 
 Add or update the role of an Org Member
 
@@ -608,14 +612,14 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new OrgsApi(Configuration.Default);
             var name = name_example;  // string | 
             var username = username_example;  // string | 
-            var role = ;  // OrgRoleEnum | 
+            var role = ;  // OrganizationRoleEnum | 
 
             try
             {
@@ -641,7 +645,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **string**|  | 
  **username** | **string**|  | 
- **role** | **OrgRoleEnum**|  | 
+ **role** | **OrganizationRoleEnum**|  | 
 
 ### Return type
 
@@ -649,7 +653,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 

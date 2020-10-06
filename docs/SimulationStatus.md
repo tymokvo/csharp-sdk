@@ -12,10 +12,10 @@ Name | Type | Description | Notes
 **Id** | **string** | The ID of the individual workflow run. | 
 **Entrypoint** | **string** | The ID of the first task in the workflow | [optional] 
 **Tasks** | [**Dictionary&lt;string, TaskStatus&gt;**](TaskStatus.md) |  | [optional] 
-**OwnerId** | **string** | ID of the account the simulation is running for. | 
+**AccountId** | **string** | ID of the account the simulation is running for. | 
 **ProjectId** | **string** | ID of the project the simulation belongs to | 
 **RecipeId** | **string** | ID of the recipe repository used to create the workflow | 
-**RecipeOwnerId** | **string** | ID of the recipe owner | 
+**RecipeAccountId** | **string** | ID of the recipe owner | 
 **RecipePackageId** | **string** | ID of the specific recipe package used to create the workflow | 
 **Parallelism** | **int** | The max number of parallel tasks running for this simulation | [optional] 
 

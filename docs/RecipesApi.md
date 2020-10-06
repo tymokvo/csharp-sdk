@@ -1,23 +1,26 @@
 # PollinationSDK.Api.RecipesApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://api.pollination.cloud*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateRecipe**](RecipesApi.md#createrecipe) | **POST** /recipes/{owner} | Create a Recipe
 [**CreateRecipePackage**](RecipesApi.md#createrecipepackage) | **POST** /recipes/{owner}/{name}/tags | Create a new Recipe package
 [**DeleteRecipe**](RecipesApi.md#deleterecipe) | **DELETE** /recipes/{owner}/{name} | Delete a Recipe
+[**DeleteRecipeOrgPermission**](RecipesApi.md#deleterecipeorgpermission) | **DELETE** /recipes/{owner}/{name}/permissions | Remove a Repository permissions
 [**GetRecipe**](RecipesApi.md#getrecipe) | **GET** /recipes/{owner}/{name} | Get a recipe
+[**GetRecipeAccessPermissions**](RecipesApi.md#getrecipeaccesspermissions) | **GET** /recipes/{owner}/{name}/permissions | Get recipe access permissions
 [**GetRecipeByTag**](RecipesApi.md#getrecipebytag) | **GET** /recipes/{owner}/{name}/tags/{tag} | Get a recipe tag
 [**ListRecipeTags**](RecipesApi.md#listrecipetags) | **GET** /recipes/{owner}/{name}/tags | Get a recipe tags
 [**ListRecipes**](RecipesApi.md#listrecipes) | **GET** /recipes | List recipes
 [**UpdateRecipe**](RecipesApi.md#updaterecipe) | **PUT** /recipes/{owner}/{name} | Update a Recipe
+[**UpsertRecipePermission**](RecipesApi.md#upsertrecipepermission) | **PATCH** /recipes/{owner}/{name}/permissions | Upsert a new permission to a recipe
 
 
 
 ## CreateRecipe
 
-> CreatedContent CreateRecipe (string owner, NewRepositoryDto newRepositoryDto)
+> CreatedContent CreateRecipe (string owner, RepositoryCreate repositoryCreate)
 
 Create a Recipe
 
@@ -38,18 +41,18 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new RecipesApi(Configuration.Default);
             var owner = owner_example;  // string | 
-            var newRepositoryDto = new NewRepositoryDto(); // NewRepositoryDto | 
+            var repositoryCreate = new RepositoryCreate(); // RepositoryCreate | 
 
             try
             {
                 // Create a Recipe
-                CreatedContent result = apiInstance.CreateRecipe(owner, newRepositoryDto);
+                CreatedContent result = apiInstance.CreateRecipe(owner, repositoryCreate);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -69,7 +72,7 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
- **newRepositoryDto** | [**NewRepositoryDto**](NewRepositoryDto.md)|  | 
+ **repositoryCreate** | [**RepositoryCreate**](RepositoryCreate.md)|  | 
 
 ### Return type
 
@@ -77,7 +80,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -123,8 +126,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new RecipesApi(Configuration.Default);
@@ -166,7 +169,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -212,8 +215,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new RecipesApi(Configuration.Default);
@@ -250,7 +253,7 @@ void (empty response body)
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 
@@ -272,9 +275,94 @@ void (empty response body)
 [[Back to README]](../README.md)
 
 
+## DeleteRecipeOrgPermission
+
+> void DeleteRecipeOrgPermission (string owner, string name, RepositoryPolicySubject repositoryPolicySubject)
+
+Remove a Repository permissions
+
+Delete a recipe's access policy (must have `admin` permission)
+
+### Example
+
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using PollinationSDK.Api;
+using PollinationSDK.Client;
+using PollinationSDK.Model;
+
+namespace Example
+{
+    public class DeleteRecipeOrgPermissionExample
+    {
+        public static void Main()
+        {
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
+            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+
+            var apiInstance = new RecipesApi(Configuration.Default);
+            var owner = owner_example;  // string | 
+            var name = name_example;  // string | 
+            var repositoryPolicySubject = new RepositoryPolicySubject(); // RepositoryPolicySubject | 
+
+            try
+            {
+                // Remove a Repository permissions
+                apiInstance.DeleteRecipeOrgPermission(owner, name, repositoryPolicySubject);
+            }
+            catch (ApiException e)
+            {
+                Debug.Print("Exception when calling RecipesApi.DeleteRecipeOrgPermission: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **string**|  | 
+ **name** | **string**|  | 
+ **repositoryPolicySubject** | [**RepositoryPolicySubject**](RepositoryPolicySubject.md)|  | 
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[CompulsoryAuth](../README.md#CompulsoryAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **204** | Accepted |  -  |
+| **403** | Access forbidden |  -  |
+| **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#)
+[[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## GetRecipe
 
-> RepositoryDto GetRecipe (string owner, string name)
+> Repository GetRecipe (string owner, string name)
 
 Get a recipe
 
@@ -295,8 +383,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: OptionalAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new RecipesApi(Configuration.Default);
@@ -306,7 +394,7 @@ namespace Example
             try
             {
                 // Get a recipe
-                RepositoryDto result = apiInstance.GetRecipe(owner, name);
+                Repository result = apiInstance.GetRecipe(owner, name);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -330,11 +418,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**RepositoryDto**](RepositoryDto.md)
+[**Repository**](Repository.md)
 
 ### Authorization
 
-[Optional Auth](../README.md#Optional Auth)
+[OptionalAuth](../README.md#OptionalAuth)
 
 ### HTTP request headers
 
@@ -349,6 +437,98 @@ Name | Type | Description  | Notes
 | **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
 | **404** | Not found |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#)
+[[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetRecipeAccessPermissions
+
+> RepositoryAccessPolicyList GetRecipeAccessPermissions (string owner, string name, int? page = null, int? perPage = null, List<string> subjectType = null, List<string> permission = null)
+
+Get recipe access permissions
+
+Retrieve a recipe's access permissions (must have `contribute` permission)
+
+### Example
+
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using PollinationSDK.Api;
+using PollinationSDK.Client;
+using PollinationSDK.Model;
+
+namespace Example
+{
+    public class GetRecipeAccessPermissionsExample
+    {
+        public static void Main()
+        {
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
+            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+
+            var apiInstance = new RecipesApi(Configuration.Default);
+            var owner = owner_example;  // string | 
+            var name = name_example;  // string | 
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
+            var subjectType = new List<string>(); // List<string> | The type of access policy subject (optional) 
+            var permission = new List<string>(); // List<string> | An access policy permission string (optional) 
+
+            try
+            {
+                // Get recipe access permissions
+                RepositoryAccessPolicyList result = apiInstance.GetRecipeAccessPermissions(owner, name, page, perPage, subjectType, permission);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException e)
+            {
+                Debug.Print("Exception when calling RecipesApi.GetRecipeAccessPermissions: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **string**|  | 
+ **name** | **string**|  | 
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
+ **subjectType** | [**List&lt;string&gt;**](string.md)| The type of access policy subject | [optional] 
+ **permission** | [**List&lt;string&gt;**](string.md)| An access policy permission string | [optional] 
+
+### Return type
+
+[**RepositoryAccessPolicyList**](RepositoryAccessPolicyList.md)
+
+### Authorization
+
+[CompulsoryAuth](../README.md#CompulsoryAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Retrieved |  -  |
+| **403** | Access forbidden |  -  |
+| **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -380,8 +560,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: OptionalAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new RecipesApi(Configuration.Default);
@@ -421,7 +601,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Optional Auth](../README.md#Optional Auth)
+[OptionalAuth](../README.md#OptionalAuth)
 
 ### HTTP request headers
 
@@ -446,7 +626,7 @@ Name | Type | Description  | Notes
 
 ## ListRecipeTags
 
-> PackageListDto ListRecipeTags (string owner, string name)
+> RepositoryPackageList ListRecipeTags (string owner, string name)
 
 Get a recipe tags
 
@@ -467,8 +647,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: OptionalAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new RecipesApi(Configuration.Default);
@@ -478,7 +658,7 @@ namespace Example
             try
             {
                 // Get a recipe tags
-                PackageListDto result = apiInstance.ListRecipeTags(owner, name);
+                RepositoryPackageList result = apiInstance.ListRecipeTags(owner, name);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -502,11 +682,11 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**PackageListDto**](PackageListDto.md)
+[**RepositoryPackageList**](RepositoryPackageList.md)
 
 ### Authorization
 
-[Optional Auth](../README.md#Optional Auth)
+[OptionalAuth](../README.md#OptionalAuth)
 
 ### HTTP request headers
 
@@ -531,7 +711,7 @@ Name | Type | Description  | Notes
 
 ## ListRecipes
 
-> RepositoryListDto ListRecipes (int? page = null, int? perPage = null, List<string> name = null, List<string> owner = null, bool? _public = null, List<string> keyword = null)
+> RepositoryList ListRecipes (int? page = null, int? perPage = null, List<string> name = null, List<string> owner = null, bool? _public = null, List<string> keyword = null, List<string> permission = null)
 
 List recipes
 
@@ -550,8 +730,8 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Optional Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: OptionalAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new RecipesApi(Configuration.Default);
@@ -561,11 +741,12 @@ namespace Example
             var owner = new List<string>(); // List<string> | Owner of the project (optional) 
             var _public = true;  // bool? | Boolean check for public/private projects (optional) 
             var keyword = new List<string>(); // List<string> | A keyword to index the repository by (optional) 
+            var permission = new List<string>(); // List<string> |  (optional) 
 
             try
             {
                 // List recipes
-                RepositoryListDto result = apiInstance.ListRecipes(page, perPage, name, owner, _public, keyword);
+                RepositoryList result = apiInstance.ListRecipes(page, perPage, name, owner, _public, keyword, permission);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -590,14 +771,15 @@ Name | Type | Description  | Notes
  **owner** | [**List&lt;string&gt;**](string.md)| Owner of the project | [optional] 
  **_public** | **bool?**| Boolean check for public/private projects | [optional] 
  **keyword** | [**List&lt;string&gt;**](string.md)| A keyword to index the repository by | [optional] 
+ **permission** | [**List&lt;string&gt;**](string.md)|  | [optional] 
 
 ### Return type
 
-[**RepositoryListDto**](RepositoryListDto.md)
+[**RepositoryList**](RepositoryList.md)
 
 ### Authorization
 
-[Optional Auth](../README.md#Optional Auth)
+[OptionalAuth](../README.md#OptionalAuth)
 
 ### HTTP request headers
 
@@ -618,7 +800,7 @@ Name | Type | Description  | Notes
 
 ## UpdateRecipe
 
-> UpdateAccepted UpdateRecipe (string owner, string name, UpdateRepositoryDto updateRepositoryDto)
+> UpdateAccepted UpdateRecipe (string owner, string name, RepositoryUpdate repositoryUpdate)
 
 Update a Recipe
 
@@ -639,19 +821,19 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
-            // Configure OAuth2 access token for authorization: Compulsory Auth
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
             Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
 
             var apiInstance = new RecipesApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var updateRepositoryDto = new UpdateRepositoryDto(); // UpdateRepositoryDto | 
+            var repositoryUpdate = new RepositoryUpdate(); // RepositoryUpdate | 
 
             try
             {
                 // Update a Recipe
-                UpdateAccepted result = apiInstance.UpdateRecipe(owner, name, updateRepositoryDto);
+                UpdateAccepted result = apiInstance.UpdateRecipe(owner, name, repositoryUpdate);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -672,7 +854,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **updateRepositoryDto** | [**UpdateRepositoryDto**](UpdateRepositoryDto.md)|  | 
+ **repositoryUpdate** | [**RepositoryUpdate**](RepositoryUpdate.md)|  | 
 
 ### Return type
 
@@ -680,7 +862,94 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[Compulsory Auth](../README.md#Compulsory Auth)
+[CompulsoryAuth](../README.md#CompulsoryAuth)
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **202** | Accepted |  -  |
+| **403** | Access forbidden |  -  |
+| **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
+| **404** | Not found |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#)
+[[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## UpsertRecipePermission
+
+> UpdateAccepted UpsertRecipePermission (string owner, string name, RepositoryAccessPolicy repositoryAccessPolicy)
+
+Upsert a new permission to a recipe
+
+Upsert a recipe's access policy (must have `admin` permission)
+
+### Example
+
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using PollinationSDK.Api;
+using PollinationSDK.Client;
+using PollinationSDK.Model;
+
+namespace Example
+{
+    public class UpsertRecipePermissionExample
+    {
+        public static void Main()
+        {
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure OAuth2 access token for authorization: CompulsoryAuth
+            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+
+            var apiInstance = new RecipesApi(Configuration.Default);
+            var owner = owner_example;  // string | 
+            var name = name_example;  // string | 
+            var repositoryAccessPolicy = new RepositoryAccessPolicy(); // RepositoryAccessPolicy | 
+
+            try
+            {
+                // Upsert a new permission to a recipe
+                UpdateAccepted result = apiInstance.UpsertRecipePermission(owner, name, repositoryAccessPolicy);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException e)
+            {
+                Debug.Print("Exception when calling RecipesApi.UpsertRecipePermission: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **string**|  | 
+ **name** | **string**|  | 
+ **repositoryAccessPolicy** | [**RepositoryAccessPolicy**](RepositoryAccessPolicy.md)|  | 
+
+### Return type
+
+[**UpdateAccepted**](UpdateAccepted.md)
+
+### Authorization
+
+[CompulsoryAuth](../README.md#CompulsoryAuth)
 
 ### HTTP request headers
 

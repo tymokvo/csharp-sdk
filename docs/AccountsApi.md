@@ -1,6 +1,6 @@
 # PollinationSDK.Api.AccountsApi
 
-All URIs are relative to *http://localhost*
+All URIs are relative to *https://api.pollination.cloud*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -32,7 +32,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new AccountsApi(Configuration.Default);
             var name = name_example;  // string | 
 
@@ -108,7 +108,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "http://localhost";
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new AccountsApi(Configuration.Default);
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
