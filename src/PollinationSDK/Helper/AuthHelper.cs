@@ -17,7 +17,7 @@ namespace PollinationSDK
         /// Token from previous sign in if any, otherwise this is an empty string. Call SignIn() first for users to login from browser.
         /// </summary>
         private static string ID_TOKEN { get; set; } = string.Empty;
-        public static async Task SignInAsync(Action ActionWhenDone = default)
+        public static async Task SignInAsync(Action ActionWhenDone = default, bool devEnv = false)
         {
             //OutputMessage = string.Empty;
             var task = Auth0SignIn();
@@ -26,7 +26,7 @@ namespace PollinationSDK
                 var token = await task;
                 if (!string.IsNullOrEmpty(token))
                 {
-                    Configuration.Default.BasePath = "https://api.pollination.cloud/";
+                    Configuration.Default.BasePath = devEnv ? "https://api.staging.pollination.cloud/": "https://api.pollination.cloud/";
                     Configuration.Default.AddDefaultHeader("Authorization", $"Bearer {token}");
                     Helper.CurrentUser = Helper.GetUser();
                 }

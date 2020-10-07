@@ -30,7 +30,7 @@ namespace ConsoleAppDemo
             ////var aj = JsonConvert.SerializeObject(a);
             //Console.WriteLine(arg.ToJson());
           
-            AuthHelper.SignInAsync().Wait();
+            AuthHelper.SignInAsync( devEnv: true).Wait();
 
             var me = Helper.CurrentUser;
             Console.WriteLine($"You are: {me.Username}");
@@ -41,8 +41,8 @@ namespace ConsoleAppDemo
             Console.WriteLine($"Getting the project. \n Found this project ID: {proj.Id}");
 
 
-            //Console.WriteLine("--------------------Getting Recipe Params-------------------");
-            //GetRecipeParameters();
+            Console.WriteLine("--------------------Getting Recipe Params-------------------");
+            GetRecipeParameters();
 
 
             //Console.WriteLine("---------------------------------------");
@@ -70,30 +70,30 @@ namespace ConsoleAppDemo
             //DeleteMyProjects(me, newProj);
 
 
-            //Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
-            ////CreateSimulation(proj);
-            //var cts = new System.Threading.CancellationTokenSource();
-            //var token = cts.Token;
+            Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
+            //CreateSimulation(proj);
+            var cts = new System.Threading.CancellationTokenSource();
+            var token = cts.Token;
 
-            //var workflow = CreateWorkflow();
+            var workflow = CreateWorkflow("ladybug-tools", "annual-energy-use");
 
-            //try
-            //{
-            //    var task = runSimu(proj, workflow, Console.WriteLine, token);
+            try
+            {
+                var task = runSimu(proj, workflow, Console.WriteLine, token);
 
-            //    //cts.CancelAfter(60000);
-            //    task.Wait();
+                //cts.CancelAfter(60000);
+                task.Wait();
 
-            //    Console.WriteLine($"Canceled check: {token.IsCancellationRequested}");
-            //    cts.Dispose();
+                Console.WriteLine($"Canceled check: {token.IsCancellationRequested}");
+                cts.Dispose();
 
 
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e.InnerException.Message);
-            //    //throw;
-            //}
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.InnerException.Message);
+                //throw;
+            }
 
 
 
@@ -101,13 +101,14 @@ namespace ConsoleAppDemo
             //DownloadOutputs(proj, "e89ecadf-6844-4ca6-a02d-1c2382231f87");
             //Console.WriteLine("Done downloading");
 
-            Console.WriteLine("--------------------Download simulation log-------------------");
-            //@"C:\\Users\\mingo\\AppData\\Local\\Temp\\Pollination\\9936f815-25f1-40b8-a298-71091dd6b71a\\re4veore.tvs\\logs.tgz"
-            var simu = new Simulation(proj, "419f600f-3f31-4dda-a7f5-1cdcd2bab08d");
-            var simuLog = simu.GetSimulationOutputLogAsync(Console.WriteLine).Result;
 
-            Console.WriteLine("Done downloading");
-            Console.WriteLine(simuLog);
+            //Console.WriteLine("--------------------Download simulation log-------------------");
+            ////@"C:\\Users\\mingo\\AppData\\Local\\Temp\\Pollination\\9936f815-25f1-40b8-a298-71091dd6b71a\\re4veore.tvs\\logs.tgz"
+            //var simu = new Simulation(proj, "419f600f-3f31-4dda-a7f5-1cdcd2bab08d");
+            //var simuLog = simu.GetSimulationOutputLogAsync(Console.WriteLine).Result;
+
+            //Console.WriteLine("Done downloading");
+            //Console.WriteLine(simuLog);
 
 
 
@@ -174,11 +175,10 @@ namespace ConsoleAppDemo
             //return inputs.ToString();
             //return recipes;
         }
-        private static Workflow CreateWorkflow()
+        private static Workflow CreateWorkflow(string recipeOwner, string recipeName)
         {
             var recipeApi = new RecipesApi();
-            var recOwner = "ladybug-tools";
-            var rec = recipeApi.GetRecipeByTag(recOwner, "annual-energy-use", "latest");
+            var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest");
             var arg = new SimulationInputs()
             {
                 Parameters = new List<ArgumentParameter>()
@@ -193,12 +193,12 @@ namespace ConsoleAppDemo
                 }
             };
             
-            var wf = new PollinationSDK.Wrapper.Workflow(recOwner, rec, arg);
+            var wf = new PollinationSDK.Wrapper.Workflow(recipeOwner, rec, arg);
             return wf;
         }
 
 
-        private static ProjectList GetProjects(PrivateUserDto user)
+        private static ProjectList GetProjects(UserPrivate user)
         {
             var api = new ProjectsApi();
             var d = api.ListProjects(_public: true, owner: new List<string>() { user.Username });
@@ -229,7 +229,7 @@ namespace ConsoleAppDemo
             return newProj;
         }
 
-        private static void DeleteMyProjects(PrivateUserDto user, string projectName)
+        private static void DeleteMyProjects(UserPrivate user, string projectName)
         {
             var userName = user.Username;
             var api = new ProjectsApi();

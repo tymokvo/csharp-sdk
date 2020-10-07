@@ -8,10 +8,10 @@ namespace PollinationSDK.Model
         //{
 
         //}
-        public ProjectFolderSource(string sourcePath) : this(path: sourcePath)
-        {
+        //public ProjectFolderSource(string sourcePath) : this(path: sourcePath)
+        //{
 
-        }
+        //}
 
         //public ProjectFolderSource FromRelativePath(string relativePath)
         //{
