@@ -10,12 +10,14 @@ mono_nunit_test.sh
 .travis.yml
 packages.config
 openapitools.json
+.openapi-generator-ignore
 
 # User-specific files
 *.suo
 *.user
 *.sln.docstates
 ./nuget
+
 
 # Build results
 
@@ -26,6 +28,7 @@ build/
 [Bb]in/
 [Oo]bj/
 .vs/
+node_modules/
 
 # NuGet Packages
 *.nupkg
