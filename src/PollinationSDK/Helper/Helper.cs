@@ -231,8 +231,7 @@ namespace PollinationSDK
                 var newFileOrDirname = Path.GetFileName(item.Source.ToString());
                 checkedArtis.Add(new SimulationInputArtifact(item.Name, new ProjectFolderSource(newFileOrDirname)));
             }
-            var simuInputs = new SimulationInputs(simu.Inputs.Parameters, checkedArtis);
-
+            var simuInputs = new SimulationInputs(checkedArtis, simu.Inputs.Parameters);
             var newSimu = new SubmitSimulation(simu.Recipe, simuInputs);
 
             return newSimu;
