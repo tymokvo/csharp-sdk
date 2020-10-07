@@ -14,7 +14,7 @@ jobs:
 
       - name: Update Assembly Version
         run: |
-          python .openapi-generator/update_assembly_version.py
+          python .github/workflows/update_assembly_version.py
 
       - name: Build
         run: |
