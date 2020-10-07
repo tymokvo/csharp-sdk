@@ -11,8 +11,15 @@ namespace PollinationSDK
 {
     public static class AuthHelper
     {
+
         private static string Auth0ClientID_GH => "Q566EJGvOncgZIQRDzxHrxBsG4TXCGrR";
+        private static string Auth0ClientID_GH_Dev => "aky7VQoGmXA5QgWYSLmCGAb67Xm5Wzhu";
         private static string Auth0URL => "https://pollination.auth0.com/";
+        private static string Auth0URL_Dev => "https://pollination-staging.auth0.com/";
+
+        private static string ApiURL => "https://api.pollination.cloud/";
+        private static string ApiURL_Dev => "https://api.staging.pollination.cloud/";
+
         /// <summary>
         /// Token from previous sign in if any, otherwise this is an empty string. Call SignIn() first for users to login from browser.
         /// </summary>
@@ -20,13 +27,13 @@ namespace PollinationSDK
         public static async Task SignInAsync(Action ActionWhenDone = default, bool devEnv = false)
         {
             //OutputMessage = string.Empty;
-            var task = Auth0SignIn();
+            var task = Auth0SignIn(devEnv);
             try
             {
                 var token = await task;
                 if (!string.IsNullOrEmpty(token))
                 {
-                    Configuration.Default.BasePath = devEnv ? "https://api.staging.pollination.cloud/": "https://api.pollination.cloud/";
+                    Configuration.Default.BasePath = devEnv ? ApiURL_Dev : ApiURL;
                     Configuration.Default.AddDefaultHeader("Authorization", $"Bearer {token}");
                     Helper.CurrentUser = Helper.GetUser();
                 }
@@ -47,7 +54,7 @@ namespace PollinationSDK
 
         }
 
-        public static async Task<string> Auth0SignIn()
+        public static async Task<string> Auth0SignIn(bool devEnv = false)
         {
 
             // create a redirect URI using an available port on the loopback address.
@@ -94,11 +101,15 @@ namespace PollinationSDK
 
             //var loginURL = state.StartUrl;
             // Build URL
-            var loginURL = Auth0URL;
+
+            var authUrl = devEnv ? Auth0URL_Dev : Auth0URL;
+            var authClientID = devEnv ? Auth0ClientID_GH_Dev : Auth0ClientID_GH;
+
+            var loginURL = authUrl;
             loginURL += $"authorize?response_type=code";
             loginURL += $"&code_challenge={codeChallenge}";
             loginURL += $"&code_challenge_method=S256";
-            loginURL += $"&client_id={Auth0ClientID_GH}";
+            loginURL += $"&client_id={authClientID}";
             loginURL += $"&scope=openid";
             loginURL += $"&redirect_uri={redirectUri}";
             loginURL += $"&state={state}";
@@ -140,12 +151,12 @@ namespace PollinationSDK
             // Request Tokens
             if (IsAuthorized)
             {
-                var restClient = new RestClient($"{Auth0URL}oauth/token");
+                var restClient = new RestClient($"{authUrl}oauth/token");
                 var restRequest = new RestRequest( Method.POST);
                 //restRequest.AddHeader("Content-Type", "application/x-www-form-urlencoded");
                 restRequest.AddParameter(
                     "application/x-www-form-urlencoded", 
-                    $"grant_type=authorization_code&client_id={Auth0ClientID_GH}&code_verifier={verifier}&code={AUTHORIZATION_CODE}&redirect_uri={redirectUri}", 
+                    $"grant_type=authorization_code&client_id={authClientID}&code_verifier={verifier}&code={AUTHORIZATION_CODE}&redirect_uri={redirectUri}", 
                     ParameterType.RequestBody
                     );
         
