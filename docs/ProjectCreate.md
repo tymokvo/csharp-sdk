@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **string** | The name of the project. Must be unique to a given owner | 
 **Description** | **string** | A description of the project | [optional] [default to ""]
+**Name** | **string** | The name of the project. Must be unique to a given owner | 
 **Public** | **bool** | Whether or not a project is publicly viewable | [optional] [default to true]
 
 [[Back to Model list]](../README.md#documentation-for-models)

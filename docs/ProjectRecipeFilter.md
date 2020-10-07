@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Owner** | **string** | The name of the account the recipe belongs to | 
 **Name** | **string** | The name of the recipe | 
+**Owner** | **string** | The name of the account the recipe belongs to | 
 **Tag** | **string** | The specific recipe tag | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models)

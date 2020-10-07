@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Owner** | **string** | Name of the owner of the recipe | 
 **Name** | **string** | Name of the recipe | 
+**Owner** | **string** | Name of the owner of the recipe | 
 **Tag** | **string** | The specific tag of the recipe to use | [optional] [default to "latest"]
 
 [[Back to Model list]](../README.md#documentation-for-models)

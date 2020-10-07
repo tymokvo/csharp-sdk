@@ -87,7 +87,7 @@ No authorization required
 
 ## ListAccounts
 
-> PublicAccountList ListAccounts (int? page = null, int? perPage = null, string search = null, string type = null)
+> PublicAccountList ListAccounts (int page = null, int perPage = null, string search = null, string type = null)
 
 List Accounts on the Pollination platform
 
@@ -110,8 +110,8 @@ namespace Example
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new AccountsApi(Configuration.Default);
-            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
+            var page = 56;  // int | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int | Number of items per page (optional)  (default to 25)
             var search = search_example;  // string | Search string to find accounts (optional) 
             var type = type_example;  // string | Whether the account is for a user or an org (optional) 
 
@@ -137,8 +137,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int?**| Number of items per page | [optional] [default to 25]
+ **page** | **int**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int**| Number of items per page | [optional] [default to 25]
  **search** | **string**| Search string to find accounts | [optional] 
  **type** | **string**| Whether the account is for a user or an org | [optional] 
 

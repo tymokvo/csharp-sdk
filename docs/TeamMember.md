@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**User** | [**UserPublic**](UserPublic.md) | The team member | 
 **Role** | **TeamRoleEnum** |  | 
+**User** | [**UserPublic**](UserPublic.md) | The team member | 
 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)

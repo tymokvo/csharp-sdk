@@ -86,11 +86,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Success |  -  |
-| **403** | Access forbidden |  -  |
-| **500** | Server error |  -  |
-| **400** | Invalid request |  -  |
 | **202** | Accepted |  -  |
+| **400** | Invalid request |  -  |
+| **403** | Access forbidden |  -  |
 | **422** | Validation Error |  -  |
+| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -168,10 +168,10 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | Accepted |  -  |
-| **403** | Access forbidden |  -  |
-| **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
+| **403** | Access forbidden |  -  |
 | **422** | Validation Error |  -  |
+| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -251,10 +251,10 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | Accepted |  -  |
-| **403** | Access forbidden |  -  |
-| **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
+| **403** | Access forbidden |  -  |
 | **422** | Validation Error |  -  |
+| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -330,11 +330,11 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Retrieved |  -  |
-| **403** | Access forbidden |  -  |
-| **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
+| **403** | Access forbidden |  -  |
 | **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
+| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -344,7 +344,7 @@ No authorization required
 
 ## GetOrgMembers
 
-> OrganizationMemberList GetOrgMembers (string name, int? page = null, int? perPage = null)
+> OrganizationMemberList GetOrgMembers (string name, int page = null, int perPage = null)
 
 List organization members
 
@@ -368,8 +368,8 @@ namespace Example
             Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new OrgsApi(Configuration.Default);
             var name = name_example;  // string | 
-            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
+            var page = 56;  // int | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int | Number of items per page (optional)  (default to 25)
 
             try
             {
@@ -394,8 +394,8 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **string**|  | 
- **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int?**| Number of items per page | [optional] [default to 25]
+ **page** | **int**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int**| Number of items per page | [optional] [default to 25]
 
 ### Return type
 
@@ -424,7 +424,7 @@ No authorization required
 
 ## ListOrgs
 
-> OrganizationList ListOrgs (int? page = null, int? perPage = null, List<string> name = null, List<string> member = null)
+> OrganizationList ListOrgs (int page = null, int perPage = null, List<string> name = null, List<string> member = null)
 
 List Orgs
 
@@ -447,8 +447,8 @@ namespace Example
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new OrgsApi(Configuration.Default);
-            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
+            var page = 56;  // int | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int | Number of items per page (optional)  (default to 25)
             var name = new List<string>(); // List<string> | The account name (optional) 
             var member = new List<string>(); // List<string> | The ID of a user (optional) 
 
@@ -474,8 +474,8 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int?**| Number of items per page | [optional] [default to 25]
+ **page** | **int**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int**| Number of items per page | [optional] [default to 25]
  **name** | [**List&lt;string&gt;**](string.md)| The account name | [optional] 
  **member** | [**List&lt;string&gt;**](string.md)| The ID of a user | [optional] 
 
@@ -577,11 +577,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **202** | Accepted |  -  |
-| **403** | Access forbidden |  -  |
-| **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
+| **403** | Access forbidden |  -  |
 | **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
+| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -619,7 +619,7 @@ namespace Example
             var apiInstance = new OrgsApi(Configuration.Default);
             var name = name_example;  // string | 
             var username = username_example;  // string | 
-            var role = ;  // OrganizationRoleEnum | 
+            var role = new OrganizationRoleEnum(); // OrganizationRoleEnum | 
 
             try
             {
@@ -645,7 +645,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **string**|  | 
  **username** | **string**|  | 
- **role** | **OrganizationRoleEnum**|  | 
+ **role** | [**OrganizationRoleEnum**](OrganizationRoleEnum.md)|  | 
 
 ### Return type
 
@@ -664,11 +664,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **202** | Accepted |  -  |
-| **403** | Access forbidden |  -  |
-| **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
+| **403** | Access forbidden |  -  |
 | **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
+| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)

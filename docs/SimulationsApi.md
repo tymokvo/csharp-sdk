@@ -107,7 +107,7 @@ Name | Type | Description  | Notes
 
 ## DownloadSimulationArtifact
 
-> AnyType DownloadSimulationArtifact (string owner, string name, string simulationId, string path = null)
+> Object DownloadSimulationArtifact (string owner, string name, string simulationId, string path = null)
 
 Download an artifact from the simulation folder
 
@@ -141,7 +141,7 @@ namespace Example
             try
             {
                 // Download an artifact from the simulation folder
-                AnyType result = apiInstance.DownloadSimulationArtifact(owner, name, simulationId, path);
+                Object result = apiInstance.DownloadSimulationArtifact(owner, name, simulationId, path);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -167,7 +167,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AnyType**](AnyType.md)
+**Object**
 
 ### Authorization
 
@@ -182,11 +182,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Retrieved |  -  |
-| **403** | Access forbidden |  -  |
-| **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
+| **403** | Access forbidden |  -  |
 | **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
+| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -279,7 +279,7 @@ Name | Type | Description  | Notes
 
 ## GetSimulationInputs
 
-> AnyType GetSimulationInputs (string owner, string name, string simulationId)
+> Object GetSimulationInputs (string owner, string name, string simulationId)
 
 Get simulation inputs
 
@@ -312,7 +312,7 @@ namespace Example
             try
             {
                 // Get simulation inputs
-                AnyType result = apiInstance.GetSimulationInputs(owner, name, simulationId);
+                Object result = apiInstance.GetSimulationInputs(owner, name, simulationId);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -337,7 +337,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AnyType**](AnyType.md)
+**Object**
 
 ### Authorization
 
@@ -352,11 +352,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Retrieved |  -  |
-| **403** | Access forbidden |  -  |
-| **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
+| **403** | Access forbidden |  -  |
 | **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
+| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -366,7 +366,7 @@ Name | Type | Description  | Notes
 
 ## GetSimulationLogs
 
-> AnyType GetSimulationLogs (string owner, string name, string simulationId)
+> Object GetSimulationLogs (string owner, string name, string simulationId)
 
 Get simulation logs
 
@@ -399,7 +399,7 @@ namespace Example
             try
             {
                 // Get simulation logs
-                AnyType result = apiInstance.GetSimulationLogs(owner, name, simulationId);
+                Object result = apiInstance.GetSimulationLogs(owner, name, simulationId);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -424,7 +424,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AnyType**](AnyType.md)
+**Object**
 
 ### Authorization
 
@@ -439,11 +439,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Retrieved |  -  |
-| **403** | Access forbidden |  -  |
-| **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
+| **403** | Access forbidden |  -  |
 | **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
+| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -453,7 +453,7 @@ Name | Type | Description  | Notes
 
 ## GetSimulationOutputArtifact
 
-> AnyType GetSimulationOutputArtifact (string owner, string name, string simulationId, string artifactName)
+> Object GetSimulationOutputArtifact (string owner, string name, string simulationId, string artifactName)
 
 Get simulation output artifact by name
 
@@ -487,7 +487,7 @@ namespace Example
             try
             {
                 // Get simulation output artifact by name
-                AnyType result = apiInstance.GetSimulationOutputArtifact(owner, name, simulationId, artifactName);
+                Object result = apiInstance.GetSimulationOutputArtifact(owner, name, simulationId, artifactName);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -513,7 +513,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AnyType**](AnyType.md)
+**Object**
 
 ### Authorization
 
@@ -528,11 +528,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Retrieved |  -  |
-| **403** | Access forbidden |  -  |
-| **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
+| **403** | Access forbidden |  -  |
 | **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
+| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -542,7 +542,7 @@ Name | Type | Description  | Notes
 
 ## GetSimulationOutputs
 
-> AnyType GetSimulationOutputs (string owner, string name, string simulationId)
+> Object GetSimulationOutputs (string owner, string name, string simulationId)
 
 Get simulation outputs
 
@@ -575,7 +575,7 @@ namespace Example
             try
             {
                 // Get simulation outputs
-                AnyType result = apiInstance.GetSimulationOutputs(owner, name, simulationId);
+                Object result = apiInstance.GetSimulationOutputs(owner, name, simulationId);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -600,7 +600,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AnyType**](AnyType.md)
+**Object**
 
 ### Authorization
 
@@ -615,11 +615,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Retrieved |  -  |
-| **403** | Access forbidden |  -  |
-| **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
+| **403** | Access forbidden |  -  |
 | **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
+| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -714,7 +714,7 @@ Name | Type | Description  | Notes
 
 ## ListSimulationArtifacts
 
-> List&lt;FileMeta&gt; ListSimulationArtifacts (string owner, string name, string simulationId, int? page = null, int? perPage = null, List<string> path = null)
+> List&lt;FileMeta&gt; ListSimulationArtifacts (string owner, string name, string simulationId, int page = null, int perPage = null, List<string> path = null)
 
 List artifacts in a simulation folder
 
@@ -743,8 +743,8 @@ namespace Example
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
             var simulationId = simulationId_example;  // string | 
-            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
+            var page = 56;  // int | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int | Number of items per page (optional)  (default to 25)
             var path = new List<string>(); // List<string> | The path to an file within a project folder (optional) 
 
             try
@@ -772,8 +772,8 @@ Name | Type | Description  | Notes
  **owner** | **string**|  | 
  **name** | **string**|  | 
  **simulationId** | **string**|  | 
- **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int?**| Number of items per page | [optional] [default to 25]
+ **page** | **int**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int**| Number of items per page | [optional] [default to 25]
  **path** | [**List&lt;string&gt;**](string.md)| The path to an file within a project folder | [optional] 
 
 ### Return type
@@ -803,7 +803,7 @@ Name | Type | Description  | Notes
 
 ## ListSimulations
 
-> SimulationList ListSimulations (string owner, string name, int? page = null, int? perPage = null, List<string> id = null, List<string> status = null)
+> SimulationList ListSimulations (string owner, string name, int page = null, int perPage = null, List<string> id = null, List<string> status = null)
 
 List simulations
 
@@ -831,8 +831,8 @@ namespace Example
             var apiInstance = new SimulationsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
+            var page = 56;  // int | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int | Number of items per page (optional)  (default to 25)
             var id = new List<string>(); // List<string> | The ID of a simulation to search for (optional) 
             var status = new List<string>(); // List<string> | The status of the simulation to filter by (optional) 
 
@@ -860,8 +860,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int?**| Number of items per page | [optional] [default to 25]
+ **page** | **int**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int**| Number of items per page | [optional] [default to 25]
  **id** | [**List&lt;string&gt;**](string.md)| The ID of a simulation to search for | [optional] 
  **status** | [**List&lt;string&gt;**](string.md)| The status of the simulation to filter by | [optional] 
 

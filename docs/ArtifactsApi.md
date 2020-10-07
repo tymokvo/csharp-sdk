@@ -179,7 +179,7 @@ Name | Type | Description  | Notes
 
 ## DownloadArtifact
 
-> AnyType DownloadArtifact (string owner, string name, string path = null)
+> Object DownloadArtifact (string owner, string name, string path = null)
 
 Download an artifact from the project folder
 
@@ -212,7 +212,7 @@ namespace Example
             try
             {
                 // Download an artifact from the project folder
-                AnyType result = apiInstance.DownloadArtifact(owner, name, path);
+                Object result = apiInstance.DownloadArtifact(owner, name, path);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -237,7 +237,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AnyType**](AnyType.md)
+**Object**
 
 ### Authorization
 
@@ -252,11 +252,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Retrieved |  -  |
-| **403** | Access forbidden |  -  |
-| **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
+| **403** | Access forbidden |  -  |
 | **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
+| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -266,7 +266,7 @@ Name | Type | Description  | Notes
 
 ## ListArtifacts
 
-> List&lt;FileMeta&gt; ListArtifacts (string owner, string name, int? page = null, int? perPage = null, List<string> path = null)
+> List&lt;FileMeta&gt; ListArtifacts (string owner, string name, int page = null, int perPage = null, List<string> path = null)
 
 List artifacts in a project folder
 
@@ -294,8 +294,8 @@ namespace Example
             var apiInstance = new ArtifactsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
+            var page = 56;  // int | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int | Number of items per page (optional)  (default to 25)
             var path = new List<string>(); // List<string> | The path to an file within a project folder (optional) 
 
             try
@@ -322,8 +322,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int?**| Number of items per page | [optional] [default to 25]
+ **page** | **int**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int**| Number of items per page | [optional] [default to 25]
  **path** | [**List&lt;string&gt;**](string.md)| The path to an file within a project folder | [optional] 
 
 ### Return type

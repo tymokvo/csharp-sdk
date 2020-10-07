@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Type** | **FolderReference** |  | [optional] 
 **Path** | **string** | The path to the file or folder relative to the workflow output folder | 
+**Type** | **FolderReference** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)

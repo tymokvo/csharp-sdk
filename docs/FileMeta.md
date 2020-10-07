@@ -5,11 +5,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Key** | **string** |  | 
-**Type** | **string** |  | 
 **FileName** | **string** |  | 
+**Key** | **string** |  | 
 **LastModified** | **DateTime** |  | [optional] 
 **Size** | **int** |  | [optional] 
+**Type** | **string** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)

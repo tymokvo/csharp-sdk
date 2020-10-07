@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 ## ChangePassword
 
-> AnyType ChangePassword (EmailRequest emailRequest)
+> Object ChangePassword (EmailRequest emailRequest)
 
 Make a password change request
 
@@ -44,7 +44,7 @@ namespace Example
             try
             {
                 // Make a password change request
-                AnyType result = apiInstance.ChangePassword(emailRequest);
+                Object result = apiInstance.ChangePassword(emailRequest);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -67,7 +67,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AnyType**](AnyType.md)
+**Object**
 
 ### Authorization
 
@@ -82,11 +82,11 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Successful Response |  -  |
-| **403** | Access forbidden |  -  |
-| **500** | Server error |  -  |
 | **400** | Invalid request |  -  |
+| **403** | Access forbidden |  -  |
 | **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
+| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -392,7 +392,7 @@ No authorization required
 
 ## Signup
 
-> AnyType Signup (SignUp signUp)
+> Object Signup (SignUp signUp)
 
 Sign Up to the platform!
 
@@ -420,7 +420,7 @@ namespace Example
             try
             {
                 // Sign Up to the platform!
-                AnyType result = apiInstance.Signup(signUp);
+                Object result = apiInstance.Signup(signUp);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -443,7 +443,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**AnyType**](AnyType.md)
+**Object**
 
 ### Authorization
 
@@ -458,11 +458,11 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Successful Response |  -  |
-| **403** | Access forbidden |  -  |
-| **500** | Server error |  -  |
-| **400** | Invalid request |  -  |
 | **202** | Accepted |  -  |
+| **400** | Invalid request |  -  |
+| **403** | Access forbidden |  -  |
 | **422** | Validation Error |  -  |
+| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)

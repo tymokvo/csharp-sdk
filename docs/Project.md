@@ -5,12 +5,12 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **string** | The name of the project. Must be unique to a given owner | 
 **Description** | **string** | A description of the project | [optional] [default to ""]
-**Public** | **bool** | Whether or not a project is publicly viewable | [optional] [default to true]
 **Id** | **string** | The project ID | 
+**Name** | **string** | The name of the project. Must be unique to a given owner | 
 **Owner** | [**AccountPublic**](AccountPublic.md) |  | 
 **Permissions** | [**ProjectUserPermissions**](ProjectUserPermissions.md) |  | 
+**Public** | **bool** | Whether or not a project is publicly viewable | [optional] [default to true]
 **Slug** | **string** | The project name in slug format | 
 
 [[Back to Model list]](../README.md#documentation-for-models)
