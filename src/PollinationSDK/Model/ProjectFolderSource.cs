@@ -38,14 +38,14 @@ namespace PollinationSDK.Model
         public ProjectFolderSource
         (
            // Required parameters
-           string path= default, string type = "project-folder"// Optional parameters
+           string path= default, string type = "ProjectFolderSource"// Optional parameters
         )// BaseClass
         {
             this.Path = path;
             // use default value if no "type" provided
             if (type == null)
             {
-                this.Type ="project-folder";
+                this.Type = "ProjectFolderSource";
             }
             else
             {
@@ -67,7 +67,7 @@ namespace PollinationSDK.Model
         /// </summary>
         [DataMember(Name="type", EmitDefaultValue=false)]
         [JsonProperty("type")]
-        public string Type { get; set; }  = "project-folder";
+        public string Type { get; set; }  = "ProjectFolderSource";
         
         /// <summary>
         /// Returns the string presentation of the object
