@@ -211,7 +211,6 @@ this.{{name}} = {{#lambda.camelcase_param}}{{name}}{{/lambda.camelcase_param}};
         {
             if (input == null)
                 return false;
-
             return {{#vars}}{{#parent}}base.Equals(input) && {{/parent}}{{^isContainer}}
                 (
                     this.{{name}} == input.{{name}} ||
