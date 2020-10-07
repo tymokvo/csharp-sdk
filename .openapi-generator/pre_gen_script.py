@@ -6,15 +6,18 @@ import shutil
 
 
 args = sys.argv[1:]
-version = ""
+url = ""
 
 if args == []:
-    source_json_url = "https://api.pollination.cloud/openapi.json"
-    json_url = urllib.request.urlopen(source_json_url)
-    data = json.loads(json_url.read())
-    version = data['info']['version']
+    url = "https://api.pollination.cloud/openapi.json"
 else:
-    version = args[0]
+    url = args[0]
+
+
+
+json_url = urllib.request.urlopen(url)
+data = json.loads(json_url.read())
+version = data['info']['version']
 
 print(version)
 version = version.replace('v', '')
