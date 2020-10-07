@@ -24,25 +24,29 @@ namespace ConsoleAppDemo
             Console.ReadKey();
 
 
-            //var a = new ArtifaceSourcePath("asset/grid/room.pts");
-            //Console.WriteLine(a);
-            //var arg = new ArgumentArtifact("input-grid", a);
-            ////var aj = JsonConvert.SerializeObject(a);
-            //Console.WriteLine(arg.ToJson());
           
             AuthHelper.SignInAsync( devEnv: true).Wait();
 
             var me = Helper.CurrentUser;
             Console.WriteLine($"You are: {me.Username}");
 
+            Console.WriteLine("--------------------Get recipes-------------------");
+            var api = new RecipesApi();
+            var recipeList = api.ListRecipes(1,25);
+            var recs = recipeList.Resources;
+            foreach (var item in recs)
+            {
+                Console.WriteLine($"{item.Owner.Name}/{item.Name}/{item.LatestTag}");
+            }
 
-            Console.WriteLine("--------------------Get a project-------------------");
-            var proj = Helper.GetAProject(me, "unnamed");
-            Console.WriteLine($"Getting the project. \n Found this project ID: {proj.Id}");
+
+            //Console.WriteLine("--------------------Get a project-------------------");
+            //var proj = Helper.GetAProject(me, "unnamed");
+            //Console.WriteLine($"Getting the project. \n Found this project ID: {proj.Id}");
 
 
-            Console.WriteLine("--------------------Getting Recipe Params-------------------");
-            GetRecipeParameters();
+            //Console.WriteLine("--------------------Getting Recipe Params-------------------");
+            //GetRecipeParameters();
 
 
             //Console.WriteLine("---------------------------------------");
@@ -70,30 +74,30 @@ namespace ConsoleAppDemo
             //DeleteMyProjects(me, newProj);
 
 
-            Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
-            //CreateSimulation(proj);
-            var cts = new System.Threading.CancellationTokenSource();
-            var token = cts.Token;
+            //Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
+            ////CreateSimulation(proj);
+            //var cts = new System.Threading.CancellationTokenSource();
+            //var token = cts.Token;
 
-            var workflow = CreateWorkflow("ladybug-tools", "annual-energy-use");
+            //var workflow = CreateWorkflow("ladybug-tools", "annual-energy-use");
 
-            try
-            {
-                var task = runSimu(proj, workflow, Console.WriteLine, token);
+            //try
+            //{
+            //    var task = runSimu(proj, workflow, Console.WriteLine, token);
 
-                //cts.CancelAfter(60000);
-                task.Wait();
+            //    //cts.CancelAfter(60000);
+            //    task.Wait();
 
-                Console.WriteLine($"Canceled check: {token.IsCancellationRequested}");
-                cts.Dispose();
+            //    Console.WriteLine($"Canceled check: {token.IsCancellationRequested}");
+            //    cts.Dispose();
 
 
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.InnerException.Message);
-                //throw;
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e.InnerException.Message);
+            //    //throw;
+            //}
 
 
 
@@ -181,9 +185,9 @@ namespace ConsoleAppDemo
             var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest");
             var arg = new SimulationInputs()
             {
-                Parameters = new List<ArgumentParameter>()
+                Parameters = new List<SimulationInputParameter>()
                 {
-                    new ArgumentParameter("filter-design-days", "True")
+                    new SimulationInputParameter("filter-design-days", "True")
                 },
                 Artifacts = new List<SimulationInputArtifact>()
                 {
