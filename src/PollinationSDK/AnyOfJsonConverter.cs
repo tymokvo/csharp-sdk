@@ -25,11 +25,20 @@ namespace PollinationSDK
             if (data == null)
             {
                 var jObject = JObject.Load(reader);
-
-                if (jObject["type"] != null)
+                var typeKey = jObject["type"];
+                if (typeKey != null)
                 {
-                    var typeName = jObject["type"].Value<string>();
+                    var typeName = typeKey.Value<string>();
+                    
                     var type = validTypes.FirstOrDefault(_ => _.Name.Equals(typeName, StringComparison.CurrentCultureIgnoreCase));
+                    // TODO: this is only for temp fix before Queenbee is updated.
+                    if (type == null)
+                    {
+                        var typename = typeName.Substring(0, typeName.Length - 1);
+                        type = validTypes.FirstOrDefault(_ => _.Name.ToLower().StartsWith(typename));
+                    }
+
+
                     if (type != null)
                     {
                         data = jObject.ToObject(type, serializer);
