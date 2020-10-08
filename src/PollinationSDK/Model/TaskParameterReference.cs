@@ -33,8 +33,8 @@ namespace PollinationSDK.Model
         /// <summary>
         /// Gets or Sets Type
         /// </summary>
-        [DataMember(Name="type", EmitDefaultValue=false)]
-        public TaskReference? Type { get; set; }   
+        [DataMember(Name = "type", EmitDefaultValue = false)]
+        public string Type { get; set; } = "TaskParameterReference";
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskParameterReference" /> class.
         /// </summary>
@@ -49,7 +49,7 @@ namespace PollinationSDK.Model
         public TaskParameterReference
         (
            string name, string variable, // Required parameters
-           TaskReference? type= default // Optional parameters
+           string type= "TaskParameterReference" // Optional parameters
         )// BaseClass
         {
             // to ensure "name" is required (not null)

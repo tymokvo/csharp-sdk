@@ -33,8 +33,8 @@ namespace PollinationSDK.Model
         /// <summary>
         /// Gets or Sets Type
         /// </summary>
-        [DataMember(Name="type", EmitDefaultValue=false)]
-        public InputReference? Type { get; set; }   
+        [DataMember(Name = "type", EmitDefaultValue = false)]
+        public string Type { get; set; } = "InputParameterReference";
         /// <summary>
         /// Initializes a new instance of the <see cref="InputParameterReference" /> class.
         /// </summary>
@@ -48,7 +48,7 @@ namespace PollinationSDK.Model
         public InputParameterReference
         (
            string variable, // Required parameters
-           InputReference? type= default // Optional parameters
+           string type = "InputParameterReference" // Optional parameters
         )// BaseClass
         {
             // to ensure "variable" is required (not null)

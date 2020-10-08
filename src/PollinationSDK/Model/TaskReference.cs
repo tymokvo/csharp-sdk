@@ -24,21 +24,6 @@ using OpenAPIDateConverter = PollinationSDK.Client.OpenAPIDateConverter;
 
 namespace PollinationSDK.Model
 {
-    /// <summary>
-    /// An enumeration.
-    /// </summary>
-    /// <value>An enumeration.</value>
-    
-    [JsonConverter(typeof(StringEnumConverter))]
-    
-    public enum TaskReference
-    {
-        /// <summary>
-        /// Enum Tasks for value: tasks
-        /// </summary>
-        [EnumMember(Value = "tasks")]
-        Tasks = 1
-
-    }
+  
 
 }
