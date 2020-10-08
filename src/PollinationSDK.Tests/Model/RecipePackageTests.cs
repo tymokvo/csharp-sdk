@@ -20,6 +20,7 @@ using PollinationSDK.Model;
 using PollinationSDK.Client;
 using System.Reflection;
 using Newtonsoft.Json;
+using System.Net;
 
 namespace PollinationSDK.Test
 {
@@ -42,9 +43,16 @@ namespace PollinationSDK.Test
         public void Init()
         {
             // TODO uncomment below to create an instance of RecipePackage
-            var file = @"../../../testResources/RecipePackage.json";
-            var text = File.ReadAllText(file);
-            instance = RecipePackage.FromJson(text);
+            var url = @"https://api.staging.pollination.cloud/recipes/ladybug-tools/annual-daylight/tags/latest";
+            using (WebClient wc = new WebClient())
+            {
+                var json = wc.DownloadString(url);
+                this.instance = RecipePackage.FromJson(json);
+            }
+
+            //var file = @"../../../testResources/RecipePackage.json";
+            //var text = File.ReadAllText(file);
+            //instance = RecipePackage.FromJson(text);
         }
 
         /// <summary>
@@ -121,7 +129,10 @@ namespace PollinationSDK.Test
         [Test]
         public void ManifestTest()
         {
-            // TODO unit test for the property 'Manifest'
+            var mainFlow = this.instance.Manifest.Flow.FirstOrDefault(_ => _.Name == "main");
+           
+            Assert.IsTrue(mainFlow.Inputs.Artifacts.Count > 0);
+            Assert.IsTrue(mainFlow.Inputs.Parameters.Count > 0);
         }
         /// <summary>
         /// Test the property 'Readme'
@@ -137,7 +148,8 @@ namespace PollinationSDK.Test
         [Test]
         public void TagTest()
         {
-            // TODO unit test for the property 'Tag'
+            var tag = this.instance.Tag;
+            Assert.IsTrue(tag != "latest");
         }
 
     }
