@@ -152,6 +152,42 @@ namespace PollinationSDK.Test
             Assert.IsTrue(tag != "latest");
         }
 
+        [Test]
+        public void ToJson()
+        {
+            var metadata = this.instance.Manifest.Metadata;
+            var dup1 = metadata.DuplicateMetaData();
+
+            Assert.IsTrue(dup1.Equals(metadata));
+
+            // test inputs
+            var dag = this.instance.Manifest.Flow.First();
+            var inputs = dag.Inputs.DuplicateDAGInputs();
+            Assert.IsTrue(inputs.Equals(dag.Inputs));
+
+            // test outputs
+            var outputs = dag.Outputs;
+            var outputsDup = outputs.DuplicateDAGOutputs();
+            Assert.IsTrue(outputsDup.Equals(outputs));
+
+
+            var task = dag.Tasks.First();
+            var taskDup = task.DuplicateDAGTask();
+            Assert.IsTrue(task.Equals(taskDup));
+
+
+            var dup2 = dag.DuplicateDAG();
+            Assert.IsTrue(dup2.Equals(dag));
+
+
+
+            //var json = this.instance.ToJson();
+            //var recipe = RecipePackage.FromJson(json);
+
+            var dup = this.instance.DuplicateRecipePackage();
+            Assert.IsTrue(dup.Equals(this.instance));
+        }
+
     }
 
 }
