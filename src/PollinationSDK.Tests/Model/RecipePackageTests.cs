@@ -171,6 +171,12 @@ namespace PollinationSDK.Test
             Assert.IsTrue(outputsDup.Equals(outputs));
 
 
+            // test output artifacts
+            var outputArtifact = outputs.Artifacts.First();
+            var outputArtifactDup = outputArtifact.DuplicateDAGOutputArtifact();
+            Assert.IsTrue(outputArtifactDup.Equals(outputArtifact));
+
+
             var task = dag.Tasks.First();
             var taskDup = task.DuplicateDAGTask();
             Assert.IsTrue(task.Equals(taskDup));

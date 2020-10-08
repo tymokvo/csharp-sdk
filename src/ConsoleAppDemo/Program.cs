@@ -40,9 +40,9 @@ namespace ConsoleAppDemo
             }
 
 
-            //Console.WriteLine("--------------------Get a project-------------------");
-            //var proj = Helper.GetAProject(me, "unnamed");
-            //Console.WriteLine($"Getting the project. \n Found this project ID: {proj.Id}");
+            Console.WriteLine("--------------------Get a project-------------------");
+            var proj = Helper.GetAProject(me, "demo");
+            Console.WriteLine($"Getting the project. \n Found this project ID: {proj.Id}");
 
 
             //Console.WriteLine("--------------------Getting Recipe Params-------------------");
@@ -74,30 +74,31 @@ namespace ConsoleAppDemo
             //DeleteMyProjects(me, newProj);
 
 
-            //Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
-            ////CreateSimulation(proj);
-            //var cts = new System.Threading.CancellationTokenSource();
-            //var token = cts.Token;
+            Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
+            //CreateSimulation(proj);
+            var cts = new System.Threading.CancellationTokenSource();
+            var token = cts.Token;
 
-            //var workflow = CreateWorkflow("ladybug-tools", "annual-energy-use");
+            //var workflow = CreateWorkflow("ladybug-tools", "annual-daylight");
+            var workflow = CreateWorkflow_AnnualDaylight();
 
-            //try
-            //{
-            //    var task = runSimu(proj, workflow, Console.WriteLine, token);
+            try
+            {
+                var task = runSimu(proj, workflow, Console.WriteLine, token);
 
-            //    //cts.CancelAfter(60000);
-            //    task.Wait();
+                //cts.CancelAfter(60000);
+                task.Wait();
 
-            //    Console.WriteLine($"Canceled check: {token.IsCancellationRequested}");
-            //    cts.Dispose();
+                Console.WriteLine($"Canceled check: {token.IsCancellationRequested}");
+                cts.Dispose();
 
 
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e.InnerException.Message);
-            //    //throw;
-            //}
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.InnerException.Message);
+                //throw;
+            }
 
 
 
@@ -179,6 +180,31 @@ namespace ConsoleAppDemo
             //return inputs.ToString();
             //return recipes;
         }
+
+        private static Workflow CreateWorkflow_AnnualDaylight()
+        {
+            var recipeOwner = "ladybug-tools";
+            var recipeName = "annual-daylight";
+            var recipeApi = new RecipesApi();
+            var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest");
+            var arg = new SimulationInputs()
+            {
+                Parameters = new List<SimulationInputParameter>()
+                {
+                    new SimulationInputParameter("sensor-grids", "[\"room\"]")
+                },
+                Artifacts = new List<SimulationInputArtifact>()
+                {
+                    new SimulationInputArtifact("model", new ProjectFolderSource(@"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder\model")),
+                    new SimulationInputArtifact("wea", new ProjectFolderSource(@"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder\in.wea"))
+                }
+            };
+
+            var wf = new PollinationSDK.Wrapper.Workflow(recipeOwner, rec, arg);
+            return wf;
+        }
+
+
         private static Workflow CreateWorkflow(string recipeOwner, string recipeName)
         {
             var recipeApi = new RecipesApi();
