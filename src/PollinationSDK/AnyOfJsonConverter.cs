@@ -37,7 +37,11 @@ namespace PollinationSDK
                         var typename = typeName.Substring(0, typeName.Length - 1);
                         type = validTypes.FirstOrDefault(_ => _.Name.ToLower().StartsWith(typename));
                     }
-
+                    // TODO: temporary fix before Queenbee is updated.
+                    if (typeName == "project-folder")
+                    {
+                        type = validTypes.FirstOrDefault(_ => _ == typeof(Model.ProjectFolderSource));
+                    }
 
                     if (type != null)
                     {
