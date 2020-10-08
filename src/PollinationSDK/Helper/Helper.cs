@@ -264,7 +264,12 @@ namespace PollinationSDK
             // Get project
             var proj = project;
 
-
+            // Check if recipe can be used in this project
+            var recipe = workflow.Recipe;
+            var projAPi = new ProjectsApi();
+            //var res = projAPi.GetProjectRecipeFilters(proj.Owner.Name, proj.Name);
+            var result = projAPi.CreateProjectRecipeFilter(proj.Owner.Name, proj.Name, new ProjectRecipeFilter(recipe.Name, recipe.Owner, recipe.Tag));
+            var status = result?.Status;
             // Upload artifacts
 
             // check artifacts 
