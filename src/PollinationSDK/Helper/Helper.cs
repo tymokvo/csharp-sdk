@@ -352,8 +352,8 @@ namespace PollinationSDK
             try
             {
                 saveAsDir = string.IsNullOrEmpty(saveAsDir)? GenTempFolder() : saveAsDir;
-                var tasks = artifacts.SelectMany(_ => DownloadArtifact(simu, _, saveAsDir)).ToList();
-        
+                //var tasks = artifacts.Select(_ => DownloadArtifact(simu, _, saveAsDir)).ToList();
+                var tasks = artifacts.SelectMany(_ => DownloadArtifactWithItems(simu, _, saveAsDir)).ToList();
 
                 var total = tasks.Count();
                 while (tasks.Count() > 0)
@@ -420,14 +420,60 @@ namespace PollinationSDK
             return outputDirOrFile;
 
         }
-        public static List<Task<string>> DownloadArtifact(Simulation simu, OutputArtifact artifact, string saveAsDir)
+        /// <summary>
+        /// Download an artifact with one call. It'd be a zip file if the artifact is a folder
+        /// </summary>
+        /// <param name="simu"></param>
+        /// <param name="artifact"></param>
+        /// <param name="saveAsDir"></param>
+        /// <returns></returns>
+        public static Task<string> DownloadArtifact(Simulation simu, OutputArtifact artifact, string saveAsDir)
         {
             var file = string.Empty;
             var outputDirOrFile = string.Empty;
             try
             {
                 var api = new PollinationSDK.Api.SimulationsApi();
-                var files = api.ListSimulationArtifacts(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID);
+
+                var outputs = api.GetSimulationOutputs(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID);
+                var artfs = api.GetSimulationOutputArtifact(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID, artifact.Name);
+                
+
+
+                var files = api.ListSimulationArtifacts(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID, page: 1, perPage: 25);
+                var found = files.FirstOrDefault(_ => _.FileName == artifact.Name);
+                if (found == null) throw new ArgumentException($"{artifact.Name} doesn't exist in {simu.Project.Owner.Name}/{simu.Project.Name}/{simu.SimulationID}");
+
+                var dir = string.IsNullOrEmpty(saveAsDir) ? GenTempFolder() : saveAsDir;
+                var simuID = simu.SimulationID.Substring(0, 8);
+
+
+                dir = Path.Combine(dir, simuID);
+                var url = api.DownloadSimulationArtifact(owner: simu.Project.Owner.Name, name: simu.Project.Name, simulationId: simuID).ToString();
+                var task = DownloadFromUrlAsync(url, dir);
+                return task;
+
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException($"Failed to download artifact {artifact.Name}.\n -{e.Message}");
+            }
+        }
+        /// <summary>
+        /// Download an artifact(file/folder) items independently.
+        /// </summary>
+        /// <param name="simu"></param>
+        /// <param name="artifact"></param>
+        /// <param name="saveAsDir"></param>
+        /// <returns></returns>
+        public static List<Task<string>> DownloadArtifactWithItems(Simulation simu, OutputArtifact artifact, string saveAsDir)
+        {
+            var file = string.Empty;
+            var outputDirOrFile = string.Empty;
+            try
+            {
+                var api = new PollinationSDK.Api.SimulationsApi();
+                var files = api.ListSimulationArtifacts(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID, page: 1, perPage: 100);
                 var found = files.FirstOrDefault(_ => _.FileName == artifact.Name);
                 if (found == null) throw new ArgumentException($"{artifact.Name} doesn't exist in {simu.Project.Owner.Name}/{simu.Project.Name}/{simu.SimulationID}");
 
@@ -462,7 +508,7 @@ namespace PollinationSDK
                 else if (artfact.Type == "folder")
                 {
                     dir = Path.Combine(dir, artfact.FileName);
-                    var files = api.ListSimulationArtifacts(owner, projName, simuID, path: new[] { artifact.Name }.ToList());
+                    var files = api.ListSimulationArtifacts(owner, projName, simuID, page: 1, perPage: 100, path: new[] { artifact.Name }.ToList());
                     foreach (var item in files)
                     {
                         // get all files in folder
