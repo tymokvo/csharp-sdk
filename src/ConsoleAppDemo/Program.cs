@@ -30,14 +30,15 @@ namespace ConsoleAppDemo
             var me = Helper.CurrentUser;
             Console.WriteLine($"You are: {me.Username}");
 
-            Console.WriteLine("--------------------Get recipes-------------------");
-            var api = new RecipesApi();
-            var recipeList = api.ListRecipes(1,25);
-            var recs = recipeList.Resources;
-            foreach (var item in recs)
-            {
-                Console.WriteLine($"{item.Owner.Name}/{item.Name}/{item.LatestTag}");
-            }
+
+            //Console.WriteLine("--------------------Get recipes-------------------");
+            //var api = new RecipesApi();
+            //var recipeList = api.ListRecipes(1,25);
+            //var recs = recipeList.Resources;
+            //foreach (var item in recs)
+            //{
+            //    Console.WriteLine($"{item.Owner.Name}/{item.Name}/{item.LatestTag}");
+            //}
 
 
             Console.WriteLine("--------------------Get a project-------------------");
@@ -53,6 +54,7 @@ namespace ConsoleAppDemo
             //Console.WriteLine("Creating a project");
             //var proj = CreateAProject(me);
 
+
             //Console.WriteLine("--------------------Upload a directory-------------------");
             //var dir = @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder";
             //var task = Helper.UploadDirectoryAsync(proj, dir);
@@ -64,47 +66,49 @@ namespace ConsoleAppDemo
             //var recipies = GetRecipes();
             //Console.WriteLine(string.Join("\n", recipies));
 
+
             //Console.WriteLine("---------------------------------------");
             //var projects = GetProjects();
             //Console.WriteLine("Getting the project list");
             //Console.WriteLine(string.Join("\n", projects));
+
 
             //Console.WriteLine("---------------------------------------");
             //Console.WriteLine($"Deleting the project {newProj}");
             //DeleteMyProjects(me, newProj);
 
 
-            Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
-            //CreateSimulation(proj);
-            var cts = new System.Threading.CancellationTokenSource();
-            var token = cts.Token;
+            //Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
+            ////CreateSimulation(proj);
+            //var cts = new System.Threading.CancellationTokenSource();
+            //var token = cts.Token;
 
-            //var workflow = CreateWorkflow("ladybug-tools", "annual-daylight");
-            var workflow = CreateWorkflow_AnnualDaylight();
+            ////var workflow = CreateWorkflow("ladybug-tools", "annual-daylight");
+            //var workflow = CreateWorkflow_AnnualDaylight();
 
-            try
-            {
-                var task = runSimu(proj, workflow, Console.WriteLine, token);
+            //try
+            //{
+            //    var task = runSimu(proj, workflow, Console.WriteLine, token);
 
-                //cts.CancelAfter(60000);
-                task.Wait();
+            //    //cts.CancelAfter(60000);
+            //    task.Wait();
 
-                Console.WriteLine($"Canceled check: {token.IsCancellationRequested}");
-                cts.Dispose();
-
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.InnerException.Message);
-                //throw;
-            }
+            //    Console.WriteLine($"Canceled check: {token.IsCancellationRequested}");
+            //    cts.Dispose();
 
 
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e.InnerException.Message);
+            //    //throw;
+            //}
 
-            //Console.WriteLine("--------------------Download simulation output-------------------");
-            //DownloadOutputs(proj, "e89ecadf-6844-4ca6-a02d-1c2382231f87");
-            //Console.WriteLine("Done downloading");
+
+
+            Console.WriteLine("--------------------Download simulation output-------------------");
+            DownloadOutputs(proj, "8b7033ac-e2e7-44d3-b631-81fa1ecfefb0", new List<string> { "results"});
+            Console.WriteLine("Done downloading");
 
 
             //Console.WriteLine("--------------------Download simulation log-------------------");
@@ -298,33 +302,19 @@ namespace ConsoleAppDemo
             Console.WriteLine(outputs);
         }
 
-        private async static void DownloadOutputs(Project proj, string simuId)
+        private async static void DownloadOutputs(Project proj, string simuId, List<string> artifacts)
         {
-            var api = new PollinationSDK.Api.SimulationsApi();
+            var simu = new Simulation(proj, simuId);
+            var simuStatus = new PollinationSDK.Api.SimulationsApi().GetSimulation(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID);
 
-            var outputDownloadURL = api.GetSimulationOutputs(proj.Owner.Name, proj.Name, simuId).ToString();
-            //outputDownloadURL = "https://nyc3.digitaloceanspaces.com/pollination-bucket/accounts/9af569d8-1ce9-4bed-914b-32051b3b2d2d/projects/2d69dd8b-5a32-4fa9-a16f-5637c451c17e/simulations/e89ecadf-6844-4ca6-a02d-1c2382231f87/outputs.tgz?AWSAccessKeyId=ECHSSBKXTHZWSJ3UV4CU&Signature=m%2FLN3Rr%2FB6MUD6xnGWagHTl7YHI%3D&Expires=1594700427";
-            var fileName = Path.GetFileName(outputDownloadURL).Split(new[] { '?' })[0];
+            var artfs = artifacts.Select(_ => new OutputArtifact(_)).ToList();
+            var temp = Path.Combine( Path.GetTempPath(), Path.GetRandomFileName());
+            //Directory.CreateDirectory(temp);
 
-            Console.WriteLine($"Simulation output link url: {outputDownloadURL}");
-            var request = new RestRequest(Method.GET);
-            var client = new RestClient(outputDownloadURL.ToString());
-            var response = await client.ExecuteTaskAsync(request);
-            if (response.StatusCode != HttpStatusCode.OK)
-                throw new Exception($"Unable to download file");
+            Action<int> reportPercent = (int percent) => Console.WriteLine($"{percent}%");
+            var filePaths = await PollinationSDK.Helper.DownloadOutputArtifactsAsync(simu, artfs, temp, reportPercent);
 
-            Task.Delay(3000);
-
-
-            var file = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName(), fileName);
-            response.RawBytes.SaveAs(file);
-
-            if (File.Exists(file))
-            {
-                Console.WriteLine($"Finished downloading: {file}");
-            }
-
-            //client.DownloadData(request).SaveAs(file);
+          
 
         }
 
