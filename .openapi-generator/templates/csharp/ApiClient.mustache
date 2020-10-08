@@ -34,7 +34,8 @@ namespace {{packageName}}.Client
         {
             ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
             MissingMemberHandling = MissingMemberHandling.Ignore,
-            NullValueHandling = NullValueHandling.Ignore
+            NullValueHandling = NullValueHandling.Ignore,
+            Converters = new List<JsonConverter>() { new AnyOfJsonConverter() }
         };
 
         /// <summary>

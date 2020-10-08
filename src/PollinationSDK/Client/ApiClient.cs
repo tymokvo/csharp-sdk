@@ -33,7 +33,8 @@ namespace PollinationSDK.Client
         {
             ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor,
             MissingMemberHandling = MissingMemberHandling.Ignore,
-            NullValueHandling = NullValueHandling.Ignore
+            NullValueHandling = NullValueHandling.Ignore,
+            Converters = new List<JsonConverter>() { new AnyOfJsonConverter() }
         };
 
         /// <summary>
@@ -342,7 +343,7 @@ namespace PollinationSDK.Client
         {
             try
             {
-                return obj != null ? JsonConvert.SerializeObject(obj) : null;
+                return obj != null ? JsonConvert.SerializeObject(obj, serializerSettings) : null;
             }
             catch (Exception e)
             {
