@@ -2,11 +2,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PollinationSDK", "src\PollinationSDK\PollinationSDK.csproj", "{B5D437C0-A194-443B-A9A1-A94594F3D150}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollinationSDK", "src\PollinationSDK\PollinationSDK.csproj", "{B5D437C0-A194-443B-A9A1-A94594F3D150}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PollinationSDK.Test", "src\PollinationSDK.Test\PollinationSDK.Test.csproj", "{D7D79F32-F12C-40D9-9DF5-A89DA95672A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PollinationSDK.Tests", "src\PollinationSDK.Test\PollinationSDK.Tests.csproj", "{D7D79F32-F12C-40D9-9DF5-A89DA95672A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppDemo", "src\ConsoleAppDemo\ConsoleAppDemo.csproj", "{9B368D0E-9965-4FFF-A2EF-1C828558C960}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppDemo", "src\ConsoleAppDemo\ConsoleAppDemo.csproj", "{9B368D0E-9965-4FFF-A2EF-1C828558C960}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
