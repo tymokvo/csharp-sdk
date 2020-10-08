@@ -60,7 +60,11 @@ namespace PollinationSDK
         {
             if (ReferenceEquals(this, null))
                 return ReferenceEquals(obj, null) ? true : false;
-            return this.Obj.Equals(obj);
+
+            if (obj is AnyOf anyof)
+                return this.Obj.Equals(anyof.Obj);
+            else
+                return this.Obj.Equals(obj);
         }
         public override int GetHashCode()
         {
@@ -77,7 +81,7 @@ namespace PollinationSDK
             if (ReferenceEquals(obj, null))
                 return ReferenceEquals(anotherObj, null) ? true : false;
 
-            return obj.Obj.Equals(anotherObj);
+            return obj.Equals(anotherObj);
         }
 
         public static bool operator != (AnyOf obj, object anotherObj)
