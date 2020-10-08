@@ -18,7 +18,7 @@ namespace PollinationSDK.Wrapper
         {
             var name = recipe.Manifest.Metadata.Name;
             var digest = recipe.Digest;
-            return new RecipeSelection(recipeOwner, name, digest);
+            return new RecipeSelection(name: name, owner: recipeOwner, digest);
         }
 
         public override string ToString()
