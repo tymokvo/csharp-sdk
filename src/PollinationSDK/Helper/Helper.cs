@@ -45,7 +45,7 @@ namespace PollinationSDK
                 // Project not found
                 if (e.ErrorCode == 404)
                 {
-                    var ifPublic = projectName == "unnamed";
+                    var ifPublic = projectName == "demo";
                     var res = api.CreateProject(user.Username, new ProjectCreate(projectName, _public: ifPublic));
                     return GetAProject(user, projectName);
                 }
@@ -227,9 +227,15 @@ namespace PollinationSDK
             var checkedArtis = new List<SimulationInputArtifact>();
             foreach (var item in artis)
             {
+                // only update the path for ProjectFolderSource for a relative path
+                var projFolderSource = item.Source.Obj as ProjectFolderSource;
+                if (projFolderSource == null) continue;
+
                 // update artifact arguments
-                var newFileOrDirname = Path.GetFileName(item.Source.ToString());
-                checkedArtis.Add(new SimulationInputArtifact(item.Name, new ProjectFolderSource(newFileOrDirname)));
+                var newFileOrDirname = Path.GetFileName(projFolderSource.Path);
+                // TODO: this is a temporary fix before Queenbee updates the type value
+                var pSource = new ProjectFolderSource(newFileOrDirname) { Type = "project-folder" };
+                checkedArtis.Add(new SimulationInputArtifact(item.Name, pSource));
             }
             var simuInputs = new SimulationInputs(checkedArtis, simu.Inputs.Parameters);
             var newSimu = new SubmitSimulation(simu.Recipe, simuInputs);
