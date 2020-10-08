@@ -70,6 +70,21 @@ namespace PollinationSDK
         {
             return this.Obj.GetHashCode();
         }
+        /// <summary>
+        /// Return the this.obj with specified type. 
+        /// If type T doesn't in this.AllValidTypes, or this.obj is not type T, then return null.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T OfType<T>() where T : class
+        {
+            var isValidType = this.AllValidTypes.Contains(typeof(T));
+            isValidType &= this.Obj.GetType() == typeof(T);
+            if (!isValidType) return null;
+
+            var obj = (T)this.Obj;
+            return obj;
+        }
 
         public new Type GetType()
         {

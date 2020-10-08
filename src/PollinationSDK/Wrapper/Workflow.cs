@@ -26,7 +26,7 @@ namespace PollinationSDK.Wrapper
             var headerString = $"{this.Recipe.Owner}/{this.Recipe.Name}/{this.Recipe.Tag}";
 
             var inputParams = this.Inputs.Parameters.Select(_ => $"    {_.Name}: {_.Value}").ToList();
-            inputParams.AddRange(this.Inputs.Artifacts.Select(_ => $"    {_.Name}: {_.Source}"));
+            inputParams.AddRange(this.Inputs.Artifacts.Select(_ => $"    {_.Name}: {_.Source.OfType<ProjectFolderSource>()?.Path}"));
             var inputParamsString = string.Join(Environment.NewLine, inputParams);
 
             return $"{headerString}:{Environment.NewLine}{inputParamsString}";
