@@ -31,19 +31,26 @@ namespace ConsoleAppDemo
             Console.WriteLine($"You are: {me.Username}");
 
 
-            //Console.WriteLine("--------------------Get recipes-------------------");
-            //var api = new RecipesApi();
-            //var recipeList = api.ListRecipes(1,25);
-            //var recs = recipeList.Resources;
-            //foreach (var item in recs)
-            //{
-            //    Console.WriteLine($"{item.Owner.Name}/{item.Name}/{item.LatestTag}");
-            //}
+            Console.WriteLine("--------------------Get recipes-------------------");
+            var api = new RecipesApi();
+            var recipeList = api.ListRecipes(1, 25);
+            var recs = recipeList.Resources;
+            foreach (var item in recs)
+            {
+                Console.WriteLine($"{item.Owner.Name}/{item.Name}/{item.LatestTag}");
+            }
 
 
-            Console.WriteLine("--------------------Get a project-------------------");
-            var proj = Helper.GetAProject(me, "demo");
-            Console.WriteLine($"Getting the project. \n Found this project ID: {proj.Id}");
+            Console.WriteLine("--------------------Get a recipe-------------------");
+            var recipeOwner = "ladybug-tools";
+            var recipeName = "daylight-factor";
+            var recipeApi = new RecipesApi();
+            var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest");
+            Console.WriteLine($"{rec.Manifest.Metadata.Name}/{rec.Manifest.Metadata.Name}/{rec.Tag}");
+
+            //Console.WriteLine("--------------------Get a project-------------------");
+            //var proj = Helper.GetAProject(me, "demo");
+            //Console.WriteLine($"Getting the project. \n Found this project ID: {proj.Id}");
 
 
             //Console.WriteLine("--------------------Getting Recipe Params-------------------");
@@ -106,9 +113,9 @@ namespace ConsoleAppDemo
 
 
 
-            Console.WriteLine("--------------------Download simulation output-------------------");
-            DownloadOutputs(proj, "8b7033ac-e2e7-44d3-b631-81fa1ecfefb0", new List<string> { "results"});
-            Console.WriteLine("Done downloading");
+            //Console.WriteLine("--------------------Download simulation output-------------------");
+            //DownloadOutputs(proj, "8b7033ac-e2e7-44d3-b631-81fa1ecfefb0", new List<string> { "results"});
+            //Console.WriteLine("Done downloading");
 
 
             //Console.WriteLine("--------------------Download simulation log-------------------");
