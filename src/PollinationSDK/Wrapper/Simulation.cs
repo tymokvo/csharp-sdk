@@ -66,7 +66,7 @@ namespace PollinationSDK.Wrapper
                 {
                     await Task.Delay(1000);
                     currentSeconds++;
-                    progressAction?.Invoke($"{status.Status}: [{currentSeconds} s]");
+                    progressAction?.Invoke($"{status.Status}: [{GetUserFriendlyTimeCounter(TimeSpan.FromSeconds(currentSeconds))}]");
 
                     // suspended by user
                     if (cancelToken.IsCancellationRequested) break;
@@ -85,7 +85,7 @@ namespace PollinationSDK.Wrapper
                 StopSimulaiton();
                 return;
             }
-            var totalSeconds = Math.Round((DateTime.UtcNow - startTime).TotalSeconds);
+            var totalTime = DateTime.UtcNow - startTime;
             var finishMessage = status.Status == "Succeeded" ? $"✔ Succeeded" : $"❌ {status.Status}";
             progressAction?.Invoke($"Task: {status.Status}");
 
@@ -95,7 +95,21 @@ namespace PollinationSDK.Wrapper
             var logUrl= outputs.ToString();
             this.Logs = await GetSimulationOutputLogAsync(progressAction, cancelToken);
 
-            progressAction?.Invoke($"{finishMessage}: [{totalSeconds} s]");
+            progressAction?.Invoke($"{finishMessage}: [{GetUserFriendlyTimeCounter(totalTime)}]");
+
+            string GetUserFriendlyTimeCounter(TimeSpan timeDelta)
+            {
+                string format = @"hh\:mm\:ss";
+                if (timeDelta.Days > 0)
+                    format = @"d\ hh\:mm\:ss";
+                else if (timeDelta.Hours > 0)
+                    format = @"hh\:mm\:ss";
+                else if (timeDelta.Minutes > 0)
+                    format = @"mm\:ss";
+                else
+                    format = @"ss";
+                return timeDelta.ToString(format);
+            }
         }
 
         public void StopSimulaiton()
