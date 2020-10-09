@@ -352,8 +352,8 @@ namespace PollinationSDK
             try
             {
                 saveAsDir = string.IsNullOrEmpty(saveAsDir)? GenTempFolder() : saveAsDir;
-                //var tasks = artifacts.Select(_ => DownloadArtifact(simu, _, saveAsDir)).ToList();
-                var tasks = artifacts.SelectMany(_ => DownloadArtifactWithItems(simu, _, saveAsDir)).ToList();
+                var tasks = artifacts.Select(_ => DownloadArtifact(simu, _, saveAsDir)).ToList();
+                //var tasks = artifacts.SelectMany(_ => DownloadArtifactWithItems(simu, _, saveAsDir)).ToList();
 
                 var total = tasks.Count();
                 while (tasks.Count() > 0)
@@ -434,22 +434,12 @@ namespace PollinationSDK
             try
             {
                 var api = new PollinationSDK.Api.SimulationsApi();
-
-                var outputs = api.GetSimulationOutputs(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID);
-                var artfs = api.GetSimulationOutputArtifact(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID, artifact.Name);
+                var url = api.GetSimulationOutputArtifact(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID, artifact.Name).ToString();
                 
-
-
-                var files = api.ListSimulationArtifacts(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID, page: 1, perPage: 25);
-                var found = files.FirstOrDefault(_ => _.FileName == artifact.Name);
-                if (found == null) throw new ArgumentException($"{artifact.Name} doesn't exist in {simu.Project.Owner.Name}/{simu.Project.Name}/{simu.SimulationID}");
-
                 var dir = string.IsNullOrEmpty(saveAsDir) ? GenTempFolder() : saveAsDir;
                 var simuID = simu.SimulationID.Substring(0, 8);
 
-
                 dir = Path.Combine(dir, simuID);
-                var url = api.DownloadSimulationArtifact(owner: simu.Project.Owner.Name, name: simu.Project.Name, simulationId: simuID).ToString();
                 var task = DownloadFromUrlAsync(url, dir);
                 return task;
 
