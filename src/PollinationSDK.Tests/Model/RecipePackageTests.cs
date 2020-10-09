@@ -33,17 +33,13 @@ namespace PollinationSDK.Test
     /// </remarks>
     public class RecipePackageTests
     {
-        // TODO uncomment below to declare an instance variable for RecipePackage
         private RecipePackage instance;
 
-        /// <summary>
-        /// Setup before each test
-        /// </summary>
         [SetUp]
         public void Init()
         {
-            // TODO uncomment below to create an instance of RecipePackage
             var url = @"https://api.staging.pollination.cloud/recipes/ladybug-tools/annual-daylight/tags/latest";
+            url = @"https://api.staging.pollination.cloud/recipes/ladybug-tools/daylight-factor/tags/latest";
             using (WebClient wc = new WebClient())
             {
                 var json = wc.DownloadString(url);
@@ -75,57 +71,6 @@ namespace PollinationSDK.Test
         }
 
 
-        /// <summary>
-        /// Test the property 'CreatedAt'
-        /// </summary>
-        [Test]
-        public void CreatedAtTest()
-        {
-            // TODO unit test for the property 'CreatedAt'
-        }
-        /// <summary>
-        /// Test the property 'Description'
-        /// </summary>
-        [Test]
-        public void DescriptionTest()
-        {
-            // TODO unit test for the property 'Description'
-        }
-        /// <summary>
-        /// Test the property 'Digest'
-        /// </summary>
-        [Test]
-        public void DigestTest()
-        {
-            // TODO unit test for the property 'Digest'
-        }
-        /// <summary>
-        /// Test the property 'Icon'
-        /// </summary>
-        [Test]
-        public void IconTest()
-        {
-            // TODO unit test for the property 'Icon'
-        }
-        /// <summary>
-        /// Test the property 'Keywords'
-        /// </summary>
-        [Test]
-        public void KeywordsTest()
-        {
-            // TODO unit test for the property 'Keywords'
-        }
-        /// <summary>
-        /// Test the property 'License'
-        /// </summary>
-        [Test]
-        public void LicenseTest()
-        {
-            // TODO unit test for the property 'License'
-        }
-        /// <summary>
-        /// Test the property 'Manifest'
-        /// </summary>
         [Test]
         public void ManifestTest()
         {
@@ -170,11 +115,6 @@ namespace PollinationSDK.Test
             var outputsDup = outputs.DuplicateDAGOutputs();
             Assert.IsTrue(outputsDup.Equals(outputs));
 
-
-            // test output artifacts
-            var outputArtifact = outputs.Artifacts.First();
-            var outputArtifactDup = outputArtifact.DuplicateDAGOutputArtifact();
-            Assert.IsTrue(outputArtifactDup.Equals(outputArtifact));
 
 
             var task = dag.Tasks.First();
