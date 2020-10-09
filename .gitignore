@@ -29,6 +29,7 @@ build/
 [Oo]bj/
 .vs/
 node_modules/
+src/PollinationSDK.Test/
 
 # NuGet Packages
 *.nupkg
