@@ -277,7 +277,7 @@ namespace ConsoleAppDemo
             Console.WriteLine($"New project id: {res.Id}");
             Console.WriteLine(res.Message);
 
-            var newProj = Helper.GetAProject(user, name);
+            var newProj = Helper.GetAProject(user.Username, name);
             return newProj;
         }
 

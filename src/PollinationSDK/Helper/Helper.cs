@@ -32,22 +32,22 @@ namespace PollinationSDK
         /// <param name="user"></param>
         /// <param name="projectName"></param>
         /// <returns></returns>
-        public static Project GetAProject(UserPrivate user, string projectName)
+        public static Project GetAProject(string userName, string projectName)
         {
             var api = new ProjectsApi();
             try
             {
-                var d = api.GetProject(user.Username, projectName);
+                var d = api.GetProject(userName, projectName);
                 return d;
             } 
             catch (ApiException e)
             {
-                // Project not found
-                if (e.ErrorCode == 404)
+                // Project not found and person account, create a default demo project.
+                if (e.ErrorCode == 404 && userName == Helper.CurrentUser.Username)
                 {
                     var ifPublic = projectName == "demo";
-                    var res = api.CreateProject(user.Username, new ProjectCreate(projectName, _public: ifPublic));
-                    return GetAProject(user, projectName);
+                    var res = api.CreateProject(userName, new ProjectCreate(projectName, _public: ifPublic));
+                    return GetAProject(userName, projectName);
                 }
                 throw e;
             }
