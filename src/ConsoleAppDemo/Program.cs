@@ -41,12 +41,23 @@ namespace ConsoleAppDemo
             }
 
 
-            Console.WriteLine("--------------------Get a recipe-------------------");
-            var recipeOwner = "ladybug-tools";
-            var recipeName = "daylight-factor";
-            var recipeApi = new RecipesApi();
-            var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest");
-            Console.WriteLine($"{rec.Manifest.Metadata.Name}/{rec.Manifest.Metadata.Name}/{rec.Tag}");
+            //Console.WriteLine("--------------------Get projects-------------------");
+            //var projApi = new ProjectsApi();
+            //var projList = projApi.ListProjects(page: 1, perPage: 25);
+            //foreach (var item in projList.Resources)
+            //{
+            //    Console.WriteLine($"{item.Owner.Name}/{item.Name}/is public: {item.Public}/Admin: {item.Permissions.Admin}");
+            //    Console.WriteLine($"{item.Permissions}");
+            //}
+
+
+            //Console.WriteLine("--------------------Get a recipe-------------------");
+            //var recipeOwner = "ladybug-tools";
+            //var recipeName = "daylight-factor";
+            //var recipeApi = new RecipesApi();
+            //var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest");
+            //Console.WriteLine($"{rec.Manifest.Metadata.Name}/{rec.Manifest.Metadata.Name}/{rec.Tag}");
+
 
             //Console.WriteLine("--------------------Get a project-------------------");
             //var proj = Helper.GetAProject(me, "demo");
