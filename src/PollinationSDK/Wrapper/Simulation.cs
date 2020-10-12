@@ -152,7 +152,7 @@ namespace PollinationSDK.Wrapper
             //unzip file 
             if (cancelToken.IsCancellationRequested) return string.Empty;
             progressAction?.Invoke($"Reading logs");
-            Helper.Unzip(downloadfile, dir);
+            Helper.Unzip(downloadfile, dir, true);
            
 
 
