@@ -377,6 +377,17 @@ namespace PollinationSDK
 
             var artifactNames = artifacts.Select(_ => _.Name.ToUpper()).ToList();
             var filePaths = downloadedFiles.OrderBy(_ => artifactNames.IndexOf(Path.GetFileNameWithoutExtension(_).ToUpper())).ToList();
+
+            if (filePaths.Count == 1)
+            {
+                //if folder, then return items in folder
+                var path = filePaths[0];
+                if (Directory.Exists(path))
+                {
+                    var items = Directory.EnumerateFileSystemEntries(path, "*", SearchOption.TopDirectoryOnly);
+                    filePaths = items.Any() ? items.ToList() : filePaths;
+                }
+            }
             return filePaths;
             //return finished;
         }
@@ -409,7 +420,7 @@ namespace PollinationSDK
             // unzip
             try
             {
-                if (file.ToLower().EndsWith(".zip")) outputDirOrFile = Helper.Unzip(file, saveAsDir);
+                if (file.ToLower().EndsWith(".zip")) outputDirOrFile = Helper.Unzip(file, saveAsDir, true);
             }
             catch (Exception e)
             {
@@ -529,7 +540,7 @@ namespace PollinationSDK
             return tempDir;
         }
 
-        internal static string Unzip(string zipFilePath, string saveAsDir)
+        internal static string Unzip(string zipFilePath, string saveAsDir, bool removeZip)
         {
             if (!File.Exists(zipFilePath)) throw new ArgumentException($"{Path.GetFileName(zipFilePath)} does not exist!");
             var tempDir = new DirectoryInfo(Path.Combine(GenTempFolder(), Path.GetRandomFileName()));
@@ -540,7 +551,10 @@ namespace PollinationSDK
             //copy folder
             try
             {
+                if (removeZip)
+                    File.Delete(zipFilePath);
                 CopyDirectory(tempDir.FullName, saveAsDir);
+                
             }
             catch (Exception e)
             {
