@@ -25,20 +25,20 @@ namespace ConsoleAppDemo
 
 
           
-            AuthHelper.SignInAsync( devEnv: true).Wait();
+            AuthHelper.SignInAsync( devEnv: false).Wait();
 
             var me = Helper.CurrentUser;
             Console.WriteLine($"You are: {me.Username}");
 
 
-            Console.WriteLine("--------------------Get recipes-------------------");
-            var api = new RecipesApi();
-            var recipeList = api.ListRecipes(1, 25);
-            var recs = recipeList.Resources;
-            foreach (var item in recs)
-            {
-                Console.WriteLine($"{item.Owner.Name}/{item.Name}/{item.LatestTag}");
-            }
+            //Console.WriteLine("--------------------Get recipes-------------------");
+            //var api = new RecipesApi();
+            //var recipeList = api.ListRecipes(1, 25);
+            //var recs = recipeList.Resources;
+            //foreach (var item in recs)
+            //{
+            //    Console.WriteLine($"{item.Owner.Name}/{item.Name}/{item.LatestTag}");
+            //}
 
 
             //Console.WriteLine("--------------------Get projects-------------------");
@@ -59,9 +59,9 @@ namespace ConsoleAppDemo
             //Console.WriteLine($"{rec.Manifest.Metadata.Name}/{rec.Manifest.Metadata.Name}/{rec.Tag}");
 
 
-            //Console.WriteLine("--------------------Get a project-------------------");
-            //var proj = Helper.GetAProject(me, "demo");
-            //Console.WriteLine($"Getting the project. \n Found this project ID: {proj.Id}");
+            Console.WriteLine("--------------------Get a project-------------------");
+            var proj = Helper.GetAProject(me.Username, "demo");
+            Console.WriteLine($"Getting the project. \n Found this project ID: {proj.Id}");
 
 
             //Console.WriteLine("--------------------Getting Recipe Params-------------------");
@@ -121,6 +121,20 @@ namespace ConsoleAppDemo
             //    Console.WriteLine(e.InnerException.Message);
             //    //throw;
             //}
+
+
+            //Console.WriteLine("--------------------get simulation outputs-------------------");
+            //var simuApi = new PollinationSDK.Api.SimulationsApi();
+            ////var outputs = simuApi.GetSimulationOutputs(proj.Owner.Name, proj.Name, "e7bd42b9-9878-416d-bc0d-e5f245c6f036");
+            //var output2 = simuApi.ListSimulationArtifacts(proj.Owner.Name, proj.Name, "e7bd42b9-9878-416d-bc0d-e5f245c6f036", 1, 25);
+
+            //foreach (var item in output2)
+            //{
+            //     Console.WriteLine($"{item.FileName}");
+            //    var url = simuApi.DownloadSimulationArtifact(proj.Owner.Name, proj.Name, "e7bd42b9-9878-416d-bc0d-e5f245c6f036", item.FileName).ToString();
+            //    Console.WriteLine(url);
+            //}
+            //Console.WriteLine("Done downloading");
 
 
 
