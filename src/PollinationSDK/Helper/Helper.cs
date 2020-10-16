@@ -351,8 +351,11 @@ namespace PollinationSDK
             var downloadedFiles = new List<string>();
             try
             {
-                saveAsDir = string.IsNullOrEmpty(saveAsDir)? GenTempFolder() : saveAsDir;
-                var tasks = artifacts.Select(_ => DownloadArtifact(simu, _, saveAsDir)).ToList();
+                var dir = string.IsNullOrEmpty(saveAsDir) ? GenTempFolder() : saveAsDir;
+                var simuID = simu.SimulationID.Substring(0, 8);
+                dir = Path.Combine(dir, simuID, "outputs");
+
+                var tasks = artifacts.Select(_ => DownloadArtifact(simu, _, dir)).ToList();
                 //var tasks = artifacts.SelectMany(_ => DownloadArtifactWithItems(simu, _, saveAsDir)).ToList();
 
                 var total = tasks.Count();
@@ -449,7 +452,7 @@ namespace PollinationSDK
 
                 var dir = string.IsNullOrEmpty(saveAsDir) ? GenTempFolder() : saveAsDir;
                 var simuID = simu.SimulationID.Substring(0, 8);
-                dir = Path.Combine(dir, simuID);
+                dir = Path.Combine(dir, simuID, "inputs");
                 // downloaded folder
                 return await Download(url, dir);
             }
@@ -505,7 +508,7 @@ namespace PollinationSDK
         /// <param name="artifact"></param>
         /// <param name="saveAsDir"></param>
         /// <returns></returns>
-        public static Task<string> DownloadArtifact(Simulation simu, OutputArtifact artifact, string saveAsDir)
+        private static Task<string> DownloadArtifact(Simulation simu, OutputArtifact artifact, string saveAsDir)
         {
             var file = string.Empty;
             var outputDirOrFile = string.Empty;
@@ -514,11 +517,7 @@ namespace PollinationSDK
                 var api = new PollinationSDK.Api.SimulationsApi();
                 var url = api.GetSimulationOutputArtifact(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID, artifact.Name).ToString();
                 
-                var dir = string.IsNullOrEmpty(saveAsDir) ? GenTempFolder() : saveAsDir;
-                var simuID = simu.SimulationID.Substring(0, 8);
-
-                dir = Path.Combine(dir, simuID);
-                var task = DownloadFromUrlAsync(url, dir);
+                var task = DownloadFromUrlAsync(url, saveAsDir);
                 return task;
 
             }
@@ -631,27 +630,14 @@ namespace PollinationSDK
             var outputDirOrFile = saveAsDir;
 
 
-            var files = tempDir.GetFiles("*.*", SearchOption.TopDirectoryOnly);
-            var dirs = tempDir.GetDirectories("*", SearchOption.TopDirectoryOnly);
+            var subItems = tempDir.GetFileSystemInfos("*", SearchOption.TopDirectoryOnly);
 
-            if (files.Count() == 1)
+            if (subItems.Count() == 1 )
             {
-                // if there is only one file inside
-                var f = files.First();
+                // if there is only one file/folder inside
+                var f = subItems[0];
                 if (f.Exists) outputDirOrFile = Path.Combine(saveAsDir, f.Name);
             }
-            else if (dirs.Count() == 1)
-            {
-                // if there is only one subfolder inside
-                var d = dirs.First();
-                if (d.Exists) outputDirOrFile = Path.Combine(saveAsDir, d.Name);
-            }
-            else
-            {
-                outputDirOrFile = saveAsDir;
-            }
-            //throw new ArgumentException($"[{files.Count()}]: {string.Join(",", files)}");
-
 
             return outputDirOrFile;
         }
