@@ -392,18 +392,11 @@ namespace PollinationSDK
             //return finished;
         }
     
-
-        public static async Task<List<string>> DownloadArtifactZip(Simulation simu, string zipFileName, string saveAsDir = default, Action<int> reportProgressAction = default)
+        private static async Task<List<string>> Download(string url, string dir)
         {
+
             try
             {
-                var simuApi = new PollinationSDK.Api.SimulationsApi();
-
-                var url = simuApi.DownloadSimulationArtifact(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID, zipFileName).ToString();
-
-                var dir = string.IsNullOrEmpty(saveAsDir) ? GenTempFolder() : saveAsDir;
-                var simuID = simu.SimulationID.Substring(0, 8);
-                dir = Path.Combine(dir, simuID);
                 // downloaded folder
                 var task = DownloadFromUrlAsync(url, dir);
                 var finishedTask = await Task.WhenAny(new[] { task });
@@ -425,9 +418,46 @@ namespace PollinationSDK
             {
                 throw;
             }
-
         }
 
+        public static async Task<List<string>> DownloadArtifactZip(Simulation simu, string zipFileName, string saveAsDir = default, Action<int> reportProgressAction = default)
+        {
+            try
+            {
+                var simuApi = new PollinationSDK.Api.SimulationsApi();
+
+                var url = simuApi.DownloadSimulationArtifact(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID, zipFileName).ToString();
+
+                var dir = string.IsNullOrEmpty(saveAsDir) ? GenTempFolder() : saveAsDir;
+                var simuID = simu.SimulationID.Substring(0, 8);
+                dir = Path.Combine(dir, simuID);
+                // downloaded folder
+                return await Download(url, dir);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+           
+        }
+        public static async Task<List<string>> DownloadSimulationInputAssets(Simulation simu, string saveAsDir = default, Action<int> reportProgressAction = default)
+        {
+            try
+            {
+                var simuApi = new PollinationSDK.Api.SimulationsApi();
+                var url = simuApi.GetSimulationInputs(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID).ToString();
+
+                var dir = string.IsNullOrEmpty(saveAsDir) ? GenTempFolder() : saveAsDir;
+                var simuID = simu.SimulationID.Substring(0, 8);
+                dir = Path.Combine(dir, simuID);
+                // downloaded folder
+                return await Download(url, dir);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
 
         public static async Task<string> DownloadFromUrlAsync(string url, string saveAsDir)
