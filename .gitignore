@@ -9,8 +9,6 @@ git_push.sh
 mono_nunit_test.sh
 .travis.yml
 packages.config
-openapitools.json
-.openapi-generator-ignore
 
 # User-specific files
 *.suo
