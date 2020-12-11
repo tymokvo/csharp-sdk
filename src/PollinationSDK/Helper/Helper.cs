@@ -11,6 +11,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using QueenbeeSDK;
 
 namespace PollinationSDK
 {
@@ -140,11 +141,11 @@ namespace PollinationSDK
         /// </summary>
         /// <param name="SubmitSimulation"></param>
         /// <returns></returns>
-        private static string CheckArtifacts(SubmitSimulation SubmitSimulation)
+        private static string CheckArtifacts(Run SubmitSimulation)
         {
-            var arg = SubmitSimulation.Inputs;
+            var arg = SubmitSimulation.Job.Arguments;
 
-            var artis = arg.Artifacts;
+            var artis = arg.OfType<JobPathArgument>();
             //var files = new List<string>();
             //var folders = new List<string>();
             var temp = string.Empty;
@@ -163,7 +164,7 @@ namespace PollinationSDK
                 foreach (var item in artis)
                 {
                     //ProjectFolderSource only
-                    var source = item.Source.Obj as ProjectFolderSource;
+                    var source = item.Source.Obj as ProjectFolder;
                     if (source == null) continue;
 
                     var fileOrFolder = source.Path;
@@ -214,33 +215,43 @@ namespace PollinationSDK
         /// <summary>
         /// Update artifact's absolute path to relative path to project-folder
         /// </summary>
-        /// <param name="SubmitSimulation"></param>
+        /// <param name="job"></param>
         /// <returns></returns>
-        public static SubmitSimulation UpdateArtifactPath(SubmitSimulation SubmitSimulation)
+        public static Job UpdateArtifactPath(Job job)
         {
-            var simu = SubmitSimulation;
+            var simu = job;
 
-            if (simu?.Inputs?.Artifacts == null)
+            var args = job?.Arguments;
+            if (args == null)
                 return simu;
 
-            var artis = simu.Inputs.Artifacts;
-            var checkedArtis = new List<SimulationInputArtifact>();
-            foreach (var item in artis)
+         
+            //var checkedArtis = new List<JobPathArgument>();
+            var newJob = job.DuplicateJob();
+            newJob.Arguments.Clear();
+
+            foreach (var item in args)
             {
-                // only update the path for ProjectFolderSource for a relative path
-                var projFolderSource = item.Source.Obj as ProjectFolderSource;
-                if (projFolderSource == null) continue;
+                if (item.Obj is JobPathArgument path)
+                {
+                    // only update the path for ProjectFolderSource for a relative path
+                    var projFolderSource = path.Source.Obj as ProjectFolder;
+                    if (projFolderSource == null) continue;
 
-                // update artifact arguments
-                var newFileOrDirname = Path.GetFileName(projFolderSource.Path);
-                // TODO: this is a temporary fix before Queenbee updates the type value
-                var pSource = new ProjectFolderSource(newFileOrDirname) { Type = "project-folder" };
-                checkedArtis.Add(new SimulationInputArtifact(item.Name, pSource));
+                    // update artifact arguments
+                    var newFileOrDirname = Path.GetFileName(projFolderSource.Path);
+                    var pSource = new ProjectFolder(path: newFileOrDirname);
+                    var newPath = new JobPathArgument(path.Name, pSource);
+                    newJob.Arguments.Add(newPath);
+                }
+                else if(item.Obj is JobArgument valueArg)
+                {
+                    newJob.Arguments.Add(valueArg);
+                }
+               
             }
-            var simuInputs = new SimulationInputs(checkedArtis, simu.Inputs.Parameters);
-            var newSimu = new SubmitSimulation(simu.Recipe, simuInputs);
 
-            return newSimu;
+            return newJob;
         }
 
 
@@ -255,7 +266,7 @@ namespace PollinationSDK
         /// <returns></returns>
         public static async Task<Wrapper.Simulation> RunSimulationAsync(
             Project project, 
-            SubmitSimulation workflow, 
+            Run workflow, 
             Action<string> progressLogAction = default,
             CancellationToken cancellationToken = default,
             Action actionWhenDone = default)
@@ -264,12 +275,13 @@ namespace PollinationSDK
             // Get project
             var proj = project;
 
-            // Check if recipe can be used in this project
-            var recipe = workflow.Recipe;
-            var projAPi = new ProjectsApi();
-            //var res = projAPi.GetProjectRecipeFilters(proj.Owner.Name, proj.Name);
-            var result = projAPi.CreateProjectRecipeFilter(proj.Owner.Name, proj.Name, new ProjectRecipeFilter(recipe.Name, recipe.Owner, recipe.Tag));
-            var status = result?.Status;
+            //// Check if recipe can be used in this project
+            //var recipe = workflow.Recipe;
+            //var projAPi = new ProjectsApi();
+            ////var res = projAPi.GetProjectRecipeFilters(proj.Owner.Name, proj.Name);
+            //var result = projAPi.CreateProjectRecipeFilter(proj.Owner.Name, proj.Name, new ProjectRecipeFilter(recipe.Name, recipe.Owner, recipe.Tag));
+            //var status = result?.Status;
+
             // Upload artifacts
 
             // check artifacts 
@@ -292,17 +304,17 @@ namespace PollinationSDK
             }
 
             // update Artifact to cloud's relative path after uploaded.
-            var newWorkflow = UpdateArtifactPath(workflow);
-            var json = newWorkflow.ToJson();
+            var newJob = UpdateArtifactPath(workflow.Job);
+            //var json = newJob.ToJson();
 
             // create a new Simulation
-            var api = new SimulationsApi();
+            var api = new JobsApi();
             progressLogAction?.Invoke($"Start running."); 
 
             try
             {
                 // schedule a simulation on Pollination.Cloud
-                var ret = await api.CreateSimulationAsync(proj.Owner.Name, proj.Name, newWorkflow);
+                var ret = await api.CreateJobAsync(proj.Owner.Name, proj.Name, newJob);
                 var simuId = ret.Id;
                 progressLogAction?.Invoke($"Start running..");
 
@@ -345,7 +357,7 @@ namespace PollinationSDK
         /// <param name="saveAsDir"></param>
         /// <param name="reportProgressAction"></param>
         /// <returns></returns>
-        public static async Task<List<string>> DownloadOutputArtifactsAsync(Simulation simu, List<OutputArtifact> artifacts, string saveAsDir = default, Action<int> reportProgressAction = default)
+        public static async Task<List<string>> DownloadOutputArtifactsAsync(Simulation simu, List<QueenbeeSDK.DAGPathOutput> artifacts, string saveAsDir = default, Action<int> reportProgressAction = default)
         {
             //_filePaths = new List<string>();
             var downloadedFiles = new List<string>();
@@ -427,9 +439,9 @@ namespace PollinationSDK
         {
             try
             {
-                var simuApi = new PollinationSDK.Api.SimulationsApi();
+                var simuApi = new PollinationSDK.Api.JobsApi();
 
-                var url = simuApi.DownloadSimulationArtifact(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID, zipFileName).ToString();
+                var url = simuApi.DownloadJobArtifact(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID, zipFileName).ToString();
 
                 var dir = string.IsNullOrEmpty(saveAsDir) ? GenTempFolder() : saveAsDir;
                 var simuID = simu.SimulationID.Substring(0, 8);
@@ -447,7 +459,7 @@ namespace PollinationSDK
         {
             try
             {
-                var simuApi = new PollinationSDK.Api.SimulationsApi();
+                var simuApi = new PollinationSDK.Api.JobsApi();
                 var url = simuApi.GetSimulationInputs(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID).ToString();
 
                 var dir = string.IsNullOrEmpty(saveAsDir) ? GenTempFolder() : saveAsDir;
@@ -508,13 +520,13 @@ namespace PollinationSDK
         /// <param name="artifact"></param>
         /// <param name="saveAsDir"></param>
         /// <returns></returns>
-        private static Task<string> DownloadArtifact(Simulation simu, OutputArtifact artifact, string saveAsDir)
+        private static Task<string> DownloadArtifact(Simulation simu, QueenbeeSDK.DAGPathOutput artifact, string saveAsDir)
         {
             var file = string.Empty;
             var outputDirOrFile = string.Empty;
             try
             {
-                var api = new PollinationSDK.Api.SimulationsApi();
+                var api = new PollinationSDK.Api.JobsApi();
                 var url = api.GetSimulationOutputArtifact(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID, artifact.Name).ToString();
                 
                 var task = DownloadFromUrlAsync(url, saveAsDir);
@@ -533,14 +545,14 @@ namespace PollinationSDK
         /// <param name="artifact"></param>
         /// <param name="saveAsDir"></param>
         /// <returns></returns>
-        public static List<Task<string>> DownloadArtifactWithItems(Simulation simu, OutputArtifact artifact, string saveAsDir)
+        public static List<Task<string>> DownloadArtifactWithItems(Simulation simu, QueenbeeSDK.DAGPathOutput artifact, string saveAsDir)
         {
             var file = string.Empty;
             var outputDirOrFile = string.Empty;
             try
             {
-                var api = new PollinationSDK.Api.SimulationsApi();
-                var files = api.ListSimulationArtifacts(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID, page: 1, perPage: 100);
+                var api = new PollinationSDK.Api.JobsApi();
+                var files = api.ListJobArtifacts(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID, page: 1, perPage: 100);
                 var found = files.FirstOrDefault(_ => _.FileName == artifact.Name);
                 if (found == null) throw new ArgumentException($"{artifact.Name} doesn't exist in {simu.Project.Owner.Name}/{simu.Project.Name}/{simu.SimulationID}");
 
@@ -562,20 +574,20 @@ namespace PollinationSDK
             }
 
             // loop through files in folder
-            void ListFilesFromFolder(ref List<Task<string>> ts, string saveDir, string owner, string projName, string simuID,  FileMeta artfact, SimulationsApi simulationsApi )
+            void ListFilesFromFolder(ref List<Task<string>> ts, string saveDir, string owner, string projName, string simuID,  FileMeta artfact, JobsApi JobsApi )
             {
                 var dir = saveDir;
-                var api = simulationsApi;
+                var api = JobsApi;
                 if (artfact.Type == "file")
                 {
-                    var url = api.DownloadSimulationArtifact(owner, projName, simuID, artfact.Key).ToString();
+                    var url = api.DownloadJobArtifact(owner, projName, simuID, artfact.Key).ToString();
                     var task = DownloadFromUrlAsync(url, dir);
                     ts.Add(task);
                 }
                 else if (artfact.Type == "folder")
                 {
                     dir = Path.Combine(dir, artfact.FileName);
-                    var files = api.ListSimulationArtifacts(owner, projName, simuID, page: 1, perPage: 100, path: new[] { artifact.Name }.ToList());
+                    var files = api.ListJobArtifacts(owner, projName, simuID, page: 1, perPage: 100, path: new[] { artifact.Name }.ToList());
                     foreach (var item in files)
                     {
                         // get all files in folder
@@ -585,7 +597,7 @@ namespace PollinationSDK
                             continue;
                         }
                         // item is file
-                        var url = api.DownloadSimulationArtifact(owner, projName, simuID, item.Key).ToString();
+                        var url = api.DownloadJobArtifact(owner, projName, simuID, item.Key).ToString();
                         var task = DownloadFromUrlAsync(url, dir);
 
                         ts.Add(task);

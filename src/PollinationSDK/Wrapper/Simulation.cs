@@ -52,11 +52,12 @@ namespace PollinationSDK.Wrapper
 
         public async Task CheckStatusAndGetLogsAsync(Action<string> progressAction = default, System.Threading.CancellationToken cancelToken = default)
         {
-            var api = new SimulationsApi();
+            var api = new JobsApi();
             var proj = this.Project;
             var simuId = this.SimulationID;
 
-            var status =  await api.GetSimulationAsync(proj.Owner.Name, proj.Name, simuId);
+            var job = await api.GetJobAsync(proj.Owner.Name, proj.Name, simuId);
+            var status = job.Status;
             var startTime = status.StartedAt.ToUniversalTime();
             while (status.Status == "Running")
             {
@@ -76,7 +77,8 @@ namespace PollinationSDK.Wrapper
 
 
                 // update status
-                status = await api.GetSimulationAsync(proj.Owner.Name, proj.Name, simuId);
+                job = await api.GetJobAsync(proj.Owner.Name, proj.Name, simuId);
+                status = job.Status;
                 //_simulation = new Simulation(proj, simuId);
             }
             // suspended by user
@@ -116,8 +118,8 @@ namespace PollinationSDK.Wrapper
         {
             var proj = this.Project;
             var simuId = this.SimulationID;
-            var api = new SimulationsApi();
-            api.StopSimulationAsync(proj.Owner.Name, proj.Name, simuId);
+            var api = new JobsApi();
+            api.StopJobAsync(proj.Owner.Name, proj.Name, simuId);
         }
 
         /// <summary>
@@ -133,10 +135,11 @@ namespace PollinationSDK.Wrapper
             progressAction?.Invoke($"Getting log IDs");
             var proj = this.Project;
             var simuId = this.SimulationID;
-            var api = new SimulationsApi();
-            var status = api.GetSimulation(proj.Owner.Name, proj.Name, simuId);
+            var api = new JobsApi();
+            var job = api.GetJob(proj.Owner.Name, proj.Name, simuId);
+            var status = job.Status;
             if(status.Status == "Running") throw new ArgumentException("Simulation is still running, please wait until it's done!");
-            var taskDic = status.Tasks.OrderBy(_ => _.Value.StartedAt).ToDictionary(_ => _.Key, _ => $"[{_.Key}]\n{_.Value.StartedAt.ToLocalTime()} : {_.Value.Name}");
+            var taskDic = status.Steps.OrderBy(_ => _.Value.StartedAt).ToDictionary(_ => _.Key, _ => $"[{_.Key}]\n{_.Value.StartedAt.ToLocalTime()} : {_.Value.Name}");
             var taskIDs = taskDic.Keys;
 
             //Download file
