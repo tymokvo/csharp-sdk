@@ -5,15 +5,16 @@ All URIs are relative to *https://api.pollination.cloud*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**GetPackage**](RegistriesApi.md#getpackage) | **GET** /registries/{owner}/{type}/{name}/{digest} | Get Package
+[**GetPackageJson**](RegistriesApi.md#getpackagejson) | **GET** /registries/{owner}/{type}/{name}/{digest}/json | Get Package in JSON format
 [**GetRegistryIndex**](RegistriesApi.md#getregistryindex) | **GET** /registries/{owner}/index.json | Get Registry Index
-[**PostOperator**](RegistriesApi.md#postoperator) | **POST** /registries/{owner}/operators | Push an Operator to the registry
+[**PostPlugin**](RegistriesApi.md#postplugin) | **POST** /registries/{owner}/plugins | Push a plugin to the registry
 [**PostRecipe**](RegistriesApi.md#postrecipe) | **POST** /registries/{owner}/recipes | Push an Recipe to the registry
 
 
 
 ## GetPackage
 
-> Object GetPackage (string owner, string type, string name, string digest)
+> AnyType GetPackage (string owner, string type, string name, string digest)
 
 Get Package
 
@@ -33,8 +34,12 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: OptionalAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new RegistriesApi(Configuration.Default);
             var owner = owner_example;  // string | 
@@ -45,7 +50,7 @@ namespace Example
             try
             {
                 // Get Package
-                Object result = apiInstance.GetPackage(owner, type, name, digest);
+                AnyType result = apiInstance.GetPackage(owner, type, name, digest);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -71,16 +76,103 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**AnyType**](AnyType.md)
 
 ### Authorization
 
-[OptionalAuth](../README.md#OptionalAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
 - **Content-Type**: Not defined
 - **Accept**: application/json, application/x-tar
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Retrieved |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#)
+[[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetPackageJson
+
+> AnyOfRecipePlugin GetPackageJson (string owner, string type, string name, string digest)
+
+Get Package in JSON format
+
+### Example
+
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using PollinationSDK.Api;
+using PollinationSDK.Client;
+using PollinationSDK.Model;
+
+namespace Example
+{
+    public class GetPackageJsonExample
+    {
+        public static void Main()
+        {
+            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new RegistriesApi(Configuration.Default);
+            var owner = owner_example;  // string | 
+            var type = type_example;  // string | 
+            var name = name_example;  // string | 
+            var digest = digest_example;  // string | 
+
+            try
+            {
+                // Get Package in JSON format
+                AnyOfRecipePlugin result = apiInstance.GetPackageJson(owner, type, name, digest);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException e)
+            {
+                Debug.Print("Exception when calling RegistriesApi.GetPackageJson: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **string**|  | 
+ **type** | **string**|  | 
+ **name** | **string**|  | 
+ **digest** | **string**|  | 
+
+### Return type
+
+[**AnyOfRecipePlugin**](AnyOfRecipePlugin.md)
+
+### Authorization
+
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
@@ -116,8 +208,12 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: OptionalAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new RegistriesApi(Configuration.Default);
             var owner = owner_example;  // string | 
@@ -152,7 +248,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OptionalAuth](../README.md#OptionalAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -171,11 +267,11 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## PostOperator
+## PostPlugin
 
-> Object PostOperator (string owner, System.IO.Stream package)
+> AnyType PostPlugin (string owner, string type = null, System.IO.Stream package = null)
 
-Push an Operator to the registry
+Push a plugin to the registry
 
 ### Example
 
@@ -188,27 +284,32 @@ using PollinationSDK.Model;
 
 namespace Example
 {
-    public class PostOperatorExample
+    public class PostPluginExample
     {
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: CompulsoryAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new RegistriesApi(Configuration.Default);
             var owner = owner_example;  // string | 
-            var package = BINARY_DATA_HERE;  // System.IO.Stream | 
+            var type = type_example;  // string |  (optional)  (default to "Body_post_plugin_registries__owner__plugins_post")
+            var package = BINARY_DATA_HERE;  // System.IO.Stream |  (optional) 
 
             try
             {
-                // Push an Operator to the registry
-                Object result = apiInstance.PostOperator(owner, package);
+                // Push a plugin to the registry
+                AnyType result = apiInstance.PostPlugin(owner, type, package);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
             {
-                Debug.Print("Exception when calling RegistriesApi.PostOperator: " + e.Message );
+                Debug.Print("Exception when calling RegistriesApi.PostPlugin: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -223,15 +324,16 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
- **package** | **System.IO.Stream**|  | 
+ **type** | **string**|  | [optional] [default to &quot;Body_post_plugin_registries__owner__plugins_post&quot;]
+ **package** | **System.IO.Stream**|  | [optional] 
 
 ### Return type
 
-**Object**
+[**AnyType**](AnyType.md)
 
 ### Authorization
 
-[CompulsoryAuth](../README.md#CompulsoryAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -252,7 +354,7 @@ Name | Type | Description  | Notes
 
 ## PostRecipe
 
-> Object PostRecipe (string owner, System.IO.Stream package, string authorization = null)
+> AnyType PostRecipe (string owner, string authorization = null, string type = null, System.IO.Stream package = null)
 
 Push an Recipe to the registry
 
@@ -272,18 +374,23 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: CompulsoryAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new RegistriesApi(Configuration.Default);
             var owner = owner_example;  // string | 
-            var package = BINARY_DATA_HERE;  // System.IO.Stream | 
             var authorization = authorization_example;  // string |  (optional) 
+            var type = type_example;  // string |  (optional)  (default to "Body_post_recipe_registries__owner__recipes_post")
+            var package = BINARY_DATA_HERE;  // System.IO.Stream |  (optional) 
 
             try
             {
                 // Push an Recipe to the registry
-                Object result = apiInstance.PostRecipe(owner, package, authorization);
+                AnyType result = apiInstance.PostRecipe(owner, authorization, type, package);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -303,16 +410,17 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
- **package** | **System.IO.Stream**|  | 
  **authorization** | **string**|  | [optional] 
+ **type** | **string**|  | [optional] [default to &quot;Body_post_recipe_registries__owner__recipes_post&quot;]
+ **package** | **System.IO.Stream**|  | [optional] 
 
 ### Return type
 
-**Object**
+[**AnyType**](AnyType.md)
 
 ### Authorization
 
-[CompulsoryAuth](../README.md#CompulsoryAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 

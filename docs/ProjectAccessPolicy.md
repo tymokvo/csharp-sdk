@@ -5,8 +5,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Permission** | **Permission** |  | 
 **Subject** | [**PolicySubject**](PolicySubject.md) | The subject of the access policy | 
+**Permission** | **Permission** | The permission given to the subject of the access policy | 
+**Type** | **string** |  | [optional] [readonly] [default to "ProjectAccessPolicy"]
 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)

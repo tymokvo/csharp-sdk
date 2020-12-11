@@ -39,8 +39,12 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: CompulsoryAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new OrgsApi(Configuration.Default);
             var organizationCreate = new OrganizationCreate(); // OrganizationCreate | 
@@ -75,7 +79,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CompulsoryAuth](../README.md#CompulsoryAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -86,11 +90,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Success |  -  |
-| **202** | Accepted |  -  |
-| **400** | Invalid request |  -  |
 | **403** | Access forbidden |  -  |
-| **422** | Validation Error |  -  |
 | **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
+| **202** | Accepted |  -  |
+| **422** | Validation Error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -122,8 +126,12 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: CompulsoryAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new OrgsApi(Configuration.Default);
             var name = name_example;  // string | 
@@ -157,7 +165,7 @@ void (empty response body)
 
 ### Authorization
 
-[CompulsoryAuth](../README.md#CompulsoryAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -168,10 +176,10 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | Accepted |  -  |
-| **400** | Invalid request |  -  |
 | **403** | Access forbidden |  -  |
-| **422** | Validation Error |  -  |
 | **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
+| **422** | Validation Error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -203,8 +211,12 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: CompulsoryAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new OrgsApi(Configuration.Default);
             var name = name_example;  // string | 
@@ -240,7 +252,7 @@ void (empty response body)
 
 ### Authorization
 
-[CompulsoryAuth](../README.md#CompulsoryAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -251,10 +263,10 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | Accepted |  -  |
-| **400** | Invalid request |  -  |
 | **403** | Access forbidden |  -  |
-| **422** | Validation Error |  -  |
 | **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
+| **422** | Validation Error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -286,6 +298,13 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
             var apiInstance = new OrgsApi(Configuration.Default);
             var name = name_example;  // string | 
 
@@ -319,7 +338,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -330,11 +349,11 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Retrieved |  -  |
-| **400** | Invalid request |  -  |
 | **403** | Access forbidden |  -  |
+| **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
 | **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
-| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -344,7 +363,7 @@ No authorization required
 
 ## GetOrgMembers
 
-> OrganizationMemberList GetOrgMembers (string name, int page = null, int perPage = null)
+> OrganizationMemberList GetOrgMembers (string name, int? page = null, int? perPage = null)
 
 List organization members
 
@@ -368,8 +387,8 @@ namespace Example
             Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new OrgsApi(Configuration.Default);
             var name = name_example;  // string | 
-            var page = 56;  // int | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int | Number of items per page (optional)  (default to 25)
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
@@ -394,8 +413,8 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **string**|  | 
- **page** | **int**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int**| Number of items per page | [optional] [default to 25]
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
 ### Return type
 
@@ -424,7 +443,7 @@ No authorization required
 
 ## ListOrgs
 
-> OrganizationList ListOrgs (int page = null, int perPage = null, List<string> name = null, List<string> member = null)
+> OrganizationList ListOrgs (int? page = null, int? perPage = null, List<string> search = null, List<string> name = null, List<string> member = null)
 
 List Orgs
 
@@ -446,16 +465,24 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
             var apiInstance = new OrgsApi(Configuration.Default);
-            var page = 56;  // int | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int | Number of items per page (optional)  (default to 25)
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
+            var search = new List<string>(); // List<string> | You know, for search (optional) 
             var name = new List<string>(); // List<string> | The account name (optional) 
             var member = new List<string>(); // List<string> | The ID of a user (optional) 
 
             try
             {
                 // List Orgs
-                OrganizationList result = apiInstance.ListOrgs(page, perPage, name, member);
+                OrganizationList result = apiInstance.ListOrgs(page, perPage, search, name, member);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -474,8 +501,9 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int**| Number of items per page | [optional] [default to 25]
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
+ **search** | [**List&lt;string&gt;**](string.md)| You know, for search | [optional] 
  **name** | [**List&lt;string&gt;**](string.md)| The account name | [optional] 
  **member** | [**List&lt;string&gt;**](string.md)| The ID of a user | [optional] 
 
@@ -485,7 +513,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -528,8 +556,12 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: CompulsoryAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new OrgsApi(Configuration.Default);
             var name = name_example;  // string | 
@@ -566,7 +598,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CompulsoryAuth](../README.md#CompulsoryAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -577,11 +609,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **202** | Accepted |  -  |
-| **400** | Invalid request |  -  |
 | **403** | Access forbidden |  -  |
+| **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
 | **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
-| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -613,13 +645,17 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: CompulsoryAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new OrgsApi(Configuration.Default);
             var name = name_example;  // string | 
             var username = username_example;  // string | 
-            var role = new OrganizationRoleEnum(); // OrganizationRoleEnum | 
+            var role = ;  // OrganizationRoleEnum | 
 
             try
             {
@@ -645,7 +681,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **string**|  | 
  **username** | **string**|  | 
- **role** | [**OrganizationRoleEnum**](OrganizationRoleEnum.md)|  | 
+ **role** | **OrganizationRoleEnum**|  | 
 
 ### Return type
 
@@ -653,7 +689,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CompulsoryAuth](../README.md#CompulsoryAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -664,11 +700,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **202** | Accepted |  -  |
-| **400** | Invalid request |  -  |
 | **403** | Access forbidden |  -  |
+| **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
 | **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
-| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)

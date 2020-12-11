@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 ## CheckUsername
 
-> Object CheckUsername (string username)
+> AnyType CheckUsername (string username)
 
 Check if a username is already taken
 
@@ -40,7 +40,7 @@ namespace Example
             try
             {
                 // Check if a username is already taken
-                Object result = apiInstance.CheckUsername(username);
+                AnyType result = apiInstance.CheckUsername(username);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -63,7 +63,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**Object**
+[**AnyType**](AnyType.md)
 
 ### Authorization
 
@@ -164,7 +164,7 @@ No authorization required
 
 ## ListUsers
 
-> UserPublicList ListUsers (int page = null, int perPage = null, string name = null, string username = null, List<string> id = null)
+> UserPublicList ListUsers (int? page = null, int? perPage = null, List<string> username = null)
 
 List Users
 
@@ -185,16 +185,14 @@ namespace Example
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new UsersApi(Configuration.Default);
-            var page = 56;  // int | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int | Number of items per page (optional)  (default to 25)
-            var name = name_example;  // string | Name of the user to search for (optional) 
-            var username = username_example;  // string | Username of the user to search for (optional) 
-            var id = new List<string>(); // List<string> | A list of users to search for by their user ID (optional) 
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
+            var username = new List<string>(); // List<string> | Username of the user to search for (optional) 
 
             try
             {
                 // List Users
-                UserPublicList result = apiInstance.ListUsers(page, perPage, name, username, id);
+                UserPublicList result = apiInstance.ListUsers(page, perPage, username);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -213,11 +211,9 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int**| Number of items per page | [optional] [default to 25]
- **name** | **string**| Name of the user to search for | [optional] 
- **username** | **string**| Username of the user to search for | [optional] 
- **id** | [**List&lt;string&gt;**](string.md)| A list of users to search for by their user ID | [optional] 
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
+ **username** | [**List&lt;string&gt;**](string.md)| Username of the user to search for | [optional] 
 
 ### Return type
 

@@ -5,8 +5,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Role** | **OrganizationRoleEnum** |  | 
-**User** | [**UserPublic**](UserPublic.md) | The team member | 
+**User** | [**UserPublic**](UserPublic.md) | The organization member | 
+**Role** | **OrganizationRoleEnum** | The role the user has within the organization | 
+**Type** | **string** |  | [optional] [readonly] [default to "OrganizationMember"]
 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)

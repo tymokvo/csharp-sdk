@@ -43,8 +43,12 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: CompulsoryAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
             var owner = owner_example;  // string | 
@@ -81,7 +85,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CompulsoryAuth](../README.md#CompulsoryAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -92,11 +96,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **201** | Success |  -  |
-| **202** | Accepted |  -  |
-| **400** | Invalid request |  -  |
 | **403** | Access forbidden |  -  |
-| **422** | Validation Error |  -  |
 | **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
+| **202** | Accepted |  -  |
+| **422** | Validation Error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -128,8 +132,12 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: CompulsoryAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
             var owner = owner_example;  // string | 
@@ -168,7 +176,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CompulsoryAuth](../README.md#CompulsoryAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -179,11 +187,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **202** | Accepted |  -  |
-| **400** | Invalid request |  -  |
 | **403** | Access forbidden |  -  |
+| **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
 | **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
-| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -215,8 +223,12 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: CompulsoryAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
             var owner = owner_example;  // string | 
@@ -252,7 +264,7 @@ void (empty response body)
 
 ### Authorization
 
-[CompulsoryAuth](../README.md#CompulsoryAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -263,10 +275,10 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | Accepted |  -  |
-| **400** | Invalid request |  -  |
 | **403** | Access forbidden |  -  |
-| **422** | Validation Error |  -  |
 | **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
+| **422** | Validation Error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -298,8 +310,12 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: CompulsoryAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
             var owner = owner_example;  // string | 
@@ -337,7 +353,7 @@ void (empty response body)
 
 ### Authorization
 
-[CompulsoryAuth](../README.md#CompulsoryAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -348,10 +364,10 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | Accepted |  -  |
-| **400** | Invalid request |  -  |
 | **403** | Access forbidden |  -  |
-| **422** | Validation Error |  -  |
 | **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
+| **422** | Validation Error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -383,8 +399,12 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: CompulsoryAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
             var owner = owner_example;  // string | 
@@ -422,7 +442,7 @@ void (empty response body)
 
 ### Authorization
 
-[CompulsoryAuth](../README.md#CompulsoryAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -433,10 +453,10 @@ void (empty response body)
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **204** | Accepted |  -  |
-| **400** | Invalid request |  -  |
 | **403** | Access forbidden |  -  |
-| **422** | Validation Error |  -  |
 | **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
+| **422** | Validation Error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -468,8 +488,12 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: OptionalAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
             var owner = owner_example;  // string | 
@@ -506,7 +530,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OptionalAuth](../README.md#OptionalAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -517,11 +541,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Retrieved |  -  |
-| **400** | Invalid request |  -  |
 | **403** | Access forbidden |  -  |
+| **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
 | **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
-| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -531,7 +555,7 @@ Name | Type | Description  | Notes
 
 ## GetProjectAccessPermissions
 
-> ProjectAccessPolicyList GetProjectAccessPermissions (string owner, string name, int page = null, int perPage = null, List<string> subjectType = null, List<string> permission = null)
+> ProjectAccessPolicyList GetProjectAccessPermissions (string owner, string name, int? page = null, int? perPage = null, List<string> subjectType = null, List<string> permission = null)
 
 Get project access permissions
 
@@ -553,14 +577,18 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: CompulsoryAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var page = 56;  // int | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int | Number of items per page (optional)  (default to 25)
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
             var subjectType = new List<string>(); // List<string> | The type of access policy subject (optional) 
             var permission = new List<string>(); // List<string> | An access policy permission string (optional) 
 
@@ -588,8 +616,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **page** | **int**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int**| Number of items per page | [optional] [default to 25]
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
  **subjectType** | [**List&lt;string&gt;**](string.md)| The type of access policy subject | [optional] 
  **permission** | [**List&lt;string&gt;**](string.md)| An access policy permission string | [optional] 
 
@@ -599,7 +627,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CompulsoryAuth](../README.md#CompulsoryAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -610,10 +638,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Retrieved |  -  |
-| **400** | Invalid request |  -  |
 | **403** | Access forbidden |  -  |
-| **422** | Validation Error |  -  |
 | **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
+| **422** | Validation Error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -645,8 +673,12 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: OptionalAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
             var owner = owner_example;  // string | 
@@ -683,7 +715,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OptionalAuth](../README.md#OptionalAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -694,10 +726,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Retrieved |  -  |
-| **400** | Invalid request |  -  |
 | **403** | Access forbidden |  -  |
-| **422** | Validation Error |  -  |
 | **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
+| **422** | Validation Error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -707,7 +739,7 @@ Name | Type | Description  | Notes
 
 ## GetProjectRecipes
 
-> RepositoryList GetProjectRecipes (string owner, string name, int page = null, int perPage = null)
+> RecipeInterfaceList GetProjectRecipes (string owner, string name, string search = null, int? page = null, int? perPage = null)
 
 Get project recipes
 
@@ -729,19 +761,24 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: OptionalAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var page = 56;  // int | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int | Number of items per page (optional)  (default to 25)
+            var search = search_example;  // string |  (optional) 
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
                 // Get project recipes
-                RepositoryList result = apiInstance.GetProjectRecipes(owner, name, page, perPage);
+                RecipeInterfaceList result = apiInstance.GetProjectRecipes(owner, name, search, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -762,16 +799,17 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **page** | **int**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int**| Number of items per page | [optional] [default to 25]
+ **search** | **string**|  | [optional] 
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
 ### Return type
 
-[**RepositoryList**](RepositoryList.md)
+[**RecipeInterfaceList**](RecipeInterfaceList.md)
 
 ### Authorization
 
-[OptionalAuth](../README.md#OptionalAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -782,10 +820,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Retrieved |  -  |
-| **400** | Invalid request |  -  |
 | **403** | Access forbidden |  -  |
-| **422** | Validation Error |  -  |
 | **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
+| **422** | Validation Error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -795,7 +833,7 @@ Name | Type | Description  | Notes
 
 ## ListProjects
 
-> ProjectList ListProjects (int page = null, int perPage = null, List<string> id = null, List<string> name = null, List<string> owner = null, bool _public = null, List<string> _operator = null)
+> ProjectList ListProjects (int? page = null, int? perPage = null, List<string> search = null, List<string> id = null, List<string> name = null, List<string> owner = null, bool? _public = null, List<string> permission = null)
 
 List Projects
 
@@ -817,22 +855,27 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: OptionalAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
-            var page = 56;  // int | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int | Number of items per page (optional)  (default to 25)
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
+            var search = new List<string>(); // List<string> | You know, for search (optional) 
             var id = new List<string>(); // List<string> | The ID of a project to search for (optional) 
             var name = new List<string>(); // List<string> | The account name (optional) 
             var owner = new List<string>(); // List<string> | Owner of the project (optional) 
-            var _public = true;  // bool | Boolean check for public/private projects (optional) 
-            var _operator = new List<string>(); // List<string> | Name of an operator to search workflows by (optional) 
+            var _public = true;  // bool? | Boolean check for public/private projects (optional) 
+            var permission = new List<string>(); // List<string> | Filter by permission on given resource (optional) 
 
             try
             {
                 // List Projects
-                ProjectList result = apiInstance.ListProjects(page, perPage, id, name, owner, _public, _operator);
+                ProjectList result = apiInstance.ListProjects(page, perPage, search, id, name, owner, _public, permission);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -851,13 +894,14 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int**| Number of items per page | [optional] [default to 25]
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
+ **search** | [**List&lt;string&gt;**](string.md)| You know, for search | [optional] 
  **id** | [**List&lt;string&gt;**](string.md)| The ID of a project to search for | [optional] 
  **name** | [**List&lt;string&gt;**](string.md)| The account name | [optional] 
  **owner** | [**List&lt;string&gt;**](string.md)| Owner of the project | [optional] 
- **_public** | **bool**| Boolean check for public/private projects | [optional] 
- **_operator** | [**List&lt;string&gt;**](string.md)| Name of an operator to search workflows by | [optional] 
+ **_public** | **bool?**| Boolean check for public/private projects | [optional] 
+ **permission** | [**List&lt;string&gt;**](string.md)| Filter by permission on given resource | [optional] 
 
 ### Return type
 
@@ -865,7 +909,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OptionalAuth](../README.md#OptionalAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -876,10 +920,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | Retrieved |  -  |
-| **400** | Invalid request |  -  |
 | **403** | Access forbidden |  -  |
-| **422** | Validation Error |  -  |
 | **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
+| **422** | Validation Error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -911,8 +955,12 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: CompulsoryAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
             var owner = owner_example;  // string | 
@@ -951,7 +999,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CompulsoryAuth](../README.md#CompulsoryAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -962,11 +1010,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **202** | Accepted |  -  |
-| **400** | Invalid request |  -  |
 | **403** | Access forbidden |  -  |
+| **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
 | **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
-| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
@@ -998,8 +1046,12 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure OAuth2 access token for authorization: CompulsoryAuth
-            Configuration.Default.AccessToken = "YOUR_JWT_TOKEN";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
             var owner = owner_example;  // string | 
@@ -1038,7 +1090,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[CompulsoryAuth](../README.md#CompulsoryAuth)
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 
@@ -1049,11 +1101,11 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **202** | Accepted |  -  |
-| **400** | Invalid request |  -  |
 | **403** | Access forbidden |  -  |
+| **500** | Server error |  -  |
+| **400** | Invalid request |  -  |
 | **404** | Not found |  -  |
 | **422** | Validation Error |  -  |
-| **500** | Server error |  -  |
 
 [[Back to top]](#)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
