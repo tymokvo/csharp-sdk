@@ -274,6 +274,12 @@ def check_types(source_json_url, mapper_json):
     source_folder = os.path.join(root, 'src', name_space, 'Model')
     check_csfiles(source_folder, all_types)
 
+    source_folder = os.path.join(root, 'src', name_space, 'Api')
+    if os.path.exists(source_folder):
+        check_csfiles(source_folder, all_types)
+
+
+
 
 def cleanup(projectName):
     root = os.path.dirname(os.path.dirname(__file__))
