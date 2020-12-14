@@ -471,7 +471,7 @@ Name | Type | Description  | Notes
 
 ## GetJobSteps
 
-> StepList GetJobSteps (string owner, string name, string jobId)
+> StepList GetJobSteps (string owner, string name, string jobId, string status = null, List<string> stepId = null, int? page = null, int? perPage = null)
 
 Query the steps of a job
 
@@ -504,11 +504,15 @@ namespace Example
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
             var jobId = jobId_example;  // string | 
+            var status = status_example;  // string |  (optional) 
+            var stepId = new List<string>(); // List<string> |  (optional) 
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
                 // Query the steps of a job
-                StepList result = apiInstance.GetJobSteps(owner, name, jobId);
+                StepList result = apiInstance.GetJobSteps(owner, name, jobId, status, stepId, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -530,6 +534,10 @@ Name | Type | Description  | Notes
  **owner** | **string**|  | 
  **name** | **string**|  | 
  **jobId** | **string**|  | 
+ **status** | **string**|  | [optional] 
+ **stepId** | [**List&lt;string&gt;**](string.md)|  | [optional] 
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
 ### Return type
 
@@ -651,7 +659,7 @@ Name | Type | Description  | Notes
 
 ## ListJobs
 
-> JobList ListJobs (string owner, string name, int? page = null, int? perPage = null, List<string> id = null, List<string> status = null)
+> JobList ListJobs (string owner, string name, List<string> ids = null, string status = null, int? page = null, int? perPage = null)
 
 List jobs
 
@@ -683,15 +691,15 @@ namespace Example
             var apiInstance = new JobsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
+            var ids = new List<string>(); // List<string> |  (optional) 
+            var status = status_example;  // string |  (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
-            var id = new List<string>(); // List<string> | The ID of a simulation to search for (optional) 
-            var status = new List<string>(); // List<string> | The status of the simulation to filter by (optional) 
 
             try
             {
                 // List jobs
-                JobList result = apiInstance.ListJobs(owner, name, page, perPage, id, status);
+                JobList result = apiInstance.ListJobs(owner, name, ids, status, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -712,10 +720,10 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
+ **ids** | [**List&lt;string&gt;**](string.md)|  | [optional] 
+ **status** | **string**|  | [optional] 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
  **perPage** | **int?**| Number of items per page | [optional] [default to 25]
- **id** | [**List&lt;string&gt;**](string.md)| The ID of a simulation to search for | [optional] 
- **status** | [**List&lt;string&gt;**](string.md)| The status of the simulation to filter by | [optional] 
 
 ### Return type
 
@@ -922,7 +930,7 @@ Name | Type | Description  | Notes
 
 Suspend a job
 
-Suspend a job.
+Stop a job.
 
 ### Example
 

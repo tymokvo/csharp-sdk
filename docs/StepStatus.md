@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **StartedAt** | **DateTime** | The time at which the task was started | 
 **Id** | **string** | The step unique ID | 
 **Name** | **string** | A human readable name for the step. Usually defined by the DAG task name but can be extended if the step is part of a loop for example. This name is unique within the boundary of the DAG/Job that generated it. | 
-**StatusType** | **StatusType** | The type of step this status is for. Can be \&quot;Function\&quot;, \&quot;DAG\&quot; or \&quot;Loop\&quot; | 
+**StatusType** | **string** | The type of step this status is for. Can be \&quot;Function\&quot;, \&quot;DAG\&quot; or \&quot;Loop\&quot; | 
 **TemplateRef** | **string** | The name of the template that spawned this step | 
 **ChildrenIds** | **List&lt;string&gt;** | A list of child step IDs | 
 **OutboundSteps** | **List&lt;string&gt;** | A list of the last step to ran in the context of this step. In the case of a DAG or a job this will be the last step that has been executed. It will remain empty for functions. | 

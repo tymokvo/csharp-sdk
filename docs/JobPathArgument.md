@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | Argument name. The name must match one of the input names from Job&#39;s template which can be a function or DAG. | 
-**Source** | [**AnyOfHTTPS3ProjectFolder**](AnyOfHTTPS3ProjectFolder.md) | The path to source the file from. | 
+**Source** | [**AnyOfobjectobjectobject**](AnyOfobjectobjectobject.md) | The path to source the file from. | 
 **Type** | **string** |  | [optional] [readonly] [default to "JobPathArgument"]
 **Annotations** | **Dictionary&lt;string, string&gt;** | An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries. | [optional] 
 

@@ -9,8 +9,8 @@
     "AccessPolicyList": "app.modules.access_policy.dto",
     "AccountPublic": "app.modules.accounts.dto",
     "BaseStatus": "queenbee.job.status",
-    "Body_post_plugin_registries__owner__plugins_post": "pydantic.main",
-    "Body_post_recipe_registries__owner__recipes_post": "pydantic.main",
+    "Body_post_plugin_registries__owner__plugins_post": null,
+    "Body_post_recipe_registries__owner__recipes_post": null,
     "CreatedContent": "honeycomb_wax.schema.responses",
     "DAG": "queenbee.recipe.dag",
     "DAGArrayInput": "queenbee.io.inputs.dag",
@@ -193,22 +193,7 @@
     "_ArtifactSource": "queenbee.io.artifact_source",
     "_BaseReference": "queenbee.io.reference",
     "_InputReferenceBase": "queenbee.io.reference",
-    "_TaskReferenceBase": "queenbee.io.reference",
-    "app__modules__access_policy__dto__Permission": "app.modules.access_policy.dto",
-    "app__modules__access_policy__dto__SubjectType": "app.modules.access_policy.dto",
-    "app__modules__orgs__dto__orgs__OrganizationRoleEnum": "app.modules.orgs.dto.orgs",
-    "app__modules__orgs__dto__teams__TeamRoleEnum": "app.modules.orgs.dto.teams",
-    "queenbee__io__common__ItemType": "queenbee.io.common",
-    "queenbee__job__status__StatusType": "queenbee.job.status",
-    "queenbee__recipe__dependency__DependencyKind": "queenbee.recipe.dependency"
+    "_TaskReferenceBase": "queenbee.io.reference"
   },
-  "enums": {
-    "DependencyKind": "queenbee.recipe.dependency",
-    "ItemType": "queenbee.io.common",
-    "OrganizationRoleEnum": "app.modules.orgs.dto.orgs",
-    "Permission": "app.modules.access_policy.dto",
-    "StatusType": "queenbee.job.status",
-    "SubjectType": "app.modules.access_policy.dto",
-    "TeamRoleEnum": "app.modules.orgs.dto.teams"
-  }
+  "enums": {}
 }

@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **Description** | **string** | Optional description for input. | [optional] 
 **Platform** | **List&lt;string&gt;** | Name of the client platform (e.g. Grasshopper, Revit, etc). The value can be any strings as long as it has been agreed between client-side developer and author of the recipe. | 
 **Handler** | [**List&lt;IOAliasHandler&gt;**](IOAliasHandler.md) | List of process actions to process the input or output value. | 
-**Default** | [**AnyOfHTTPS3ProjectFolder**](AnyOfHTTPS3ProjectFolder.md) | The default source for file if the value is not provided. | [optional] 
+**Default** | [**AnyOfobjectobjectobject**](AnyOfobjectobjectobject.md) | The default source for file if the value is not provided. | [optional] 
 **Required** | **bool** | A field to indicate if this input is required. This input needs to be set explicitly even when a default value is provided. | [optional] [default to false]
 **Spec** | **Object** | An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec. | [optional] 
 **Type** | **string** |  | [optional] [readonly] [default to "DAGFolderInputAlias"]

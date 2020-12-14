@@ -23,7 +23,7 @@ Name | Type | Description | Notes
 **Slug** | **string** | A slug of the repository name and the package name. | [optional] 
 **Kind** | **string** | The type of Queenbee package (ie: recipe or plugin) | [optional] [default to ""]
 **Readme** | **string** | The README file string for this package | [optional] 
-**Manifest** | [**AnyOfRecipePlugin**](AnyOfRecipePlugin.md) | The package Recipe or Plugin manifest | [optional] 
+**Manifest** | [**AnyOfobjectobject**](AnyOfobjectobject.md) | The package Recipe or Plugin manifest | [optional] 
 **Type** | **string** |  | [optional] [readonly] [default to "PackageVersion"]
 
 [[Back to Model list]](../README.md#documentation-for-models)

@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Name** | **string** | Argument name. The name must match one of the input names from Task&#39;s template which can be a function or DAG. | 
-**From** | [**AnyOfInputReferenceTaskReferenceItemReferenceValueReference**](AnyOfInputReferenceTaskReferenceItemReferenceValueReference.md) | A reference to a DAG input, a DAG output or another task output. You can also use the ValueReference type to hard-code an input value. | 
+**From** | [**AnyOfobjectobjectobjectobject**](AnyOfobjectobjectobjectobject.md) | A reference to a DAG input, a DAG output or another task output. You can also use the ValueReference type to hard-code an input value. | 
 **Type** | **string** |  | [optional] [readonly] [default to "TaskArgument"]
 **Annotations** | **Dictionary&lt;string, string&gt;** | An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries. | [optional] 
 

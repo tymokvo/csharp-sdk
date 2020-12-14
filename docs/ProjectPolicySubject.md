@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**PolicyType** | [**SubjectType**](SubjectType.md) |  | 
+**SubjectType** | **string** |  | 
 **Name** | **string** | The name of the policy subject | 
 **Type** | **string** |  | [optional] [readonly] [default to "ProjectPolicySubject"]
 

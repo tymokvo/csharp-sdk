@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **Description** | **string** | A description of the org | [optional] [default to ""]
 **Id** | **string** | The org ID | 
 **Owner** | [**AccountPublic**](AccountPublic.md) | The account the organization represents | 
-**Role** | **OrganizationRoleEnum** | The role the user has within the organization | [optional] 
+**Role** | **string** | The role the user has within the organization | [optional] 
 **MemberCount** | **int** | The number of members that are part of this org | [optional] [default to 0]
 **TeamCount** | **int** | The number of teams that are part of this org | [optional] [default to 0]
 **Type** | **string** |  | [optional] [readonly] [default to "Organization"]
