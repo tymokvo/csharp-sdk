@@ -19,7 +19,10 @@ def remove_queenbee_schema(source_json):
     classesItems.update(data['enums'])
     
     for key in classesItems.keys():
-        name_space = classesItems[key].title().replace('_', '', 1)
+        class_module = classesItems[key]
+        if class_module == None:
+            continue
+        name_space = class_module.title().replace('_', '', 1)
         if name_space.startswith('Queenbee'):
             print(name_space)
             # remove the interface:
