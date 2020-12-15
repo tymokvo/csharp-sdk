@@ -141,9 +141,9 @@ namespace PollinationSDK
         /// </summary>
         /// <param name="SubmitSimulation"></param>
         /// <returns></returns>
-        private static string CheckArtifacts(Run SubmitSimulation)
+        private static string CheckArtifacts(Job job)
         {
-            var arg = SubmitSimulation.Job.Arguments;
+            var arg = job.Arguments;
 
             var artis = arg.OfType<JobPathArgument>();
             //var files = new List<string>();
@@ -152,8 +152,8 @@ namespace PollinationSDK
 
             // remove old temp files first
             var tempPollination = Path.Combine(GenTempFolder(), "prepareArtifacts");
-            Directory.CreateDirectory(tempPollination);
-            Directory.Delete(tempPollination, true);
+            //Directory.CreateDirectory(tempPollination);
+            //Directory.Delete(tempPollination, true);
 
 
             if (artis != null)
@@ -179,6 +179,7 @@ namespace PollinationSDK
                     if (isDir)
                     {
                         var targetDir = Path.Combine(temp, Path.GetFileName(fileOrFolder));
+                        Directory.CreateDirectory(targetDir);
                         var subDirs = Directory.GetDirectories(fileOrFolder, "*", SearchOption.AllDirectories);
                         foreach (var dir in subDirs)
                         {
@@ -266,7 +267,7 @@ namespace PollinationSDK
         /// <returns></returns>
         public static async Task<Wrapper.Simulation> RunSimulationAsync(
             Project project, 
-            Run workflow, 
+            Job job, 
             Action<string> progressLogAction = default,
             CancellationToken cancellationToken = default,
             Action actionWhenDone = default)
@@ -285,7 +286,7 @@ namespace PollinationSDK
             // Upload artifacts
 
             // check artifacts 
-            var tempProjectDir = CheckArtifacts(workflow);
+            var tempProjectDir = CheckArtifacts(job);
 
             // upload artifacts
             if (!string.IsNullOrEmpty(tempProjectDir))
@@ -304,7 +305,7 @@ namespace PollinationSDK
             }
 
             // update Artifact to cloud's relative path after uploaded.
-            var newJob = UpdateArtifactPath(workflow.Job);
+            var newJob = UpdateArtifactPath(job);
             //var json = newJob.ToJson();
 
             // create a new Simulation
@@ -339,10 +340,10 @@ namespace PollinationSDK
                 actionWhenDone?.Invoke();
                 return runningSimulaiton;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 //Eto.Forms.MessageBox.Show(e.Message, Eto.Forms.MessageBoxType.Error);
-                throw;
+                throw ex;
             }
 
        

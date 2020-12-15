@@ -1,6 +1,6 @@
 ﻿using PollinationSDK.Api;
 using PollinationSDK.Client;
-using PollinationSDK.Model;
+//using PollinationSDK.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +12,8 @@ using RestSharp.Extensions;
 using System.IO;
 using PollinationSDK.Wrapper;
 using System.Threading;
+using QueenbeeSDK;
+
 
 namespace ConsoleAppDemo
 {
@@ -25,20 +27,20 @@ namespace ConsoleAppDemo
 
 
           
-            AuthHelper.SignInAsync( devEnv: false).Wait();
+            AuthHelper.SignInAsync( devEnv: true).Wait();
 
             var me = Helper.CurrentUser;
             Console.WriteLine($"You are: {me.Username}");
 
 
-            //Console.WriteLine("--------------------Get recipes-------------------");
-            //var api = new RecipesApi();
-            //var recipeList = api.ListRecipes(1, 25);
-            //var recs = recipeList.Resources;
-            //foreach (var item in recs)
-            //{
-            //    Console.WriteLine($"{item.Owner.Name}/{item.Name}/{item.LatestTag}");
-            //}
+            Console.WriteLine("--------------------Get recipes-------------------");
+            var api = new RecipesApi();
+            var recipeList = api.ListRecipes(1, 25);
+            var recs = recipeList.Resources;
+            foreach (var item in recs)
+            {
+                Console.WriteLine($"{item.Owner.Name}/{item.Name}/{item.LatestTag}");
+            }
 
 
             //Console.WriteLine("--------------------Get projects-------------------");
@@ -51,12 +53,12 @@ namespace ConsoleAppDemo
             //}
 
 
-            //Console.WriteLine("--------------------Get a recipe-------------------");
-            //var recipeOwner = "ladybug-tools";
-            //var recipeName = "daylight-factor";
-            //var recipeApi = new RecipesApi();
-            //var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest");
-            //Console.WriteLine($"{rec.Manifest.Metadata.Name}/{rec.Manifest.Metadata.Name}/{rec.Tag}");
+            Console.WriteLine("--------------------Get a recipe-------------------");
+            var recipeOwner = "ladybug-tools";
+            var recipeName = "daylight-factor";
+            var recipeApi = new RecipesApi();
+            var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest");
+            Console.WriteLine($"{rec.Source}/{rec.Metadata.Name}/{rec.Metadata.Tag}");
 
 
             Console.WriteLine("--------------------Get a project-------------------");
@@ -96,31 +98,31 @@ namespace ConsoleAppDemo
             //DeleteMyProjects(me, newProj);
 
 
-            //Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
-            ////CreateSimulation(proj);
-            //var cts = new System.Threading.CancellationTokenSource();
-            //var token = cts.Token;
+            Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
+            //CreateSimulation(proj);
+            var cts = new System.Threading.CancellationTokenSource();
+            var token = cts.Token;
 
-            ////var workflow = CreateWorkflow("ladybug-tools", "annual-daylight");
-            //var workflow = CreateWorkflow_AnnualDaylight();
+            //var workflow = CreateWorkflow("ladybug-tools", "annual-daylight");
+            var workflow = CreateWorkflow_DaylightFactor();
 
-            //try
-            //{
-            //    var task = runSimu(proj, workflow, Console.WriteLine, token);
+            try
+            {
+                var task = runSimu(proj, workflow, Console.WriteLine, token);
 
-            //    //cts.CancelAfter(60000);
-            //    task.Wait();
+                //cts.CancelAfter(60000);
+                task.Wait();
 
-            //    Console.WriteLine($"Canceled check: {token.IsCancellationRequested}");
-            //    cts.Dispose();
+                Console.WriteLine($"Canceled check: {token.IsCancellationRequested}");
+                cts.Dispose();
 
 
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e.InnerException.Message);
-            //    //throw;
-            //}
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.InnerException.Message);
+                //throw;
+            }
 
 
             //Console.WriteLine("--------------------get simulation outputs-------------------");
@@ -157,11 +159,11 @@ namespace ConsoleAppDemo
 
         }
 
-        private static async Task runSimu(Project proj, SubmitSimulation workflow, Action<string> msgAction, CancellationToken token)
+        private static async Task runSimu(Project proj, Job job, Action<string> msgAction, CancellationToken token)
         {
             try
             {
-                var simu = await Helper.RunSimulationAsync(proj, workflow, msgAction, token);
+                var simu = await Helper.RunSimulationAsync(proj, job, msgAction, token);
                 await simu.CheckStatusAndGetLogsAsync(msgAction, token);
 
                 msgAction(simu.Logs);
@@ -198,70 +200,61 @@ namespace ConsoleAppDemo
             var api = new RecipesApi();
             //var d = api.ListRecipes(owner: new[] { "ladybug-tools" }.ToList()).Resources.First(_ => _.Name == "annual-energy-use");
 
-            var recTag = api.GetRecipeByTag("ladybug-tools", "annual-energy-use", "latest");
+            var rec = api.GetRecipeByTag("ladybug-tools", "annual-energy-use", "latest");
             //var recTag = api.GetRecipeByTag("ladybug-tools", "annual-energy-use", "c2657adb0b13db6cd3ff706d9d6db59b98ef8f994d2809d23c3ed449c19b52ea");
-            //TODO: ask Antoine to fix why Manifest returns Recipe 
-            var mani = recTag.Manifest;
-            //TODO: ask Antoine to fix why Flow returns DAG 
-            var flow = mani.Flow.First();
-            var inputs = flow.Inputs;
-            var ParamNames = inputs.Parameters.Select(_ => _.Name);
+       
+            var inputs = rec.Inputs.OfType<QueenbeeSDK.GenericInput>();
+            var ParamNames = inputs.Select(_ => _.Name);
             Console.WriteLine("------------------Getting Recipe Input Params---------------------");
             Console.WriteLine(string.Join("\n", ParamNames));
 
-            var artifactNames = inputs.Artifacts.Select(_ => _.Name);
-            Console.WriteLine("------------------Getting Recipe Input artifacts---------------------");
-            Console.WriteLine(string.Join("\n", artifactNames));
-
-            //return inputs.ToString();
-            //return recipes;
         }
 
-        private static Workflow CreateWorkflow_AnnualDaylight()
+        private static Job CreateWorkflow_AnnualDaylight()
         {
             var recipeOwner = "ladybug-tools";
             var recipeName = "annual-daylight";
             var recipeApi = new RecipesApi();
             var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest");
-            var arg = new SimulationInputs()
-            {
-                Parameters = new List<SimulationInputParameter>()
-                {
-                    new SimulationInputParameter("sensor-grids", "[\"room\"]")
-                },
-                Artifacts = new List<SimulationInputArtifact>()
-                {
-                    new SimulationInputArtifact("model", new ProjectFolderSource(@"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder\model")),
-                    new SimulationInputArtifact("wea", new ProjectFolderSource(@"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder\in.wea"))
-                }
-            };
 
-            var wf = new PollinationSDK.Wrapper.Workflow(recipeOwner, rec, arg);
-            return wf;
+            var recipeSource = "";
+            var job = new Job(recipeSource);
+           
+            job.AddArgument(new JobArgument("sensor-grids", "[\"room\"]"));
+            job.AddArgument(new JobPathArgument("model", new ProjectFolder(path: @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder\model")));
+            job.AddArgument(new JobPathArgument("wea", new ProjectFolder(path: @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder\in.wea")));
+
+            return job;
+
+            //var jobApi = new JobsApi();
+            //var projOwner = Helper.CurrentUser.Name;
+            //var jobName = "annual daylight simulation test";
+            //jobApi.CreateJob(projOwner, jobName, job);
+            
         }
 
-
-        private static Workflow CreateWorkflow(string recipeOwner, string recipeName)
+        private static Job CreateWorkflow_DaylightFactor()
         {
+            var recipeOwner = "ladybug-tools";
+            var recipeName = "daylight-factor";
             var recipeApi = new RecipesApi();
             var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest");
-            var arg = new SimulationInputs()
-            {
-                Parameters = new List<SimulationInputParameter>()
-                {
-                    new SimulationInputParameter("filter-design-days", "True")
-                },
-                Artifacts = new List<SimulationInputArtifact>()
-                {
-                    new SimulationInputArtifact("ddy-file", new ProjectFolderSource(@"C:\ladybug\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3.ddy")),
-                    new SimulationInputArtifact("epw-file", new ProjectFolderSource(@"C:\ladybug\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3\USA_NY_New.York-Kennedy.Intl.AP.744860_TMY3.epw")),
-                    new SimulationInputArtifact("model-json", new ProjectFolderSource(@"D:\Dev\honeybee-schema\samples\model\model_complete_single_zone_office.json"))
-                }
-            };
-            
-            var wf = new PollinationSDK.Wrapper.Workflow(recipeOwner, rec, arg);
-            return wf;
+
+            var recipeSource = rec.Source;
+            var job = new Job(recipeSource);
+
+            job.AddArgument(new JobPathArgument("model", new ProjectFolder(path: @"D:\Test\queenbeeTest\model.hbjson")));
+            //job.AddArgument(new JobPathArgument("input", new ProjectFolder(path: @"D:\Test\queenbeeTest\inputs.json")));
+
+            return job;
+
+            //var jobApi = new JobsApi();
+            //var projOwner = Helper.CurrentUser.Name;
+            //var jobName = "annual daylight simulation test";
+            //jobApi.CreateJob(projOwner, jobName, job);
+
         }
+
 
 
         private static ProjectList GetProjects(UserPrivate user)
@@ -305,9 +298,10 @@ namespace ConsoleAppDemo
 
         private static async Task<bool> CheckSimulationStatus(Project proj, string simuId)
         {
-            var api = new SimulationsApi();
+            var api = new JobsApi();
+            var run = api.GetJob(proj.Owner.Name, proj.Name, simuId);
 
-            var status = api.GetSimulation(proj.Owner.Name, proj.Name, simuId);
+            var status = run.Status;
             var startTime = status.StartedAt.ToUniversalTime();
             while (status.Status == "Running")
             {
@@ -317,7 +311,7 @@ namespace ConsoleAppDemo
                 Console.WriteLine($"{status.Status}: [{runseconds} s]");
 
                 // update status
-                status = api.GetSimulation(proj.Owner.Name, proj.Name, simuId);
+                status = api.GetJob(proj.Owner.Name, proj.Name, simuId).Status;
 
             }
 
@@ -329,26 +323,29 @@ namespace ConsoleAppDemo
 
         private static void CheckOutputLogs(Project proj, string simuId)
         {
-            var api = new SimulationsApi();
-            var outputs = api.GetSimulationLogs(proj.Owner.Name, proj.Name, simuId.ToString());
-            Console.WriteLine(outputs);
+            var api = new JobsApi();
+            var steps = api.GetJobSteps(proj.Owner.Name, proj.Name, simuId.ToString());
+            foreach (var item in steps.Resources)
+            {
+                var stepLog = api.GetJobStepLogs(proj.Owner.Name, proj.Name, simuId.ToString(), item.Id);
+                Console.WriteLine(stepLog);
+            }
+           
         }
 
-        private async static void DownloadOutputs(Project proj, string simuId, List<string> artifacts)
-        {
-            var simu = new Simulation(proj, simuId);
-            var simuStatus = new PollinationSDK.Api.SimulationsApi().GetSimulation(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID);
+        //private async static void DownloadOutputs(Project proj, string simuId, List<string> artifacts)
+        //{
+        //    var simu = new Simulation(proj, simuId);
+        //    var simuStatus = new PollinationSDK.Api.JobsApi().GetJob(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID).Status;
 
-            var artfs = artifacts.Select(_ => new OutputArtifact(_)).ToList();
-            var temp = Path.Combine( Path.GetTempPath(), Path.GetRandomFileName());
-            //Directory.CreateDirectory(temp);
+        //    var artfs = artifacts.Select(_ => new OutputArtifact(_)).ToList();
+        //    var temp = Path.Combine( Path.GetTempPath(), Path.GetRandomFileName());
+        //    //Directory.CreateDirectory(temp);
 
-            Action<int> reportPercent = (int percent) => Console.WriteLine($"{percent}%");
-            var filePaths = await PollinationSDK.Helper.DownloadOutputArtifactsAsync(simu, artfs, temp, reportPercent);
+        //    Action<int> reportPercent = (int percent) => Console.WriteLine($"{percent}%");
+        //    var filePaths = await PollinationSDK.Helper.DownloadOutputArtifactsAsync(simu, artfs, temp, reportPercent);
 
-          
-
-        }
+        //}
 
 
 
