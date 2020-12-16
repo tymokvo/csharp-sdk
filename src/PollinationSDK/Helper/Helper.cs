@@ -276,12 +276,8 @@ namespace PollinationSDK
             // Get project
             var proj = project;
 
-            //// Check if recipe can be used in this project
-            //var recipe = workflow.Recipe;
-            //var projAPi = new ProjectsApi();
-            ////var res = projAPi.GetProjectRecipeFilters(proj.Owner.Name, proj.Name);
-            //var result = projAPi.CreateProjectRecipeFilter(proj.Owner.Name, proj.Name, new ProjectRecipeFilter(recipe.Name, recipe.Owner, recipe.Tag));
-            //var status = result?.Status;
+            // Check if recipe can be used in this project
+            CheckRecipeInProject(job.Source, proj);
 
             // Upload artifacts
 
@@ -346,8 +342,26 @@ namespace PollinationSDK
                 throw ex;
             }
 
-       
-           
+        }
+
+        private static void CheckRecipeInProject(string recipeSource, Project project)
+        {
+            //https://api.staging.pollination.cloud/registries/ladybug-tools/recipe/annual-daylight/0.2.0
+            //// Check if recipe can be used in this project
+            var projAPi = new ProjectsApi();
+            //var recipeSource = job.Source;
+            if (string.IsNullOrEmpty(recipeSource)) return;
+            if (!recipeSource.Contains("pollination.cloud/registries/")) return;
+            var items = recipeSource.Split(new[] { "pollination.cloud/registries/" }, StringSplitOptions.RemoveEmptyEntries);
+            items = items[1].Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+            if (items.Count()<3) return;
+            var recipeOwner = items[0];
+            var recipeName = items[2];
+
+            var recipeFilter = new ProjectRecipeFilter(recipeOwner, recipeName);
+            var result = projAPi.CreateProjectRecipeFilter(project.Owner.Name, project.Name, recipeFilter);
+            var status = result?.Status;
+
         }
 
         /// <summary>

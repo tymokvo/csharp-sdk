@@ -58,17 +58,17 @@ namespace PollinationSDK.Wrapper
 
             var job = await api.GetJobAsync(proj.Owner.Name, proj.Name, simuId);
             var status = job.Status;
-            var startTime = status.StartedAt.ToUniversalTime();
-            while (status.Status == "Running")
+            var startTime = status.StartedAt;
+            while (status.Status == "Running" || status.Status == "Scheduled")
             {
                 var currentSeconds = Math.Round((DateTime.UtcNow - startTime).TotalSeconds);
                 // wait 5 seconds before calling api to re-check the status
-                for (int i = 0; i < 5; i++)
+                var totalDelaySeconds = status.Status == "Scheduled" ? 3 : 5;
+                for (int i = 0; i < totalDelaySeconds; i++)
                 {
+                    progressAction?.Invoke($"{status.Status}: [{GetUserFriendlyTimeCounter(TimeSpan.FromSeconds(currentSeconds))}]");
                     await Task.Delay(1000);
                     currentSeconds++;
-                    progressAction?.Invoke($"{status.Status}: [{GetUserFriendlyTimeCounter(TimeSpan.FromSeconds(currentSeconds))}]");
-
                     // suspended by user
                     if (cancelToken.IsCancellationRequested) break;
                 }
@@ -93,9 +93,10 @@ namespace PollinationSDK.Wrapper
 
             // Only get simulation logs when run toggle is set to true by user
             if (cancelToken.IsCancellationRequested) return;
-            var outputs = api.GetSimulationLogs(proj.Owner.Name, proj.Name, simuId.ToString());
-            var logUrl= outputs.ToString();
-            this.Logs = await GetSimulationOutputLogAsync(progressAction, cancelToken);
+            CheckOutputLogs(api, proj, simuId.ToString());
+            //var outputs = api.GetSimulationLogs(proj.Owner.Name, proj.Name, simuId.ToString());
+            //var logUrl= outputs.ToString();
+            //this.Logs = await GetSimulationOutputLogAsync(progressAction, cancelToken);
 
             progressAction?.Invoke($"{finishMessage}: [{GetUserFriendlyTimeCounter(totalTime)}]");
 
@@ -205,6 +206,17 @@ namespace PollinationSDK.Wrapper
             return file;
         }
 
+        private static void CheckOutputLogs(JobsApi api, Project proj, string simuId)
+        {
+            //var api = new JobsApi();
+            var steps = api.GetJobSteps(proj.Owner.Name, proj.Name, simuId.ToString());
+            foreach (var item in steps.Resources)
+            {
+                var stepLog = api.GetJobStepLogs(proj.Owner.Name, proj.Name, simuId.ToString(), item.Id);
+                Console.WriteLine(stepLog);
+            }
+
+        }
 
     }
 }
