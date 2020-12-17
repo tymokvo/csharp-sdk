@@ -15,7 +15,7 @@ namespace PollinationSDK.Wrapper
     /// <summary>
     /// Simulation wrapper contains the project (ProjectDto), and simulationID for tracking the simulation.
     /// </summary>
-    public class Simulation
+    public class JobInfo
     {
         // keep all setters public, so that JsonConvert can DeserializeObject it. 
         public Project Project { get; set; }
@@ -23,7 +23,7 @@ namespace PollinationSDK.Wrapper
 
         [IgnoreDataMember]
         public string Logs { get; set; }
-        public Simulation(Project proj, string simuId)
+        public JobInfo(Project proj, string simuId)
         {
             this.Project = proj;
             this.SimulationID = simuId;
@@ -39,13 +39,13 @@ namespace PollinationSDK.Wrapper
             return JsonConvert.SerializeObject(this);
         }
 
-        public static Simulation FromJson(string json)
+        public static JobInfo FromJson(string json)
         {
-            var obj =  JsonConvert.DeserializeObject<Simulation>(json);
+            var obj =  JsonConvert.DeserializeObject<JobInfo>(json);
             return obj;
         }
 
-        public Simulation Duplicate()
+        public JobInfo Duplicate()
         {
             return FromJson(this.ToJson());
         }

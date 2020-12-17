@@ -226,7 +226,6 @@ namespace PollinationSDK
             if (args == null)
                 return simu;
 
-         
             //var checkedArtis = new List<JobPathArgument>();
             var newJob = job.DuplicateJob();
             newJob.Arguments.Clear();
@@ -265,7 +264,7 @@ namespace PollinationSDK
         /// <param name="cancelFunc"></param>
         /// <param name="actionWhenDone"></param>
         /// <returns></returns>
-        public static async Task<Wrapper.Simulation> RunSimulationAsync(
+        public static async Task<Wrapper.JobInfo> ScheduleRunAsync(
             Project project, 
             Job job, 
             Action<string> progressLogAction = default,
@@ -319,7 +318,7 @@ namespace PollinationSDK
                 await Task.Delay(500);
 
                 // monitoring the running simulation
-                var runningSimulaiton = new Wrapper.Simulation(proj, simuId.ToString());
+                var runningSimulaiton = new Wrapper.JobInfo(proj, simuId.ToString());
                 progressLogAction?.Invoke($"Start running...");
 
                 //Action<string> updateMessageProgressForStatus = (string p) => { progressLogAction?.Invoke(p); };
@@ -344,21 +343,34 @@ namespace PollinationSDK
 
         }
 
-        private static void CheckRecipeInProject(string recipeSource, Project project)
+        public static bool GetRecipeFromRecipeSourceURL(string recipeSource, out string recipeOwner, out string recipeName, out string recipeVersion)
         {
+            recipeOwner = null;
+            recipeName = null;
+            recipeVersion = null;
+
             //https://api.staging.pollination.cloud/registries/ladybug-tools/recipe/annual-daylight/0.2.0
-            //// Check if recipe can be used in this project
-            var projAPi = new ProjectsApi();
+
             //var recipeSource = job.Source;
-            if (string.IsNullOrEmpty(recipeSource)) return;
-            if (!recipeSource.Contains("pollination.cloud/registries/")) return;
+            if (string.IsNullOrEmpty(recipeSource)) return false;
+            if (!recipeSource.Contains("pollination.cloud/registries/")) return false;
             var items = recipeSource.Split(new[] { "pollination.cloud/registries/" }, StringSplitOptions.RemoveEmptyEntries);
             items = items[1].Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-            if (items.Count()<3) return;
-            var recipeOwner = items[0];
-            var recipeName = items[2];
+            if (items.Count() != 4) return false;
+            recipeOwner = items[0];
+            recipeName = items[2];
+            recipeVersion = items[3];
+            return true;
+        }
 
-            var recipeFilter = new ProjectRecipeFilter(recipeOwner, recipeName);
+        private static void CheckRecipeInProject(string recipeSource, Project project)
+        {
+            var found = GetRecipeFromRecipeSourceURL(recipeSource, out var recOwner, out var recName, out var recVersion);
+            if (!found) return;
+
+            //// Check if recipe can be used in this project
+            var projAPi = new ProjectsApi();
+            var recipeFilter = new ProjectRecipeFilter(recOwner, recName);
             var result = projAPi.CreateProjectRecipeFilter(project.Owner.Name, project.Name, recipeFilter);
             var status = result?.Status;
 
@@ -372,7 +384,7 @@ namespace PollinationSDK
         /// <param name="saveAsDir"></param>
         /// <param name="reportProgressAction"></param>
         /// <returns></returns>
-        public static async Task<List<string>> DownloadOutputArtifactsAsync(Simulation simu, List<QueenbeeSDK.DAGPathOutput> artifacts, string saveAsDir = default, Action<int> reportProgressAction = default)
+        public static async Task<List<string>> DownloadOutputArtifactsAsync(JobInfo simu, List<QueenbeeSDK.DAGPathOutput> artifacts, string saveAsDir = default, Action<int> reportProgressAction = default)
         {
             //_filePaths = new List<string>();
             var downloadedFiles = new List<string>();
@@ -450,7 +462,7 @@ namespace PollinationSDK
             }
         }
 
-        public static async Task<List<string>> DownloadArtifactZip(Simulation simu, string zipFileName, string saveAsDir = default, Action<int> reportProgressAction = default)
+        public static async Task<List<string>> DownloadArtifactZip(JobInfo simu, string zipFileName, string saveAsDir = default, Action<int> reportProgressAction = default)
         {
             try
             {
@@ -470,7 +482,7 @@ namespace PollinationSDK
             }
            
         }
-        public static async Task<List<string>> DownloadSimulationInputAssets(Simulation simu, string saveAsDir = default, Action<int> reportProgressAction = default)
+        public static async Task<List<string>> DownloadSimulationInputAssets(JobInfo simu, string saveAsDir = default, Action<int> reportProgressAction = default)
         {
             try
             {
@@ -535,7 +547,7 @@ namespace PollinationSDK
         /// <param name="artifact"></param>
         /// <param name="saveAsDir"></param>
         /// <returns></returns>
-        private static Task<string> DownloadArtifact(Simulation simu, QueenbeeSDK.DAGPathOutput artifact, string saveAsDir)
+        private static Task<string> DownloadArtifact(JobInfo simu, QueenbeeSDK.DAGPathOutput artifact, string saveAsDir)
         {
             var file = string.Empty;
             var outputDirOrFile = string.Empty;
@@ -560,7 +572,7 @@ namespace PollinationSDK
         /// <param name="artifact"></param>
         /// <param name="saveAsDir"></param>
         /// <returns></returns>
-        public static List<Task<string>> DownloadArtifactWithItems(Simulation simu, QueenbeeSDK.DAGPathOutput artifact, string saveAsDir)
+        public static List<Task<string>> DownloadArtifactWithItems(JobInfo simu, QueenbeeSDK.DAGPathOutput artifact, string saveAsDir)
         {
             var file = string.Empty;
             var outputDirOrFile = string.Empty;
