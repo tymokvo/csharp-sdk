@@ -104,11 +104,12 @@ namespace ConsoleAppDemo
             var token = cts.Token;
 
             //var workflow = CreateWorkflow("ladybug-tools", "annual-daylight");
-            var workflow = CreateWorkflow_DaylightFactor();
+            var jobInfo = CreateJob_DaylightFactor(proj);
 
             try
             {
-                var task = runSimu(proj, workflow, Console.WriteLine, token);
+
+                var task = runSimu(jobInfo, (s) => Console.WriteLine(s), token);
 
                 //cts.CancelAfter(60000);
                 task.Wait();
@@ -159,19 +160,18 @@ namespace ConsoleAppDemo
 
         }
 
-        private static async Task runSimu(Project proj, Job job, Action<string> msgAction, CancellationToken token)
+        private static async Task runSimu(JobInfo job, Action<string> msgAction, CancellationToken token)
         {
             try
             {
-                var simu = await Helper.RunSimulationAsync(proj, job, msgAction, token);
-                await simu.CheckStatusAndGetLogsAsync(msgAction, token);
+                var runInfo = await job.RunJobOnCloud(msgAction, token);
+                await runInfo.CheckStatusAndGetLogsAsync(msgAction, token);
 
-                msgAction(simu.Logs);
+                msgAction(runInfo.Logs);
 
                 if (!token.IsCancellationRequested)
                 {
-                    var dup = simu.Duplicate();
-                    msgAction($"Finished simulation: {dup.ToJson()}");
+                    msgAction($"Finished simulation: {runInfo.RunID}");
                 }
 
                 msgAction($"Canceled by user: {token.IsCancellationRequested}");
@@ -210,7 +210,7 @@ namespace ConsoleAppDemo
 
         }
 
-        private static Job CreateWorkflow_AnnualDaylight()
+        private static JobInfo CreateJob_AnnualDaylight(Project proj)
         {
             var recipeOwner = "ladybug-tools";
             var recipeName = "annual-daylight";
@@ -224,17 +224,15 @@ namespace ConsoleAppDemo
             job.AddArgument(new JobPathArgument("model", new ProjectFolder(path: @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder\model")));
             job.AddArgument(new JobPathArgument("wea", new ProjectFolder(path: @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder\in.wea")));
 
-            return job;
+            var jobInfo = new JobInfo(proj, rec);
+            return jobInfo;
 
-            //var jobApi = new JobsApi();
-            //var projOwner = Helper.CurrentUser.Name;
-            //var jobName = "annual daylight simulation test";
-            //jobApi.CreateJob(projOwner, jobName, job);
-            
         }
 
-        private static Job CreateWorkflow_DaylightFactor()
+        private static JobInfo CreateJob_DaylightFactor(Project proj)
         {
+          
+
             var recipeOwner = "ladybug-tools";
             var recipeName = "daylight-factor";
             var recipeApi = new RecipesApi();
@@ -246,12 +244,9 @@ namespace ConsoleAppDemo
             job.AddArgument(new JobPathArgument("model", new ProjectFolder(path: @"D:\Test\queenbeeTest\model.hbjson")));
             //job.AddArgument(new JobPathArgument("input", new ProjectFolder(path: @"D:\Test\queenbeeTest\inputs.json")));
 
-            return job;
+            var jobInfo = new JobInfo(proj, rec);
 
-            //var jobApi = new JobsApi();
-            //var projOwner = Helper.CurrentUser.Name;
-            //var jobName = "annual daylight simulation test";
-            //jobApi.CreateJob(projOwner, jobName, job);
+            return jobInfo;
 
         }
 
