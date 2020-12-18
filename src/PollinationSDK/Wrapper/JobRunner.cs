@@ -13,7 +13,6 @@ namespace PollinationSDK.Wrapper
     {
 
         private JobInfo JobInfo { get; set; }
-        private Project Project => JobInfo.Project;
         private RecipeInterface Recipe => JobInfo.Recipe;
         private Job Job => JobInfo.Job;
 
@@ -22,18 +21,14 @@ namespace PollinationSDK.Wrapper
             this.JobInfo = job;
         }
        
-        public async Task<RunInfo> RunOnCloudAsync(Action<string> progressReporting = default, System.Threading.CancellationToken token = default)
-        {
-            return await RunOnCloudAsync(this.Project, progressReporting, token);
-        }
-        private async Task<RunInfo> RunOnCloudAsync(Project project, Action<string> progressReporting, System.Threading.CancellationToken token)
+        public async Task<RunInfo> RunOnCloudAsync(Project project, Action<string> progressReporting, System.Threading.CancellationToken token)
         {
 
             RunInfo runInfo = null;
             try
             {
                 var runID = await ScheduleRunAsync(project, this.Job, progressReporting, token);
-                runInfo = new RunInfo(project, runID.ToString());
+                runInfo = new RunInfo(project, this.Recipe, runID.ToString());
                 progressReporting?.Invoke(runInfo.Run.Status.Status);
 
             }

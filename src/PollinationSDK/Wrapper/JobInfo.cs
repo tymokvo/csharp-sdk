@@ -20,16 +20,16 @@ namespace PollinationSDK.Wrapper
     public class JobInfo
     {
         // keep all setters public, so that JsonConvert can DeserializeObject it. 
-        public Project Project { get; set; }
+        //public string ProjectName { get; set; }
         public RecipeInterface Recipe { get; set; }
         //public string JobRunID { get; set; }
 
         public Job Job { get; set; }
       
       
-        public JobInfo(Project proj, RecipeInterface recpie)
+        public JobInfo(RecipeInterface recpie)
         {
-            this.Project = proj;
+            //this.ProjectName = projName;
             this.Recipe = recpie;
 
             this.Job = new Job(recpie.Source);
@@ -60,10 +60,10 @@ namespace PollinationSDK.Wrapper
             var projPath = runner.RunOnLocalMachine(cpuNum);
             return new RunInfo(projPath);
         }
-        public async Task<RunInfo> RunJobOnCloud(Action<string> progressReporting = default, System.Threading.CancellationToken token = default)
+        public async Task<RunInfo> RunJobOnCloud(Project proj, Action<string> progressReporting = default, System.Threading.CancellationToken token = default)
         {
             var runner = new JobRunner(this);
-            return await runner.RunOnCloudAsync(progressReporting, token);
+            return await runner.RunOnCloudAsync(proj, progressReporting, token);
         }
 
         public void AddArgument(JobArgument arg) => this.Job.AddArgument(arg);

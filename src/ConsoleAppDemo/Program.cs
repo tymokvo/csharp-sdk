@@ -104,12 +104,12 @@ namespace ConsoleAppDemo
             var token = cts.Token;
 
             //var workflow = CreateWorkflow("ladybug-tools", "annual-daylight");
-            var jobInfo = CreateJob_DaylightFactor(proj);
+            var jobInfo = CreateJob_DaylightFactor();
 
             try
             {
 
-                var task = runSimu(jobInfo, (s) => Console.WriteLine(s), token);
+                var task = runSimu(proj, jobInfo, (s) => Console.WriteLine(s), token);
 
                 //cts.CancelAfter(60000);
                 task.Wait();
@@ -160,11 +160,11 @@ namespace ConsoleAppDemo
 
         }
 
-        private static async Task runSimu(JobInfo job, Action<string> msgAction, CancellationToken token)
+        private static async Task runSimu(Project proj, JobInfo job, Action<string> msgAction, CancellationToken token)
         {
             try
             {
-                var runInfo = await job.RunJobOnCloud(msgAction, token);
+                var runInfo = await job.RunJobOnCloud(proj, msgAction, token);
                 await runInfo.CheckStatusAndGetLogsAsync(msgAction, token);
 
                 msgAction(runInfo.Logs);
@@ -210,7 +210,7 @@ namespace ConsoleAppDemo
 
         }
 
-        private static JobInfo CreateJob_AnnualDaylight(Project proj)
+        private static JobInfo CreateJob_AnnualDaylight()
         {
             var recipeOwner = "ladybug-tools";
             var recipeName = "annual-daylight";
@@ -224,12 +224,12 @@ namespace ConsoleAppDemo
             job.AddArgument(new JobPathArgument("model", new ProjectFolder(path: @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder\model")));
             job.AddArgument(new JobPathArgument("wea", new ProjectFolder(path: @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder\in.wea")));
 
-            var jobInfo = new JobInfo(proj, rec);
+            var jobInfo = new JobInfo(rec);
             return jobInfo;
 
         }
 
-        private static JobInfo CreateJob_DaylightFactor(Project proj)
+        private static JobInfo CreateJob_DaylightFactor()
         {
           
 
@@ -244,7 +244,7 @@ namespace ConsoleAppDemo
             job.AddArgument(new JobPathArgument("model", new ProjectFolder(path: @"D:\Test\queenbeeTest\model.hbjson")));
             //job.AddArgument(new JobPathArgument("input", new ProjectFolder(path: @"D:\Test\queenbeeTest\inputs.json")));
 
-            var jobInfo = new JobInfo(proj, rec);
+            var jobInfo = new JobInfo(rec);
 
             return jobInfo;
 

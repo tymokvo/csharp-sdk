@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using QueenbeeSDK;
 
 namespace PollinationSDK.Wrapper
 {
@@ -14,16 +15,17 @@ namespace PollinationSDK.Wrapper
         public string RunID { get; set; }
         public Run Run { get; set; }
         public Project Project { get; set; }
+        public RecipeInterface Recipe { get; set; }
 
         [IgnoreDataMember]
         public string Logs { get; set; }
-        public RunInfo(Project proj, string runID)
+        public RunInfo(Project proj, RecipeInterface Recipe, string runID)
         {
-
             var api = new JobsApi();
             var run = api.GetJob(proj.Owner.Name, proj.Name, runID.ToString());
             this.Run = run;
             this.Project = proj;
+            this.Recipe = Recipe;
         }
 
         public RunInfo(string localRunPath)
