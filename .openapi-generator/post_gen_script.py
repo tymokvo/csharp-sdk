@@ -206,7 +206,7 @@ def replace_anyof_type(read_data, anyof_types):
         if len(items) > 0:
             replace_source = "AnyOf%s" % ("".join(items).replace('number', 'double'))
             replace_new = "AnyOf<%s>" % (",".join(items).replace('number', 'double'))
-            rex = "(%s)(?=[ >])" % replace_source # find replace_source only with " "(space) or ">" follows
+            rex = "(%s)(?=[ >)])" % replace_source # find replace_source only with " "(space) or ">" follows
             if re.findall(rex, data) != []:
                 data = re.sub(rex, replace_new, data)
                 print("|---Replacing %s to %s" % (replace_source, replace_new))

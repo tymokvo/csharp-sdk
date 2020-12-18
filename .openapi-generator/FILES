@@ -122,6 +122,7 @@ docs/DAGTaskLoop.md
 docs/DAGTaskLoopAllOf.md
 docs/Dependency.md
 docs/DependencyAllOf.md
+docs/DependencyKind.md
 docs/DockerConfig.md
 docs/DockerConfigAllOf.md
 docs/FileMeta.md
@@ -192,6 +193,7 @@ docs/InputReferenceBase.md
 docs/InputReferenceBaseAllOf.md
 docs/ItemReference.md
 docs/ItemReferenceAllOf.md
+docs/ItemType.md
 docs/Job.md
 docs/JobAllOf.md
 docs/JobArgument.md
@@ -230,6 +232,7 @@ docs/OrganizationMember.md
 docs/OrganizationMemberAllOf.md
 docs/OrganizationMemberList.md
 docs/OrganizationMemberListAllOf.md
+docs/OrganizationRoleEnum.md
 docs/OrganizationUpdate.md
 docs/OrganizationUpdateAllOf.md
 docs/OrgsApi.md
@@ -237,12 +240,15 @@ docs/PackageVersion.md
 docs/PackageVersionAllOf.md
 docs/PathOutput.md
 docs/PathOutputAllOf.md
+docs/Permission.md
 docs/Plugin.md
 docs/PluginAllOf.md
 docs/PluginConfig.md
 docs/PluginConfigAllOf.md
-docs/PluginList.md
-docs/PluginListAllOf.md
+docs/PluginPackage.md
+docs/PluginPackageAllOf.md
+docs/PluginPackageList.md
+docs/PluginPackageListAllOf.md
 docs/PluginsApi.md
 docs/PolicySubject.md
 docs/PolicySubjectAllOf.md
@@ -277,6 +283,10 @@ docs/RecipeInterface.md
 docs/RecipeInterfaceAllOf.md
 docs/RecipeInterfaceList.md
 docs/RecipeInterfaceListAllOf.md
+docs/RecipePackage.md
+docs/RecipePackageAllOf.md
+docs/RecipePackageList.md
+docs/RecipePackageListAllOf.md
 docs/RecipesApi.md
 docs/RegistriesApi.md
 docs/Repository.md
@@ -293,6 +303,8 @@ docs/RepositoryList.md
 docs/RepositoryListAllOf.md
 docs/RepositoryMetadata.md
 docs/RepositoryMetadataAllOf.md
+docs/RepositoryPackage.md
+docs/RepositoryPackageAllOf.md
 docs/RepositoryPolicySubject.md
 docs/RepositoryPolicySubjectAllOf.md
 docs/RepositoryUpdate.md
@@ -305,6 +317,7 @@ docs/S3.md
 docs/S3AllOf.md
 docs/S3UploadRequest.md
 docs/S3UploadRequestAllOf.md
+docs/StatusType.md
 docs/StepArrayInput.md
 docs/StepArrayInputAllOf.md
 docs/StepArrayOutput.md
@@ -345,6 +358,7 @@ docs/StepStringInput.md
 docs/StepStringInputAllOf.md
 docs/StepStringOutput.md
 docs/StepStringOutputAllOf.md
+docs/SubjectType.md
 docs/TaskArgument.md
 docs/TaskArgumentAllOf.md
 docs/TaskFileReference.md
@@ -373,6 +387,7 @@ docs/TeamMember.md
 docs/TeamMemberAllOf.md
 docs/TeamMemberList.md
 docs/TeamMemberListAllOf.md
+docs/TeamRoleEnum.md
 docs/TeamUpdate.md
 docs/TeamUpdateAllOf.md
 docs/TeamsApi.md
@@ -531,6 +546,7 @@ src/PollinationSDK.Test/Model/DAGTaskLoopTests.cs
 src/PollinationSDK.Test/Model/DAGTaskTests.cs
 src/PollinationSDK.Test/Model/DAGTests.cs
 src/PollinationSDK.Test/Model/DependencyAllOfTests.cs
+src/PollinationSDK.Test/Model/DependencyKindTests.cs
 src/PollinationSDK.Test/Model/DependencyTests.cs
 src/PollinationSDK.Test/Model/DockerConfigAllOfTests.cs
 src/PollinationSDK.Test/Model/DockerConfigTests.cs
@@ -602,6 +618,7 @@ src/PollinationSDK.Test/Model/InputReferenceBaseTests.cs
 src/PollinationSDK.Test/Model/InputReferenceTests.cs
 src/PollinationSDK.Test/Model/ItemReferenceAllOfTests.cs
 src/PollinationSDK.Test/Model/ItemReferenceTests.cs
+src/PollinationSDK.Test/Model/ItemTypeTests.cs
 src/PollinationSDK.Test/Model/JobAllOfTests.cs
 src/PollinationSDK.Test/Model/JobArgumentAllOfTests.cs
 src/PollinationSDK.Test/Model/JobArgumentTests.cs
@@ -638,6 +655,7 @@ src/PollinationSDK.Test/Model/OrganizationMemberAllOfTests.cs
 src/PollinationSDK.Test/Model/OrganizationMemberListAllOfTests.cs
 src/PollinationSDK.Test/Model/OrganizationMemberListTests.cs
 src/PollinationSDK.Test/Model/OrganizationMemberTests.cs
+src/PollinationSDK.Test/Model/OrganizationRoleEnumTests.cs
 src/PollinationSDK.Test/Model/OrganizationTests.cs
 src/PollinationSDK.Test/Model/OrganizationUpdateAllOfTests.cs
 src/PollinationSDK.Test/Model/OrganizationUpdateTests.cs
@@ -645,11 +663,14 @@ src/PollinationSDK.Test/Model/PackageVersionAllOfTests.cs
 src/PollinationSDK.Test/Model/PackageVersionTests.cs
 src/PollinationSDK.Test/Model/PathOutputAllOfTests.cs
 src/PollinationSDK.Test/Model/PathOutputTests.cs
+src/PollinationSDK.Test/Model/PermissionTests.cs
 src/PollinationSDK.Test/Model/PluginAllOfTests.cs
 src/PollinationSDK.Test/Model/PluginConfigAllOfTests.cs
 src/PollinationSDK.Test/Model/PluginConfigTests.cs
-src/PollinationSDK.Test/Model/PluginListAllOfTests.cs
-src/PollinationSDK.Test/Model/PluginListTests.cs
+src/PollinationSDK.Test/Model/PluginPackageAllOfTests.cs
+src/PollinationSDK.Test/Model/PluginPackageListAllOfTests.cs
+src/PollinationSDK.Test/Model/PluginPackageListTests.cs
+src/PollinationSDK.Test/Model/PluginPackageTests.cs
 src/PollinationSDK.Test/Model/PluginTests.cs
 src/PollinationSDK.Test/Model/PolicySubjectAllOfTests.cs
 src/PollinationSDK.Test/Model/PolicySubjectTests.cs
@@ -682,6 +703,10 @@ src/PollinationSDK.Test/Model/RecipeInterfaceAllOfTests.cs
 src/PollinationSDK.Test/Model/RecipeInterfaceListAllOfTests.cs
 src/PollinationSDK.Test/Model/RecipeInterfaceListTests.cs
 src/PollinationSDK.Test/Model/RecipeInterfaceTests.cs
+src/PollinationSDK.Test/Model/RecipePackageAllOfTests.cs
+src/PollinationSDK.Test/Model/RecipePackageListAllOfTests.cs
+src/PollinationSDK.Test/Model/RecipePackageListTests.cs
+src/PollinationSDK.Test/Model/RecipePackageTests.cs
 src/PollinationSDK.Test/Model/RecipeTests.cs
 src/PollinationSDK.Test/Model/RepositoryAccessPolicyAllOfTests.cs
 src/PollinationSDK.Test/Model/RepositoryAccessPolicyListAllOfTests.cs
@@ -696,6 +721,8 @@ src/PollinationSDK.Test/Model/RepositoryListAllOfTests.cs
 src/PollinationSDK.Test/Model/RepositoryListTests.cs
 src/PollinationSDK.Test/Model/RepositoryMetadataAllOfTests.cs
 src/PollinationSDK.Test/Model/RepositoryMetadataTests.cs
+src/PollinationSDK.Test/Model/RepositoryPackageAllOfTests.cs
+src/PollinationSDK.Test/Model/RepositoryPackageTests.cs
 src/PollinationSDK.Test/Model/RepositoryPolicySubjectAllOfTests.cs
 src/PollinationSDK.Test/Model/RepositoryPolicySubjectTests.cs
 src/PollinationSDK.Test/Model/RepositoryTests.cs
@@ -709,6 +736,7 @@ src/PollinationSDK.Test/Model/S3AllOfTests.cs
 src/PollinationSDK.Test/Model/S3Tests.cs
 src/PollinationSDK.Test/Model/S3UploadRequestAllOfTests.cs
 src/PollinationSDK.Test/Model/S3UploadRequestTests.cs
+src/PollinationSDK.Test/Model/StatusTypeTests.cs
 src/PollinationSDK.Test/Model/StepArrayInputAllOfTests.cs
 src/PollinationSDK.Test/Model/StepArrayInputTests.cs
 src/PollinationSDK.Test/Model/StepArrayOutputAllOfTests.cs
@@ -749,6 +777,7 @@ src/PollinationSDK.Test/Model/StepStringInputAllOfTests.cs
 src/PollinationSDK.Test/Model/StepStringInputTests.cs
 src/PollinationSDK.Test/Model/StepStringOutputAllOfTests.cs
 src/PollinationSDK.Test/Model/StepStringOutputTests.cs
+src/PollinationSDK.Test/Model/SubjectTypeTests.cs
 src/PollinationSDK.Test/Model/TaskArgumentAllOfTests.cs
 src/PollinationSDK.Test/Model/TaskArgumentTests.cs
 src/PollinationSDK.Test/Model/TaskFileReferenceAllOfTests.cs
@@ -776,6 +805,7 @@ src/PollinationSDK.Test/Model/TeamMemberAllOfTests.cs
 src/PollinationSDK.Test/Model/TeamMemberListAllOfTests.cs
 src/PollinationSDK.Test/Model/TeamMemberListTests.cs
 src/PollinationSDK.Test/Model/TeamMemberTests.cs
+src/PollinationSDK.Test/Model/TeamRoleEnumTests.cs
 src/PollinationSDK.Test/Model/TeamTests.cs
 src/PollinationSDK.Test/Model/TeamUpdateAllOfTests.cs
 src/PollinationSDK.Test/Model/TeamUpdateTests.cs
@@ -943,6 +973,7 @@ src/PollinationSDK/Model/DAGTaskLoop.cs
 src/PollinationSDK/Model/DAGTaskLoopAllOf.cs
 src/PollinationSDK/Model/Dependency.cs
 src/PollinationSDK/Model/DependencyAllOf.cs
+src/PollinationSDK/Model/DependencyKind.cs
 src/PollinationSDK/Model/DockerConfig.cs
 src/PollinationSDK/Model/DockerConfigAllOf.cs
 src/PollinationSDK/Model/FileMeta.cs
@@ -1013,6 +1044,7 @@ src/PollinationSDK/Model/InputReferenceBase.cs
 src/PollinationSDK/Model/InputReferenceBaseAllOf.cs
 src/PollinationSDK/Model/ItemReference.cs
 src/PollinationSDK/Model/ItemReferenceAllOf.cs
+src/PollinationSDK/Model/ItemType.cs
 src/PollinationSDK/Model/Job.cs
 src/PollinationSDK/Model/JobAllOf.cs
 src/PollinationSDK/Model/JobArgument.cs
@@ -1050,18 +1082,22 @@ src/PollinationSDK/Model/OrganizationMember.cs
 src/PollinationSDK/Model/OrganizationMemberAllOf.cs
 src/PollinationSDK/Model/OrganizationMemberList.cs
 src/PollinationSDK/Model/OrganizationMemberListAllOf.cs
+src/PollinationSDK/Model/OrganizationRoleEnum.cs
 src/PollinationSDK/Model/OrganizationUpdate.cs
 src/PollinationSDK/Model/OrganizationUpdateAllOf.cs
 src/PollinationSDK/Model/PackageVersion.cs
 src/PollinationSDK/Model/PackageVersionAllOf.cs
 src/PollinationSDK/Model/PathOutput.cs
 src/PollinationSDK/Model/PathOutputAllOf.cs
+src/PollinationSDK/Model/Permission.cs
 src/PollinationSDK/Model/Plugin.cs
 src/PollinationSDK/Model/PluginAllOf.cs
 src/PollinationSDK/Model/PluginConfig.cs
 src/PollinationSDK/Model/PluginConfigAllOf.cs
-src/PollinationSDK/Model/PluginList.cs
-src/PollinationSDK/Model/PluginListAllOf.cs
+src/PollinationSDK/Model/PluginPackage.cs
+src/PollinationSDK/Model/PluginPackageAllOf.cs
+src/PollinationSDK/Model/PluginPackageList.cs
+src/PollinationSDK/Model/PluginPackageListAllOf.cs
 src/PollinationSDK/Model/PolicySubject.cs
 src/PollinationSDK/Model/PolicySubjectAllOf.cs
 src/PollinationSDK/Model/Project.cs
@@ -1094,6 +1130,10 @@ src/PollinationSDK/Model/RecipeInterface.cs
 src/PollinationSDK/Model/RecipeInterfaceAllOf.cs
 src/PollinationSDK/Model/RecipeInterfaceList.cs
 src/PollinationSDK/Model/RecipeInterfaceListAllOf.cs
+src/PollinationSDK/Model/RecipePackage.cs
+src/PollinationSDK/Model/RecipePackageAllOf.cs
+src/PollinationSDK/Model/RecipePackageList.cs
+src/PollinationSDK/Model/RecipePackageListAllOf.cs
 src/PollinationSDK/Model/Repository.cs
 src/PollinationSDK/Model/RepositoryAccessPolicy.cs
 src/PollinationSDK/Model/RepositoryAccessPolicyAllOf.cs
@@ -1108,6 +1148,8 @@ src/PollinationSDK/Model/RepositoryList.cs
 src/PollinationSDK/Model/RepositoryListAllOf.cs
 src/PollinationSDK/Model/RepositoryMetadata.cs
 src/PollinationSDK/Model/RepositoryMetadataAllOf.cs
+src/PollinationSDK/Model/RepositoryPackage.cs
+src/PollinationSDK/Model/RepositoryPackageAllOf.cs
 src/PollinationSDK/Model/RepositoryPolicySubject.cs
 src/PollinationSDK/Model/RepositoryPolicySubjectAllOf.cs
 src/PollinationSDK/Model/RepositoryUpdate.cs
@@ -1120,6 +1162,7 @@ src/PollinationSDK/Model/S3.cs
 src/PollinationSDK/Model/S3AllOf.cs
 src/PollinationSDK/Model/S3UploadRequest.cs
 src/PollinationSDK/Model/S3UploadRequestAllOf.cs
+src/PollinationSDK/Model/StatusType.cs
 src/PollinationSDK/Model/StepArrayInput.cs
 src/PollinationSDK/Model/StepArrayInputAllOf.cs
 src/PollinationSDK/Model/StepArrayOutput.cs
@@ -1160,6 +1203,7 @@ src/PollinationSDK/Model/StepStringInput.cs
 src/PollinationSDK/Model/StepStringInputAllOf.cs
 src/PollinationSDK/Model/StepStringOutput.cs
 src/PollinationSDK/Model/StepStringOutputAllOf.cs
+src/PollinationSDK/Model/SubjectType.cs
 src/PollinationSDK/Model/TaskArgument.cs
 src/PollinationSDK/Model/TaskArgumentAllOf.cs
 src/PollinationSDK/Model/TaskFileReference.cs
@@ -1188,6 +1232,7 @@ src/PollinationSDK/Model/TeamMember.cs
 src/PollinationSDK/Model/TeamMemberAllOf.cs
 src/PollinationSDK/Model/TeamMemberList.cs
 src/PollinationSDK/Model/TeamMemberListAllOf.cs
+src/PollinationSDK/Model/TeamRoleEnum.cs
 src/PollinationSDK/Model/TeamUpdate.cs
 src/PollinationSDK/Model/TeamUpdateAllOf.cs
 src/PollinationSDK/Model/Update.cs
