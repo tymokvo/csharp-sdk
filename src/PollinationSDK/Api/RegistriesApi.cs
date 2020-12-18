@@ -63,7 +63,7 @@ namespace PollinationSDK.Api
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="digest"></param>
-        /// <returns>AnyOf<Recipe,Plugin></returns>
+        /// <returns>AnyOfRecipePlugin</returns>
         AnyOf<Recipe,Plugin> GetPackageJson (string owner, string type, string name, string digest);
 
         /// <summary>
@@ -77,8 +77,8 @@ namespace PollinationSDK.Api
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="digest"></param>
-        /// <returns>ApiResponse of AnyOf<Recipe,Plugin></returns>
-        ApiResponse<AnyOf<Recipe, Plugin>> GetPackageJsonWithHttpInfo (string owner, string type, string name, string digest);
+        /// <returns>ApiResponse of AnyOfRecipePlugin</returns>
+        ApiResponse<AnyOf<Recipe,Plugin>> GetPackageJsonWithHttpInfo (string owner, string type, string name, string digest);
         /// <summary>
         /// Get Registry Index
         /// </summary>
@@ -195,8 +195,8 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="digest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of AnyOf<Recipe,Plugin></returns>
-        System.Threading.Tasks.Task<AnyOf<Recipe, Plugin>> GetPackageJsonAsync (string owner, string type, string name, string digest, CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of AnyOfRecipePlugin</returns>
+        System.Threading.Tasks.Task<AnyOf<Recipe,Plugin>> GetPackageJsonAsync (string owner, string type, string name, string digest, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get Package in JSON format
@@ -211,7 +211,7 @@ namespace PollinationSDK.Api
         /// <param name="digest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (AnyOf<Recipe,Plugin>)</returns>
-        System.Threading.Tasks.Task<ApiResponse<AnyOf<Recipe, Plugin>>> GetPackageJsonWithHttpInfoAsync (string owner, string type, string name, string digest, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<AnyOf<Recipe,Plugin>>> GetPackageJsonWithHttpInfoAsync (string owner, string type, string name, string digest, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get Registry Index
         /// </summary>
@@ -573,10 +573,10 @@ namespace PollinationSDK.Api
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="digest"></param>
-        /// <returns>AnyOf<Recipe,Plugin></returns>
-        public AnyOf<Recipe, Plugin> GetPackageJson (string owner, string type, string name, string digest)
+        /// <returns>AnyOfRecipePlugin</returns>
+        public AnyOf<Recipe,Plugin> GetPackageJson (string owner, string type, string name, string digest)
         {
-             ApiResponse<AnyOf<Recipe, Plugin>> localVarResponse = GetPackageJsonWithHttpInfo(owner, type, name, digest);
+             ApiResponse<AnyOf<Recipe,Plugin>> localVarResponse = GetPackageJsonWithHttpInfo(owner, type, name, digest);
              return localVarResponse.Data;
         }
 
@@ -588,8 +588,8 @@ namespace PollinationSDK.Api
         /// <param name="type"></param>
         /// <param name="name"></param>
         /// <param name="digest"></param>
-        /// <returns>ApiResponse of AnyOf<Recipe,Plugin></returns>
-        public ApiResponse<AnyOf<Recipe, Plugin>> GetPackageJsonWithHttpInfo (string owner, string type, string name, string digest)
+        /// <returns>ApiResponse of AnyOfRecipePlugin</returns>
+        public ApiResponse<AnyOf<Recipe,Plugin>> GetPackageJsonWithHttpInfo (string owner, string type, string name, string digest)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -669,7 +669,7 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="digest"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of AnyOf<Recipe,Plugin></returns>
+        /// <returns>Task of AnyOfRecipePlugin</returns>
         public async System.Threading.Tasks.Task<AnyOf<Recipe,Plugin>> GetPackageJsonAsync (string owner, string type, string name, string digest, CancellationToken cancellationToken = default(CancellationToken))
         {
              ApiResponse<AnyOf<Recipe,Plugin>> localVarResponse = await GetPackageJsonWithHttpInfoAsync(owner, type, name, digest, cancellationToken);

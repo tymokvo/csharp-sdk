@@ -1,0 +1,84 @@
+﻿{
+  "type": "RecipeInterface",
+  "annotations": {},
+  "api_version": "v1beta1",
+  "metadata": {
+    "type": "MetaData",
+    "annotations": {},
+    "name": "daylight-factor",
+    "tag": "0.3.0",
+    "app_version": null,
+    "keywords": [
+      "ladybug-tools",
+      "radiance"
+    ],
+    "maintainers": [
+      {
+        "type": "Maintainer",
+        "annotations": {},
+        "name": "mostapha",
+        "email": "mostapha@ladybug.tools"
+      }
+    ],
+    "home": null,
+    "sources": null,
+    "icon": "https://raw.githubusercontent.com/ladybug-tools/artwork/master/icons_components/honeybee/png/dfrecipe.png",
+    "deprecated": null,
+    "description": "Run daylight factor for a single model.",
+    "license": null
+  },
+  "source": "https://api.staging.pollination.cloud/registries/ladybug-tools/recipe/daylight-factor/0.3.0",
+  "inputs": [
+    {
+      "type": "DAGFileInput",
+      "annotations": {},
+      "name": "model",
+      "description": "A Honeybee model in HBJSON file format.",
+      "default": null,
+      "alias": [],
+      "required": true,
+      "spec": null,
+      "extensions": [
+        "json",
+        "hbjson"
+      ]
+    },
+    {
+      "type": "DAGStringInput",
+      "annotations": {},
+      "name": "radiance-parameters",
+      "description": "The radiance parameters for ray tracing",
+      "default": "-ab 2",
+      "alias": [],
+      "required": false,
+      "spec": null
+    },
+    {
+      "type": "DAGIntegerInput",
+      "annotations": {},
+      "name": "sensor-count",
+      "description": "The maximum number of grid points per parallel execution",
+      "default": 200,
+      "alias": [],
+      "required": false,
+      "spec": {
+        "type": "integer",
+        "minimum": 1
+      }
+    }
+  ],
+  "outputs": [
+    {
+      "type": "DAGFolderOutput",
+      "annotations": {},
+      "name": "results",
+      "description": null,
+      "from": {
+        "type": "FolderReference",
+        "annotations": {},
+        "path": "results"
+      },
+      "alias": []
+    }
+  ]
+}

@@ -14,7 +14,7 @@ Name | Type | Description | Notes
 **Message** | **string** | Any message produced by the task. Usually error/debugging hints. | [optional] 
 **FinishedAt** | **DateTime** | The time at which the task was completed | [optional] 
 **Source** | **string** | Source url for the status object. It can be a recipe or a function. | [optional] 
-**ApiVersion** | **string** |  | [optional] [default to "v1beta1"]
+**ApiVersion** | **string** |  | [optional] [readonly] [default to "v1beta1"]
 **Entrypoint** | **string** | The ID of the first step in the job. | [optional] 
 **Steps** | [**Dictionary&lt;string, StepStatus&gt;**](StepStatus.md) |  | [optional] 
 **Type** | **string** |  | [optional] [readonly] [default to "JobStatus"]

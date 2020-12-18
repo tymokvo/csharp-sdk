@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ItemsType** | **string** | Type of items in this array. All the items in an array must be from the same type. | [optional] [default to ItemsTypeEnum.String]
+**ItemsType** | **ItemType** | Type of items in this array. All the items in an array must be from the same type. | [optional] 
 **Type** | **string** |  | [optional] [readonly] [default to "FunctionArrayOutput"]
 
 [[Back to Model list]](../README.md#documentation-for-models)

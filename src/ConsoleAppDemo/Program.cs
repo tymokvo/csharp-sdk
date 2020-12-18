@@ -57,7 +57,7 @@ namespace ConsoleAppDemo
             var recipeOwner = "ladybug-tools";
             var recipeName = "daylight-factor";
             var recipeApi = new RecipesApi();
-            var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest");
+            var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest").Manifest;
             Console.WriteLine($"{rec.Source}/{rec.Metadata.Name}/{rec.Metadata.Tag}");
 
 
@@ -200,7 +200,7 @@ namespace ConsoleAppDemo
             var api = new RecipesApi();
             //var d = api.ListRecipes(owner: new[] { "ladybug-tools" }.ToList()).Resources.First(_ => _.Name == "annual-energy-use");
 
-            var rec = api.GetRecipeByTag("ladybug-tools", "annual-energy-use", "latest");
+            var rec = api.GetRecipeByTag("ladybug-tools", "annual-energy-use", "latest").Manifest;
             //var recTag = api.GetRecipeByTag("ladybug-tools", "annual-energy-use", "c2657adb0b13db6cd3ff706d9d6db59b98ef8f994d2809d23c3ed449c19b52ea");
        
             var inputs = rec.Inputs.OfType<QueenbeeSDK.GenericInput>();
@@ -215,7 +215,7 @@ namespace ConsoleAppDemo
             var recipeOwner = "ladybug-tools";
             var recipeName = "annual-daylight";
             var recipeApi = new RecipesApi();
-            var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest");
+            var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest").Manifest;
 
             var recipeSource = "";
             var job = new Job(recipeSource);
@@ -236,7 +236,7 @@ namespace ConsoleAppDemo
             var recipeOwner = "ladybug-tools";
             var recipeName = "daylight-factor";
             var recipeApi = new RecipesApi();
-            var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest");
+            var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest").Manifest;
 
             var recipeSource = rec.Source;
             var job = new Job(recipeSource);

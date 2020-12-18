@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **User** | [**UserPublic**](UserPublic.md) | The team member | 
-**Role** | **string** | The role the user has within the team | 
+**Role** | **TeamRoleEnum** | The role the user has within the team | 
 **Type** | **string** |  | [optional] [readonly] [default to "TeamMember"]
 
 [[Back to Model list]](../README.md#documentation-for-models)

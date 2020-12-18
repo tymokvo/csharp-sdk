@@ -561,7 +561,7 @@ Name | Type | Description  | Notes
 
 ## GetPluginByTag
 
-> Plugin GetPluginByTag (string owner, string name, string tag)
+> PluginPackage GetPluginByTag (string owner, string name, string tag)
 
 Get a plugin tag
 
@@ -598,7 +598,7 @@ namespace Example
             try
             {
                 // Get a plugin tag
-                Plugin result = apiInstance.GetPluginByTag(owner, name, tag);
+                PluginPackage result = apiInstance.GetPluginByTag(owner, name, tag);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -623,7 +623,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Plugin**](Plugin.md)
+[**PluginPackage**](PluginPackage.md)
 
 ### Authorization
 
@@ -652,7 +652,7 @@ Name | Type | Description  | Notes
 
 ## ListPluginTags
 
-> PluginList ListPluginTags (string owner, string name)
+> PluginPackageList ListPluginTags (string owner, string name, int? page = null, int? perPage = null)
 
 Get a plugin tags
 
@@ -684,11 +684,13 @@ namespace Example
             var apiInstance = new PluginsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
                 // Get a plugin tags
-                PluginList result = apiInstance.ListPluginTags(owner, name);
+                PluginPackageList result = apiInstance.ListPluginTags(owner, name, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -709,10 +711,12 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
 ### Return type
 
-[**PluginList**](PluginList.md)
+[**PluginPackageList**](PluginPackageList.md)
 
 ### Authorization
 

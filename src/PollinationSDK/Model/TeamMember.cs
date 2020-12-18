@@ -33,29 +33,8 @@ namespace PollinationSDK
         /// The role the user has within the team
         /// </summary>
         /// <value>The role the user has within the team</value>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum RoleEnum
-        {
-            /// <summary>
-            /// Enum Owner for value: owner
-            /// </summary>
-            [EnumMember(Value = "owner")]
-            Owner = 1,
-
-            /// <summary>
-            /// Enum Member for value: member
-            /// </summary>
-            [EnumMember(Value = "member")]
-            Member = 2
-
-        }
-
-        /// <summary>
-        /// The role the user has within the team
-        /// </summary>
-        /// <value>The role the user has within the team</value>
         [DataMember(Name="role", EmitDefaultValue=false)]
-        public RoleEnum Role { get; set; }   
+        public TeamRoleEnum Role { get; set; }   
         /// <summary>
         /// Initializes a new instance of the <see cref="TeamMember" /> class.
         /// </summary>
@@ -73,7 +52,7 @@ namespace PollinationSDK
         /// <param name="role">The role the user has within the team (required).</param>
         public TeamMember
         (
-           UserPublic user, RoleEnum role// Required parameters
+           UserPublic user, TeamRoleEnum role// Required parameters
            // Optional parameters
         ) : base()// BaseClass
         {

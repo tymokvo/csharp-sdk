@@ -30,30 +30,10 @@ namespace PollinationSDK
     public partial class PolicySubject : OpenAPIGenBaseModel, IEquatable<PolicySubject>, IValidatableObject
     {
         /// <summary>
-        /// Defines SubjectType
-        /// </summary>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum SubjectTypeEnum
-        {
-            /// <summary>
-            /// Enum User for value: user
-            /// </summary>
-            [EnumMember(Value = "user")]
-            User = 1,
-
-            /// <summary>
-            /// Enum Team for value: team
-            /// </summary>
-            [EnumMember(Value = "team")]
-            Team = 2
-
-        }
-
-        /// <summary>
         /// Gets or Sets SubjectType
         /// </summary>
         [DataMember(Name="subject_type", EmitDefaultValue=false)]
-        public SubjectTypeEnum SubjectType { get; set; }   
+        public SubjectType SubjectType { get; set; }   
         /// <summary>
         /// Initializes a new instance of the <see cref="PolicySubject" /> class.
         /// </summary>
@@ -71,7 +51,7 @@ namespace PollinationSDK
         /// <param name="name">The name of the policy subject (required).</param>
         public PolicySubject
         (
-           SubjectTypeEnum subjectType, string name// Required parameters
+           SubjectType subjectType, string name// Required parameters
            // Optional parameters
         ) : base()// BaseClass
         {

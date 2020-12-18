@@ -5,8 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ItemsType** | **string** | Type of items in this array. All the items in an array must be from the same type. | [optional] [default to ItemsTypeEnum.String]
 **Value** | [**List&lt;AnyType&gt;**](AnyType.md) |  | 
+**ItemsType** | **ItemType** | Type of items in this array. All the items in an array must be from the same type. | [optional] 
 **Type** | **string** |  | [optional] [readonly] [default to "StepArrayOutput"]
 
 [[Back to Model list]](../README.md#documentation-for-models)

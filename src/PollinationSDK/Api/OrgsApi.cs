@@ -199,7 +199,7 @@ namespace PollinationSDK.Api
         /// <param name="username"></param>
         /// <param name="role"></param>
         /// <returns>UpdateAccepted</returns>
-        UpdateAccepted UpsertOrgMember (string name, string username, string role);
+        UpdateAccepted UpsertOrgMember (string name, string username, OrganizationRoleEnum role);
 
         /// <summary>
         /// Add or update the role of an Org Member
@@ -212,7 +212,7 @@ namespace PollinationSDK.Api
         /// <param name="username"></param>
         /// <param name="role"></param>
         /// <returns>ApiResponse of UpdateAccepted</returns>
-        ApiResponse<UpdateAccepted> UpsertOrgMemberWithHttpInfo (string name, string username, string role);
+        ApiResponse<UpdateAccepted> UpsertOrgMemberWithHttpInfo (string name, string username, OrganizationRoleEnum role);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -404,7 +404,7 @@ namespace PollinationSDK.Api
         /// <param name="role"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of UpdateAccepted</returns>
-        System.Threading.Tasks.Task<UpdateAccepted> UpsertOrgMemberAsync (string name, string username, string role, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<UpdateAccepted> UpsertOrgMemberAsync (string name, string username, OrganizationRoleEnum role, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Add or update the role of an Org Member
@@ -418,7 +418,7 @@ namespace PollinationSDK.Api
         /// <param name="role"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (UpdateAccepted)</returns>
-        System.Threading.Tasks.Task<ApiResponse<UpdateAccepted>> UpsertOrgMemberWithHttpInfoAsync (string name, string username, string role, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<UpdateAccepted>> UpsertOrgMemberWithHttpInfoAsync (string name, string username, OrganizationRoleEnum role, CancellationToken cancellationToken = default(CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -1665,7 +1665,7 @@ namespace PollinationSDK.Api
         /// <param name="username"></param>
         /// <param name="role"></param>
         /// <returns>UpdateAccepted</returns>
-        public UpdateAccepted UpsertOrgMember (string name, string username, string role)
+        public UpdateAccepted UpsertOrgMember (string name, string username, OrganizationRoleEnum role)
         {
              ApiResponse<UpdateAccepted> localVarResponse = UpsertOrgMemberWithHttpInfo(name, username, role);
              return localVarResponse.Data;
@@ -1679,7 +1679,7 @@ namespace PollinationSDK.Api
         /// <param name="username"></param>
         /// <param name="role"></param>
         /// <returns>ApiResponse of UpdateAccepted</returns>
-        public ApiResponse<UpdateAccepted> UpsertOrgMemberWithHttpInfo (string name, string username, string role)
+        public ApiResponse<UpdateAccepted> UpsertOrgMemberWithHttpInfo (string name, string username, OrganizationRoleEnum role)
         {
             // verify the required parameter 'name' is set
             if (name == null)
@@ -1755,7 +1755,7 @@ namespace PollinationSDK.Api
         /// <param name="role"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of UpdateAccepted</returns>
-        public async System.Threading.Tasks.Task<UpdateAccepted> UpsertOrgMemberAsync (string name, string username, string role, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<UpdateAccepted> UpsertOrgMemberAsync (string name, string username, OrganizationRoleEnum role, CancellationToken cancellationToken = default(CancellationToken))
         {
              ApiResponse<UpdateAccepted> localVarResponse = await UpsertOrgMemberWithHttpInfoAsync(name, username, role, cancellationToken);
              return localVarResponse.Data;
@@ -1771,7 +1771,7 @@ namespace PollinationSDK.Api
         /// <param name="role"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (UpdateAccepted)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<UpdateAccepted>> UpsertOrgMemberWithHttpInfoAsync (string name, string username, string role, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<UpdateAccepted>> UpsertOrgMemberWithHttpInfoAsync (string name, string username, OrganizationRoleEnum role, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'name' is set
             if (name == null)

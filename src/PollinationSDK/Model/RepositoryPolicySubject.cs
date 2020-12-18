@@ -46,7 +46,7 @@ namespace PollinationSDK
         /// <param name="name">The name of the policy subject (required).</param>
         public RepositoryPolicySubject
         (
-            SubjectTypeEnum subjectType, string name// Required parameters
+            SubjectType subjectType, string name// Required parameters
            // Optional parameters
         ) : base(subjectType: subjectType, name: name)// BaseClass
         {

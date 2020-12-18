@@ -187,8 +187,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="tag"></param>
-        /// <returns>RecipeInterface</returns>
-        RecipeInterface GetRecipeByTag (string owner, string name, string tag);
+        /// <returns>RecipePackage</returns>
+        RecipePackage GetRecipeByTag (string owner, string name, string tag);
 
         /// <summary>
         /// Get a recipe tag
@@ -200,8 +200,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="tag"></param>
-        /// <returns>ApiResponse of RecipeInterface</returns>
-        ApiResponse<RecipeInterface> GetRecipeByTagWithHttpInfo (string owner, string name, string tag);
+        /// <returns>ApiResponse of RecipePackage</returns>
+        ApiResponse<RecipePackage> GetRecipeByTagWithHttpInfo (string owner, string name, string tag);
         /// <summary>
         /// Get a recipe tags
         /// </summary>
@@ -211,8 +211,10 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <returns>RecipeInterfaceList</returns>
-        RecipeInterfaceList ListRecipeTags (string owner, string name);
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
+        /// <returns>RecipePackageList</returns>
+        RecipePackageList ListRecipeTags (string owner, string name, int? page = default, int? perPage = default);
 
         /// <summary>
         /// Get a recipe tags
@@ -223,8 +225,10 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <returns>ApiResponse of RecipeInterfaceList</returns>
-        ApiResponse<RecipeInterfaceList> ListRecipeTagsWithHttpInfo (string owner, string name);
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
+        /// <returns>ApiResponse of RecipePackageList</returns>
+        ApiResponse<RecipePackageList> ListRecipeTagsWithHttpInfo (string owner, string name, int? page = default, int? perPage = default);
         /// <summary>
         /// List recipes
         /// </summary>
@@ -487,8 +491,8 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="tag"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of RecipeInterface</returns>
-        System.Threading.Tasks.Task<RecipeInterface> GetRecipeByTagAsync (string owner, string name, string tag, CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of RecipePackage</returns>
+        System.Threading.Tasks.Task<RecipePackage> GetRecipeByTagAsync (string owner, string name, string tag, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get a recipe tag
@@ -501,8 +505,8 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="tag"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of ApiResponse (RecipeInterface)</returns>
-        System.Threading.Tasks.Task<ApiResponse<RecipeInterface>> GetRecipeByTagWithHttpInfoAsync (string owner, string name, string tag, CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of ApiResponse (RecipePackage)</returns>
+        System.Threading.Tasks.Task<ApiResponse<RecipePackage>> GetRecipeByTagWithHttpInfoAsync (string owner, string name, string tag, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a recipe tags
         /// </summary>
@@ -512,9 +516,11 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of RecipeInterfaceList</returns>
-        System.Threading.Tasks.Task<RecipeInterfaceList> ListRecipeTagsAsync (string owner, string name, CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of RecipePackageList</returns>
+        System.Threading.Tasks.Task<RecipePackageList> ListRecipeTagsAsync (string owner, string name, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get a recipe tags
@@ -525,9 +531,11 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of ApiResponse (RecipeInterfaceList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<RecipeInterfaceList>> ListRecipeTagsWithHttpInfoAsync (string owner, string name, CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of ApiResponse (RecipePackageList)</returns>
+        System.Threading.Tasks.Task<ApiResponse<RecipePackageList>> ListRecipeTagsWithHttpInfoAsync (string owner, string name, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List recipes
         /// </summary>
@@ -1817,10 +1825,10 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="tag"></param>
-        /// <returns>RecipeInterface</returns>
-        public RecipeInterface GetRecipeByTag (string owner, string name, string tag)
+        /// <returns>RecipePackage</returns>
+        public RecipePackage GetRecipeByTag (string owner, string name, string tag)
         {
-             ApiResponse<RecipeInterface> localVarResponse = GetRecipeByTagWithHttpInfo(owner, name, tag);
+             ApiResponse<RecipePackage> localVarResponse = GetRecipeByTagWithHttpInfo(owner, name, tag);
              return localVarResponse.Data;
         }
 
@@ -1831,8 +1839,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="tag"></param>
-        /// <returns>ApiResponse of RecipeInterface</returns>
-        public ApiResponse<RecipeInterface> GetRecipeByTagWithHttpInfo (string owner, string name, string tag)
+        /// <returns>ApiResponse of RecipePackage</returns>
+        public ApiResponse<RecipePackage> GetRecipeByTagWithHttpInfo (string owner, string name, string tag)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1894,9 +1902,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<RecipeInterface>(localVarStatusCode,
+            return new ApiResponse<RecipePackage>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (RecipeInterface) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(RecipeInterface)));
+                (RecipePackage) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(RecipePackage)));
         }
 
         /// <summary>
@@ -1907,10 +1915,10 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="tag"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of RecipeInterface</returns>
-        public async System.Threading.Tasks.Task<RecipeInterface> GetRecipeByTagAsync (string owner, string name, string tag, CancellationToken cancellationToken = default(CancellationToken))
+        /// <returns>Task of RecipePackage</returns>
+        public async System.Threading.Tasks.Task<RecipePackage> GetRecipeByTagAsync (string owner, string name, string tag, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<RecipeInterface> localVarResponse = await GetRecipeByTagWithHttpInfoAsync(owner, name, tag, cancellationToken);
+             ApiResponse<RecipePackage> localVarResponse = await GetRecipeByTagWithHttpInfoAsync(owner, name, tag, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -1923,8 +1931,8 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="tag"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of ApiResponse (RecipeInterface)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<RecipeInterface>> GetRecipeByTagWithHttpInfoAsync (string owner, string name, string tag, CancellationToken cancellationToken = default(CancellationToken))
+        /// <returns>Task of ApiResponse (RecipePackage)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<RecipePackage>> GetRecipeByTagWithHttpInfoAsync (string owner, string name, string tag, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1986,9 +1994,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<RecipeInterface>(localVarStatusCode,
+            return new ApiResponse<RecipePackage>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (RecipeInterface) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(RecipeInterface)));
+                (RecipePackage) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(RecipePackage)));
         }
 
         /// <summary>
@@ -1997,10 +2005,12 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <returns>RecipeInterfaceList</returns>
-        public RecipeInterfaceList ListRecipeTags (string owner, string name)
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
+        /// <returns>RecipePackageList</returns>
+        public RecipePackageList ListRecipeTags (string owner, string name, int? page = default, int? perPage = default)
         {
-             ApiResponse<RecipeInterfaceList> localVarResponse = ListRecipeTagsWithHttpInfo(owner, name);
+             ApiResponse<RecipePackageList> localVarResponse = ListRecipeTagsWithHttpInfo(owner, name, page, perPage);
              return localVarResponse.Data;
         }
 
@@ -2010,8 +2020,10 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <returns>ApiResponse of RecipeInterfaceList</returns>
-        public ApiResponse<RecipeInterfaceList> ListRecipeTagsWithHttpInfo (string owner, string name)
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
+        /// <returns>ApiResponse of RecipePackageList</returns>
+        public ApiResponse<RecipePackageList> ListRecipeTagsWithHttpInfo (string owner, string name, int? page = default, int? perPage = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2043,6 +2055,8 @@ namespace PollinationSDK.Api
 
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
+            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
+            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
             // authentication (APIKeyAuth) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
@@ -2069,9 +2083,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<RecipeInterfaceList>(localVarStatusCode,
+            return new ApiResponse<RecipePackageList>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (RecipeInterfaceList) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(RecipeInterfaceList)));
+                (RecipePackageList) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(RecipePackageList)));
         }
 
         /// <summary>
@@ -2080,11 +2094,13 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of RecipeInterfaceList</returns>
-        public async System.Threading.Tasks.Task<RecipeInterfaceList> ListRecipeTagsAsync (string owner, string name, CancellationToken cancellationToken = default(CancellationToken))
+        /// <returns>Task of RecipePackageList</returns>
+        public async System.Threading.Tasks.Task<RecipePackageList> ListRecipeTagsAsync (string owner, string name, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<RecipeInterfaceList> localVarResponse = await ListRecipeTagsWithHttpInfoAsync(owner, name, cancellationToken);
+             ApiResponse<RecipePackageList> localVarResponse = await ListRecipeTagsWithHttpInfoAsync(owner, name, page, perPage, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -2095,9 +2111,11 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of ApiResponse (RecipeInterfaceList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<RecipeInterfaceList>> ListRecipeTagsWithHttpInfoAsync (string owner, string name, CancellationToken cancellationToken = default(CancellationToken))
+        /// <returns>Task of ApiResponse (RecipePackageList)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<RecipePackageList>> ListRecipeTagsWithHttpInfoAsync (string owner, string name, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2129,6 +2147,8 @@ namespace PollinationSDK.Api
 
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
+            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
+            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
             // authentication (APIKeyAuth) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
@@ -2155,9 +2175,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<RecipeInterfaceList>(localVarStatusCode,
+            return new ApiResponse<RecipePackageList>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (RecipeInterfaceList) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(RecipeInterfaceList)));
+                (RecipePackageList) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(RecipePackageList)));
         }
 
         /// <summary>

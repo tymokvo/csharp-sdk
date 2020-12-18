@@ -36,8 +36,9 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="job"></param>
         /// <param name="authorization"> (optional)</param>
+        /// <param name="xPollinationToken"> (optional)</param>
         /// <returns>CreatedContent</returns>
-        CreatedContent CreateJob (string owner, string name, Job job, string authorization = default);
+        CreatedContent CreateJob (string owner, string name, Job job, string authorization = default, string xPollinationToken = default);
 
         /// <summary>
         /// Schedule a job
@@ -50,8 +51,9 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="job"></param>
         /// <param name="authorization"> (optional)</param>
+        /// <param name="xPollinationToken"> (optional)</param>
         /// <returns>ApiResponse of CreatedContent</returns>
-        ApiResponse<CreatedContent> CreateJobWithHttpInfo (string owner, string name, Job job, string authorization = default);
+        ApiResponse<CreatedContent> CreateJobWithHttpInfo (string owner, string name, Job job, string authorization = default, string xPollinationToken = default);
         /// <summary>
         /// Download an artifact from the job folder
         /// </summary>
@@ -341,9 +343,10 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="job"></param>
         /// <param name="authorization"> (optional)</param>
+        /// <param name="xPollinationToken"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of CreatedContent</returns>
-        System.Threading.Tasks.Task<CreatedContent> CreateJobAsync (string owner, string name, Job job, string authorization = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<CreatedContent> CreateJobAsync (string owner, string name, Job job, string authorization = default, string xPollinationToken = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Schedule a job
@@ -356,9 +359,10 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="job"></param>
         /// <param name="authorization"> (optional)</param>
+        /// <param name="xPollinationToken"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (CreatedContent)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CreatedContent>> CreateJobWithHttpInfoAsync (string owner, string name, Job job, string authorization = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<CreatedContent>> CreateJobWithHttpInfoAsync (string owner, string name, Job job, string authorization = default, string xPollinationToken = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Download an artifact from the job folder
         /// </summary>
@@ -742,10 +746,11 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="job"></param>
         /// <param name="authorization"> (optional)</param>
+        /// <param name="xPollinationToken"> (optional)</param>
         /// <returns>CreatedContent</returns>
-        public CreatedContent CreateJob (string owner, string name, Job job, string authorization = default)
+        public CreatedContent CreateJob (string owner, string name, Job job, string authorization = default, string xPollinationToken = default)
         {
-             ApiResponse<CreatedContent> localVarResponse = CreateJobWithHttpInfo(owner, name, job, authorization);
+             ApiResponse<CreatedContent> localVarResponse = CreateJobWithHttpInfo(owner, name, job, authorization, xPollinationToken);
              return localVarResponse.Data;
         }
 
@@ -757,8 +762,9 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="job"></param>
         /// <param name="authorization"> (optional)</param>
+        /// <param name="xPollinationToken"> (optional)</param>
         /// <returns>ApiResponse of CreatedContent</returns>
-        public ApiResponse<CreatedContent> CreateJobWithHttpInfo (string owner, string name, Job job, string authorization = default)
+        public ApiResponse<CreatedContent> CreateJobWithHttpInfo (string owner, string name, Job job, string authorization = default, string xPollinationToken = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -795,6 +801,7 @@ namespace PollinationSDK.Api
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
             if (authorization != null) localVarHeaderParams.Add("authorization", this.Configuration.ApiClient.ParameterToString(authorization)); // header parameter
+            if (xPollinationToken != null) localVarHeaderParams.Add("x-pollination-token", this.Configuration.ApiClient.ParameterToString(xPollinationToken)); // header parameter
             if (job != null && job.GetType() != typeof(byte[]))
             {
                 localVarPostBody = this.Configuration.ApiClient.Serialize(job); // http body (model) parameter
@@ -842,11 +849,12 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="job"></param>
         /// <param name="authorization"> (optional)</param>
+        /// <param name="xPollinationToken"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of CreatedContent</returns>
-        public async System.Threading.Tasks.Task<CreatedContent> CreateJobAsync (string owner, string name, Job job, string authorization = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<CreatedContent> CreateJobAsync (string owner, string name, Job job, string authorization = default, string xPollinationToken = default, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<CreatedContent> localVarResponse = await CreateJobWithHttpInfoAsync(owner, name, job, authorization, cancellationToken);
+             ApiResponse<CreatedContent> localVarResponse = await CreateJobWithHttpInfoAsync(owner, name, job, authorization, xPollinationToken, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -859,9 +867,10 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="job"></param>
         /// <param name="authorization"> (optional)</param>
+        /// <param name="xPollinationToken"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (CreatedContent)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<CreatedContent>> CreateJobWithHttpInfoAsync (string owner, string name, Job job, string authorization = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<CreatedContent>> CreateJobWithHttpInfoAsync (string owner, string name, Job job, string authorization = default, string xPollinationToken = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -898,6 +907,7 @@ namespace PollinationSDK.Api
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
             if (authorization != null) localVarHeaderParams.Add("authorization", this.Configuration.ApiClient.ParameterToString(authorization)); // header parameter
+            if (xPollinationToken != null) localVarHeaderParams.Add("x-pollination-token", this.Configuration.ApiClient.ParameterToString(xPollinationToken)); // header parameter
             if (job != null && job.GetType() != typeof(byte[]))
             {
                 localVarPostBody = this.Configuration.ApiClient.Serialize(job); // http body (model) parameter

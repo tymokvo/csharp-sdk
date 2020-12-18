@@ -185,8 +185,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="tag"></param>
-        /// <returns>Plugin</returns>
-        Plugin GetPluginByTag (string owner, string name, string tag);
+        /// <returns>PluginPackage</returns>
+        PluginPackage GetPluginByTag (string owner, string name, string tag);
 
         /// <summary>
         /// Get a plugin tag
@@ -198,8 +198,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="tag"></param>
-        /// <returns>ApiResponse of Plugin</returns>
-        ApiResponse<Plugin> GetPluginByTagWithHttpInfo (string owner, string name, string tag);
+        /// <returns>ApiResponse of PluginPackage</returns>
+        ApiResponse<PluginPackage> GetPluginByTagWithHttpInfo (string owner, string name, string tag);
         /// <summary>
         /// Get a plugin tags
         /// </summary>
@@ -209,8 +209,10 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <returns>PluginList</returns>
-        PluginList ListPluginTags (string owner, string name);
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
+        /// <returns>PluginPackageList</returns>
+        PluginPackageList ListPluginTags (string owner, string name, int? page = default, int? perPage = default);
 
         /// <summary>
         /// Get a plugin tags
@@ -221,8 +223,10 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <returns>ApiResponse of PluginList</returns>
-        ApiResponse<PluginList> ListPluginTagsWithHttpInfo (string owner, string name);
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
+        /// <returns>ApiResponse of PluginPackageList</returns>
+        ApiResponse<PluginPackageList> ListPluginTagsWithHttpInfo (string owner, string name, int? page = default, int? perPage = default);
         /// <summary>
         /// List plugins
         /// </summary>
@@ -483,8 +487,8 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="tag"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of Plugin</returns>
-        System.Threading.Tasks.Task<Plugin> GetPluginByTagAsync (string owner, string name, string tag, CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of PluginPackage</returns>
+        System.Threading.Tasks.Task<PluginPackage> GetPluginByTagAsync (string owner, string name, string tag, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get a plugin tag
@@ -497,8 +501,8 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="tag"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of ApiResponse (Plugin)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Plugin>> GetPluginByTagWithHttpInfoAsync (string owner, string name, string tag, CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of ApiResponse (PluginPackage)</returns>
+        System.Threading.Tasks.Task<ApiResponse<PluginPackage>> GetPluginByTagWithHttpInfoAsync (string owner, string name, string tag, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a plugin tags
         /// </summary>
@@ -508,9 +512,11 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of PluginList</returns>
-        System.Threading.Tasks.Task<PluginList> ListPluginTagsAsync (string owner, string name, CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of PluginPackageList</returns>
+        System.Threading.Tasks.Task<PluginPackageList> ListPluginTagsAsync (string owner, string name, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get a plugin tags
@@ -521,9 +527,11 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of ApiResponse (PluginList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PluginList>> ListPluginTagsWithHttpInfoAsync (string owner, string name, CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of ApiResponse (PluginPackageList)</returns>
+        System.Threading.Tasks.Task<ApiResponse<PluginPackageList>> ListPluginTagsWithHttpInfoAsync (string owner, string name, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List plugins
         /// </summary>
@@ -1807,10 +1815,10 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="tag"></param>
-        /// <returns>Plugin</returns>
-        public Plugin GetPluginByTag (string owner, string name, string tag)
+        /// <returns>PluginPackage</returns>
+        public PluginPackage GetPluginByTag (string owner, string name, string tag)
         {
-             ApiResponse<Plugin> localVarResponse = GetPluginByTagWithHttpInfo(owner, name, tag);
+             ApiResponse<PluginPackage> localVarResponse = GetPluginByTagWithHttpInfo(owner, name, tag);
              return localVarResponse.Data;
         }
 
@@ -1821,8 +1829,8 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="tag"></param>
-        /// <returns>ApiResponse of Plugin</returns>
-        public ApiResponse<Plugin> GetPluginByTagWithHttpInfo (string owner, string name, string tag)
+        /// <returns>ApiResponse of PluginPackage</returns>
+        public ApiResponse<PluginPackage> GetPluginByTagWithHttpInfo (string owner, string name, string tag)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1884,9 +1892,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<Plugin>(localVarStatusCode,
+            return new ApiResponse<PluginPackage>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (Plugin) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Plugin)));
+                (PluginPackage) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(PluginPackage)));
         }
 
         /// <summary>
@@ -1897,10 +1905,10 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="tag"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of Plugin</returns>
-        public async System.Threading.Tasks.Task<Plugin> GetPluginByTagAsync (string owner, string name, string tag, CancellationToken cancellationToken = default(CancellationToken))
+        /// <returns>Task of PluginPackage</returns>
+        public async System.Threading.Tasks.Task<PluginPackage> GetPluginByTagAsync (string owner, string name, string tag, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<Plugin> localVarResponse = await GetPluginByTagWithHttpInfoAsync(owner, name, tag, cancellationToken);
+             ApiResponse<PluginPackage> localVarResponse = await GetPluginByTagWithHttpInfoAsync(owner, name, tag, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -1913,8 +1921,8 @@ namespace PollinationSDK.Api
         /// <param name="name"></param>
         /// <param name="tag"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of ApiResponse (Plugin)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Plugin>> GetPluginByTagWithHttpInfoAsync (string owner, string name, string tag, CancellationToken cancellationToken = default(CancellationToken))
+        /// <returns>Task of ApiResponse (PluginPackage)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<PluginPackage>> GetPluginByTagWithHttpInfoAsync (string owner, string name, string tag, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1976,9 +1984,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<Plugin>(localVarStatusCode,
+            return new ApiResponse<PluginPackage>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (Plugin) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Plugin)));
+                (PluginPackage) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(PluginPackage)));
         }
 
         /// <summary>
@@ -1987,10 +1995,12 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <returns>PluginList</returns>
-        public PluginList ListPluginTags (string owner, string name)
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
+        /// <returns>PluginPackageList</returns>
+        public PluginPackageList ListPluginTags (string owner, string name, int? page = default, int? perPage = default)
         {
-             ApiResponse<PluginList> localVarResponse = ListPluginTagsWithHttpInfo(owner, name);
+             ApiResponse<PluginPackageList> localVarResponse = ListPluginTagsWithHttpInfo(owner, name, page, perPage);
              return localVarResponse.Data;
         }
 
@@ -2000,8 +2010,10 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <returns>ApiResponse of PluginList</returns>
-        public ApiResponse<PluginList> ListPluginTagsWithHttpInfo (string owner, string name)
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
+        /// <returns>ApiResponse of PluginPackageList</returns>
+        public ApiResponse<PluginPackageList> ListPluginTagsWithHttpInfo (string owner, string name, int? page = default, int? perPage = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2033,6 +2045,8 @@ namespace PollinationSDK.Api
 
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
+            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
+            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
             // authentication (APIKeyAuth) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
@@ -2059,9 +2073,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<PluginList>(localVarStatusCode,
+            return new ApiResponse<PluginPackageList>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (PluginList) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(PluginList)));
+                (PluginPackageList) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(PluginPackageList)));
         }
 
         /// <summary>
@@ -2070,11 +2084,13 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of PluginList</returns>
-        public async System.Threading.Tasks.Task<PluginList> ListPluginTagsAsync (string owner, string name, CancellationToken cancellationToken = default(CancellationToken))
+        /// <returns>Task of PluginPackageList</returns>
+        public async System.Threading.Tasks.Task<PluginPackageList> ListPluginTagsAsync (string owner, string name, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<PluginList> localVarResponse = await ListPluginTagsWithHttpInfoAsync(owner, name, cancellationToken);
+             ApiResponse<PluginPackageList> localVarResponse = await ListPluginTagsWithHttpInfoAsync(owner, name, page, perPage, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -2085,9 +2101,11 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of ApiResponse (PluginList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<PluginList>> ListPluginTagsWithHttpInfoAsync (string owner, string name, CancellationToken cancellationToken = default(CancellationToken))
+        /// <returns>Task of ApiResponse (PluginPackageList)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<PluginPackageList>> ListPluginTagsWithHttpInfoAsync (string owner, string name, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2119,6 +2137,8 @@ namespace PollinationSDK.Api
 
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
+            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
+            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
             // authentication (APIKeyAuth) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
@@ -2145,9 +2165,9 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<PluginList>(localVarStatusCode,
+            return new ApiResponse<PluginPackageList>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (PluginList) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(PluginList)));
+                (PluginPackageList) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(PluginPackageList)));
         }
 
         /// <summary>

@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Source** | [**AnyOfobjectobjectobject**](AnyOfobjectobjectobject.md) | The path to source the file from. | 
+**Source** | [**AnyOfHTTPS3ProjectFolder**](AnyOfHTTPS3ProjectFolder.md) | The path to source the file from. | 
 **Type** | **string** |  | [optional] [readonly] [default to "StepFolderOutput"]
 
 [[Back to Model list]](../README.md#documentation-for-models)

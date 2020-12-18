@@ -26,21 +26,21 @@ namespace PollinationSDK
     /// <summary>
     /// A list response from a pagination request
     /// </summary>
-    [DataContract(Name = "PluginList")]
-    public partial class PluginList : OpenAPIGenBaseModel, IEquatable<PluginList>, IValidatableObject
+    [DataContract(Name = "RecipePackageList")]
+    public partial class RecipePackageList : OpenAPIGenBaseModel, IEquatable<RecipePackageList>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="PluginList" /> class.
+        /// Initializes a new instance of the <see cref="RecipePackageList" /> class.
         /// </summary>
         [JsonConstructorAttribute]
-        protected PluginList() 
+        protected RecipePackageList() 
         { 
             // Set non-required readonly properties with defaultValue
-            this.Type = "PluginList";
+            this.Type = "RecipePackageList";
         }
         
         /// <summary>
-        /// Initializes a new instance of the <see cref="PluginList" /> class.
+        /// Initializes a new instance of the <see cref="RecipePackageList" /> class.
         /// </summary>
         /// <param name="page">The current page the pagination request is on (required).</param>
         /// <param name="perPage">The number of pages per pagination request (required).</param>
@@ -48,9 +48,9 @@ namespace PollinationSDK
         /// <param name="totalCount">The total number of resources matching the list request (required).</param>
         /// <param name="resources">resources (required).</param>
         /// <param name="nextPage">The next page, if this on is not the last.</param>
-        public PluginList
+        public RecipePackageList
         (
-           int page, int perPage, int pageCount, int totalCount, List<Plugin> resources, // Required parameters
+           int page, int perPage, int pageCount, int totalCount, List<RecipePackage> resources, // Required parameters
            int nextPage= default // Optional parameters
         ) : base()// BaseClass
         {
@@ -59,11 +59,11 @@ namespace PollinationSDK
             this.PageCount = pageCount;
             this.TotalCount = totalCount;
             // to ensure "resources" is required (not null)
-            this.Resources = resources ?? throw new ArgumentNullException("resources is a required property for PluginList and cannot be null");
+            this.Resources = resources ?? throw new ArgumentNullException("resources is a required property for RecipePackageList and cannot be null");
             this.NextPage = nextPage;
 
             // Set non-required readonly properties with defaultValue
-            this.Type = "PluginList";
+            this.Type = "RecipePackageList";
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace PollinationSDK
         /// Gets or Sets Resources
         /// </summary>
         [DataMember(Name = "resources", IsRequired = true, EmitDefaultValue = false)]
-        public List<Plugin> Resources { get; set; } 
+        public List<RecipePackage> Resources { get; set; } 
         /// <summary>
         /// The next page, if this on is not the last
         /// </summary>
@@ -108,7 +108,7 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            return "PluginList";
+            return "RecipePackageList";
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace PollinationSDK
                 return this.ToString();
             
             var sb = new StringBuilder();
-            sb.Append("PluginList:\n");
+            sb.Append("RecipePackageList:\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  Page: ").Append(Page).Append("\n");
             sb.Append("  PerPage: ").Append(PerPage).Append("\n");
@@ -135,10 +135,10 @@ namespace PollinationSDK
         /// <summary>
         /// Returns the object from JSON string
         /// </summary>
-        /// <returns>PluginList object</returns>
-        public static PluginList FromJson(string json)
+        /// <returns>RecipePackageList object</returns>
+        public static RecipePackageList FromJson(string json)
         {
-            var obj = JsonConvert.DeserializeObject<PluginList>(json, JsonSetting.AnyOfConvertSetting);
+            var obj = JsonConvert.DeserializeObject<RecipePackageList>(json, JsonSetting.AnyOfConvertSetting);
             if (obj == null)
                 return null;
             return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
@@ -147,8 +147,8 @@ namespace PollinationSDK
         /// <summary>
         /// Creates a new instance with the same properties.
         /// </summary>
-        /// <returns>PluginList object</returns>
-        public virtual PluginList DuplicatePluginList()
+        /// <returns>RecipePackageList object</returns>
+        public virtual RecipePackageList DuplicateRecipePackageList()
         {
             return FromJson(this.ToJson());
         }
@@ -159,7 +159,7 @@ namespace PollinationSDK
         /// <returns>OpenAPIGenBaseModel</returns>
         public override OpenAPIGenBaseModel Duplicate()
         {
-            return DuplicatePluginList();
+            return DuplicateRecipePackageList();
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace PollinationSDK
         /// <returns>OpenAPIGenBaseModel</returns>
         public override OpenAPIGenBaseModel DuplicateOpenAPIGenBaseModel()
         {
-            return DuplicatePluginList();
+            return DuplicateRecipePackageList();
         }
      
         /// <summary>
@@ -178,15 +178,15 @@ namespace PollinationSDK
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as PluginList);
+            return this.Equals(input as RecipePackageList);
         }
 
         /// <summary>
-        /// Returns true if PluginList instances are equal
+        /// Returns true if RecipePackageList instances are equal
         /// </summary>
-        /// <param name="input">Instance of PluginList to be compared</param>
+        /// <param name="input">Instance of RecipePackageList to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(PluginList input)
+        public bool Equals(RecipePackageList input)
         {
             if (input == null)
                 return false;
@@ -267,7 +267,7 @@ namespace PollinationSDK
 
             
             // Type (string) pattern
-            Regex regexType = new Regex(@"^PluginList$", RegexOptions.CultureInvariant);
+            Regex regexType = new Regex(@"^RecipePackageList$", RegexOptions.CultureInvariant);
             if (false == regexType.Match(this.Type).Success)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Type, must match a pattern of " + regexType, new [] { "Type" });

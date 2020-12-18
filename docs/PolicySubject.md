@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**SubjectType** | **string** |  | 
+**SubjectType** | **SubjectType** |  | 
 **Name** | **string** | The name of the policy subject | 
 **Type** | **string** |  | [optional] [readonly] [default to "PolicySubject"]
 

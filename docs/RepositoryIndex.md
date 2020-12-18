@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | **string** |  | [optional] [readonly] [default to "RepositoryIndex"]
 **Annotations** | **Dictionary&lt;string, string&gt;** | An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries. | [optional] 
-**ApiVersion** | **string** |  | [optional] [default to "v1beta1"]
+**ApiVersion** | **string** |  | [optional] [readonly] [default to "v1beta1"]
 **Generated** | **DateTime** | The timestamp at which the index was generated | [optional] 
 **Metadata** | [**RepositoryMetadata**](RepositoryMetadata.md) | Extra information about the repository | [optional] 
 **Plugin** | **Dictionary&lt;string, List&lt;PackageVersion&gt;&gt;** | A dict of plugins accessible by name. Each name key points to a list of plugin versions | [optional] 

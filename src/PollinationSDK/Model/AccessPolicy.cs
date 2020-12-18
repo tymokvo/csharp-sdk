@@ -33,35 +33,8 @@ namespace PollinationSDK
         /// The permission given to the subject of the access policy
         /// </summary>
         /// <value>The permission given to the subject of the access policy</value>
-        [JsonConverter(typeof(StringEnumConverter))]
-        public enum PermissionEnum
-        {
-            /// <summary>
-            /// Enum Admin for value: admin
-            /// </summary>
-            [EnumMember(Value = "admin")]
-            Admin = 1,
-
-            /// <summary>
-            /// Enum Write for value: write
-            /// </summary>
-            [EnumMember(Value = "write")]
-            Write = 2,
-
-            /// <summary>
-            /// Enum Read for value: read
-            /// </summary>
-            [EnumMember(Value = "read")]
-            Read = 3
-
-        }
-
-        /// <summary>
-        /// The permission given to the subject of the access policy
-        /// </summary>
-        /// <value>The permission given to the subject of the access policy</value>
         [DataMember(Name="permission", EmitDefaultValue=false)]
-        public PermissionEnum Permission { get; set; }   
+        public Permission Permission { get; set; }   
         /// <summary>
         /// Initializes a new instance of the <see cref="AccessPolicy" /> class.
         /// </summary>
@@ -79,7 +52,7 @@ namespace PollinationSDK
         /// <param name="permission">The permission given to the subject of the access policy (required).</param>
         public AccessPolicy
         (
-           PolicySubject subject, PermissionEnum permission// Required parameters
+           PolicySubject subject, Permission permission// Required parameters
            // Optional parameters
         ) : base()// BaseClass
         {

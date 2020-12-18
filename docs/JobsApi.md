@@ -20,7 +20,7 @@ Method | HTTP request | Description
 
 ## CreateJob
 
-> CreatedContent CreateJob (string owner, string name, Job job, string authorization = null)
+> CreatedContent CreateJob (string owner, string name, Job job, string authorization = null, string xPollinationToken = null)
 
 Schedule a job
 
@@ -54,11 +54,12 @@ namespace Example
             var name = name_example;  // string | 
             var job = new Job(); // Job | 
             var authorization = authorization_example;  // string |  (optional) 
+            var xPollinationToken = xPollinationToken_example;  // string |  (optional) 
 
             try
             {
                 // Schedule a job
-                CreatedContent result = apiInstance.CreateJob(owner, name, job, authorization);
+                CreatedContent result = apiInstance.CreateJob(owner, name, job, authorization, xPollinationToken);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -81,6 +82,7 @@ Name | Type | Description  | Notes
  **name** | **string**|  | 
  **job** | [**Job**](Job.md)|  | 
  **authorization** | **string**|  | [optional] 
+ **xPollinationToken** | **string**|  | [optional] 
 
 ### Return type
 

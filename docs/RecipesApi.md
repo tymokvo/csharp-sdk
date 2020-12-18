@@ -563,7 +563,7 @@ Name | Type | Description  | Notes
 
 ## GetRecipeByTag
 
-> RecipeInterface GetRecipeByTag (string owner, string name, string tag)
+> RecipePackage GetRecipeByTag (string owner, string name, string tag)
 
 Get a recipe tag
 
@@ -600,7 +600,7 @@ namespace Example
             try
             {
                 // Get a recipe tag
-                RecipeInterface result = apiInstance.GetRecipeByTag(owner, name, tag);
+                RecipePackage result = apiInstance.GetRecipeByTag(owner, name, tag);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -625,7 +625,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**RecipeInterface**](RecipeInterface.md)
+[**RecipePackage**](RecipePackage.md)
 
 ### Authorization
 
@@ -654,7 +654,7 @@ Name | Type | Description  | Notes
 
 ## ListRecipeTags
 
-> RecipeInterfaceList ListRecipeTags (string owner, string name)
+> RecipePackageList ListRecipeTags (string owner, string name, int? page = null, int? perPage = null)
 
 Get a recipe tags
 
@@ -686,11 +686,13 @@ namespace Example
             var apiInstance = new RecipesApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
                 // Get a recipe tags
-                RecipeInterfaceList result = apiInstance.ListRecipeTags(owner, name);
+                RecipePackageList result = apiInstance.ListRecipeTags(owner, name, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -711,10 +713,12 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
 ### Return type
 
-[**RecipeInterfaceList**](RecipeInterfaceList.md)
+[**RecipePackageList**](RecipePackageList.md)
 
 ### Authorization
 
