@@ -7,6 +7,7 @@ using System.Net;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using QueenbeeSDK;
+using System.Collections.Generic;
 
 namespace PollinationSDK.Wrapper
 {
@@ -141,7 +142,7 @@ namespace PollinationSDK.Wrapper
             var url = api.GetSimulationLogs(proj.Owner.Name, proj.Name, simuId).ToString();
             if (string.IsNullOrEmpty(url)) throw new ArgumentNullException("Failed to call GetSimulationLogs");
             var dir = Path.Combine(Helper.GenTempFolder(), simuId);
-            var downloadfile = await DownloadFile(url, dir);
+            var downloadfile = await Helper.DownloadFromUrlAsync(url, dir);
 
 
             //unzip file 
@@ -176,26 +177,26 @@ namespace PollinationSDK.Wrapper
             return fullLog;
         }
 
-        private static async Task<string> DownloadFile(string url, string dir)
-        {
-            var request = new RestRequest(Method.GET);
-            var client = new RestClient(url.ToString());
-            var response = await client.ExecuteAsync(request);
-            if (response.StatusCode != HttpStatusCode.OK)
-                throw new Exception($"Unable to download file");
+        //private static async Task<string> DownloadFile(string url, string dir)
+        //{
+        //    var request = new RestRequest(Method.GET);
+        //    var client = new RestClient(url.ToString());
+        //    var response = await client.ExecuteAsync(request);
+        //    if (response.StatusCode != HttpStatusCode.OK)
+        //        throw new Exception($"Unable to download file");
 
-            // prep file path
-            var fileName = Path.GetFileName(url).Split(new[] { '?' })[0];
-            var tempDir = string.IsNullOrEmpty(dir) ? Path.Combine(Path.GetTempPath(), "Pollination", Path.GetRandomFileName()) : dir;
-            Directory.CreateDirectory(tempDir);
-            var file = Path.Combine(tempDir, fileName);
+        //    // prep file path
+        //    var fileName = Path.GetFileName(url).Split(new[] { '?' })[0];
+        //    var tempDir = string.IsNullOrEmpty(dir) ? Path.Combine(Path.GetTempPath(), "Pollination", Path.GetRandomFileName()) : dir;
+        //    Directory.CreateDirectory(tempDir);
+        //    var file = Path.Combine(tempDir, fileName);
 
-            var b = response.RawBytes;
-            File.WriteAllBytes(file, b);
+        //    var b = response.RawBytes;
+        //    File.WriteAllBytes(file, b);
 
-            if (!File.Exists(file)) throw new ArgumentException($"Failed to download {fileName}");
-            return file;
-        }
+        //    if (!File.Exists(file)) throw new ArgumentException($"Failed to download {fileName}");
+        //    return file;
+        //}
 
         private static void CheckOutputLogs(JobsApi api, Project proj, string simuId)
         {
@@ -209,6 +210,89 @@ namespace PollinationSDK.Wrapper
 
         }
 
+
+
+        /// <summary>
+        /// Download a list of OutputArtifacts from a simulation.
+        /// </summary>
+        /// <param name="runInfo"></param>
+        /// <param name="artifacts"></param>
+        /// <param name="saveAsDir"></param>
+        /// <param name="reportProgressAction"></param>
+        /// <returns></returns>
+        public async Task<List<string>> DownloadOutputArtifactsAsync(List<string> artifacts, string saveAsDir = default, Action<int> reportProgressAction = default)
+        {
+            //_filePaths = new List<string>();
+            var downloadedFiles = new List<string>();
+            try
+            {
+                var dir = string.IsNullOrEmpty(saveAsDir) ? Helper.GenTempFolder() : saveAsDir;
+                var simuID = this.RunID.Substring(0, 8);
+                dir = Path.Combine(dir, simuID, "outputs");
+
+                var tasks = artifacts.Select(_ => DownloadArtifact(this, _, dir)).ToList();
+                //var tasks = artifacts.SelectMany(_ => DownloadArtifactWithItems(simu, _, saveAsDir)).ToList();
+
+                var total = tasks.Count();
+                while (tasks.Count() > 0)
+                {
+                    var finishedTask = await Task.WhenAny(tasks);
+                    downloadedFiles.Add(finishedTask.Result);
+                    tasks.Remove(finishedTask);
+
+                    var left = tasks.Count();
+                    var finishedPercent = (total - left) / (double)total * 100;
+                    reportProgressAction?.Invoke((int)finishedPercent);
+
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            var artifactNames = artifacts.Select(_ => _.ToUpper()).ToList();
+            var filePaths = downloadedFiles.OrderBy(_ => artifactNames.IndexOf(Path.GetFileNameWithoutExtension(_).ToUpper())).ToList();
+
+            if (filePaths.Count == 1)
+            {
+                //if folder, then return items in folder
+                var path = filePaths[0];
+                if (Directory.Exists(path))
+                {
+                    var items = Directory.EnumerateFileSystemEntries(path, "*", SearchOption.TopDirectoryOnly);
+                    filePaths = items.Any() ? items.ToList() : filePaths;
+                }
+            }
+            return filePaths;
+            //return finished;
+        }
+
+        /// <summary>
+        /// Download an artifact with one call. It'd be a zip file if the artifact is a folder
+        /// </summary>
+        /// <param name="runInfo"></param>
+        /// <param name="artifact"></param>
+        /// <param name="saveAsDir"></param>
+        /// <returns></returns>
+        private static Task<string> DownloadArtifact(RunInfo runInfo, string artifactName, string saveAsDir)
+        {
+            //var file = string.Empty;
+            //var outputDirOrFile = string.Empty;
+            try
+            {
+                var api = new PollinationSDK.Api.JobsApi();
+                var url = api.GetSimulationOutputArtifact(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID, artifactName).ToString();
+                var task = Helper.DownloadFromUrlAsync(url, saveAsDir);
+                return task;
+
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException($"Failed to download artifact {artifactName}.\n -{e.Message}");
+            }
+        }
 
 
     }

@@ -162,63 +162,7 @@ namespace PollinationSDK
 
       
 
-        /// <summary>
-        /// Download a list of OutputArtifacts from a simulation.
-        /// </summary>
-        /// <param name="runInfo"></param>
-        /// <param name="artifacts"></param>
-        /// <param name="saveAsDir"></param>
-        /// <param name="reportProgressAction"></param>
-        /// <returns></returns>
-        public static async Task<List<string>> DownloadOutputArtifactsAsync(RunInfo runInfo, List<QueenbeeSDK.DAGPathOutput> artifacts, string saveAsDir = default, Action<int> reportProgressAction = default)
-        {
-            //_filePaths = new List<string>();
-            var downloadedFiles = new List<string>();
-            try
-            {
-                var dir = string.IsNullOrEmpty(saveAsDir) ? GenTempFolder() : saveAsDir;
-                var simuID = runInfo.RunID.Substring(0, 8);
-                dir = Path.Combine(dir, simuID, "outputs");
-
-                var tasks = artifacts.Select(_ => DownloadArtifact(runInfo, _, dir)).ToList();
-                //var tasks = artifacts.SelectMany(_ => DownloadArtifactWithItems(simu, _, saveAsDir)).ToList();
-
-                var total = tasks.Count();
-                while (tasks.Count() > 0)
-                {
-                    var finishedTask = await Task.WhenAny(tasks);
-                    downloadedFiles.Add(finishedTask.Result);
-                    tasks.Remove(finishedTask);
-
-                    var left = tasks.Count();
-                    var finishedPercent = (total - left) / (double)total * 100;
-                    reportProgressAction?.Invoke((int)finishedPercent);
-
-                }
-
-
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
-            var artifactNames = artifacts.Select(_ => _.Name.ToUpper()).ToList();
-            var filePaths = downloadedFiles.OrderBy(_ => artifactNames.IndexOf(Path.GetFileNameWithoutExtension(_).ToUpper())).ToList();
-
-            if (filePaths.Count == 1)
-            {
-                //if folder, then return items in folder
-                var path = filePaths[0];
-                if (Directory.Exists(path))
-                {
-                    var items = Directory.EnumerateFileSystemEntries(path, "*", SearchOption.TopDirectoryOnly);
-                    filePaths = items.Any() ? items.ToList() : filePaths;
-                }
-            }
-            return filePaths;
-            //return finished;
-        }
+        
     
         private static async Task<List<string>> Download(string url, string dir)
         {
@@ -326,31 +270,7 @@ namespace PollinationSDK
             return outputDirOrFile;
 
         }
-        /// <summary>
-        /// Download an artifact with one call. It'd be a zip file if the artifact is a folder
-        /// </summary>
-        /// <param name="runInfo"></param>
-        /// <param name="artifact"></param>
-        /// <param name="saveAsDir"></param>
-        /// <returns></returns>
-        private static Task<string> DownloadArtifact(RunInfo runInfo, QueenbeeSDK.DAGPathOutput artifact, string saveAsDir)
-        {
-            var file = string.Empty;
-            var outputDirOrFile = string.Empty;
-            try
-            {
-                var api = new PollinationSDK.Api.JobsApi();
-                var url = api.GetSimulationOutputArtifact(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID, artifact.Name).ToString();
-                
-                var task = DownloadFromUrlAsync(url, saveAsDir);
-                return task;
-
-            }
-            catch (Exception e)
-            {
-                throw new ArgumentException($"Failed to download artifact {artifact.Name}.\n -{e.Message}");
-            }
-        }
+        
         /// <summary>
         /// Download an artifact(file/folder) items independently.
         /// </summary>
