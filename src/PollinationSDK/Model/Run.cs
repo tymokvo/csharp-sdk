@@ -46,7 +46,7 @@ namespace PollinationSDK
         /// <param name="job">job (required).</param>
         /// <param name="author">author.</param>
         /// <param name="owner">owner.</param>
-        /// <param name="status">The status of the job.</param>
+        /// <param name="status">The status of the run.</param>
         public Run
         (
            string id, Job job, // Required parameters
@@ -89,9 +89,9 @@ namespace PollinationSDK
         [DataMember(Name = "owner", EmitDefaultValue = false)]
         public AccountPublic Owner { get; set; } 
         /// <summary>
-        /// The status of the job
+        /// The status of the run
         /// </summary>
-        /// <value>The status of the job</value>
+        /// <value>The status of the run</value>
         [DataMember(Name = "status", EmitDefaultValue = false)]
         public JobStatus Status { get; set; } 
 

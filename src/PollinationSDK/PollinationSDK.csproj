@@ -3,14 +3,14 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>0.10.13.2</Version>
+    <Version>0.10.14.0</Version>
     <Authors>Ladybug Tools</Authors>
     <Description>This is the .Net version of PollinationSDK</Description>
     <Copyright>Copyright © 2020 Ladybug Tools LLC</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/pollination/csharp-sdk</PackageProjectUrl>
-    <AssemblyVersion>0.10.13.0</AssemblyVersion>
-    <FileVersion>0.10.13.0</FileVersion>
+    <AssemblyVersion>0.10.14.0</AssemblyVersion>
+    <FileVersion>0.10.14.0</FileVersion>
     <RepositoryUrl>https://github.com/pollination/csharp-sdk</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>

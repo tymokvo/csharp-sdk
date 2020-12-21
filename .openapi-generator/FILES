@@ -198,13 +198,10 @@ docs/Job.md
 docs/JobAllOf.md
 docs/JobArgument.md
 docs/JobArgumentAllOf.md
-docs/JobList.md
-docs/JobListAllOf.md
 docs/JobPathArgument.md
 docs/JobPathArgumentAllOf.md
 docs/JobStatus.md
 docs/JobStatusAllOf.md
-docs/JobsApi.md
 docs/KeyRequest.md
 docs/KeyRequestAllOf.md
 docs/License.md
@@ -313,6 +310,9 @@ docs/RepositoryUserPermissions.md
 docs/RepositoryUserPermissionsAllOf.md
 docs/Run.md
 docs/RunAllOf.md
+docs/RunList.md
+docs/RunListAllOf.md
+docs/RunsApi.md
 docs/S3.md
 docs/S3AllOf.md
 docs/S3UploadRequest.md
@@ -418,12 +418,12 @@ docs/ValueReferenceAllOf.md
 src/PollinationSDK.Test/Api/APITokensApiTests.cs
 src/PollinationSDK.Test/Api/AccountsApiTests.cs
 src/PollinationSDK.Test/Api/ArtifactsApiTests.cs
-src/PollinationSDK.Test/Api/JobsApiTests.cs
 src/PollinationSDK.Test/Api/OrgsApiTests.cs
 src/PollinationSDK.Test/Api/PluginsApiTests.cs
 src/PollinationSDK.Test/Api/ProjectsApiTests.cs
 src/PollinationSDK.Test/Api/RecipesApiTests.cs
 src/PollinationSDK.Test/Api/RegistriesApiTests.cs
+src/PollinationSDK.Test/Api/RunsApiTests.cs
 src/PollinationSDK.Test/Api/TeamsApiTests.cs
 src/PollinationSDK.Test/Api/UserApiTests.cs
 src/PollinationSDK.Test/Api/UsersApiTests.cs
@@ -622,8 +622,6 @@ src/PollinationSDK.Test/Model/ItemTypeTests.cs
 src/PollinationSDK.Test/Model/JobAllOfTests.cs
 src/PollinationSDK.Test/Model/JobArgumentAllOfTests.cs
 src/PollinationSDK.Test/Model/JobArgumentTests.cs
-src/PollinationSDK.Test/Model/JobListAllOfTests.cs
-src/PollinationSDK.Test/Model/JobListTests.cs
 src/PollinationSDK.Test/Model/JobPathArgumentAllOfTests.cs
 src/PollinationSDK.Test/Model/JobPathArgumentTests.cs
 src/PollinationSDK.Test/Model/JobStatusAllOfTests.cs
@@ -731,6 +729,8 @@ src/PollinationSDK.Test/Model/RepositoryUpdateTests.cs
 src/PollinationSDK.Test/Model/RepositoryUserPermissionsAllOfTests.cs
 src/PollinationSDK.Test/Model/RepositoryUserPermissionsTests.cs
 src/PollinationSDK.Test/Model/RunAllOfTests.cs
+src/PollinationSDK.Test/Model/RunListAllOfTests.cs
+src/PollinationSDK.Test/Model/RunListTests.cs
 src/PollinationSDK.Test/Model/RunTests.cs
 src/PollinationSDK.Test/Model/S3AllOfTests.cs
 src/PollinationSDK.Test/Model/S3Tests.cs
@@ -835,12 +835,12 @@ src/PollinationSDK.Test/packages.config
 src/PollinationSDK/Api/APITokensApi.cs
 src/PollinationSDK/Api/AccountsApi.cs
 src/PollinationSDK/Api/ArtifactsApi.cs
-src/PollinationSDK/Api/JobsApi.cs
 src/PollinationSDK/Api/OrgsApi.cs
 src/PollinationSDK/Api/PluginsApi.cs
 src/PollinationSDK/Api/ProjectsApi.cs
 src/PollinationSDK/Api/RecipesApi.cs
 src/PollinationSDK/Api/RegistriesApi.cs
+src/PollinationSDK/Api/RunsApi.cs
 src/PollinationSDK/Api/TeamsApi.cs
 src/PollinationSDK/Api/UserApi.cs
 src/PollinationSDK/Api/UsersApi.cs
@@ -1049,8 +1049,6 @@ src/PollinationSDK/Model/Job.cs
 src/PollinationSDK/Model/JobAllOf.cs
 src/PollinationSDK/Model/JobArgument.cs
 src/PollinationSDK/Model/JobArgumentAllOf.cs
-src/PollinationSDK/Model/JobList.cs
-src/PollinationSDK/Model/JobListAllOf.cs
 src/PollinationSDK/Model/JobPathArgument.cs
 src/PollinationSDK/Model/JobPathArgumentAllOf.cs
 src/PollinationSDK/Model/JobStatus.cs
@@ -1158,6 +1156,8 @@ src/PollinationSDK/Model/RepositoryUserPermissions.cs
 src/PollinationSDK/Model/RepositoryUserPermissionsAllOf.cs
 src/PollinationSDK/Model/Run.cs
 src/PollinationSDK/Model/RunAllOf.cs
+src/PollinationSDK/Model/RunList.cs
+src/PollinationSDK/Model/RunListAllOf.cs
 src/PollinationSDK/Model/S3.cs
 src/PollinationSDK/Model/S3AllOf.cs
 src/PollinationSDK/Model/S3UploadRequest.cs

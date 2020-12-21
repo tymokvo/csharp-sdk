@@ -26,21 +26,21 @@ namespace PollinationSDK
     /// <summary>
     /// A list response from a pagination request
     /// </summary>
-    [DataContract(Name = "JobList")]
-    public partial class JobList : OpenAPIGenBaseModel, IEquatable<JobList>, IValidatableObject
+    [DataContract(Name = "RunList")]
+    public partial class RunList : OpenAPIGenBaseModel, IEquatable<RunList>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="JobList" /> class.
+        /// Initializes a new instance of the <see cref="RunList" /> class.
         /// </summary>
         [JsonConstructorAttribute]
-        protected JobList() 
+        protected RunList() 
         { 
             // Set non-required readonly properties with defaultValue
-            this.Type = "JobList";
+            this.Type = "RunList";
         }
         
         /// <summary>
-        /// Initializes a new instance of the <see cref="JobList" /> class.
+        /// Initializes a new instance of the <see cref="RunList" /> class.
         /// </summary>
         /// <param name="page">The current page the pagination request is on (required).</param>
         /// <param name="perPage">The number of pages per pagination request (required).</param>
@@ -48,7 +48,7 @@ namespace PollinationSDK
         /// <param name="totalCount">The total number of resources matching the list request (required).</param>
         /// <param name="resources">resources (required).</param>
         /// <param name="nextPage">The next page, if this on is not the last.</param>
-        public JobList
+        public RunList
         (
            int page, int perPage, int pageCount, int totalCount, List<Run> resources, // Required parameters
            int nextPage= default // Optional parameters
@@ -59,11 +59,11 @@ namespace PollinationSDK
             this.PageCount = pageCount;
             this.TotalCount = totalCount;
             // to ensure "resources" is required (not null)
-            this.Resources = resources ?? throw new ArgumentNullException("resources is a required property for JobList and cannot be null");
+            this.Resources = resources ?? throw new ArgumentNullException("resources is a required property for RunList and cannot be null");
             this.NextPage = nextPage;
 
             // Set non-required readonly properties with defaultValue
-            this.Type = "JobList";
+            this.Type = "RunList";
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            return "JobList";
+            return "RunList";
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace PollinationSDK
                 return this.ToString();
             
             var sb = new StringBuilder();
-            sb.Append("JobList:\n");
+            sb.Append("RunList:\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  Page: ").Append(Page).Append("\n");
             sb.Append("  PerPage: ").Append(PerPage).Append("\n");
@@ -135,10 +135,10 @@ namespace PollinationSDK
         /// <summary>
         /// Returns the object from JSON string
         /// </summary>
-        /// <returns>JobList object</returns>
-        public static JobList FromJson(string json)
+        /// <returns>RunList object</returns>
+        public static RunList FromJson(string json)
         {
-            var obj = JsonConvert.DeserializeObject<JobList>(json, JsonSetting.AnyOfConvertSetting);
+            var obj = JsonConvert.DeserializeObject<RunList>(json, JsonSetting.AnyOfConvertSetting);
             if (obj == null)
                 return null;
             return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
@@ -147,8 +147,8 @@ namespace PollinationSDK
         /// <summary>
         /// Creates a new instance with the same properties.
         /// </summary>
-        /// <returns>JobList object</returns>
-        public virtual JobList DuplicateJobList()
+        /// <returns>RunList object</returns>
+        public virtual RunList DuplicateRunList()
         {
             return FromJson(this.ToJson());
         }
@@ -159,7 +159,7 @@ namespace PollinationSDK
         /// <returns>OpenAPIGenBaseModel</returns>
         public override OpenAPIGenBaseModel Duplicate()
         {
-            return DuplicateJobList();
+            return DuplicateRunList();
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace PollinationSDK
         /// <returns>OpenAPIGenBaseModel</returns>
         public override OpenAPIGenBaseModel DuplicateOpenAPIGenBaseModel()
         {
-            return DuplicateJobList();
+            return DuplicateRunList();
         }
      
         /// <summary>
@@ -178,15 +178,15 @@ namespace PollinationSDK
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as JobList);
+            return this.Equals(input as RunList);
         }
 
         /// <summary>
-        /// Returns true if JobList instances are equal
+        /// Returns true if RunList instances are equal
         /// </summary>
-        /// <param name="input">Instance of JobList to be compared</param>
+        /// <param name="input">Instance of RunList to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(JobList input)
+        public bool Equals(RunList input)
         {
             if (input == null)
                 return false;
@@ -267,7 +267,7 @@ namespace PollinationSDK
 
             
             // Type (string) pattern
-            Regex regexType = new Regex(@"^JobList$", RegexOptions.CultureInvariant);
+            Regex regexType = new Regex(@"^RunList$", RegexOptions.CultureInvariant);
             if (false == regexType.Match(this.Type).Success)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Type, must match a pattern of " + regexType, new [] { "Type" });

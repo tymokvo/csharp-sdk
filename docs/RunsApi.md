@@ -1,30 +1,30 @@
-# PollinationSDK.Api.JobsApi
+# PollinationSDK.Api.RunsApi
 
 All URIs are relative to *https://api.pollination.cloud*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreateJob**](JobsApi.md#createjob) | **POST** /projects/{owner}/{name}/jobs | Schedule a job
-[**DownloadJobArtifact**](JobsApi.md#downloadjobartifact) | **GET** /projects/{owner}/{name}/jobs/{job_id}/artifacts/download | Download an artifact from the job folder
-[**GetJob**](JobsApi.md#getjob) | **GET** /projects/{owner}/{name}/jobs/{job_id} | Get a Job
-[**GetJobOutput**](JobsApi.md#getjoboutput) | **GET** /projects/{owner}/{name}/jobs/{job_id}/outputs/{output_name} | Get job output by name
-[**GetJobStepLogs**](JobsApi.md#getjobsteplogs) | **GET** /projects/{owner}/{name}/jobs/{job_id}/steps/{step_id}/logs | Get the logs of a specific step of the job
-[**GetJobSteps**](JobsApi.md#getjobsteps) | **GET** /projects/{owner}/{name}/jobs/{job_id}/steps | Query the steps of a job
-[**ListJobArtifacts**](JobsApi.md#listjobartifacts) | **GET** /projects/{owner}/{name}/jobs/{job_id}/artifacts | List artifacts in a job folder
-[**ListJobs**](JobsApi.md#listjobs) | **GET** /projects/{owner}/{name}/jobs | List jobs
-[**ResumeJob**](JobsApi.md#resumejob) | **PUT** /projects/{owner}/{name}/jobs/{job_id}/resume | resume a job
-[**StopJob**](JobsApi.md#stopjob) | **PUT** /projects/{owner}/{name}/jobs/{job_id}/stop | Stop a job
-[**SuspendJob**](JobsApi.md#suspendjob) | **PUT** /projects/{owner}/{name}/jobs/{job_id}/suspend | Suspend a job
+[**CreateRun**](RunsApi.md#createrun) | **POST** /projects/{owner}/{name}/runs | Schedule a run
+[**DownloadRunArtifact**](RunsApi.md#downloadrunartifact) | **GET** /projects/{owner}/{name}/runs/{run_id}/artifacts/download | Download an artifact from the run folder
+[**GetRun**](RunsApi.md#getrun) | **GET** /projects/{owner}/{name}/runs/{run_id} | Get a Run
+[**GetRunOutput**](RunsApi.md#getrunoutput) | **GET** /projects/{owner}/{name}/runs/{run_id}/outputs/{output_name} | Get run output by name
+[**GetRunStepLogs**](RunsApi.md#getrunsteplogs) | **GET** /projects/{owner}/{name}/runs/{run_id}/steps/{step_id}/logs | Get the logs of a specific step of the run
+[**GetRunSteps**](RunsApi.md#getrunsteps) | **GET** /projects/{owner}/{name}/runs/{run_id}/steps | Query the steps of a run
+[**ListRunArtifacts**](RunsApi.md#listrunartifacts) | **GET** /projects/{owner}/{name}/runs/{run_id}/artifacts | List artifacts in a run folder
+[**ListRuns**](RunsApi.md#listruns) | **GET** /projects/{owner}/{name}/runs | List runs
+[**ResumeRun**](RunsApi.md#resumerun) | **PUT** /projects/{owner}/{name}/runs/{run_id}/resume | resume a run
+[**StopRun**](RunsApi.md#stoprun) | **PUT** /projects/{owner}/{name}/runs/{run_id}/stop | Stop a run
+[**SuspendRun**](RunsApi.md#suspendrun) | **PUT** /projects/{owner}/{name}/runs/{run_id}/suspend | Suspend a run
 
 
 
-## CreateJob
+## CreateRun
 
-> CreatedContent CreateJob (string owner, string name, Job job, string authorization = null, string xPollinationToken = null)
+> CreatedContent CreateRun (string owner, string name, Job job, string authorization = null, string xPollinationToken = null)
 
-Schedule a job
+Schedule a run
 
-Create a new job.
+Create a new run.
 
 ### Example
 
@@ -37,7 +37,7 @@ using PollinationSDK.Model;
 
 namespace Example
 {
-    public class CreateJobExample
+    public class CreateRunExample
     {
         public static void Main()
         {
@@ -49,7 +49,7 @@ namespace Example
             // Configure HTTP bearer authorization: JWTAuth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
-            var apiInstance = new JobsApi(Configuration.Default);
+            var apiInstance = new RunsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
             var job = new Job(); // Job | 
@@ -58,13 +58,13 @@ namespace Example
 
             try
             {
-                // Schedule a job
-                CreatedContent result = apiInstance.CreateJob(owner, name, job, authorization, xPollinationToken);
+                // Schedule a run
+                CreatedContent result = apiInstance.CreateRun(owner, name, job, authorization, xPollinationToken);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
             {
-                Debug.Print("Exception when calling JobsApi.CreateJob: " + e.Message );
+                Debug.Print("Exception when calling RunsApi.CreateRun: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -109,13 +109,13 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## DownloadJobArtifact
+## DownloadRunArtifact
 
-> AnyType DownloadJobArtifact (string owner, string name, string jobId, string path = null)
+> AnyType DownloadRunArtifact (string owner, string name, string runId, string path = null)
 
-Download an artifact from the job folder
+Download an artifact from the run folder
 
-Get a download link for an artifact in a job folder
+Get a download link for an artifact in a run folder
 
 ### Example
 
@@ -128,7 +128,7 @@ using PollinationSDK.Model;
 
 namespace Example
 {
-    public class DownloadJobArtifactExample
+    public class DownloadRunArtifactExample
     {
         public static void Main()
         {
@@ -140,21 +140,21 @@ namespace Example
             // Configure HTTP bearer authorization: JWTAuth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
-            var apiInstance = new JobsApi(Configuration.Default);
+            var apiInstance = new RunsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var jobId = jobId_example;  // string | 
+            var runId = runId_example;  // string | 
             var path = path_example;  // string | The path to an file within a project folder (optional) 
 
             try
             {
-                // Download an artifact from the job folder
-                AnyType result = apiInstance.DownloadJobArtifact(owner, name, jobId, path);
+                // Download an artifact from the run folder
+                AnyType result = apiInstance.DownloadRunArtifact(owner, name, runId, path);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
             {
-                Debug.Print("Exception when calling JobsApi.DownloadJobArtifact: " + e.Message );
+                Debug.Print("Exception when calling RunsApi.DownloadRunArtifact: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -170,7 +170,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **jobId** | **string**|  | 
+ **runId** | **string**|  | 
  **path** | **string**| The path to an file within a project folder | [optional] 
 
 ### Return type
@@ -202,13 +202,13 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetJob
+## GetRun
 
-> Run GetJob (string owner, string name, string jobId)
+> Run GetRun (string owner, string name, string runId)
 
-Get a Job
+Get a Run
 
-Retrieve a job.
+Retrieve a run.
 
 ### Example
 
@@ -221,7 +221,7 @@ using PollinationSDK.Model;
 
 namespace Example
 {
-    public class GetJobExample
+    public class GetRunExample
     {
         public static void Main()
         {
@@ -233,20 +233,20 @@ namespace Example
             // Configure HTTP bearer authorization: JWTAuth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
-            var apiInstance = new JobsApi(Configuration.Default);
+            var apiInstance = new RunsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var jobId = jobId_example;  // string | 
+            var runId = runId_example;  // string | 
 
             try
             {
-                // Get a Job
-                Run result = apiInstance.GetJob(owner, name, jobId);
+                // Get a Run
+                Run result = apiInstance.GetRun(owner, name, runId);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
             {
-                Debug.Print("Exception when calling JobsApi.GetJob: " + e.Message );
+                Debug.Print("Exception when calling RunsApi.GetRun: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -262,7 +262,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **jobId** | **string**|  | 
+ **runId** | **string**|  | 
 
 ### Return type
 
@@ -289,13 +289,13 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetJobOutput
+## GetRunOutput
 
-> AnyType GetJobOutput (string owner, string name, string jobId, string outputName)
+> AnyType GetRunOutput (string owner, string name, string runId, string outputName)
 
-Get job output by name
+Get run output by name
 
-get job output by name
+get run output by name
 
 ### Example
 
@@ -308,7 +308,7 @@ using PollinationSDK.Model;
 
 namespace Example
 {
-    public class GetJobOutputExample
+    public class GetRunOutputExample
     {
         public static void Main()
         {
@@ -320,21 +320,21 @@ namespace Example
             // Configure HTTP bearer authorization: JWTAuth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
-            var apiInstance = new JobsApi(Configuration.Default);
+            var apiInstance = new RunsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var jobId = jobId_example;  // string | 
+            var runId = runId_example;  // string | 
             var outputName = outputName_example;  // string | 
 
             try
             {
-                // Get job output by name
-                AnyType result = apiInstance.GetJobOutput(owner, name, jobId, outputName);
+                // Get run output by name
+                AnyType result = apiInstance.GetRunOutput(owner, name, runId, outputName);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
             {
-                Debug.Print("Exception when calling JobsApi.GetJobOutput: " + e.Message );
+                Debug.Print("Exception when calling RunsApi.GetRunOutput: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -350,7 +350,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **jobId** | **string**|  | 
+ **runId** | **string**|  | 
  **outputName** | **string**|  | 
 
 ### Return type
@@ -382,13 +382,13 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetJobStepLogs
+## GetRunStepLogs
 
-> string GetJobStepLogs (string owner, string name, string jobId, string stepId)
+> string GetRunStepLogs (string owner, string name, string runId, string stepId)
 
-Get the logs of a specific step of the job
+Get the logs of a specific step of the run
 
-get job step logs
+get run step logs
 
 ### Example
 
@@ -401,7 +401,7 @@ using PollinationSDK.Model;
 
 namespace Example
 {
-    public class GetJobStepLogsExample
+    public class GetRunStepLogsExample
     {
         public static void Main()
         {
@@ -413,21 +413,21 @@ namespace Example
             // Configure HTTP bearer authorization: JWTAuth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
-            var apiInstance = new JobsApi(Configuration.Default);
+            var apiInstance = new RunsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var jobId = jobId_example;  // string | 
+            var runId = runId_example;  // string | 
             var stepId = stepId_example;  // string | 
 
             try
             {
-                // Get the logs of a specific step of the job
-                string result = apiInstance.GetJobStepLogs(owner, name, jobId, stepId);
+                // Get the logs of a specific step of the run
+                string result = apiInstance.GetRunStepLogs(owner, name, runId, stepId);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
             {
-                Debug.Print("Exception when calling JobsApi.GetJobStepLogs: " + e.Message );
+                Debug.Print("Exception when calling RunsApi.GetRunStepLogs: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -443,7 +443,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **jobId** | **string**|  | 
+ **runId** | **string**|  | 
  **stepId** | **string**|  | 
 
 ### Return type
@@ -471,13 +471,13 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetJobSteps
+## GetRunSteps
 
-> StepList GetJobSteps (string owner, string name, string jobId, string status = null, List<string> stepId = null, int? page = null, int? perPage = null)
+> StepList GetRunSteps (string owner, string name, string runId, string status = null, List<string> stepId = null, int? page = null, int? perPage = null)
 
-Query the steps of a job
+Query the steps of a run
 
-list job steps
+list run steps
 
 ### Example
 
@@ -490,7 +490,7 @@ using PollinationSDK.Model;
 
 namespace Example
 {
-    public class GetJobStepsExample
+    public class GetRunStepsExample
     {
         public static void Main()
         {
@@ -502,10 +502,10 @@ namespace Example
             // Configure HTTP bearer authorization: JWTAuth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
-            var apiInstance = new JobsApi(Configuration.Default);
+            var apiInstance = new RunsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var jobId = jobId_example;  // string | 
+            var runId = runId_example;  // string | 
             var status = status_example;  // string |  (optional) 
             var stepId = new List<string>(); // List<string> |  (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
@@ -513,13 +513,13 @@ namespace Example
 
             try
             {
-                // Query the steps of a job
-                StepList result = apiInstance.GetJobSteps(owner, name, jobId, status, stepId, page, perPage);
+                // Query the steps of a run
+                StepList result = apiInstance.GetRunSteps(owner, name, runId, status, stepId, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
             {
-                Debug.Print("Exception when calling JobsApi.GetJobSteps: " + e.Message );
+                Debug.Print("Exception when calling RunsApi.GetRunSteps: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -535,7 +535,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **jobId** | **string**|  | 
+ **runId** | **string**|  | 
  **status** | **string**|  | [optional] 
  **stepId** | [**List&lt;string&gt;**](string.md)|  | [optional] 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
@@ -566,13 +566,13 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ListJobArtifacts
+## ListRunArtifacts
 
-> List&lt;FileMeta&gt; ListJobArtifacts (string owner, string name, string jobId, int? page = null, int? perPage = null, List<string> path = null)
+> List&lt;FileMeta&gt; ListRunArtifacts (string owner, string name, string runId, int? page = null, int? perPage = null, List<string> path = null)
 
-List artifacts in a job folder
+List artifacts in a run folder
 
-Retrieve a list of artifacts in a job folder
+Retrieve a list of artifacts in a run folder
 
 ### Example
 
@@ -585,7 +585,7 @@ using PollinationSDK.Model;
 
 namespace Example
 {
-    public class ListJobArtifactsExample
+    public class ListRunArtifactsExample
     {
         public static void Main()
         {
@@ -597,23 +597,23 @@ namespace Example
             // Configure HTTP bearer authorization: JWTAuth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
-            var apiInstance = new JobsApi(Configuration.Default);
+            var apiInstance = new RunsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var jobId = jobId_example;  // string | 
+            var runId = runId_example;  // string | 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
             var path = new List<string>(); // List<string> | The path to an file within a project folder (optional) 
 
             try
             {
-                // List artifacts in a job folder
-                List<FileMeta> result = apiInstance.ListJobArtifacts(owner, name, jobId, page, perPage, path);
+                // List artifacts in a run folder
+                List<FileMeta> result = apiInstance.ListRunArtifacts(owner, name, runId, page, perPage, path);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
             {
-                Debug.Print("Exception when calling JobsApi.ListJobArtifacts: " + e.Message );
+                Debug.Print("Exception when calling RunsApi.ListRunArtifacts: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -629,7 +629,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **jobId** | **string**|  | 
+ **runId** | **string**|  | 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
  **perPage** | **int?**| Number of items per page | [optional] [default to 25]
  **path** | [**List&lt;string&gt;**](string.md)| The path to an file within a project folder | [optional] 
@@ -659,13 +659,13 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ListJobs
+## ListRuns
 
-> JobList ListJobs (string owner, string name, List<string> ids = null, string status = null, int? page = null, int? perPage = null)
+> RunList ListRuns (string owner, string name, List<string> ids = null, string status = null, int? page = null, int? perPage = null)
 
-List jobs
+List runs
 
-Retrieve a list of jobs.
+Retrieve a list of runs.
 
 ### Example
 
@@ -678,7 +678,7 @@ using PollinationSDK.Model;
 
 namespace Example
 {
-    public class ListJobsExample
+    public class ListRunsExample
     {
         public static void Main()
         {
@@ -690,7 +690,7 @@ namespace Example
             // Configure HTTP bearer authorization: JWTAuth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
-            var apiInstance = new JobsApi(Configuration.Default);
+            var apiInstance = new RunsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
             var ids = new List<string>(); // List<string> |  (optional) 
@@ -700,13 +700,13 @@ namespace Example
 
             try
             {
-                // List jobs
-                JobList result = apiInstance.ListJobs(owner, name, ids, status, page, perPage);
+                // List runs
+                RunList result = apiInstance.ListRuns(owner, name, ids, status, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
             {
-                Debug.Print("Exception when calling JobsApi.ListJobs: " + e.Message );
+                Debug.Print("Exception when calling RunsApi.ListRuns: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -729,7 +729,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**JobList**](JobList.md)
+[**RunList**](RunList.md)
 
 ### Authorization
 
@@ -752,13 +752,13 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ResumeJob
+## ResumeRun
 
-> Accepted ResumeJob (string owner, string name, string jobId)
+> Accepted ResumeRun (string owner, string name, string runId)
 
-resume a job
+resume a run
 
-resume a job
+resume a run
 
 ### Example
 
@@ -771,7 +771,7 @@ using PollinationSDK.Model;
 
 namespace Example
 {
-    public class ResumeJobExample
+    public class ResumeRunExample
     {
         public static void Main()
         {
@@ -783,20 +783,20 @@ namespace Example
             // Configure HTTP bearer authorization: JWTAuth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
-            var apiInstance = new JobsApi(Configuration.Default);
+            var apiInstance = new RunsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var jobId = jobId_example;  // string | 
+            var runId = runId_example;  // string | 
 
             try
             {
-                // resume a job
-                Accepted result = apiInstance.ResumeJob(owner, name, jobId);
+                // resume a run
+                Accepted result = apiInstance.ResumeRun(owner, name, runId);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
             {
-                Debug.Print("Exception when calling JobsApi.ResumeJob: " + e.Message );
+                Debug.Print("Exception when calling RunsApi.ResumeRun: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -812,7 +812,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **jobId** | **string**|  | 
+ **runId** | **string**|  | 
 
 ### Return type
 
@@ -839,13 +839,13 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## StopJob
+## StopRun
 
-> Accepted StopJob (string owner, string name, string jobId)
+> Accepted StopRun (string owner, string name, string runId)
 
-Stop a job
+Stop a run
 
-Stop a job.
+Stop a run.
 
 ### Example
 
@@ -858,7 +858,7 @@ using PollinationSDK.Model;
 
 namespace Example
 {
-    public class StopJobExample
+    public class StopRunExample
     {
         public static void Main()
         {
@@ -870,20 +870,20 @@ namespace Example
             // Configure HTTP bearer authorization: JWTAuth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
-            var apiInstance = new JobsApi(Configuration.Default);
+            var apiInstance = new RunsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var jobId = jobId_example;  // string | 
+            var runId = runId_example;  // string | 
 
             try
             {
-                // Stop a job
-                Accepted result = apiInstance.StopJob(owner, name, jobId);
+                // Stop a run
+                Accepted result = apiInstance.StopRun(owner, name, runId);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
             {
-                Debug.Print("Exception when calling JobsApi.StopJob: " + e.Message );
+                Debug.Print("Exception when calling RunsApi.StopRun: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -899,7 +899,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **jobId** | **string**|  | 
+ **runId** | **string**|  | 
 
 ### Return type
 
@@ -926,13 +926,13 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## SuspendJob
+## SuspendRun
 
-> Accepted SuspendJob (string owner, string name, string jobId)
+> Accepted SuspendRun (string owner, string name, string runId)
 
-Suspend a job
+Suspend a run
 
-Stop a job.
+Stop a run.
 
 ### Example
 
@@ -945,7 +945,7 @@ using PollinationSDK.Model;
 
 namespace Example
 {
-    public class SuspendJobExample
+    public class SuspendRunExample
     {
         public static void Main()
         {
@@ -957,20 +957,20 @@ namespace Example
             // Configure HTTP bearer authorization: JWTAuth
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
-            var apiInstance = new JobsApi(Configuration.Default);
+            var apiInstance = new RunsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var jobId = jobId_example;  // string | 
+            var runId = runId_example;  // string | 
 
             try
             {
-                // Suspend a job
-                Accepted result = apiInstance.SuspendJob(owner, name, jobId);
+                // Suspend a run
+                Accepted result = apiInstance.SuspendRun(owner, name, runId);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
             {
-                Debug.Print("Exception when calling JobsApi.SuspendJob: " + e.Message );
+                Debug.Print("Exception when calling RunsApi.SuspendRun: " + e.Message );
                 Debug.Print("Status Code: "+ e.ErrorCode);
                 Debug.Print(e.StackTrace);
             }
@@ -986,7 +986,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **jobId** | **string**|  | 
+ **runId** | **string**|  | 
 
 ### Return type
 

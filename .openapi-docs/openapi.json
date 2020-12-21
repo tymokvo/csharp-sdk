@@ -3,7 +3,7 @@
   "info": {
     "title": "Pollination Server",
     "description": "Pollination Server OpenAPI Definition",
-    "version": "0.10.13",
+    "version": "0.10.14",
     "contact": {
       "name": "PollinationSolutions",
       "url": "https://pollination.cloud",
@@ -4670,14 +4670,14 @@
         ]
       }
     },
-    "/projects/{owner}/{name}/jobs": {
+    "/projects/{owner}/{name}/runs": {
       "get": {
         "tags": [
-          "Jobs"
+          "Runs"
         ],
-        "summary": "List jobs",
-        "description": "Retrieve a list of jobs.",
-        "operationId": "list_jobs",
+        "summary": "List runs",
+        "description": "Retrieve a list of runs.",
+        "operationId": "list_runs",
         "parameters": [
           {
             "required": true,
@@ -4700,7 +4700,7 @@
           {
             "required": false,
             "schema": {
-              "title": "Job IDs",
+              "title": "Run IDs",
               "type": "array",
               "items": {
                 "type": "string"
@@ -4712,7 +4712,7 @@
           {
             "required": false,
             "schema": {
-              "title": "The status of the job",
+              "title": "The status of the run",
               "type": "string"
             },
             "name": "status",
@@ -4751,7 +4751,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/JobList"
+                  "$ref": "#/components/schemas/RunList"
                 }
               }
             }
@@ -4778,11 +4778,11 @@
       },
       "post": {
         "tags": [
-          "Jobs"
+          "Runs"
         ],
-        "summary": "Schedule a job",
-        "description": "Create a new job.",
-        "operationId": "create_job",
+        "summary": "Schedule a run",
+        "description": "Create a new run.",
+        "operationId": "create_run",
         "parameters": [
           {
             "required": true,
@@ -4863,14 +4863,14 @@
         ]
       }
     },
-    "/projects/{owner}/{name}/jobs/{job_id}": {
+    "/projects/{owner}/{name}/runs/{run_id}": {
       "get": {
         "tags": [
-          "Jobs"
+          "Runs"
         ],
-        "summary": "Get a Job",
-        "description": "Retrieve a job.",
-        "operationId": "get_job",
+        "summary": "Get a Run",
+        "description": "Retrieve a run.",
+        "operationId": "get_run",
         "parameters": [
           {
             "required": true,
@@ -4893,10 +4893,10 @@
           {
             "required": true,
             "schema": {
-              "title": "Job ID",
+              "title": "Run ID",
               "type": "string"
             },
-            "name": "job_id",
+            "name": "run_id",
             "in": "path"
           }
         ],
@@ -4932,14 +4932,14 @@
         ]
       }
     },
-    "/projects/{owner}/{name}/jobs/{job_id}/stop": {
+    "/projects/{owner}/{name}/runs/{run_id}/stop": {
       "put": {
         "tags": [
-          "Jobs"
+          "Runs"
         ],
-        "summary": "Stop a job",
-        "description": "Stop a job.",
-        "operationId": "stop_job",
+        "summary": "Stop a run",
+        "description": "Stop a run.",
+        "operationId": "stop_run",
         "parameters": [
           {
             "required": true,
@@ -4962,10 +4962,10 @@
           {
             "required": true,
             "schema": {
-              "title": "Job id.",
+              "title": "Run id.",
               "type": "string"
             },
-            "name": "job_id",
+            "name": "run_id",
             "in": "path"
           }
         ],
@@ -5001,14 +5001,14 @@
         ]
       }
     },
-    "/projects/{owner}/{name}/jobs/{job_id}/suspend": {
+    "/projects/{owner}/{name}/runs/{run_id}/suspend": {
       "put": {
         "tags": [
-          "Jobs"
+          "Runs"
         ],
-        "summary": "Suspend a job",
-        "description": "Stop a job.",
-        "operationId": "suspend_job",
+        "summary": "Suspend a run",
+        "description": "Stop a run.",
+        "operationId": "suspend_run",
         "parameters": [
           {
             "required": true,
@@ -5031,10 +5031,10 @@
           {
             "required": true,
             "schema": {
-              "title": "Job id.",
+              "title": "Run id.",
               "type": "string"
             },
-            "name": "job_id",
+            "name": "run_id",
             "in": "path"
           }
         ],
@@ -5070,14 +5070,14 @@
         ]
       }
     },
-    "/projects/{owner}/{name}/jobs/{job_id}/resume": {
+    "/projects/{owner}/{name}/runs/{run_id}/resume": {
       "put": {
         "tags": [
-          "Jobs"
+          "Runs"
         ],
-        "summary": "resume a job",
-        "description": "resume a job",
-        "operationId": "resume_job",
+        "summary": "resume a run",
+        "description": "resume a run",
+        "operationId": "resume_run",
         "parameters": [
           {
             "required": true,
@@ -5100,10 +5100,10 @@
           {
             "required": true,
             "schema": {
-              "title": "Job id.",
+              "title": "Run id.",
               "type": "string"
             },
-            "name": "job_id",
+            "name": "run_id",
             "in": "path"
           }
         ],
@@ -5139,14 +5139,14 @@
         ]
       }
     },
-    "/projects/{owner}/{name}/jobs/{job_id}/outputs/{output_name}": {
+    "/projects/{owner}/{name}/runs/{run_id}/outputs/{output_name}": {
       "get": {
         "tags": [
-          "Jobs"
+          "Runs"
         ],
-        "summary": "Get job output by name",
-        "description": "get job output by name",
-        "operationId": "get_job_output",
+        "summary": "Get run output by name",
+        "description": "get run output by name",
+        "operationId": "get_run_output",
         "parameters": [
           {
             "required": true,
@@ -5169,10 +5169,10 @@
           {
             "required": true,
             "schema": {
-              "title": "Job ID",
+              "title": "Run ID",
               "type": "string"
             },
-            "name": "job_id",
+            "name": "run_id",
             "in": "path"
           },
           {
@@ -5227,14 +5227,14 @@
         ]
       }
     },
-    "/projects/{owner}/{name}/jobs/{job_id}/steps": {
+    "/projects/{owner}/{name}/runs/{run_id}/steps": {
       "get": {
         "tags": [
-          "Jobs"
+          "Runs"
         ],
-        "summary": "Query the steps of a job",
-        "description": "list job steps",
-        "operationId": "get_job_steps",
+        "summary": "Query the steps of a run",
+        "description": "list run steps",
+        "operationId": "get_run_steps",
         "parameters": [
           {
             "required": true,
@@ -5257,10 +5257,10 @@
           {
             "required": true,
             "schema": {
-              "title": "Job id.",
+              "title": "Run id.",
               "type": "string"
             },
-            "name": "job_id",
+            "name": "run_id",
             "in": "path"
           },
           {
@@ -5343,14 +5343,14 @@
         ]
       }
     },
-    "/projects/{owner}/{name}/jobs/{job_id}/steps/{step_id}/logs": {
+    "/projects/{owner}/{name}/runs/{run_id}/steps/{step_id}/logs": {
       "get": {
         "tags": [
-          "Jobs"
+          "Runs"
         ],
-        "summary": "Get the logs of a specific step of the job",
-        "description": "get job step logs",
-        "operationId": "get_job_step_logs",
+        "summary": "Get the logs of a specific step of the run",
+        "description": "get run step logs",
+        "operationId": "get_run_step_logs",
         "parameters": [
           {
             "required": true,
@@ -5373,16 +5373,16 @@
           {
             "required": true,
             "schema": {
-              "title": "Job id.",
+              "title": "Run id.",
               "type": "string"
             },
-            "name": "job_id",
+            "name": "run_id",
             "in": "path"
           },
           {
             "required": true,
             "schema": {
-              "title": "Job Task name.",
+              "title": "Run Task name.",
               "type": "string"
             },
             "name": "step_id",
@@ -5395,7 +5395,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Response Get Step Logs Projects  Owner   Name  Jobs  Job Id  Steps  Step Id  Logs Get",
+                  "title": "Response Get Step Logs Projects  Owner   Name  Runs  Run Id  Steps  Step Id  Logs Get",
                   "type": "string"
                 }
               }
@@ -5422,14 +5422,14 @@
         ]
       }
     },
-    "/projects/{owner}/{name}/jobs/{job_id}/artifacts": {
+    "/projects/{owner}/{name}/runs/{run_id}/artifacts": {
       "get": {
         "tags": [
-          "Jobs"
+          "Runs"
         ],
-        "summary": "List artifacts in a job folder",
-        "description": "Retrieve a list of artifacts in a job folder",
-        "operationId": "list_job_artifacts",
+        "summary": "List artifacts in a run folder",
+        "description": "Retrieve a list of artifacts in a run folder",
+        "operationId": "list_run_artifacts",
         "parameters": [
           {
             "required": true,
@@ -5452,10 +5452,10 @@
           {
             "required": true,
             "schema": {
-              "title": "Job id.",
+              "title": "Run id.",
               "type": "string"
             },
-            "name": "job_id",
+            "name": "run_id",
             "in": "path"
           },
           {
@@ -5505,7 +5505,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Response Get List Artifacts Projects  Owner   Name  Jobs  Job Id  Artifacts Get",
+                  "title": "Response Get List Artifacts Projects  Owner   Name  Runs  Run Id  Artifacts Get",
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/FileMeta"
@@ -5535,14 +5535,14 @@
         ]
       }
     },
-    "/projects/{owner}/{name}/jobs/{job_id}/artifacts/download": {
+    "/projects/{owner}/{name}/runs/{run_id}/artifacts/download": {
       "get": {
         "tags": [
-          "Jobs"
+          "Runs"
         ],
-        "summary": "Download an artifact from the job folder",
-        "description": "Get a download link for an artifact in a job folder",
-        "operationId": "download_job_artifact",
+        "summary": "Download an artifact from the run folder",
+        "description": "Get a download link for an artifact in a run folder",
+        "operationId": "download_run_artifact",
         "parameters": [
           {
             "required": true,
@@ -5565,10 +5565,10 @@
           {
             "required": true,
             "schema": {
-              "title": "Job id.",
+              "title": "Run id.",
               "type": "string"
             },
-            "name": "job_id",
+            "name": "run_id",
             "in": "path"
           },
           {
@@ -12224,57 +12224,6 @@
         "additionalProperties": false,
         "description": "Job argument is an argument input for arguments which are not files or folders."
       },
-      "JobList": {
-        "title": "JobList",
-        "required": [
-          "page",
-          "per_page",
-          "page_count",
-          "total_count",
-          "resources"
-        ],
-        "type": "object",
-        "properties": {
-          "page": {
-            "title": "Page",
-            "type": "integer",
-            "description": "The current page the pagination request is on",
-            "format": "int32"
-          },
-          "per_page": {
-            "title": "Per Page",
-            "type": "integer",
-            "description": "The number of pages per pagination request",
-            "format": "int32"
-          },
-          "page_count": {
-            "title": "Page Count",
-            "type": "integer",
-            "description": "The total number of pages",
-            "format": "int32"
-          },
-          "total_count": {
-            "title": "Total Count",
-            "type": "integer",
-            "description": "The total number of resources matching the list request",
-            "format": "int32"
-          },
-          "resources": {
-            "title": "Resources",
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Run"
-            }
-          },
-          "next_page": {
-            "title": "Next Page",
-            "type": "integer",
-            "description": "The next page, if this on is not the last",
-            "format": "int32"
-          }
-        },
-        "description": "A list response from a pagination request"
-      },
       "JobPathArgument": {
         "title": "JobPathArgument",
         "required": [
@@ -14716,9 +14665,60 @@
                 "$ref": "#/components/schemas/JobStatus"
               }
             ],
-            "description": "The status of the job"
+            "description": "The status of the run"
           }
         }
+      },
+      "RunList": {
+        "title": "RunList",
+        "required": [
+          "page",
+          "per_page",
+          "page_count",
+          "total_count",
+          "resources"
+        ],
+        "type": "object",
+        "properties": {
+          "page": {
+            "title": "Page",
+            "type": "integer",
+            "description": "The current page the pagination request is on",
+            "format": "int32"
+          },
+          "per_page": {
+            "title": "Per Page",
+            "type": "integer",
+            "description": "The number of pages per pagination request",
+            "format": "int32"
+          },
+          "page_count": {
+            "title": "Page Count",
+            "type": "integer",
+            "description": "The total number of pages",
+            "format": "int32"
+          },
+          "total_count": {
+            "title": "Total Count",
+            "type": "integer",
+            "description": "The total number of resources matching the list request",
+            "format": "int32"
+          },
+          "resources": {
+            "title": "Resources",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Run"
+            }
+          },
+          "next_page": {
+            "title": "Next Page",
+            "type": "integer",
+            "description": "The next page, if this on is not the last",
+            "format": "int32"
+          }
+        },
+        "description": "A list response from a pagination request"
       },
       "S3": {
         "title": "S3",
