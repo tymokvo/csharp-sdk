@@ -63,7 +63,7 @@ namespace ConsoleAppDemo
 
             Console.WriteLine("--------------------Get a project-------------------");
             var proj = Helper.GetAProject(me.Username, "demo");
-            Console.WriteLine($"Getting the project. \n Found this project ID: {proj.Id}");
+            Console.WriteLine($"Getting the project. \nFound this project {proj.Name} ID: {proj.Id}");
 
 
             //Console.WriteLine("--------------------Getting Recipe Params-------------------");
@@ -105,12 +105,11 @@ namespace ConsoleAppDemo
 
             //var workflow = CreateWorkflow("ladybug-tools", "annual-daylight");
             var jobInfo = CreateJob_DaylightFactor();
+            //var jobInfo = CreateJob_AnnualDaylight();
 
             try
             {
-
                 var task = runSimu(proj, jobInfo, (s) => Console.WriteLine(s), token);
-
                 //cts.CancelAfter(60000);
                 task.Wait();
 
@@ -142,17 +141,22 @@ namespace ConsoleAppDemo
 
 
             //Console.WriteLine("--------------------Download simulation output-------------------");
-            //DownloadOutputs(proj, "8b7033ac-e2e7-44d3-b631-81fa1ecfefb0", new List<string> { "results"});
+            //var runInfo = new RunInfo(proj, "a211fd95-2830-411a-a4e9-35e4ccbe4eab");
+            //DownloadOutputs(runInfo, new List<string> { "results" });
             //Console.WriteLine("Done downloading");
 
 
             //Console.WriteLine("--------------------Download simulation log-------------------");
             ////@"C:\\Users\\mingo\\AppData\\Local\\Temp\\Pollination\\9936f815-25f1-40b8-a298-71091dd6b71a\\re4veore.tvs\\logs.tgz"
-            //var simu = new Simulation(proj, "419f600f-3f31-4dda-a7f5-1cdcd2bab08d");
-            //var simuLog = simu.GetSimulationOutputLogAsync(Console.WriteLine).Result;
+            //var rapi = new RunsApi();
+            //var run = rapi.GetRun("mingbo","demo", "941e9e52-4f98-4dd8-87b9-16129bc38c47");
+            //var simu = rapi.GetRunSteps("mingbo", "demo", "941e9e52-4f98-4dd8-87b9-16129bc38c47").Resources;
+            ////var simuLog = simu.GetSimulationOutputLogAsync(Console.WriteLine).Result;
 
             //Console.WriteLine("Done downloading");
-            //Console.WriteLine(simuLog);
+            ////Console.WriteLine(simuLog);
+            //var entryID = run.Status.Entrypoint;
+            //var log = rapi.GetRunStepLogs("mingbo", "demo", "941e9e52-4f98-4dd8-87b9-16129bc38c47", entryID);
 
 
 
@@ -160,27 +164,29 @@ namespace ConsoleAppDemo
 
         }
 
-        private static async Task runSimu(Project proj, JobInfo job, Action<string> msgAction, CancellationToken token)
+        private static async Task<RunInfo> runSimu(Project proj, JobInfo job, Action<string> msgAction, CancellationToken token)
         {
             try
             {
                 var runInfo = await job.RunJobOnCloud(proj, msgAction, token);
+                msgAction($"Starting the job: {runInfo.RunID}");
                 await runInfo.CheckStatusAndGetLogsAsync(msgAction, token);
 
-                msgAction(runInfo.Logs);
+                //msgAction(runInfo.Logs);
 
                 if (!token.IsCancellationRequested)
                 {
-                    msgAction($"Finished simulation: {runInfo.RunID}");
+                    msgAction($"Finished the job: {runInfo.RunID}");
                 }
 
                 msgAction($"Canceled by user: {token.IsCancellationRequested}");
+                return runInfo;
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                throw;
+                throw e;
             }
            
 
@@ -217,14 +223,12 @@ namespace ConsoleAppDemo
             var recipeApi = new RecipesApi();
             var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest").Manifest;
 
-            var recipeSource = "";
-            var job = new Job(recipeSource);
-           
-            job.AddArgument(new JobArgument("sensor-grids", "[\"room\"]"));
-            job.AddArgument(new JobPathArgument("model", new ProjectFolder(path: @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder\model")));
-            job.AddArgument(new JobPathArgument("wea", new ProjectFolder(path: @"C:\Users\mingo\Downloads\Compressed\project_folder\project_folder\in.wea")));
-
             var jobInfo = new JobInfo(rec);
+
+            //job.AddArgument(new JobArgument("sensor-grids", "[\"room\"]"));
+            jobInfo.AddArgument(new JobPathArgument("model", new ProjectFolder(path: @"D:\Test\queenbeeTest\two_rooms.hbjson")));
+            jobInfo.AddArgument(new JobPathArgument("wea", new ProjectFolder(path: @"D:\Test\queenbeeTest\golden_co.wea")));
+
             return jobInfo;
 
         }
@@ -238,13 +242,11 @@ namespace ConsoleAppDemo
             var recipeApi = new RecipesApi();
             var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest").Manifest;
 
-            var recipeSource = rec.Source;
-            var job = new Job(recipeSource);
+            var jobInfo = new JobInfo(rec);
 
-            job.AddArgument(new JobPathArgument("model", new ProjectFolder(path: @"D:\Test\queenbeeTest\model.hbjson")));
+            jobInfo.AddArgument(new JobPathArgument("model", new ProjectFolder(path: @"D:\Test\queenbeeTest\model.hbjson")));
             //job.AddArgument(new JobPathArgument("input", new ProjectFolder(path: @"D:\Test\queenbeeTest\inputs.json")));
 
-            var jobInfo = new JobInfo(rec);
 
             return jobInfo;
 
@@ -293,8 +295,8 @@ namespace ConsoleAppDemo
 
         private static async Task<bool> CheckSimulationStatus(Project proj, string simuId)
         {
-            var api = new JobsApi();
-            var run = api.GetJob(proj.Owner.Name, proj.Name, simuId);
+            var api = new RunsApi();
+            var run = api.GetRun(proj.Owner.Name, proj.Name, simuId);
 
             var status = run.Status;
             var startTime = status.StartedAt.ToUniversalTime();
@@ -306,7 +308,7 @@ namespace ConsoleAppDemo
                 Console.WriteLine($"{status.Status}: [{runseconds} s]");
 
                 // update status
-                status = api.GetJob(proj.Owner.Name, proj.Name, simuId).Status;
+                status = api.GetRun(proj.Owner.Name, proj.Name, simuId).Status;
 
             }
 
@@ -318,29 +320,26 @@ namespace ConsoleAppDemo
 
         private static void CheckOutputLogs(Project proj, string simuId)
         {
-            var api = new JobsApi();
-            var steps = api.GetJobSteps(proj.Owner.Name, proj.Name, simuId.ToString());
+            var api = new RunsApi();
+      
+            var steps = api.GetRunSteps(proj.Owner.Name, proj.Name, simuId.ToString());
             foreach (var item in steps.Resources)
             {
-                var stepLog = api.GetJobStepLogs(proj.Owner.Name, proj.Name, simuId.ToString(), item.Id);
+                var stepLog = api.GetRunStepLogs(proj.Owner.Name, proj.Name, simuId.ToString(), item.Id);
                 Console.WriteLine(stepLog);
             }
            
         }
 
-        //private async static void DownloadOutputs(Project proj, string simuId, List<string> artifacts)
-        //{
-        //    var simu = new Simulation(proj, simuId);
-        //    var simuStatus = new PollinationSDK.Api.JobsApi().GetJob(simu.Project.Owner.Name, simu.Project.Name, simu.SimulationID).Status;
+        private async static void DownloadOutputs(RunInfo runInfo, List<string> outputNames)
+        {
+            //var run = new Simulation(proj, simuId);
+            var simuStatus = new PollinationSDK.Api.RunsApi().GetRun(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID).Status;
 
-        //    var artfs = artifacts.Select(_ => new OutputArtifact(_)).ToList();
-        //    var temp = Path.Combine( Path.GetTempPath(), Path.GetRandomFileName());
-        //    //Directory.CreateDirectory(temp);
+            var filePaths = await runInfo.DownloadOutputArtifactsAsync(outputNames);
 
-        //    Action<int> reportPercent = (int percent) => Console.WriteLine($"{percent}%");
-        //    var filePaths = await PollinationSDK.Helper.DownloadOutputArtifactsAsync(simu, artfs, temp, reportPercent);
 
-        //}
+        }
 
 
 

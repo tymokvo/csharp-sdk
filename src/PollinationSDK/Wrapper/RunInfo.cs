@@ -13,20 +13,21 @@ namespace PollinationSDK.Wrapper
 {
     public class RunInfo
     {
-        public string RunID { get; set; }
+        public string RunID => this.Run.Id;
         public Run Run { get; set; }
         public Project Project { get; set; }
         public RecipeInterface Recipe { get; set; }
 
-        [IgnoreDataMember]
-        public string Logs { get; set; }
-        public RunInfo(Project proj, RecipeInterface Recipe, string runID)
+        //[IgnoreDataMember]
+        //public string Logs { get; set; }
+        public RunInfo(Project proj, string runID)
         {
-            var api = new JobsApi();
-            var run = api.GetJob(proj.Owner.Name, proj.Name, runID.ToString());
+            var api = new RunsApi();
+            var run = api.GetRun(proj.Owner.Name, proj.Name, runID.ToString());
             this.Run = run;
             this.Project = proj;
-            this.Recipe = Recipe;
+            //this.Recipe = Recipe;
+            //this.RunID = run.Id;
         }
 
         public RunInfo(string localRunPath)
@@ -42,11 +43,11 @@ namespace PollinationSDK.Wrapper
 
         public async Task CheckStatusAndGetLogsAsync(Action<string> progressAction = default, System.Threading.CancellationToken cancelToken = default)
         {
-            var api = new JobsApi();
+            var api = new RunsApi();
             var proj = this.Project;
             var simuId = this.RunID;
 
-            var job = await api.GetJobAsync(proj.Owner.Name, proj.Name, simuId);
+            var job = api.GetRun(proj.Owner.Name, proj.Name, simuId);
             var status = job.Status;
             var startTime = status.StartedAt;
             while (status.Status == "Running" || status.Status == "Scheduled")
@@ -67,7 +68,8 @@ namespace PollinationSDK.Wrapper
 
 
                 // update status
-                job = await api.GetJobAsync(proj.Owner.Name, proj.Name, simuId);
+                await Task.Delay(1000);
+                job = api.GetRun(proj.Owner.Name, proj.Name, simuId);
                 status = job.Status;
                 //_simulation = new Simulation(proj, simuId);
             }
@@ -83,7 +85,7 @@ namespace PollinationSDK.Wrapper
 
             // Only get simulation logs when run toggle is set to true by user
             if (cancelToken.IsCancellationRequested) return;
-            CheckOutputLogs(api, proj, simuId.ToString());
+            //CheckOutputLogs(api, proj, simuId.ToString());
             //var outputs = api.GetSimulationLogs(proj.Owner.Name, proj.Name, simuId.ToString());
             //var logUrl= outputs.ToString();
             //this.Logs = await GetSimulationOutputLogAsync(progressAction, cancelToken);
@@ -109,8 +111,8 @@ namespace PollinationSDK.Wrapper
         {
             var proj = this.Project;
             var simuId = this.RunID;
-            var api = new JobsApi();
-            api.StopJobAsync(proj.Owner.Name, proj.Name, simuId);
+            var api = new RunsApi();
+            api.StopRunAsync(proj.Owner.Name, proj.Name, simuId);
         }
 
 
@@ -128,8 +130,8 @@ namespace PollinationSDK.Wrapper
             progressAction?.Invoke($"Getting log IDs");
             var proj = this.Project;
             var simuId = this.RunID;
-            var api = new JobsApi();
-            var job = api.GetJob(proj.Owner.Name, proj.Name, simuId);
+            var api = new RunsApi();
+            var job = api.GetRun(proj.Owner.Name, proj.Name, simuId);
             var status = job.Status;
             if (status.Status == "Running") throw new ArgumentException("Simulation is still running, please wait until it's done!");
             var taskDic = status.Steps.OrderBy(_ => _.Value.StartedAt).ToDictionary(_ => _.Key, _ => $"[{_.Key}]\n{_.Value.StartedAt.ToLocalTime()} : {_.Value.Name}");
@@ -139,7 +141,8 @@ namespace PollinationSDK.Wrapper
             if (cancelToken.IsCancellationRequested) return string.Empty;
             progressAction?.Invoke($"Downloading logs");
 
-            var url = api.GetSimulationLogs(proj.Owner.Name, proj.Name, simuId).ToString();
+            //var url = api.GetSimulationLogs(proj.Owner.Name, proj.Name, simuId).ToString();
+            var url = "";
             if (string.IsNullOrEmpty(url)) throw new ArgumentNullException("Failed to call GetSimulationLogs");
             var dir = Path.Combine(Helper.GenTempFolder(), simuId);
             var downloadfile = await Helper.DownloadFromUrlAsync(url, dir);
@@ -198,13 +201,13 @@ namespace PollinationSDK.Wrapper
         //    return file;
         //}
 
-        private static void CheckOutputLogs(JobsApi api, Project proj, string simuId)
+        private static void CheckOutputLogs(RunsApi api, Project proj, string simuId)
         {
-            //var api = new JobsApi();
-            var steps = api.GetJobSteps(proj.Owner.Name, proj.Name, simuId.ToString());
+            //var api = new RunsApi();
+            var steps = api.GetRunSteps(proj.Owner.Name, proj.Name, simuId.ToString());
             foreach (var item in steps.Resources)
             {
-                var stepLog = api.GetJobStepLogs(proj.Owner.Name, proj.Name, simuId.ToString(), item.Id);
+                var stepLog = api.GetRunStepLogs(proj.Owner.Name, proj.Name, simuId.ToString(), item.Id);
                 Console.WriteLine(stepLog);
             }
 
@@ -282,8 +285,10 @@ namespace PollinationSDK.Wrapper
             //var outputDirOrFile = string.Empty;
             try
             {
-                var api = new PollinationSDK.Api.JobsApi();
-                var url = api.GetSimulationOutputArtifact(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID, artifactName).ToString();
+                var api = new PollinationSDK.Api.RunsApi();
+                //var url = api.GetSimulationOutputArtifact(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID, artifactName).ToString();
+                //var url = "";
+                var url = api.GetRunOutput(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID, artifactName).ToString();
                 var task = Helper.DownloadFromUrlAsync(url, saveAsDir);
                 return task;
 

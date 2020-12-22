@@ -28,7 +28,7 @@ namespace PollinationSDK.Wrapper
             try
             {
                 var runID = await ScheduleRunAsync(project, this.Job, progressReporting, token);
-                runInfo = new RunInfo(project, this.Recipe, runID.ToString());
+                runInfo = new RunInfo(project, runID.ToString());
                 progressReporting?.Invoke(runInfo.Run.Status.Status);
 
             }
@@ -100,13 +100,13 @@ namespace PollinationSDK.Wrapper
             //var json = newJob.ToJson();
 
             // create a new Simulation
-            var api = new JobsApi();
+            var api = new RunsApi();
             progressLogAction?.Invoke($"Start running.");
 
             try
             {
                 // schedule a simulation on Pollination.Cloud
-                var run = await api.CreateJobAsync(proj.Owner.Name, proj.Name, newJob);
+                var run = await api.CreateRunAsync(proj.Owner.Name, proj.Name, newJob);
                 var runJobID = run.Id;
                 progressLogAction?.Invoke($"Start running..");
 

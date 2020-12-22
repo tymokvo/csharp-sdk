@@ -196,9 +196,9 @@ namespace PollinationSDK
         {
             try
             {
-                var simuApi = new PollinationSDK.Api.JobsApi();
+                var simuApi = new PollinationSDK.Api.RunsApi();
 
-                var url = simuApi.DownloadJobArtifact(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID, zipFileName).ToString();
+                var url = simuApi.DownloadRunArtifact(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID, zipFileName).ToString();
 
                 var dir = string.IsNullOrEmpty(saveAsDir) ? GenTempFolder() : saveAsDir;
                 var simuID = runInfo.RunID.Substring(0, 8);
@@ -216,8 +216,9 @@ namespace PollinationSDK
         {
             try
             {
-                var simuApi = new PollinationSDK.Api.JobsApi();
-                var url = simuApi.GetSimulationInputs(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID).ToString();
+                var simuApi = new PollinationSDK.Api.RunsApi();
+                //var url = simuApi.GetSimulationInputs(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID).ToString();
+                var url = "";
 
                 var dir = string.IsNullOrEmpty(saveAsDir) ? GenTempFolder() : saveAsDir;
                 var simuID = runInfo.RunID.Substring(0, 8);
@@ -284,8 +285,8 @@ namespace PollinationSDK
             var outputDirOrFile = string.Empty;
             try
             {
-                var api = new PollinationSDK.Api.JobsApi();
-                var files = api.ListJobArtifacts(simu.Project.Owner.Name, simu.Project.Name, simu.RunID, page: 1, perPage: 100);
+                var api = new PollinationSDK.Api.RunsApi();
+                var files = api.ListRunArtifacts(simu.Project.Owner.Name, simu.Project.Name, simu.RunID, page: 1, perPage: 100);
                 var found = files.FirstOrDefault(_ => _.FileName == artifact.Name);
                 if (found == null) throw new ArgumentException($"{artifact.Name} doesn't exist in {simu.Project.Owner.Name}/{simu.Project.Name}/{simu.RunID}");
 
@@ -307,20 +308,20 @@ namespace PollinationSDK
             }
 
             // loop through files in folder
-            void ListFilesFromFolder(ref List<Task<string>> ts, string saveDir, string owner, string projName, string simuID,  FileMeta artfact, JobsApi JobsApi )
+            void ListFilesFromFolder(ref List<Task<string>> ts, string saveDir, string owner, string projName, string simuID,  FileMeta artfact, RunsApi RunsApi )
             {
                 var dir = saveDir;
-                var api = JobsApi;
+                var api = RunsApi;
                 if (artfact.Type == "file")
                 {
-                    var url = api.DownloadJobArtifact(owner, projName, simuID, artfact.Key).ToString();
+                    var url = api.DownloadRunArtifact(owner, projName, simuID, artfact.Key).ToString();
                     var task = DownloadFromUrlAsync(url, dir);
                     ts.Add(task);
                 }
                 else if (artfact.Type == "folder")
                 {
                     dir = Path.Combine(dir, artfact.FileName);
-                    var files = api.ListJobArtifacts(owner, projName, simuID, page: 1, perPage: 100, path: new[] { artifact.Name }.ToList());
+                    var files = api.ListRunArtifacts(owner, projName, simuID, page: 1, perPage: 100, path: new[] { artifact.Name }.ToList());
                     foreach (var item in files)
                     {
                         // get all files in folder
@@ -330,7 +331,7 @@ namespace PollinationSDK
                             continue;
                         }
                         // item is file
-                        var url = api.DownloadJobArtifact(owner, projName, simuID, item.Key).ToString();
+                        var url = api.DownloadRunArtifact(owner, projName, simuID, item.Key).ToString();
                         var task = DownloadFromUrlAsync(url, dir);
 
                         ts.Add(task);
