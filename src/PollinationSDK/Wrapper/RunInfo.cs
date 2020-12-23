@@ -14,26 +14,40 @@ namespace PollinationSDK.Wrapper
     public class RunInfo
     {
         public string RunID => this.Run.Id;
-        public Run Run { get; set; }
-        public Project Project { get; set; }
-        public RecipeInterface Recipe { get; set; }
+        public Run Run { get; private set; }
+        public Project Project { get; private set; }
+        public RecipeInterface Recipe { get; private set; }
 
         //[IgnoreDataMember]
         //public string Logs { get; set; }
-        public RunInfo(Project proj, string runID)
+        public RunInfo(Project proj, string runID): this(proj, GetRun(proj, runID))
         {
-            var api = new RunsApi();
-            var run = api.GetRun(proj.Owner.Name, proj.Name, runID.ToString());
+        }
+
+        public RunInfo(Project proj, Run run)
+        {
             this.Run = run;
             this.Project = proj;
-            //this.Recipe = Recipe;
-            //this.RunID = run.Id;
+            this.Recipe = GetRecipe(this.Run.Job.Source);
         }
 
         public RunInfo(string localRunPath)
         {
-
         }
+
+        private static Run GetRun(Project proj, string runID)
+        {
+            var api = new RunsApi();
+            var run = api.GetRun(proj.Owner.Name, proj.Name, runID.ToString());
+            return run;
+        }
+
+        private static RecipeInterface GetRecipe(string url)
+        {
+            Helper.GetRecipeFromRecipeSourceURL(url, out var recipe);
+            return recipe;
+        }
+
 
         public override string ToString()
         {
