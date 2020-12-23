@@ -69,6 +69,11 @@ namespace PollinationSDK.Wrapper
         public void AddArgument(JobArgument arg) => this.Job.AddArgument(arg);
         public void AddArgument(JobPathArgument arg) => this.Job.AddArgument(arg);
 
+        public void SetJobName(string name)
+        {
+            if (!string.IsNullOrEmpty(name)) return;
+            this.Job.Name = name;
+        }
 
         
     }
