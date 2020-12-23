@@ -136,9 +136,16 @@ namespace PollinationSDK
 
         }
 
-      
-       
-       
+
+        public static bool GetRecipeFromRecipeSourceURL(string recipeSource, out RecipeInterface recipe)
+        {
+            //var recipeSource = this.Run.Job.Source;
+            var isRecipe = Helper.GetRecipeFromRecipeSourceURL(recipeSource, out var recOwner, out var recName, out var recVersion);
+            var recApi = new RecipesApi();
+            recipe = recApi.GetRecipeByTag(recOwner, recName, recVersion).Manifest;
+            return recipe != null;
+        }
+
 
         public static bool GetRecipeFromRecipeSourceURL(string recipeSource, out string recipeOwner, out string recipeName, out string recipeVersion)
         {
