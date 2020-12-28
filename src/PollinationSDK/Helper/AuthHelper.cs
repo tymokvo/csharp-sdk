@@ -92,7 +92,7 @@ namespace PollinationSDK
             if (string.IsNullOrEmpty(returnUrl)) throw new ArgumentException($"Failed to authorize the login: \n{request.RawUrl}");
 
             //sends an HTTP response to the browser.
-            string responseString = string.Format($"<html><head></head><body>Succesfully Logged in! You can close this browser window.</body></html>");
+            string responseString = string.Format($"<html><head></head><body style=\"text-align: center; font-family: Lato, Helvetica, Arial, sans-serif\">Succesfully Logged in! You can close this browser window.</body></html>");
             var buffer = Encoding.UTF8.GetBytes(responseString);
             response.ContentLength64 = buffer.Length;
             var responseOutput = response.OutputStream;
