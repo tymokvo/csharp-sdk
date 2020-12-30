@@ -15,8 +15,8 @@ namespace PollinationSDK
         private static string LoginURL => "https://app.pollination.cloud/sdk-login";
         private static string LoginURL_Dev => "https://app.staging.pollination.cloud/sdk-login";
 
-        private static string ApiURL => "https://api.pollination.cloud/";
-        private static string ApiURL_Dev => "https://api.staging.pollination.cloud/";
+        public static string ApiURL => "https://api.pollination.cloud/";
+        public static string ApiURL_Dev => "https://api.staging.pollination.cloud/";
 
         /// <summary>
         /// Token from previous sign in if any, otherwise this is an empty string. Call SignIn() first for users to login from browser.
