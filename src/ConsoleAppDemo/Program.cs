@@ -109,6 +109,7 @@ namespace ConsoleAppDemo
 
             try
             {
+                jobInfo.SetJobSubFolderPath("round1/test");
                 var task = runSimu(proj, jobInfo, (s) => Console.WriteLine(s), token);
                 //cts.CancelAfter(60000);
                 task.Wait();

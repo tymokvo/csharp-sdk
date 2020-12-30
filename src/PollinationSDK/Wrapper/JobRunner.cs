@@ -76,7 +76,7 @@ namespace PollinationSDK.Wrapper
             // Upload artifacts
 
             // check artifacts 
-            var tempProjectDir = CheckArtifacts(job);
+            var tempProjectDir = CheckArtifacts(job, this.JobInfo.SubFolderPath);
 
             // upload artifacts
             if (!string.IsNullOrEmpty(tempProjectDir))
@@ -217,70 +217,66 @@ namespace PollinationSDK.Wrapper
         /// </summary>
         /// <param name="SubmitSimulation"></param>
         /// <returns></returns>
-        private static string CheckArtifacts(Job job)
+        private static string CheckArtifacts(Job job, string subFolderPath)
         {
+            var temp = string.Empty;
             var arg = job.Arguments;
 
             var artis = arg.OfType<JobPathArgument>();
-            //var files = new List<string>();
-            //var folders = new List<string>();
-            var temp = string.Empty;
+            if (artis == null || !artis.Any()) return temp;
 
             // remove old temp files first
             var tempPollination = Path.Combine(Helper.GenTempFolder(), "prepareArtifacts");
             //Directory.CreateDirectory(tempPollination);
             //Directory.Delete(tempPollination, true);
 
+            temp = Path.Combine(tempPollination, Path.GetRandomFileName());
+            // add sub study folder under project root folder
+            var studyFolder = string.IsNullOrEmpty(subFolderPath) ? temp : Path.Combine(temp, subFolderPath);
+            Directory.CreateDirectory(studyFolder);
 
-            if (artis != null)
+            foreach (var item in artis)
             {
-                temp = Path.Combine(tempPollination, Path.GetRandomFileName());
-                Directory.CreateDirectory(temp);
+                //ProjectFolderSource only
+                var source = item.Source.Obj as ProjectFolder;
+                if (source == null) continue;
 
-                foreach (var item in artis)
+                var fileOrFolder = source.Path;
+                FileAttributes attr = File.GetAttributes(fileOrFolder);
+                var isDir = attr.HasFlag(FileAttributes.Directory);
+                var isExists = isDir ? Directory.Exists(fileOrFolder) : File.Exists(fileOrFolder);
+                if (!isExists)
+                    throw new ArgumentException($"File or Folder does not exist: {fileOrFolder}");
+
+
+                // copy to temp folder
+                if (isDir)
                 {
-                    //ProjectFolderSource only
-                    var source = item.Source.Obj as ProjectFolder;
-                    if (source == null) continue;
-
-                    var fileOrFolder = source.Path;
-                    FileAttributes attr = File.GetAttributes(fileOrFolder);
-                    var isDir = attr.HasFlag(FileAttributes.Directory);
-                    var isExists = isDir ? Directory.Exists(fileOrFolder) : File.Exists(fileOrFolder);
-                    if (!isExists)
-                        throw new ArgumentException($"File or Folder does not exist: {fileOrFolder}");
-
-
-                    // copy to temp folder
-                    if (isDir)
+                    var targetDir = Path.Combine(studyFolder, Path.GetFileName(fileOrFolder));
+                    Directory.CreateDirectory(targetDir);
+                    var subDirs = Directory.GetDirectories(fileOrFolder, "*", SearchOption.AllDirectories);
+                    foreach (var dir in subDirs)
                     {
-                        var targetDir = Path.Combine(temp, Path.GetFileName(fileOrFolder));
-                        Directory.CreateDirectory(targetDir);
-                        var subDirs = Directory.GetDirectories(fileOrFolder, "*", SearchOption.AllDirectories);
-                        foreach (var dir in subDirs)
-                        {
-                            Directory.CreateDirectory(dir.Replace(fileOrFolder, targetDir));
-                        }
-
-                        var subfiles = Directory.GetFiles(fileOrFolder, "*.*", SearchOption.AllDirectories);
-                        foreach (var f in subfiles)
-                        {
-                            var targetPath = f.Replace(fileOrFolder, targetDir);
-                            File.Copy(f, targetPath, true);
-                        }
-
-                        //folders.Add(fileOrFolder);
+                        Directory.CreateDirectory(dir.Replace(fileOrFolder, targetDir));
                     }
-                    else
+
+                    var subfiles = Directory.GetFiles(fileOrFolder, "*.*", SearchOption.AllDirectories);
+                    foreach (var f in subfiles)
                     {
-                        var f = fileOrFolder;
-                        var targetPath = Path.Combine(temp, Path.GetFileName(f));
+                        var targetPath = f.Replace(fileOrFolder, targetDir);
                         File.Copy(f, targetPath, true);
-                        //files.Add(fileOrFolder);
                     }
 
-
+                    //folders.Add(fileOrFolder);
                 }
+                else
+                {
+                    var f = fileOrFolder;
+                    var targetPath = Path.Combine(studyFolder, Path.GetFileName(f));
+                    File.Copy(f, targetPath, true);
+                    //files.Add(fileOrFolder);
+                }
+
 
             }
 

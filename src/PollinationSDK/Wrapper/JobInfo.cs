@@ -14,19 +14,13 @@ using System.Threading.Tasks;
 
 namespace PollinationSDK.Wrapper
 {
-    /// <summary>
-    /// Simulation wrapper contains the project (ProjectDto), and simulationID for tracking the simulation.
-    /// </summary>
     public class JobInfo
     {
-        // keep all setters public, so that JsonConvert can DeserializeObject it. 
-        //public string ProjectName { get; set; }
         public RecipeInterface Recipe { get; set; }
-        //public string JobRunID { get; set; }
-
         public Job Job { get; set; }
-      
-      
+        public string SubFolderPath { get; set; }
+
+
         public JobInfo(RecipeInterface recpie)
         {
             //this.ProjectName = projName;
@@ -71,10 +65,15 @@ namespace PollinationSDK.Wrapper
 
         public void SetJobName(string name)
         {
-            if (!string.IsNullOrEmpty(name)) return;
+            if (string.IsNullOrEmpty(name)) return;
             this.Job.Name = name;
         }
 
-        
+        public void SetJobSubFolderPath(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return;
+            path = path.Replace('\\', '/').Replace(' ', '_');
+            this.SubFolderPath = path;
+        }
     }
 }
