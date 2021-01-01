@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net452</TargetFrameworks>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Version>0.0.14.7</Version>
+    <Version>0.0.14.9</Version>
     <Authors>Ladybug Tools</Authors>
     <Description>This is the .Net version of PollinationSDK</Description>
     <Copyright>Copyright © 2020 Ladybug Tools LLC</Copyright>
@@ -23,7 +23,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="QueenbeeSDK" Version="1.22.5" />
+    <PackageReference Include="QueenbeeSDK" Version="1.22.5.1" />
     <PackageReference Include="RestSharp" Version="106.11.4" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
   </ItemGroup>
