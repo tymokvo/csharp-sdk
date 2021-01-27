@@ -45,10 +45,13 @@ namespace PollinationSDK
         /// <param name="id">id (required).</param>
         /// <param name="accountType">accountType (required).</param>
         /// <param name="name">name (required).</param>
+        /// <param name="displayName">displayName.</param>
+        /// <param name="description">description.</param>
+        /// <param name="pictureUrl">https://robohash.org/ladybugbot.</param>
         public AccountPublic
         (
-           string id, string accountType, string name// Required parameters
-           // Optional parameters
+           string id, string accountType, string name, // Required parameters
+           string displayName= default, string description= default, string pictureUrl= default // Optional parameters
         ) : base()// BaseClass
         {
             // to ensure "id" is required (not null)
@@ -57,6 +60,9 @@ namespace PollinationSDK
             this.AccountType = accountType ?? throw new ArgumentNullException("accountType is a required property for AccountPublic and cannot be null");
             // to ensure "name" is required (not null)
             this.Name = name ?? throw new ArgumentNullException("name is a required property for AccountPublic and cannot be null");
+            this.DisplayName = displayName;
+            this.Description = description;
+            this.PictureUrl = pictureUrl;
 
             // Set non-required readonly properties with defaultValue
             this.Type = "AccountPublic";
@@ -77,6 +83,22 @@ namespace PollinationSDK
         /// </summary>
         [DataMember(Name = "name", IsRequired = true, EmitDefaultValue = false)]
         public string Name { get; set; } 
+        /// <summary>
+        /// Gets or Sets DisplayName
+        /// </summary>
+        [DataMember(Name = "display_name", EmitDefaultValue = false)]
+        public string DisplayName { get; set; } 
+        /// <summary>
+        /// Gets or Sets Description
+        /// </summary>
+        [DataMember(Name = "description", EmitDefaultValue = false)]
+        public string Description { get; set; } 
+        /// <summary>
+        /// https://robohash.org/ladybugbot
+        /// </summary>
+        /// <value>https://robohash.org/ladybugbot</value>
+        [DataMember(Name = "picture_url", EmitDefaultValue = false)]
+        public string PictureUrl { get; set; } 
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -102,6 +124,9 @@ namespace PollinationSDK
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  AccountType: ").Append(AccountType).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  DisplayName: ").Append(DisplayName).Append("\n");
+            sb.Append("  Description: ").Append(Description).Append("\n");
+            sb.Append("  PictureUrl: ").Append(PictureUrl).Append("\n");
             return sb.ToString();
         }
   
@@ -180,6 +205,21 @@ namespace PollinationSDK
                     this.Name.Equals(input.Name))
                 ) && base.Equals(input) && 
                 (
+                    this.DisplayName == input.DisplayName ||
+                    (this.DisplayName != null &&
+                    this.DisplayName.Equals(input.DisplayName))
+                ) && base.Equals(input) && 
+                (
+                    this.Description == input.Description ||
+                    (this.Description != null &&
+                    this.Description.Equals(input.Description))
+                ) && base.Equals(input) && 
+                (
+                    this.PictureUrl == input.PictureUrl ||
+                    (this.PictureUrl != null &&
+                    this.PictureUrl.Equals(input.PictureUrl))
+                ) && base.Equals(input) && 
+                (
                     this.Type == input.Type ||
                     (this.Type != null &&
                     this.Type.Equals(input.Type))
@@ -201,6 +241,12 @@ namespace PollinationSDK
                     hashCode = hashCode * 59 + this.AccountType.GetHashCode();
                 if (this.Name != null)
                     hashCode = hashCode * 59 + this.Name.GetHashCode();
+                if (this.DisplayName != null)
+                    hashCode = hashCode * 59 + this.DisplayName.GetHashCode();
+                if (this.Description != null)
+                    hashCode = hashCode * 59 + this.Description.GetHashCode();
+                if (this.PictureUrl != null)
+                    hashCode = hashCode * 59 + this.PictureUrl.GetHashCode();
                 if (this.Type != null)
                     hashCode = hashCode * 59 + this.Type.GetHashCode();
                 return hashCode;

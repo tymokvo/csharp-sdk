@@ -172,10 +172,12 @@ namespace PollinationSDK.Api
         /// <param name="runId"></param>
         /// <param name="status"> (optional)</param>
         /// <param name="stepId"> (optional)</param>
+        /// <param name="untilGeneration"> (optional)</param>
+        /// <param name="sinceGeneration"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>StepList</returns>
-        StepList GetRunSteps (string owner, string name, string runId, string status = default, List<string> stepId = default, int? page = default, int? perPage = default);
+        StepList GetRunSteps (string owner, string name, string runId, string status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// Query the steps of a run
@@ -189,10 +191,12 @@ namespace PollinationSDK.Api
         /// <param name="runId"></param>
         /// <param name="status"> (optional)</param>
         /// <param name="stepId"> (optional)</param>
+        /// <param name="untilGeneration"> (optional)</param>
+        /// <param name="sinceGeneration"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of StepList</returns>
-        ApiResponse<StepList> GetRunStepsWithHttpInfo (string owner, string name, string runId, string status = default, List<string> stepId = default, int? page = default, int? perPage = default);
+        ApiResponse<StepList> GetRunStepsWithHttpInfo (string owner, string name, string runId, string status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default);
         /// <summary>
         /// List artifacts in a run folder
         /// </summary>
@@ -489,11 +493,13 @@ namespace PollinationSDK.Api
         /// <param name="runId"></param>
         /// <param name="status"> (optional)</param>
         /// <param name="stepId"> (optional)</param>
+        /// <param name="untilGeneration"> (optional)</param>
+        /// <param name="sinceGeneration"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of StepList</returns>
-        System.Threading.Tasks.Task<StepList> GetRunStepsAsync (string owner, string name, string runId, string status = default, List<string> stepId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<StepList> GetRunStepsAsync (string owner, string name, string runId, string status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Query the steps of a run
@@ -507,11 +513,13 @@ namespace PollinationSDK.Api
         /// <param name="runId"></param>
         /// <param name="status"> (optional)</param>
         /// <param name="stepId"> (optional)</param>
+        /// <param name="untilGeneration"> (optional)</param>
+        /// <param name="sinceGeneration"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (StepList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<StepList>> GetRunStepsWithHttpInfoAsync (string owner, string name, string runId, string status = default, List<string> stepId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<StepList>> GetRunStepsWithHttpInfoAsync (string owner, string name, string runId, string status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List artifacts in a run folder
         /// </summary>
@@ -1710,12 +1718,14 @@ namespace PollinationSDK.Api
         /// <param name="runId"></param>
         /// <param name="status"> (optional)</param>
         /// <param name="stepId"> (optional)</param>
+        /// <param name="untilGeneration"> (optional)</param>
+        /// <param name="sinceGeneration"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>StepList</returns>
-        public StepList GetRunSteps (string owner, string name, string runId, string status = default, List<string> stepId = default, int? page = default, int? perPage = default)
+        public StepList GetRunSteps (string owner, string name, string runId, string status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default)
         {
-             ApiResponse<StepList> localVarResponse = GetRunStepsWithHttpInfo(owner, name, runId, status, stepId, page, perPage);
+             ApiResponse<StepList> localVarResponse = GetRunStepsWithHttpInfo(owner, name, runId, status, stepId, untilGeneration, sinceGeneration, page, perPage);
              return localVarResponse.Data;
         }
 
@@ -1728,10 +1738,12 @@ namespace PollinationSDK.Api
         /// <param name="runId"></param>
         /// <param name="status"> (optional)</param>
         /// <param name="stepId"> (optional)</param>
+        /// <param name="untilGeneration"> (optional)</param>
+        /// <param name="sinceGeneration"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of StepList</returns>
-        public ApiResponse<StepList> GetRunStepsWithHttpInfo (string owner, string name, string runId, string status = default, List<string> stepId = default, int? page = default, int? perPage = default)
+        public ApiResponse<StepList> GetRunStepsWithHttpInfo (string owner, string name, string runId, string status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1769,6 +1781,8 @@ namespace PollinationSDK.Api
             if (runId != null) localVarPathParams.Add("run_id", this.Configuration.ApiClient.ParameterToString(runId)); // path parameter
             if (status != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "status", status)); // query parameter
             if (stepId != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "step_id", stepId)); // query parameter
+            if (untilGeneration != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "until_generation", untilGeneration)); // query parameter
+            if (sinceGeneration != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "since_generation", sinceGeneration)); // query parameter
             if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
             if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
@@ -1811,13 +1825,15 @@ namespace PollinationSDK.Api
         /// <param name="runId"></param>
         /// <param name="status"> (optional)</param>
         /// <param name="stepId"> (optional)</param>
+        /// <param name="untilGeneration"> (optional)</param>
+        /// <param name="sinceGeneration"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of StepList</returns>
-        public async System.Threading.Tasks.Task<StepList> GetRunStepsAsync (string owner, string name, string runId, string status = default, List<string> stepId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<StepList> GetRunStepsAsync (string owner, string name, string runId, string status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<StepList> localVarResponse = await GetRunStepsWithHttpInfoAsync(owner, name, runId, status, stepId, page, perPage, cancellationToken);
+             ApiResponse<StepList> localVarResponse = await GetRunStepsWithHttpInfoAsync(owner, name, runId, status, stepId, untilGeneration, sinceGeneration, page, perPage, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -1831,11 +1847,13 @@ namespace PollinationSDK.Api
         /// <param name="runId"></param>
         /// <param name="status"> (optional)</param>
         /// <param name="stepId"> (optional)</param>
+        /// <param name="untilGeneration"> (optional)</param>
+        /// <param name="sinceGeneration"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (StepList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<StepList>> GetRunStepsWithHttpInfoAsync (string owner, string name, string runId, string status = default, List<string> stepId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<StepList>> GetRunStepsWithHttpInfoAsync (string owner, string name, string runId, string status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1873,6 +1891,8 @@ namespace PollinationSDK.Api
             if (runId != null) localVarPathParams.Add("run_id", this.Configuration.ApiClient.ParameterToString(runId)); // path parameter
             if (status != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "status", status)); // query parameter
             if (stepId != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "step_id", stepId)); // query parameter
+            if (untilGeneration != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "until_generation", untilGeneration)); // query parameter
+            if (sinceGeneration != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "since_generation", sinceGeneration)); // query parameter
             if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
             if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Username** | **string** | The lowercase account name for this user | 
 **Name** | **string** | The display name for this user | [optional] 
+**Description** | **string** | A short description of the user | [optional] 
 **Picture** | **string** | URL to the picture associated with this user | [optional] 
 **Type** | **string** |  | [optional] [readonly] [default to "UserPublic"]
 

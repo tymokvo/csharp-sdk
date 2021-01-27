@@ -24,41 +24,48 @@ using QueenbeeSDK;
 namespace PollinationSDK
 {
     /// <summary>
-    /// UserMetadata
+    /// Base class for DAG artifact outputs.  This class add a required input. By default all artifact outputs are required.
     /// </summary>
-    [DataContract(Name = "UserMetadata")]
-    public partial class UserMetadata : OpenAPIGenBaseModel, IEquatable<UserMetadata>, IValidatableObject
+    [DataContract(Name = "_DAGArtifactOutput")]
+    public partial class DAGArtifactOutput : DAGGenericOutput, IEquatable<DAGArtifactOutput>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="UserMetadata" /> class.
+        /// Initializes a new instance of the <see cref="DAGArtifactOutput" /> class.
         /// </summary>
-        /// <param name="company">The company the user works for.</param>
-        /// <param name="description">A short description of the user.</param>
-        public UserMetadata
+        [JsonConstructorAttribute]
+        protected DAGArtifactOutput() 
+        { 
+            // Set non-required readonly properties with defaultValue
+            this.Type = "DAGGenericOutput";
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DAGArtifactOutput" /> class.
+        /// </summary>
+        /// <param name="required">A boolean to indicate if an artifact output is required. A False value makes the artifact optional. (default to true).</param>
+        /// <param name="name">Output name. (required).</param>
+        /// <param name="annotations">An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries..</param>
+        /// <param name="description">Optional description for output..</param>
+        /// <param name="from">Reference to a file or a task output. Task output must be file. (required).</param>
+        /// <param name="alias">A list of additional processes for loading this output on different platforms..</param>
+        public DAGArtifactOutput
         (
-           // Required parameters
-           string company= default, string description= default // Optional parameters
-        ) : base()// BaseClass
+            string name, object from, // Required parameters
+            Dictionary<string, string> annotations= default, string description= default, List<AnyOf<DAGGenericOutputAlias,DAGStringOutputAlias,DAGIntegerOutputAlias,DAGNumberOutputAlias,DAGBooleanOutputAlias,DAGFolderOutputAlias,DAGFileOutputAlias,DAGPathOutputAlias,DAGArrayOutputAlias,DAGJSONObjectOutputAlias,DAGLinkedOutputAlias>> alias= default, bool required = true // Optional parameters
+        ) : base(name: name, annotations: annotations, description: description, from: from, alias: alias)// BaseClass
         {
-            this.Company = company;
-            this.Description = description;
+            this.Required = required;
 
             // Set non-required readonly properties with defaultValue
-            this.Type = "UserMetadata";
+            this.Type = "DAGGenericOutput";
         }
 
         /// <summary>
-        /// The company the user works for
+        /// A boolean to indicate if an artifact output is required. A False value makes the artifact optional.
         /// </summary>
-        /// <value>The company the user works for</value>
-        [DataMember(Name = "company", EmitDefaultValue = false)]
-        public string Company { get; set; } 
-        /// <summary>
-        /// A short description of the user
-        /// </summary>
-        /// <value>A short description of the user</value>
-        [DataMember(Name = "description", EmitDefaultValue = false)]
-        public string Description { get; set; } 
+        /// <value>A boolean to indicate if an artifact output is required. A False value makes the artifact optional.</value>
+        [DataMember(Name = "required", EmitDefaultValue = true)]
+        public bool Required { get; set; }  = true;
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -66,7 +73,7 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            return "UserMetadata";
+            return "DAGArtifactOutput";
         }
 
         /// <summary>
@@ -79,20 +86,24 @@ namespace PollinationSDK
                 return this.ToString();
             
             var sb = new StringBuilder();
-            sb.Append("UserMetadata:\n");
+            sb.Append("DAGArtifactOutput:\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
-            sb.Append("  Company: ").Append(Company).Append("\n");
+            sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Annotations: ").Append(Annotations).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
+            sb.Append("  From: ").Append(From).Append("\n");
+            sb.Append("  Alias: ").Append(Alias).Append("\n");
+            sb.Append("  Required: ").Append(Required).Append("\n");
             return sb.ToString();
         }
   
         /// <summary>
         /// Returns the object from JSON string
         /// </summary>
-        /// <returns>UserMetadata object</returns>
-        public static UserMetadata FromJson(string json)
+        /// <returns>DAGArtifactOutput object</returns>
+        public static DAGArtifactOutput FromJson(string json)
         {
-            var obj = JsonConvert.DeserializeObject<UserMetadata>(json, JsonSetting.AnyOfConvertSetting);
+            var obj = JsonConvert.DeserializeObject<DAGArtifactOutput>(json, JsonSetting.AnyOfConvertSetting);
             if (obj == null)
                 return null;
             return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
@@ -101,8 +112,8 @@ namespace PollinationSDK
         /// <summary>
         /// Creates a new instance with the same properties.
         /// </summary>
-        /// <returns>UserMetadata object</returns>
-        public virtual UserMetadata DuplicateUserMetadata()
+        /// <returns>DAGArtifactOutput object</returns>
+        public virtual DAGArtifactOutput DuplicateDAGArtifactOutput()
         {
             return FromJson(this.ToJson());
         }
@@ -113,16 +124,16 @@ namespace PollinationSDK
         /// <returns>OpenAPIGenBaseModel</returns>
         public override OpenAPIGenBaseModel Duplicate()
         {
-            return DuplicateUserMetadata();
+            return DuplicateDAGArtifactOutput();
         }
 
         /// <summary>
         /// Creates a new instance with the same properties.
         /// </summary>
         /// <returns>OpenAPIGenBaseModel</returns>
-        public override OpenAPIGenBaseModel DuplicateOpenAPIGenBaseModel()
+        public override DAGGenericOutput DuplicateDAGGenericOutput()
         {
-            return DuplicateUserMetadata();
+            return DuplicateDAGArtifactOutput();
         }
      
         /// <summary>
@@ -132,28 +143,23 @@ namespace PollinationSDK
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as UserMetadata);
+            return this.Equals(input as DAGArtifactOutput);
         }
 
         /// <summary>
-        /// Returns true if UserMetadata instances are equal
+        /// Returns true if DAGArtifactOutput instances are equal
         /// </summary>
-        /// <param name="input">Instance of UserMetadata to be compared</param>
+        /// <param name="input">Instance of DAGArtifactOutput to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(UserMetadata input)
+        public bool Equals(DAGArtifactOutput input)
         {
             if (input == null)
                 return false;
             return base.Equals(input) && 
                 (
-                    this.Company == input.Company ||
-                    (this.Company != null &&
-                    this.Company.Equals(input.Company))
-                ) && base.Equals(input) && 
-                (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
+                    this.Required == input.Required ||
+                    (this.Required != null &&
+                    this.Required.Equals(input.Required))
                 ) && base.Equals(input) && 
                 (
                     this.Type == input.Type ||
@@ -171,10 +177,8 @@ namespace PollinationSDK
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = base.GetHashCode();
-                if (this.Company != null)
-                    hashCode = hashCode * 59 + this.Company.GetHashCode();
-                if (this.Description != null)
-                    hashCode = hashCode * 59 + this.Description.GetHashCode();
+                if (this.Required != null)
+                    hashCode = hashCode * 59 + this.Required.GetHashCode();
                 if (this.Type != null)
                     hashCode = hashCode * 59 + this.Type.GetHashCode();
                 return hashCode;
@@ -192,7 +196,7 @@ namespace PollinationSDK
 
             
             // Type (string) pattern
-            Regex regexType = new Regex(@"^UserMetadata$", RegexOptions.CultureInvariant);
+            Regex regexType = new Regex(@"^DAGGenericOutput$", RegexOptions.CultureInvariant);
             if (false == regexType.Match(this.Type).Success)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Type, must match a pattern of " + regexType, new [] { "Type" });

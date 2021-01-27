@@ -40,6 +40,10 @@ docs/DAGArrayOutput.md
 docs/DAGArrayOutputAlias.md
 docs/DAGArrayOutputAliasAllOf.md
 docs/DAGArrayOutputAllOf.md
+docs/DAGArtifactOutput.md
+docs/DAGArtifactOutputAlias.md
+docs/DAGArtifactOutputAliasAllOf.md
+docs/DAGArtifactOutputAllOf.md
 docs/DAGBooleanInput.md
 docs/DAGBooleanInputAlias.md
 docs/DAGBooleanInputAliasAllOf.md
@@ -396,8 +400,8 @@ docs/UpdateAccepted.md
 docs/UpdateAcceptedAllOf.md
 docs/UpdateAllOf.md
 docs/UserApi.md
-docs/UserMetadata.md
-docs/UserMetadataAllOf.md
+docs/UserCreate.md
+docs/UserCreateAllOf.md
 docs/UserPermission.md
 docs/UserPermissionAllOf.md
 docs/UserPrivate.md
@@ -406,6 +410,8 @@ docs/UserPublic.md
 docs/UserPublicAllOf.md
 docs/UserPublicList.md
 docs/UserPublicListAllOf.md
+docs/UserUpdate.md
+docs/UserUpdateAllOf.md
 docs/UsersApi.md
 docs/ValueFileReference.md
 docs/ValueFileReferenceAllOf.md
@@ -464,6 +470,10 @@ src/PollinationSDK.Test/Model/DAGArrayOutputAliasAllOfTests.cs
 src/PollinationSDK.Test/Model/DAGArrayOutputAliasTests.cs
 src/PollinationSDK.Test/Model/DAGArrayOutputAllOfTests.cs
 src/PollinationSDK.Test/Model/DAGArrayOutputTests.cs
+src/PollinationSDK.Test/Model/DAGArtifactOutputAliasAllOfTests.cs
+src/PollinationSDK.Test/Model/DAGArtifactOutputAliasTests.cs
+src/PollinationSDK.Test/Model/DAGArtifactOutputAllOfTests.cs
+src/PollinationSDK.Test/Model/DAGArtifactOutputTests.cs
 src/PollinationSDK.Test/Model/DAGBooleanInputAliasAllOfTests.cs
 src/PollinationSDK.Test/Model/DAGBooleanInputAliasTests.cs
 src/PollinationSDK.Test/Model/DAGBooleanInputAllOfTests.cs
@@ -813,8 +823,8 @@ src/PollinationSDK.Test/Model/UpdateAcceptedAllOfTests.cs
 src/PollinationSDK.Test/Model/UpdateAcceptedTests.cs
 src/PollinationSDK.Test/Model/UpdateAllOfTests.cs
 src/PollinationSDK.Test/Model/UpdateTests.cs
-src/PollinationSDK.Test/Model/UserMetadataAllOfTests.cs
-src/PollinationSDK.Test/Model/UserMetadataTests.cs
+src/PollinationSDK.Test/Model/UserCreateAllOfTests.cs
+src/PollinationSDK.Test/Model/UserCreateTests.cs
 src/PollinationSDK.Test/Model/UserPermissionAllOfTests.cs
 src/PollinationSDK.Test/Model/UserPermissionTests.cs
 src/PollinationSDK.Test/Model/UserPrivateAllOfTests.cs
@@ -823,6 +833,8 @@ src/PollinationSDK.Test/Model/UserPublicAllOfTests.cs
 src/PollinationSDK.Test/Model/UserPublicListAllOfTests.cs
 src/PollinationSDK.Test/Model/UserPublicListTests.cs
 src/PollinationSDK.Test/Model/UserPublicTests.cs
+src/PollinationSDK.Test/Model/UserUpdateAllOfTests.cs
+src/PollinationSDK.Test/Model/UserUpdateTests.cs
 src/PollinationSDK.Test/Model/ValueFileReferenceAllOfTests.cs
 src/PollinationSDK.Test/Model/ValueFileReferenceTests.cs
 src/PollinationSDK.Test/Model/ValueFolderReferenceAllOfTests.cs
@@ -891,6 +903,10 @@ src/PollinationSDK/Model/DAGArrayOutput.cs
 src/PollinationSDK/Model/DAGArrayOutputAlias.cs
 src/PollinationSDK/Model/DAGArrayOutputAliasAllOf.cs
 src/PollinationSDK/Model/DAGArrayOutputAllOf.cs
+src/PollinationSDK/Model/DAGArtifactOutput.cs
+src/PollinationSDK/Model/DAGArtifactOutputAlias.cs
+src/PollinationSDK/Model/DAGArtifactOutputAliasAllOf.cs
+src/PollinationSDK/Model/DAGArtifactOutputAllOf.cs
 src/PollinationSDK/Model/DAGBooleanInput.cs
 src/PollinationSDK/Model/DAGBooleanInputAlias.cs
 src/PollinationSDK/Model/DAGBooleanInputAliasAllOf.cs
@@ -1239,8 +1255,8 @@ src/PollinationSDK/Model/Update.cs
 src/PollinationSDK/Model/UpdateAccepted.cs
 src/PollinationSDK/Model/UpdateAcceptedAllOf.cs
 src/PollinationSDK/Model/UpdateAllOf.cs
-src/PollinationSDK/Model/UserMetadata.cs
-src/PollinationSDK/Model/UserMetadataAllOf.cs
+src/PollinationSDK/Model/UserCreate.cs
+src/PollinationSDK/Model/UserCreateAllOf.cs
 src/PollinationSDK/Model/UserPermission.cs
 src/PollinationSDK/Model/UserPermissionAllOf.cs
 src/PollinationSDK/Model/UserPrivate.cs
@@ -1249,6 +1265,8 @@ src/PollinationSDK/Model/UserPublic.cs
 src/PollinationSDK/Model/UserPublicAllOf.cs
 src/PollinationSDK/Model/UserPublicList.cs
 src/PollinationSDK/Model/UserPublicListAllOf.cs
+src/PollinationSDK/Model/UserUpdate.cs
+src/PollinationSDK/Model/UserUpdateAllOf.cs
 src/PollinationSDK/Model/ValueFileReference.cs
 src/PollinationSDK/Model/ValueFileReferenceAllOf.cs
 src/PollinationSDK/Model/ValueFolderReference.cs

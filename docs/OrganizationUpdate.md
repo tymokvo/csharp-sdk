@@ -5,10 +5,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **string** | The display name for this org | 
-**Picture** | **string** | URL to the picture associated with this org | 
-**ContactEmail** | **string** | The contact email for the Organization | 
-**Description** | **string** | A description of the org | [optional] [default to ""]
+**Name** | **string** | The display name for this org | [optional] 
+**PictureUrl** | **string** | URL to the picture associated with this org | [optional] 
+**ContactEmail** | **string** | The contact email for the Organization | [optional] 
+**Description** | **string** | A description of the org | [optional] 
 **Type** | **string** |  | [optional] [readonly] [default to "OrganizationUpdate"]
 
 [[Back to Model list]](../README.md#documentation-for-models)

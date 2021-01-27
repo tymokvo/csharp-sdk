@@ -42,14 +42,17 @@ namespace PollinationSDK
         /// <summary>
         /// Initializes a new instance of the <see cref="APIToken" /> class.
         /// </summary>
+        /// <param name="tokenId">The unique ID of this API token (required).</param>
         /// <param name="name">The user friendly name of the API token (required).</param>
         /// <param name="claims">Key value pairs of auth claims the API token is entitled to.</param>
         public APIToken
         (
-           string name, // Required parameters
+           string tokenId, string name, // Required parameters
            Dictionary<string, string> claims= default // Optional parameters
         ) : base()// BaseClass
         {
+            // to ensure "tokenId" is required (not null)
+            this.TokenId = tokenId ?? throw new ArgumentNullException("tokenId is a required property for APIToken and cannot be null");
             // to ensure "name" is required (not null)
             this.Name = name ?? throw new ArgumentNullException("name is a required property for APIToken and cannot be null");
             this.Claims = claims;
@@ -58,6 +61,12 @@ namespace PollinationSDK
             this.Type = "APIToken";
         }
 
+        /// <summary>
+        /// The unique ID of this API token
+        /// </summary>
+        /// <value>The unique ID of this API token</value>
+        [DataMember(Name = "token_id", IsRequired = true, EmitDefaultValue = false)]
+        public string TokenId { get; set; } 
         /// <summary>
         /// The user friendly name of the API token
         /// </summary>
@@ -92,6 +101,7 @@ namespace PollinationSDK
             var sb = new StringBuilder();
             sb.Append("APIToken:\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
+            sb.Append("  TokenId: ").Append(TokenId).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Claims: ").Append(Claims).Append("\n");
             return sb.ToString();
@@ -157,6 +167,11 @@ namespace PollinationSDK
                 return false;
             return base.Equals(input) && 
                 (
+                    this.TokenId == input.TokenId ||
+                    (this.TokenId != null &&
+                    this.TokenId.Equals(input.TokenId))
+                ) && base.Equals(input) && 
+                (
                     this.Name == input.Name ||
                     (this.Name != null &&
                     this.Name.Equals(input.Name))
@@ -183,6 +198,8 @@ namespace PollinationSDK
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = base.GetHashCode();
+                if (this.TokenId != null)
+                    hashCode = hashCode * 59 + this.TokenId.GetHashCode();
                 if (this.Name != null)
                     hashCode = hashCode * 59 + this.Name.GetHashCode();
                 if (this.Claims != null)

@@ -26,6 +26,27 @@ namespace PollinationSDK.Api
     {
         #region Synchronous Operations
         /// <summary>
+        /// Register a new user
+        /// </summary>
+        /// <remarks>
+        /// Create a new org.
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="userCreate"></param>
+        /// <returns>CreatedContent</returns>
+        CreatedContent CreateUser (UserCreate userCreate);
+
+        /// <summary>
+        /// Register a new user
+        /// </summary>
+        /// <remarks>
+        /// Create a new org.
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="userCreate"></param>
+        /// <returns>ApiResponse of CreatedContent</returns>
+        ApiResponse<CreatedContent> CreateUserWithHttpInfo (UserCreate userCreate);
+        /// <summary>
         /// Get authenticated user profile.
         /// </summary>
         /// <remarks>
@@ -63,8 +84,52 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <returns>ApiResponse of List&lt;string&gt;</returns>
         ApiResponse<List<string>> GetRolesWithHttpInfo ();
+        /// <summary>
+        /// Update the authenticated user
+        /// </summary>
+        /// <remarks>
+        /// Update a org (must have org &#x60;owner&#x60; role)
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="userUpdate"></param>
+        /// <returns>UpdateAccepted</returns>
+        UpdateAccepted UpdateUserProfile (UserUpdate userUpdate);
+
+        /// <summary>
+        /// Update the authenticated user
+        /// </summary>
+        /// <remarks>
+        /// Update a org (must have org &#x60;owner&#x60; role)
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="userUpdate"></param>
+        /// <returns>ApiResponse of UpdateAccepted</returns>
+        ApiResponse<UpdateAccepted> UpdateUserProfileWithHttpInfo (UserUpdate userUpdate);
         #endregion Synchronous Operations
         #region Asynchronous Operations
+        /// <summary>
+        /// Register a new user
+        /// </summary>
+        /// <remarks>
+        /// Create a new org.
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="userCreate"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of CreatedContent</returns>
+        System.Threading.Tasks.Task<CreatedContent> CreateUserAsync (UserCreate userCreate, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Register a new user
+        /// </summary>
+        /// <remarks>
+        /// Create a new org.
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="userCreate"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of ApiResponse (CreatedContent)</returns>
+        System.Threading.Tasks.Task<ApiResponse<CreatedContent>> CreateUserWithHttpInfoAsync (UserCreate userCreate, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get authenticated user profile.
         /// </summary>
@@ -107,6 +172,29 @@ namespace PollinationSDK.Api
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (List&lt;string&gt;)</returns>
         System.Threading.Tasks.Task<ApiResponse<List<string>>> GetRolesWithHttpInfoAsync (CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Update the authenticated user
+        /// </summary>
+        /// <remarks>
+        /// Update a org (must have org &#x60;owner&#x60; role)
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="userUpdate"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of UpdateAccepted</returns>
+        System.Threading.Tasks.Task<UpdateAccepted> UpdateUserProfileAsync (UserUpdate userUpdate, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Update the authenticated user
+        /// </summary>
+        /// <remarks>
+        /// Update a org (must have org &#x60;owner&#x60; role)
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="userUpdate"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of ApiResponse (UpdateAccepted)</returns>
+        System.Threading.Tasks.Task<ApiResponse<UpdateAccepted>> UpdateUserProfileWithHttpInfoAsync (UserUpdate userUpdate, CancellationToken cancellationToken = default(CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -184,6 +272,179 @@ namespace PollinationSDK.Api
                 return _exceptionFactory;
             }
             set { _exceptionFactory = value; }
+        }
+
+        /// <summary>
+        /// Register a new user Create a new org.
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="userCreate"></param>
+        /// <returns>CreatedContent</returns>
+        public CreatedContent CreateUser (UserCreate userCreate)
+        {
+             ApiResponse<CreatedContent> localVarResponse = CreateUserWithHttpInfo(userCreate);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Register a new user Create a new org.
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="userCreate"></param>
+        /// <returns>ApiResponse of CreatedContent</returns>
+        public ApiResponse<CreatedContent> CreateUserWithHttpInfo (UserCreate userCreate)
+        {
+            // verify the required parameter 'userCreate' is set
+            if (userCreate == null)
+                throw new ApiException(400, "Missing required parameter 'userCreate' when calling UserApi->CreateUser");
+
+            var localVarPath = "/user";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (userCreate != null && userCreate.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = this.Configuration.ApiClient.Serialize(userCreate); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = userCreate; // byte array
+            }
+
+            // authentication (APIKeyAuth) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
+            {
+                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
+            }
+            // authentication (JWTAuth) required
+            // http beerer authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("CreateUser", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<CreatedContent>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (CreatedContent) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(CreatedContent)));
+        }
+
+        /// <summary>
+        /// Register a new user Create a new org.
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="userCreate"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of CreatedContent</returns>
+        public async System.Threading.Tasks.Task<CreatedContent> CreateUserAsync (UserCreate userCreate, CancellationToken cancellationToken = default(CancellationToken))
+        {
+             ApiResponse<CreatedContent> localVarResponse = await CreateUserWithHttpInfoAsync(userCreate, cancellationToken);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Register a new user Create a new org.
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="userCreate"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of ApiResponse (CreatedContent)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<CreatedContent>> CreateUserWithHttpInfoAsync (UserCreate userCreate, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // verify the required parameter 'userCreate' is set
+            if (userCreate == null)
+                throw new ApiException(400, "Missing required parameter 'userCreate' when calling UserApi->CreateUser");
+
+            var localVarPath = "/user";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (userCreate != null && userCreate.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = this.Configuration.ApiClient.Serialize(userCreate); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = userCreate; // byte array
+            }
+
+            // authentication (APIKeyAuth) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
+            {
+                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
+            }
+            // authentication (JWTAuth) required
+            // http bearer authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.POST, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType, cancellationToken);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("CreateUser", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<CreatedContent>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (CreatedContent) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(CreatedContent)));
         }
 
         /// <summary>
@@ -474,6 +735,179 @@ namespace PollinationSDK.Api
             return new ApiResponse<List<string>>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 (List<string>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<string>)));
+        }
+
+        /// <summary>
+        /// Update the authenticated user Update a org (must have org &#x60;owner&#x60; role)
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="userUpdate"></param>
+        /// <returns>UpdateAccepted</returns>
+        public UpdateAccepted UpdateUserProfile (UserUpdate userUpdate)
+        {
+             ApiResponse<UpdateAccepted> localVarResponse = UpdateUserProfileWithHttpInfo(userUpdate);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Update the authenticated user Update a org (must have org &#x60;owner&#x60; role)
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="userUpdate"></param>
+        /// <returns>ApiResponse of UpdateAccepted</returns>
+        public ApiResponse<UpdateAccepted> UpdateUserProfileWithHttpInfo (UserUpdate userUpdate)
+        {
+            // verify the required parameter 'userUpdate' is set
+            if (userUpdate == null)
+                throw new ApiException(400, "Missing required parameter 'userUpdate' when calling UserApi->UpdateUserProfile");
+
+            var localVarPath = "/user";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (userUpdate != null && userUpdate.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = this.Configuration.ApiClient.Serialize(userUpdate); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = userUpdate; // byte array
+            }
+
+            // authentication (APIKeyAuth) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
+            {
+                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
+            }
+            // authentication (JWTAuth) required
+            // http beerer authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("UpdateUserProfile", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<UpdateAccepted>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (UpdateAccepted) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(UpdateAccepted)));
+        }
+
+        /// <summary>
+        /// Update the authenticated user Update a org (must have org &#x60;owner&#x60; role)
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="userUpdate"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of UpdateAccepted</returns>
+        public async System.Threading.Tasks.Task<UpdateAccepted> UpdateUserProfileAsync (UserUpdate userUpdate, CancellationToken cancellationToken = default(CancellationToken))
+        {
+             ApiResponse<UpdateAccepted> localVarResponse = await UpdateUserProfileWithHttpInfoAsync(userUpdate, cancellationToken);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Update the authenticated user Update a org (must have org &#x60;owner&#x60; role)
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="userUpdate"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of ApiResponse (UpdateAccepted)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<UpdateAccepted>> UpdateUserProfileWithHttpInfoAsync (UserUpdate userUpdate, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // verify the required parameter 'userUpdate' is set
+            if (userUpdate == null)
+                throw new ApiException(400, "Missing required parameter 'userUpdate' when calling UserApi->UpdateUserProfile");
+
+            var localVarPath = "/user";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+                "application/json"
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (userUpdate != null && userUpdate.GetType() != typeof(byte[]))
+            {
+                localVarPostBody = this.Configuration.ApiClient.Serialize(userUpdate); // http body (model) parameter
+            }
+            else
+            {
+                localVarPostBody = userUpdate; // byte array
+            }
+
+            // authentication (APIKeyAuth) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
+            {
+                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
+            }
+            // authentication (JWTAuth) required
+            // http bearer authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType, cancellationToken);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("UpdateUserProfile", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<UpdateAccepted>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (UpdateAccepted) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(UpdateAccepted)));
         }
 
     }

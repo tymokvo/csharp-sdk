@@ -164,7 +164,7 @@ No authorization required
 
 ## ListUsers
 
-> UserPublicList ListUsers (int? page = null, int? perPage = null, List<string> username = null)
+> UserPublicList ListUsers (List<string> search = null, int? page = null, int? perPage = null)
 
 List Users
 
@@ -185,14 +185,14 @@ namespace Example
         {
             Configuration.Default.BasePath = "https://api.pollination.cloud";
             var apiInstance = new UsersApi(Configuration.Default);
+            var search = new List<string>(); // List<string> | You know, for search (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
-            var username = new List<string>(); // List<string> | Username of the user to search for (optional) 
 
             try
             {
                 // List Users
-                UserPublicList result = apiInstance.ListUsers(page, perPage, username);
+                UserPublicList result = apiInstance.ListUsers(search, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -211,9 +211,9 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **search** | [**List&lt;string&gt;**](string.md)| You know, for search | [optional] 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
  **perPage** | **int?**| Number of items per page | [optional] [default to 25]
- **username** | [**List&lt;string&gt;**](string.md)| Username of the user to search for | [optional] 
 
 ### Return type
 

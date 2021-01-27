@@ -3,7 +3,7 @@
   "info": {
     "title": "Pollination Server",
     "description": "Pollination Server OpenAPI Definition",
-    "version": "0.10.14",
+    "version": "0.10.18",
     "contact": {
       "name": "PollinationSolutions",
       "url": "https://pollination.cloud",
@@ -266,6 +266,104 @@
         ]
       }
     },
+    "/tokens/{token_id}": {
+      "put": {
+        "tags": [
+          "API Tokens"
+        ],
+        "summary": "Regenerate an API token",
+        "description": "Regenerate a token",
+        "operationId": "regenerate_token",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Token Id",
+              "type": "string"
+            },
+            "name": "token_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/APITokenPrivate"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          },
+          {
+            "APIKeyAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "API Tokens"
+        ],
+        "summary": "Delete an API Token",
+        "description": "Delete a token",
+        "operationId": "delete_token",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Token Id",
+              "type": "string"
+            },
+            "name": "token_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          },
+          {
+            "APIKeyAuth": []
+          }
+        ]
+      }
+    },
     "/user": {
       "get": {
         "tags": [
@@ -281,6 +379,126 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UserPrivate"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          },
+          {
+            "APIKeyAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update the authenticated user",
+        "description": "Update a org (must have org `owner` role)",
+        "operationId": "update_user_profile",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateAccepted"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access forbidden"
+          },
+          "500": {
+            "description": "Server error"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          },
+          {
+            "APIKeyAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Register a new user",
+        "description": "Create a new org.",
+        "operationId": "create_user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatedContent"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Access forbidden"
+          },
+          "500": {
+            "description": "Server error"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "202": {
+            "description": "Accepted"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
@@ -338,6 +556,20 @@
         "operationId": "list_users",
         "parameters": [
           {
+            "description": "You know, for search",
+            "required": false,
+            "schema": {
+              "title": "Search query",
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "You know, for search"
+            },
+            "name": "search",
+            "in": "query"
+          },
+          {
             "description": "Page number starting from 1",
             "required": false,
             "schema": {
@@ -361,20 +593,6 @@
               "default": 25
             },
             "name": "per-page",
-            "in": "query"
-          },
-          {
-            "description": "Username of the user to search for",
-            "required": false,
-            "schema": {
-              "title": "Username",
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "description": "Username of the user to search for"
-            },
-            "name": "username",
             "in": "query"
           }
         ],
@@ -5285,6 +5503,24 @@
             "in": "query"
           },
           {
+            "required": false,
+            "schema": {
+              "title": "The newest run generation to retrieve steps from",
+              "type": "string"
+            },
+            "name": "until_generation",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "The oldest run generation to retrieve steps from",
+              "type": "string"
+            },
+            "name": "since_generation",
+            "in": "query"
+          },
+          {
             "description": "Page number starting from 1",
             "required": false,
             "schema": {
@@ -6279,10 +6515,16 @@
       "APIToken": {
         "title": "APIToken",
         "required": [
+          "token_id",
           "name"
         ],
         "type": "object",
         "properties": {
+          "token_id": {
+            "title": "Token Id",
+            "type": "string",
+            "description": "The unique ID of this API token"
+          },
           "name": {
             "title": "Name",
             "type": "string",
@@ -6302,10 +6544,16 @@
       "APITokenCreate": {
         "title": "APITokenCreate",
         "required": [
+          "token_id",
           "name"
         ],
         "type": "object",
         "properties": {
+          "token_id": {
+            "title": "Token Id",
+            "type": "string",
+            "description": "The unique ID of this API token"
+          },
           "name": {
             "title": "Name",
             "type": "string",
@@ -6376,11 +6624,17 @@
       "APITokenPrivate": {
         "title": "APITokenPrivate",
         "required": [
+          "token_id",
           "name",
           "token"
         ],
         "type": "object",
         "properties": {
+          "token_id": {
+            "title": "Token Id",
+            "type": "string",
+            "description": "The unique ID of this API token"
+          },
           "name": {
             "title": "Name",
             "type": "string",
@@ -6449,7 +6703,22 @@
           "name": {
             "title": "Name",
             "type": "string",
-            "example": "LadybugBot"
+            "example": "ladybugbot"
+          },
+          "display_name": {
+            "title": "Display Name",
+            "type": "string",
+            "example": "Ladybug Bot"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string",
+            "example": "Beep Boop!"
+          },
+          "picture_url": {
+            "title": "Picture Url",
+            "type": "string",
+            "description": "https://robohash.org/ladybugbot"
           }
         }
       },
@@ -6625,7 +6894,6 @@
             "default": true
           }
         },
-        "additionalProperties": false,
         "description": "A Directed Acyclic Graph containing a list of tasks."
       },
       "DAGArrayInput": {
@@ -6729,8 +6997,7 @@
             "default": "String"
           }
         },
-        "additionalProperties": false,
-        "description": "An array input.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/array.html for\nmore information."
+        "description": "A JSON array input.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/array.html for\nmore information."
       },
       "DAGArrayInputAlias": {
         "title": "DAGArrayInputAlias",
@@ -6809,8 +7076,7 @@
             "default": "String"
           }
         },
-        "additionalProperties": false,
-        "description": "An array input.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/array.html for\nmore information."
+        "description": "A JSON array input.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/array.html for\nmore information."
       },
       "DAGArrayOutput": {
         "title": "DAGArrayOutput",
@@ -6899,6 +7165,12 @@
             },
             "description": "A list of additional processes for loading this output on different platforms."
           },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
+          },
           "items_type": {
             "allOf": [
               {
@@ -6909,16 +7181,15 @@
             "default": "String"
           }
         },
-        "additionalProperties": false,
         "description": "DAG array output.\n\nThis output loads the content from a JSON file which must be a JSON Array."
       },
       "DAGArrayOutputAlias": {
         "title": "DAGArrayOutputAlias",
         "required": [
           "name",
-          "from",
           "platform",
-          "handler"
+          "handler",
+          "from"
         ],
         "type": "object",
         "properties": {
@@ -6926,18 +7197,6 @@
             "title": "Name",
             "type": "string",
             "description": "Output name."
-          },
-          "from": {
-            "title": "From",
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/TaskReference"
-              },
-              {
-                "$ref": "#/components/schemas/FileReference"
-              }
-            ],
-            "description": "Reference to a file or a task output. Task output must be file."
           },
           "platform": {
             "title": "Platform",
@@ -6954,6 +7213,18 @@
               "$ref": "#/components/schemas/IOAliasHandler"
             },
             "description": "List of process actions to process the input or output value."
+          },
+          "from": {
+            "title": "From",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TaskReference"
+              },
+              {
+                "$ref": "#/components/schemas/FileReference"
+              }
+            ],
+            "description": "Reference to a file or a task output. Task output must be file."
           },
           "type": {
             "title": "Type",
@@ -6975,6 +7246,12 @@
             "type": "string",
             "description": "Optional description for output."
           },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
+          },
           "items_type": {
             "allOf": [
               {
@@ -6985,7 +7262,6 @@
             "default": "String"
           }
         },
-        "additionalProperties": false,
         "description": "DAG alias array output.\n\nThis output loads the content from a JSON file which must be a JSON Array."
       },
       "DAGBooleanInput": {
@@ -7079,7 +7355,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "The boolean type matches only two special values: True and False.\n\nNote that values that evaluate to true or false, such as 1 and 0, are not accepted.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/boolean.html for more\ninformation."
       },
       "DAGBooleanInputAlias": {
@@ -7149,7 +7424,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "The boolean type matches only two special values: True and False.\n\nNote that values that evaluate to true or false, such as 1 and 0, are not accepted.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/boolean.html for more\ninformation."
       },
       "DAGBooleanOutput": {
@@ -7238,18 +7512,23 @@
               ]
             },
             "description": "A list of additional processes for loading this output on different platforms."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "DAG boolean output.\n\nThis output loads the content from a file as a boolean."
       },
       "DAGBooleanOutputAlias": {
         "title": "DAGBooleanOutputAlias",
         "required": [
           "name",
-          "from",
           "platform",
-          "handler"
+          "handler",
+          "from"
         ],
         "type": "object",
         "properties": {
@@ -7257,18 +7536,6 @@
             "title": "Name",
             "type": "string",
             "description": "Output name."
-          },
-          "from": {
-            "title": "From",
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/TaskReference"
-              },
-              {
-                "$ref": "#/components/schemas/FileReference"
-              }
-            ],
-            "description": "Reference to a file or a task output. Task output must be file."
           },
           "platform": {
             "title": "Platform",
@@ -7285,6 +7552,18 @@
               "$ref": "#/components/schemas/IOAliasHandler"
             },
             "description": "List of process actions to process the input or output value."
+          },
+          "from": {
+            "title": "From",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TaskReference"
+              },
+              {
+                "$ref": "#/components/schemas/FileReference"
+              }
+            ],
+            "description": "Reference to a file or a task output. Task output must be file."
           },
           "type": {
             "title": "Type",
@@ -7305,9 +7584,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "DAG alias boolean output.\n\nThis output loads the content from a file as a boolean."
       },
       "DAGFileInput": {
@@ -7419,7 +7703,6 @@
             "description": "Optional list of extensions for file. The check for extension is case-insensitive."
           }
         },
-        "additionalProperties": false,
         "description": "A file input.\n\nFile is a special string input. Unlike other string inputs, a file will be copied\nfrom its location to execution folder when a workflow is executed.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/string.html#string for\nmore information.\n\n.. code-block:: python\n\n    # a file with maximum 50 characters with an ``epw`` extension.\n\n    \"schema\": {\n        \"type\": \"string\",\n        \"maxLength\": 50,\n        \"pattern\": \"(?i)(^.*\\.epw$)\"\n    }"
       },
       "DAGFileInputAlias": {
@@ -7507,7 +7790,6 @@
             "description": "Optional list of extensions for file. The check for extension is case-insensitive."
           }
         },
-        "additionalProperties": false,
         "description": "An alias file input.\n\nFile is a special string input. Unlike other string inputs, a file will be copied\nfrom its location to execution folder when a workflow is executed.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/string.html#string for\nmore information.\n\n.. code-block:: python\n\n    # a file with maximum 50 characters with an ``epw`` extension.\n\n    \"schema\": {\n        \"type\": \"string\",\n        \"maxLength\": 50,\n        \"pattern\": \"(?i)(^.*\\.epw$)\"\n    }"
       },
       "DAGFileOutput": {
@@ -7596,18 +7878,23 @@
               ]
             },
             "description": "A list of additional processes for loading this output on different platforms."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "DAG file output."
       },
       "DAGFileOutputAlias": {
         "title": "DAGFileOutputAlias",
         "required": [
           "name",
-          "from",
           "platform",
-          "handler"
+          "handler",
+          "from"
         ],
         "type": "object",
         "properties": {
@@ -7615,18 +7902,6 @@
             "title": "Name",
             "type": "string",
             "description": "Output name."
-          },
-          "from": {
-            "title": "From",
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/TaskReference"
-              },
-              {
-                "$ref": "#/components/schemas/FileReference"
-              }
-            ],
-            "description": "Reference to a file or a task output. Task output must be file."
           },
           "platform": {
             "title": "Platform",
@@ -7643,6 +7918,18 @@
               "$ref": "#/components/schemas/IOAliasHandler"
             },
             "description": "List of process actions to process the input or output value."
+          },
+          "from": {
+            "title": "From",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TaskReference"
+              },
+              {
+                "$ref": "#/components/schemas/FileReference"
+              }
+            ],
+            "description": "Reference to a file or a task output. Task output must be file."
           },
           "type": {
             "title": "Type",
@@ -7663,9 +7950,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "DAG alias file output."
       },
       "DAGFolderInput": {
@@ -7769,7 +8061,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "A folder input.\n\nFolder is a special string input. Unlike other string inputs, a folder will be copied\nfrom its location to execution folder when a workflow is executed.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/string.html#string for\nmore information.\n\n.. code-block:: python\n\n    \"schema\": {\n        \"type\": \"string\",\n        \"maxLength\": 50,\n    }"
       },
       "DAGFolderInputAlias": {
@@ -7849,7 +8140,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "An alias folder input.\n\nFolder is a special string input. Unlike other string inputs, a folder will be copied\nfrom its location to execution folder when a workflow is executed.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/string.html#string for\nmore information.\n\n.. code-block:: python\n\n    \"schema\": {\n        \"type\": \"string\",\n        \"maxLength\": 50,\n    }"
       },
       "DAGFolderOutput": {
@@ -7938,18 +8228,23 @@
               ]
             },
             "description": "A list of additional processes for loading this output on different platforms."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "DAG folder output."
       },
       "DAGFolderOutputAlias": {
         "title": "DAGFolderOutputAlias",
         "required": [
           "name",
-          "from",
           "platform",
-          "handler"
+          "handler",
+          "from"
         ],
         "type": "object",
         "properties": {
@@ -7957,18 +8252,6 @@
             "title": "Name",
             "type": "string",
             "description": "Output name."
-          },
-          "from": {
-            "title": "From",
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/TaskReference"
-              },
-              {
-                "$ref": "#/components/schemas/FolderReference"
-              }
-            ],
-            "description": "Reference to a folder or a task output. Task output must be folder."
           },
           "platform": {
             "title": "Platform",
@@ -7985,6 +8268,18 @@
               "$ref": "#/components/schemas/IOAliasHandler"
             },
             "description": "List of process actions to process the input or output value."
+          },
+          "from": {
+            "title": "From",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TaskReference"
+              },
+              {
+                "$ref": "#/components/schemas/FolderReference"
+              }
+            ],
+            "description": "Reference to a folder or a task output. Task output must be folder."
           },
           "type": {
             "title": "Type",
@@ -8005,9 +8300,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "DAG alias folder output."
       },
       "DAGGenericInput": {
@@ -8101,7 +8401,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "Base class for DAG inputs.\n\nThis class adds a handler to input to handle the process of loading the input\nfrom different graphical interfaces."
       },
       "DAGGenericInputAlias": {
@@ -8171,7 +8470,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "Base class for DAG Alias inputs.\n\nThis class adds a handler to input to handle the process of loading the input\nfrom different graphical interfaces."
       },
       "DAGGenericOutput": {
@@ -8254,14 +8552,12 @@
             "description": "A list of additional processes for loading this output on different platforms."
           }
         },
-        "additionalProperties": false,
         "description": "DAG generic output.\n\nIn most cases, you should not be using the generic output unless you need a dynamic\noutput that changes its type in different platforms because of returning different\nobjects in handler."
       },
       "DAGGenericOutputAlias": {
         "title": "DAGGenericOutputAlias",
         "required": [
           "name",
-          "from",
           "platform",
           "handler"
         ],
@@ -8271,10 +8567,6 @@
             "title": "Name",
             "type": "string",
             "description": "Output name."
-          },
-          "from": {
-            "title": "From",
-            "description": "Reference to a file or a task output. Task output must be file."
           },
           "platform": {
             "title": "Platform",
@@ -8313,7 +8605,6 @@
             "description": "Optional description for output."
           }
         },
-        "additionalProperties": false,
         "description": "DAG generic alias output.\n\nIn most cases, you should not be using the generic output unless you need a dynamic\noutput that changes its type in different platforms because of returning different\nobjects in handler."
       },
       "DAGIntegerInput": {
@@ -8408,7 +8699,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "An integer input.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/numeric.html#numeric\nfor more information."
       },
       "DAGIntegerInputAlias": {
@@ -8479,7 +8769,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "An alias integer input.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/numeric.html#numeric\nfor more information."
       },
       "DAGIntegerOutput": {
@@ -8568,18 +8857,23 @@
               ]
             },
             "description": "A list of additional processes for loading this output on different platforms."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "DAG integer output.\n\nThis output loads the content from a file as an integer."
       },
       "DAGIntegerOutputAlias": {
         "title": "DAGIntegerOutputAlias",
         "required": [
           "name",
-          "from",
           "platform",
-          "handler"
+          "handler",
+          "from"
         ],
         "type": "object",
         "properties": {
@@ -8587,18 +8881,6 @@
             "title": "Name",
             "type": "string",
             "description": "Output name."
-          },
-          "from": {
-            "title": "From",
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/TaskReference"
-              },
-              {
-                "$ref": "#/components/schemas/FileReference"
-              }
-            ],
-            "description": "Reference to a file or a task output. Task output must be file."
           },
           "platform": {
             "title": "Platform",
@@ -8615,6 +8897,18 @@
               "$ref": "#/components/schemas/IOAliasHandler"
             },
             "description": "List of process actions to process the input or output value."
+          },
+          "from": {
+            "title": "From",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TaskReference"
+              },
+              {
+                "$ref": "#/components/schemas/FileReference"
+              }
+            ],
+            "description": "Reference to a file or a task output. Task output must be file."
           },
           "type": {
             "title": "Type",
@@ -8635,9 +8929,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "DAG alias integer output.\n\nThis output loads the content from a file as an integer."
       },
       "DAGJSONObjectInput": {
@@ -8731,7 +9030,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "A JSON object input.\n\nJSON objects are similar to Python dictionaries.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/object.html for\nmore information."
       },
       "DAGJSONObjectInputAlias": {
@@ -8801,7 +9099,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "An alias JSON object input.\n\nJSON objects are similar to Python dictionaries.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/object.html for\nmore information."
       },
       "DAGJSONObjectOutput": {
@@ -8890,18 +9187,23 @@
               ]
             },
             "description": "A list of additional processes for loading this output on different platforms."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "DAG object output.\n\nThis output loads the content from a file as a JSON object."
       },
       "DAGJSONObjectOutputAlias": {
         "title": "DAGJSONObjectOutputAlias",
         "required": [
           "name",
-          "from",
           "platform",
-          "handler"
+          "handler",
+          "from"
         ],
         "type": "object",
         "properties": {
@@ -8909,18 +9211,6 @@
             "title": "Name",
             "type": "string",
             "description": "Output name."
-          },
-          "from": {
-            "title": "From",
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/TaskReference"
-              },
-              {
-                "$ref": "#/components/schemas/FileReference"
-              }
-            ],
-            "description": "Reference to a file or a task output. Task output must be file."
           },
           "platform": {
             "title": "Platform",
@@ -8937,6 +9227,18 @@
               "$ref": "#/components/schemas/IOAliasHandler"
             },
             "description": "List of process actions to process the input or output value."
+          },
+          "from": {
+            "title": "From",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TaskReference"
+              },
+              {
+                "$ref": "#/components/schemas/FileReference"
+              }
+            ],
+            "description": "Reference to a file or a task output. Task output must be file."
           },
           "type": {
             "title": "Type",
@@ -8957,9 +9259,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "DAG alias object output.\n\nThis output loads the content from a file as a JSON object."
       },
       "DAGLinkedInputAlias": {
@@ -9029,14 +9336,12 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "An Alias for Linked Inputs.\n\nA linked input alias will be hidden in the UI and will be linked to an object in \nthe UI using the input handler."
       },
       "DAGLinkedOutputAlias": {
         "title": "DAGLinkedOutputAlias",
         "required": [
           "name",
-          "from",
           "platform",
           "handler"
         ],
@@ -9046,10 +9351,6 @@
             "title": "Name",
             "type": "string",
             "description": "Output name."
-          },
-          "from": {
-            "title": "From",
-            "description": "Reference to a file or a task output. Task output must be file."
           },
           "platform": {
             "title": "Platform",
@@ -9088,7 +9389,6 @@
             "description": "Optional description for output."
           }
         },
-        "additionalProperties": false,
         "description": "An Alias for Linked Outputs.\n\nA linked output alias will be translated to an object in the UI and stay linked to\nit."
       },
       "DAGNumberInput": {
@@ -9183,7 +9483,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "A number input.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/numeric.html#numeric\nfor more information."
       },
       "DAGNumberInputAlias": {
@@ -9254,7 +9553,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "An alias number input.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/numeric.html#numeric\nfor more information."
       },
       "DAGNumberOutput": {
@@ -9343,18 +9641,23 @@
               ]
             },
             "description": "A list of additional processes for loading this output on different platforms."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "DAG number output.\n\nThis output loads the content from a file as a floating number."
       },
       "DAGNumberOutputAlias": {
         "title": "DAGNumberOutputAlias",
         "required": [
           "name",
-          "from",
           "platform",
-          "handler"
+          "handler",
+          "from"
         ],
         "type": "object",
         "properties": {
@@ -9362,18 +9665,6 @@
             "title": "Name",
             "type": "string",
             "description": "Output name."
-          },
-          "from": {
-            "title": "From",
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/TaskReference"
-              },
-              {
-                "$ref": "#/components/schemas/FileReference"
-              }
-            ],
-            "description": "Reference to a file or a task output. Task output must be file."
           },
           "platform": {
             "title": "Platform",
@@ -9390,6 +9681,18 @@
               "$ref": "#/components/schemas/IOAliasHandler"
             },
             "description": "List of process actions to process the input or output value."
+          },
+          "from": {
+            "title": "From",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TaskReference"
+              },
+              {
+                "$ref": "#/components/schemas/FileReference"
+              }
+            ],
+            "description": "Reference to a file or a task output. Task output must be file."
           },
           "type": {
             "title": "Type",
@@ -9410,9 +9713,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "DAG alias number output.\n\nThis output loads the content from a file as a floating number."
       },
       "DAGPathInput": {
@@ -9524,7 +9832,6 @@
             "description": "Optional list of extensions for path. The check for extension is case-insensitive. The extension will only be validated for file inputs."
           }
         },
-        "additionalProperties": false,
         "description": "A file or a folder input.\n\nUse this input only in cases that the input can be either a file or folder. For file\nor folder-only inputs see File and Folder.\n\nPath is a special string input. Unlike other string inputs, a path will be copied\nfrom its location to execution folder when a workflow is executed.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/string.html#string for\nmore information.\n\n.. code-block:: python\n\n    # a file with maximum 50 characters with an ``epw`` extension.\n\n    \"schema\": {\n        \"type\": \"string\",\n        \"maxLength\": 50,\n        \"pattern\": \"(?i)(^.*\\.epw$)\"\n    }"
       },
       "DAGPathInputAlias": {
@@ -9612,7 +9919,6 @@
             "description": "Optional list of extensions for path. The check for extension is case-insensitive. The extension will only be validated for file inputs."
           }
         },
-        "additionalProperties": false,
         "description": "A file or a folder input.\n\nUse this input only in cases that the input can be either a file or folder. For file\nor folder-only inputs see File and Folder.\n\nPath is a special string input. Unlike other string inputs, a path will be copied\nfrom its location to execution folder when a workflow is executed.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/string.html#string for\nmore information.\n\n.. code-block:: python\n\n    # a file with maximum 50 characters with an ``epw`` extension.\n\n    \"schema\": {\n        \"type\": \"string\",\n        \"maxLength\": 50,\n        \"pattern\": \"(?i)(^.*\\.epw$)\"\n    }"
       },
       "DAGPathOutput": {
@@ -9704,18 +10010,23 @@
               ]
             },
             "description": "A list of additional processes for loading this output on different platforms."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "DAG path output."
       },
       "DAGPathOutputAlias": {
         "title": "DAGPathOutputAlias",
         "required": [
           "name",
-          "from",
           "platform",
-          "handler"
+          "handler",
+          "from"
         ],
         "type": "object",
         "properties": {
@@ -9723,21 +10034,6 @@
             "title": "Name",
             "type": "string",
             "description": "Output name."
-          },
-          "from": {
-            "title": "From",
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/TaskReference"
-              },
-              {
-                "$ref": "#/components/schemas/FileReference"
-              },
-              {
-                "$ref": "#/components/schemas/FolderReference"
-              }
-            ],
-            "description": "Reference to a file, folder or a task output. Task output must either be a file or a folder."
           },
           "platform": {
             "title": "Platform",
@@ -9754,6 +10050,21 @@
               "$ref": "#/components/schemas/IOAliasHandler"
             },
             "description": "List of process actions to process the input or output value."
+          },
+          "from": {
+            "title": "From",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TaskReference"
+              },
+              {
+                "$ref": "#/components/schemas/FileReference"
+              },
+              {
+                "$ref": "#/components/schemas/FolderReference"
+              }
+            ],
+            "description": "Reference to a file, folder or a task output. Task output must either be a file or a folder."
           },
           "type": {
             "title": "Type",
@@ -9774,9 +10085,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "DAG alias path output."
       },
       "DAGStringInput": {
@@ -9870,7 +10186,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "A String input.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/string.html#string for\nmore information.\n\n.. code-block:: python\n\n    \"schema\": {\n        \"type\": \"string\",\n        \"maxLength\": 50,\n        \"pattern\": \"(?i)(^.*\\.epw$)\"\n    }"
       },
       "DAGStringInputAlias": {
@@ -9940,7 +10255,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "An Alias String input.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/string.html#string for\nmore information.\n\n.. code-block:: python\n\n    \"schema\": {\n        \"type\": \"string\",\n        \"maxLength\": 50,\n        \"pattern\": \"(?i)(^.*\\.epw$)\"\n    }"
       },
       "DAGStringOutput": {
@@ -10029,18 +10343,23 @@
               ]
             },
             "description": "A list of additional processes for loading this output on different platforms."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "DAG string output.\n\nThis output loads the content from a file as a string."
       },
       "DAGStringOutputAlias": {
         "title": "DAGStringOutputAlias",
         "required": [
           "name",
-          "from",
           "platform",
-          "handler"
+          "handler",
+          "from"
         ],
         "type": "object",
         "properties": {
@@ -10048,18 +10367,6 @@
             "title": "Name",
             "type": "string",
             "description": "Output name."
-          },
-          "from": {
-            "title": "From",
-            "anyOf": [
-              {
-                "$ref": "#/components/schemas/TaskReference"
-              },
-              {
-                "$ref": "#/components/schemas/FileReference"
-              }
-            ],
-            "description": "Reference to a file or a task output. Task output must be file."
           },
           "platform": {
             "title": "Platform",
@@ -10076,6 +10383,18 @@
               "$ref": "#/components/schemas/IOAliasHandler"
             },
             "description": "List of process actions to process the input or output value."
+          },
+          "from": {
+            "title": "From",
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TaskReference"
+              },
+              {
+                "$ref": "#/components/schemas/FileReference"
+              }
+            ],
+            "description": "Reference to a file or a task output. Task output must be file."
           },
           "type": {
             "title": "Type",
@@ -10096,9 +10415,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "DAG alias string output.\n\nThis output loads the content from a file as a string."
       },
       "DAGTask": {
@@ -10187,7 +10511,6 @@
             "description": "List of task returns."
           }
         },
-        "additionalProperties": false,
         "description": "A single task in a DAG flow."
       },
       "DAGTaskLoop": {
@@ -10225,7 +10548,6 @@
             "description": "The task or DAG parameter to loop over (must be iterable)."
           }
         },
-        "additionalProperties": false,
         "description": "Loop configuration for the task.\n\nThis will run the template provided multiple times and in parallel relative to an\ninput or task parameter which should be a list."
       },
       "Dependency": {
@@ -10287,7 +10609,6 @@
             "description": "An optional alias to refer to this dependency. Useful if the name is already used somewhere else."
           }
         },
-        "additionalProperties": false,
         "description": "Configuration to fetch a Recipe or Plugin that another Recipe depends on."
       },
       "DependencyKind": {
@@ -10338,7 +10659,6 @@
             "description": "The container registry URLs that this container should be pulled from. Will default to Dockerhub if none is specified."
           }
         },
-        "additionalProperties": false,
         "description": "Plugin Configuration to run in a Docker container"
       },
       "FileMeta": {
@@ -10402,7 +10722,6 @@
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
           }
         },
-        "additionalProperties": false,
         "description": "Reference to a file."
       },
       "FolderReference": {
@@ -10433,7 +10752,6 @@
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
           }
         },
-        "additionalProperties": false,
         "description": "Reference to a folder."
       },
       "Function": {
@@ -10547,7 +10865,6 @@
             "description": "Function description. A short human readable description for this function."
           }
         },
-        "additionalProperties": false,
         "description": "A Function with a single command"
       },
       "FunctionArrayInput": {
@@ -10651,8 +10968,7 @@
             "default": "String"
           }
         },
-        "additionalProperties": false,
-        "description": "An array input.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/array.html for\nmore information."
+        "description": "A JSON array input.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/array.html for\nmore information."
       },
       "FunctionArrayOutput": {
         "title": "FunctionArrayOutput",
@@ -10692,6 +11008,12 @@
             "type": "string",
             "description": "Optional description for output."
           },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
+          },
           "items_type": {
             "allOf": [
               {
@@ -10702,7 +11024,6 @@
             "default": "String"
           }
         },
-        "additionalProperties": false,
         "description": "Function array output.\n\nThis output loads the content from a JSON file which must be a JSON Array."
       },
       "FunctionBooleanInput": {
@@ -10796,7 +11117,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "The boolean type matches only two special values: True and False.\n\nNote that values that evaluate to true or false, such as 1 and 0, are not accepted.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/boolean.html for more\ninformation."
       },
       "FunctionBooleanOutput": {
@@ -10836,9 +11156,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "Function boolean output.\n\nThis output loads the content from a file as a boolean."
       },
       "FunctionFileInput": {
@@ -10956,7 +11281,6 @@
             "description": "Optional list of extensions for file. The check for extension is case-insensitive."
           }
         },
-        "additionalProperties": false,
         "description": "A file input.\n\nFile is a special string input. Unlike other string inputs, a file will be copied\nfrom its location to execution folder when a workflow is executed.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/string.html#string for\nmore information.\n\n.. code-block:: python\n\n    # a file with maximum 50 characters with an ``epw`` extension.\n\n    \"schema\": {\n        \"type\": \"string\",\n        \"maxLength\": 50,\n        \"pattern\": \"(?i)(^.*\\.epw$)\"\n    }"
       },
       "FunctionFileOutput": {
@@ -10996,9 +11320,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "Function File output."
       },
       "FunctionFolderInput": {
@@ -11108,7 +11437,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "A folder input.\n\nFolder is a special string input. Unlike other string inputs, a folder will be copied\nfrom its location to execution folder when a workflow is executed.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/string.html#string for\nmore information.\n\n.. code-block:: python\n\n    \"schema\": {\n        \"type\": \"string\",\n        \"maxLength\": 50,\n    }"
       },
       "FunctionFolderOutput": {
@@ -11148,9 +11476,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "Function Folder output."
       },
       "FunctionIntegerInput": {
@@ -11245,7 +11578,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "An integer input.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/numeric.html#numeric\nfor more information."
       },
       "FunctionIntegerOutput": {
@@ -11285,9 +11617,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "Function integer output.\n\nThis output loads the content from a file as an integer."
       },
       "FunctionJSONObjectInput": {
@@ -11381,7 +11718,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "A JSON object input.\n\nJSON objects are similar to Python dictionaries.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/object.html for\nmore information."
       },
       "FunctionJSONObjectOutput": {
@@ -11421,9 +11757,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "Function object output.\n\nThis output loads the content from a file as a JSON object."
       },
       "FunctionNumberInput": {
@@ -11518,7 +11859,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "A number input.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/numeric.html#numeric\nfor more information."
       },
       "FunctionNumberOutput": {
@@ -11558,9 +11898,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "Function number output.\n\nThis output loads the content from a file as a floating number."
       },
       "FunctionPathInput": {
@@ -11678,7 +12023,6 @@
             "description": "Optional list of extensions for file. The check for extension is case-insensitive."
           }
         },
-        "additionalProperties": false,
         "description": "A file or a folder input.\n\nUse this input only in cases that the input can be either a file or folder. For file\nor folder-only inputs see File and Folder.\n\nPath is a special string input. Unlike other string inputs, a path will be copied\nfrom its location to execution folder when a workflow is executed.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/string.html#string for\nmore information.\n\n.. code-block:: python\n\n    # a file with maximum 50 characters with an ``epw`` extension.\n\n    \"schema\": {\n        \"type\": \"string\",\n        \"maxLength\": 50,\n        \"pattern\": \"(?i)(^.*\\.epw$)\"\n    }"
       },
       "FunctionPathOutput": {
@@ -11718,9 +12062,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "Function Path output."
       },
       "FunctionStringInput": {
@@ -11814,7 +12163,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "A String input.\n\nYou can add additional validation by defining a JSONSchema specification.\n\nSee http://json-schema.org/understanding-json-schema/reference/string.html#string for\nmore information.\n\n.. code-block:: python\n\n    \"schema\": {\n        \"type\": \"string\",\n        \"maxLength\": 50,\n        \"pattern\": \"(?i)(^.*\\.epw$)\"\n    }"
       },
       "FunctionStringOutput": {
@@ -11854,9 +12202,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "Function string output.\n\nThis output loads the content from a file as a string."
       },
       "HTTP": {
@@ -11887,7 +12240,6 @@
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
           }
         },
-        "additionalProperties": false,
         "description": "HTTP Source\n\nA web HTTP to an FTP server or an API for example."
       },
       "HTTPValidationError": {
@@ -11944,7 +12296,6 @@
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
           }
         },
-        "additionalProperties": false,
         "description": "Input and output alias handler object."
       },
       "InputFileReference": {
@@ -11975,7 +12326,6 @@
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
           }
         },
-        "additionalProperties": false,
         "description": "An input file reference"
       },
       "InputFolderReference": {
@@ -12006,7 +12356,6 @@
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
           }
         },
-        "additionalProperties": false,
         "description": "An input folder reference"
       },
       "InputPathReference": {
@@ -12037,7 +12386,6 @@
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
           }
         },
-        "additionalProperties": false,
         "description": "An input file or folder reference"
       },
       "InputReference": {
@@ -12068,7 +12416,6 @@
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
           }
         },
-        "additionalProperties": false,
         "description": "An input parameter reference which is not a file or a folder.\n\nFor a file or a folder use InputFileReference, InputFolderReference or\nInputPathReference instead."
       },
       "ItemReference": {
@@ -12096,7 +12443,6 @@
             "description": "The name of the looped item variable (use dot notation for nested json values)"
           }
         },
-        "additionalProperties": false,
         "description": "An Item Reference."
       },
       "ItemType": {
@@ -12107,14 +12453,11 @@
           "Integer",
           "Number",
           "Boolean",
-          "File",
-          "Folder",
-          "Path",
           "Array",
           "JSONObject"
         ],
         "type": "string",
-        "description": "Type enum for items in a list."
+        "description": "Type enum for items in a list.\n\nItems can not be files or folder. For a list of files you should copy them to a\nfolder and use FolderInput input instead of using ArrayInput."
       },
       "Job": {
         "title": "Job",
@@ -12184,7 +12527,6 @@
             "description": "Optional user data as a dictionary. User data is for user reference only and will not be used in the execution of the job."
           }
         },
-        "additionalProperties": false,
         "description": "Queenbee Job.\n\nA Job is an object to submit a list of arguments to execute a Queenbee recipe."
       },
       "JobArgument": {
@@ -12221,7 +12563,6 @@
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
           }
         },
-        "additionalProperties": false,
         "description": "Job argument is an argument input for arguments which are not files or folders."
       },
       "JobPathArgument": {
@@ -12268,7 +12609,6 @@
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
           }
         },
-        "additionalProperties": false,
         "description": "BaseModel with functionality to return the object as a yaml string."
       },
       "JobStatus": {
@@ -12422,7 +12762,6 @@
             "default": {}
           }
         },
-        "additionalProperties": false,
         "description": "Job Status."
       },
       "KeyRequest": {
@@ -12474,7 +12813,6 @@
             "format": "uri"
           }
         },
-        "additionalProperties": false,
         "description": "License information for the Package"
       },
       "LocalConfig": {
@@ -12497,7 +12835,6 @@
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
           }
         },
-        "additionalProperties": false,
         "description": "Plugin Configuration to run on a desktop."
       },
       "Maintainer": {
@@ -12533,7 +12870,6 @@
             "description": "The email address of the author/maintainer person or organization."
           }
         },
-        "additionalProperties": false,
         "description": "Maintainer information"
       },
       "MetaData": {
@@ -12628,7 +12964,6 @@
             "description": "The license information."
           }
         },
-        "additionalProperties": false,
         "description": "Package metadata information."
       },
       "NewPluginPackage": {
@@ -12694,32 +13029,11 @@
       "Organization": {
         "title": "Organization",
         "required": [
-          "name",
-          "picture",
-          "contact_email",
           "id",
           "owner"
         ],
         "type": "object",
         "properties": {
-          "name": {
-            "title": "Name",
-            "type": "string",
-            "description": "The display name for this org",
-            "example": "Ladybug Tools"
-          },
-          "picture": {
-            "title": "Picture",
-            "type": "string",
-            "description": "URL to the picture associated with this org",
-            "example": "https://avatars1.githubusercontent.com/u/38131342"
-          },
-          "contact_email": {
-            "title": "Contact Email",
-            "type": "string",
-            "description": "The contact email for the Organization",
-            "example": "info@ladybug.tools"
-          },
           "id": {
             "title": "Id",
             "type": "string",
@@ -12740,11 +13054,28 @@
               "name": "ladybug-tools"
             }
           },
+          "name": {
+            "title": "Name",
+            "type": "string",
+            "description": "The display name for this org",
+            "example": "Ladybug Tools"
+          },
+          "picture_url": {
+            "title": "Picture Url",
+            "type": "string",
+            "description": "URL to the picture associated with this org",
+            "example": "https://avatars1.githubusercontent.com/u/38131342"
+          },
+          "contact_email": {
+            "title": "Contact Email",
+            "type": "string",
+            "description": "The contact email for the Organization",
+            "example": "info@ladybug.tools"
+          },
           "description": {
             "title": "Description",
             "type": "string",
             "description": "A description of the org",
-            "default": "",
             "example": "Making environmental design knowledge and tools freely accessible to every person, project and design process"
           },
           "role": {
@@ -12777,21 +13108,27 @@
       "OrganizationCreate": {
         "title": "OrganizationCreate",
         "required": [
+          "account_name",
           "name",
-          "picture",
-          "contact_email",
-          "account_name"
+          "picture_url",
+          "contact_email"
         ],
         "type": "object",
         "properties": {
+          "account_name": {
+            "title": "Account Name",
+            "type": "string",
+            "description": "The unique name of the org in small case without spaces",
+            "example": "ladybug-tools"
+          },
           "name": {
             "title": "Name",
             "type": "string",
             "description": "The display name for this org",
             "example": "Ladybug Tools"
           },
-          "picture": {
-            "title": "Picture",
+          "picture_url": {
+            "title": "Picture Url",
             "type": "string",
             "description": "URL to the picture associated with this org",
             "example": "https://avatars1.githubusercontent.com/u/38131342"
@@ -12802,17 +13139,10 @@
             "description": "The contact email for the Organization",
             "example": "info@ladybug.tools"
           },
-          "account_name": {
-            "title": "Account Name",
-            "type": "string",
-            "description": "The unique name of the org in small case without spaces",
-            "example": "ladybug-tools"
-          },
           "description": {
             "title": "Description",
             "type": "string",
             "description": "A description of the org",
-            "default": "",
             "example": "Making environmental design knowledge and tools freely accessible to every person, project and design process"
           }
         }
@@ -12958,11 +13288,6 @@
       },
       "OrganizationUpdate": {
         "title": "OrganizationUpdate",
-        "required": [
-          "name",
-          "picture",
-          "contact_email"
-        ],
         "type": "object",
         "properties": {
           "name": {
@@ -12971,8 +13296,8 @@
             "description": "The display name for this org",
             "example": "Ladybug Tools"
           },
-          "picture": {
-            "title": "Picture",
+          "picture_url": {
+            "title": "Picture Url",
             "type": "string",
             "description": "URL to the picture associated with this org",
             "example": "https://avatars1.githubusercontent.com/u/38131342"
@@ -12987,7 +13312,6 @@
             "title": "Description",
             "type": "string",
             "description": "A description of the org",
-            "default": "",
             "example": "Making environmental design knowledge and tools freely accessible to every person, project and design process"
           }
         }
@@ -13128,7 +13452,6 @@
             "description": "The package Recipe or Plugin manifest"
           }
         },
-        "additionalProperties": false,
         "description": "Package Version\n\nA MetaData object to distinguish a specific package version within a repository\nindex."
       },
       "Permission": {
@@ -13199,7 +13522,6 @@
             "readOnly": true
           }
         },
-        "additionalProperties": false,
         "description": "A Queenbee Plugin.\n\nA plugin contains runtime configuration for a Command Line Interface (CLI) and\na list of functions that can be executed using this CLI tool."
       },
       "PluginConfig": {
@@ -13243,7 +13565,6 @@
             "description": "The configuration to use this plugin locally"
           }
         },
-        "additionalProperties": false,
         "description": "Plugin configuration.\n\nThe config is used to schedule functions on a desktop or in other contexts\n(ie: Docker)."
       },
       "PluginPackage": {
@@ -13552,7 +13873,6 @@
             "description": "The path to a folder where files and folders can be sourced. For a local filesystem this can be \"C:\\Users\\me\\jobs\\test\"."
           }
         },
-        "additionalProperties": false,
         "description": "Project Folder Source\n\nThis is the path to a folder where files and folders can be sourced. In the context\nof a desktop run Workflow this folder will correspond to a local folder. In the\ncontext of a workflow run on Pollination this folder will correspond to a Project\nscoped folder."
       },
       "ProjectList": {
@@ -13865,7 +14185,6 @@
             "description": "A list of plugins and other recipes this recipe depends on."
           }
         },
-        "additionalProperties": false,
         "description": "A Queenbee Recipe"
       },
       "RecipeInterface": {
@@ -13990,7 +14309,6 @@
             "description": "A list of recipe outputs."
           }
         },
-        "additionalProperties": false,
         "description": "An interface object for creating a Recipe.\n\nRecipe information only includes metadata, source, inputs and outputs of a Recipe.\nThis object is useful for creating user interface for Recipes."
       },
       "RecipeInterfaceList": {
@@ -14435,7 +14753,6 @@
             "default": {}
           }
         },
-        "additionalProperties": false,
         "description": "A searchable index for a Queenbee Plugin and Recipe repository"
       },
       "RepositoryList": {
@@ -14539,7 +14856,6 @@
             "format": "int32"
           }
         },
-        "additionalProperties": false,
         "description": "BaseModel with functionality to return the object as a yaml string."
       },
       "RepositoryPolicySubject": {
@@ -14658,6 +14974,12 @@
             ],
             "description": "owner"
           },
+          "generation": {
+            "title": "Generation",
+            "type": "number",
+            "description": "The generation of this run",
+            "format": "double"
+          },
           "status": {
             "title": "Status",
             "allOf": [
@@ -14765,7 +15087,6 @@
             "description": "Path to the file holding the AccessKey and SecretAccessKey to authenticate to the bucket. Assumes public bucket access if none are specified."
           }
         },
-        "additionalProperties": false,
         "description": "S3 Source\n\nAn S3 bucket artifact Source."
       },
       "S3UploadRequest": {
@@ -14907,8 +15228,7 @@
             "default": "String"
           }
         },
-        "additionalProperties": false,
-        "description": "An array input."
+        "description": "A JSON array input."
       },
       "StepArrayOutput": {
         "title": "StepArrayOutput",
@@ -14954,6 +15274,12 @@
             "type": "string",
             "description": "Optional description for output."
           },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
+          },
           "items_type": {
             "allOf": [
               {
@@ -14964,8 +15290,7 @@
             "default": "String"
           }
         },
-        "additionalProperties": false,
-        "description": "An array output."
+        "description": "A JSON array output."
       },
       "StepBooleanInput": {
         "title": "StepBooleanInput",
@@ -15063,7 +15388,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "The boolean type matches only two special values: True and False."
       },
       "StepBooleanOutput": {
@@ -15108,9 +15432,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "The boolean type matches only two special values: True and False."
       },
       "StepFileInput": {
@@ -15243,7 +15572,6 @@
             "description": "Optional list of extensions for file. The check for extension is case-insensitive."
           }
         },
-        "additionalProperties": false,
         "description": "A file input."
       },
       "StepFileOutput": {
@@ -15299,9 +15627,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "A file output."
       },
       "StepFolderInput": {
@@ -15426,7 +15759,6 @@
             "description": "Path to the target location that the input will be copied to.  This path is relative to the working directory where the command is executed."
           }
         },
-        "additionalProperties": false,
         "description": "A folder input."
       },
       "StepFolderOutput": {
@@ -15482,9 +15814,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "A folder output."
       },
       "StepIntegerInput": {
@@ -15585,7 +15922,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "An integer input."
       },
       "StepIntegerOutput": {
@@ -15631,9 +15967,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "An integer output."
       },
       "StepJSONObjectInput": {
@@ -15732,7 +16073,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "A JSON object input."
       },
       "StepJSONObjectOutput": {
@@ -15777,9 +16117,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "A JSON object output."
       },
       "StepList": {
@@ -15931,7 +16276,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "A number input."
       },
       "StepNumberOutput": {
@@ -15977,9 +16321,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "A number output."
       },
       "StepPathInput": {
@@ -16112,7 +16461,6 @@
             "description": "Optional list of extensions for file. The check for extension is case-insensitive."
           }
         },
-        "additionalProperties": false,
         "description": "A file or a folder input."
       },
       "StepPathOutput": {
@@ -16168,9 +16516,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "A file or a folder output."
       },
       "StepStatus": {
@@ -16353,7 +16706,6 @@
             "description": "This indicates the step ID of the associated template root             step in which this step belongs to. A DAG step will have the id of the             parent DAG for example."
           }
         },
-        "additionalProperties": false,
         "description": "The Status of a Job Step"
       },
       "StepStringInput": {
@@ -16452,7 +16804,6 @@
             "description": "An optional JSON Schema specification to validate the input value. You can use validate_spec method to validate a value against the spec."
           }
         },
-        "additionalProperties": false,
         "description": "A String input."
       },
       "StepStringOutput": {
@@ -16497,9 +16848,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "A String output."
       },
       "SubjectType": {
@@ -16558,7 +16914,6 @@
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
           }
         },
-        "additionalProperties": false,
         "description": "Task argument for receiving inputs that are not files or folders."
       },
       "TaskFileReference": {
@@ -16595,7 +16950,6 @@
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
           }
         },
-        "additionalProperties": false,
         "description": "A reference to a file that is generated in a task."
       },
       "TaskFolderReference": {
@@ -16632,7 +16986,6 @@
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
           }
         },
-        "additionalProperties": false,
         "description": "A reference to a folder that is generated in a task."
       },
       "TaskPathArgument": {
@@ -16699,7 +17052,6 @@
             "description": "A sub_path inside the path that is provided in the ``from`` field. Use sub_path to only access part of the Path that is needed instead of copying all the files and folders inside the path."
           }
         },
-        "additionalProperties": false,
         "description": "BaseModel with functionality to return the object as a yaml string."
       },
       "TaskPathReference": {
@@ -16736,7 +17088,6 @@
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
           }
         },
-        "additionalProperties": false,
         "description": "A reference to a file or folder that is generated in a task."
       },
       "TaskPathReturn": {
@@ -16776,9 +17127,14 @@
             "title": "Description",
             "type": "string",
             "description": "Optional description for output."
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean",
+            "description": "A boolean to indicate if an artifact output is required. A False value makes the artifact optional.",
+            "default": true
           }
         },
-        "additionalProperties": false,
         "description": "A Task output that returns a file or a folder output from a function or a DAG."
       },
       "TaskReference": {
@@ -16815,7 +17171,6 @@
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
           }
         },
-        "additionalProperties": false,
         "description": "A Task reference for parameters other than files or folders."
       },
       "TaskReturn": {
@@ -16851,7 +17206,6 @@
             "description": "Optional description for output."
           }
         },
-        "additionalProperties": false,
         "description": "A Task return output that exposes the values from a function or a DAG."
       },
       "Team": {
@@ -17084,21 +17438,52 @@
         },
         "description": "Accepted request response for existing resource"
       },
-      "UserMetadata": {
-        "title": "UserMetadata",
+      "UserCreate": {
+        "title": "UserCreate",
+        "required": [
+          "name",
+          "picture_url",
+          "username",
+          "email",
+          "password"
+        ],
         "type": "object",
         "properties": {
-          "company": {
-            "title": "Company",
+          "name": {
+            "title": "Name",
             "type": "string",
-            "description": "The company the user works for",
+            "description": "The display name for this user",
             "example": "Ladybug Tools"
+          },
+          "picture_url": {
+            "title": "Picture Url",
+            "type": "string",
+            "description": "URL to the picture associated with this user",
+            "example": "https://avatars1.githubusercontent.com/u/38131342"
+          },
+          "username": {
+            "title": "Username",
+            "type": "string",
+            "description": "The unique name of the user in small case without spaces",
+            "example": "ladybugbot"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string",
+            "description": "The contact email for the Organization",
+            "example": "info@ladybug.tools"
+          },
+          "password": {
+            "title": "Password",
+            "type": "string",
+            "description": "A password for this new user to authenticate with"
           },
           "description": {
             "title": "Description",
             "type": "string",
-            "description": "A short description of the user",
-            "example": "A bot user that helps automate things at Ladybug Tools!"
+            "description": "A description of the user",
+            "default": "",
+            "example": "Making environmental design knowledge and tools freely accessible to every person, project and design process"
           }
         }
       },
@@ -17106,7 +17491,8 @@
         "title": "UserPrivate",
         "required": [
           "username",
-          "id"
+          "id",
+          "email"
         ],
         "type": "object",
         "properties": {
@@ -17120,20 +17506,27 @@
             "title": "Id",
             "type": "string"
           },
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
           "name": {
             "title": "Name",
             "type": "string",
             "description": "The display name for this user",
             "example": "Ladybug Bot"
           },
+          "description": {
+            "title": "Description",
+            "type": "string",
+            "description": "A short description of the user",
+            "example": "Beep Boop!"
+          },
           "picture": {
             "title": "Picture",
             "type": "string",
             "description": "URL to the picture associated with this user",
             "example": "https://avatars1.githubusercontent.com/u/38131342"
-          },
-          "metadata": {
-            "$ref": "#/components/schemas/UserMetadata"
           }
         }
       },
@@ -17155,6 +17548,12 @@
             "type": "string",
             "description": "The display name for this user",
             "example": "Ladybug Bot"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string",
+            "description": "A short description of the user",
+            "example": "Beep Boop!"
           },
           "picture": {
             "title": "Picture",
@@ -17215,6 +17614,35 @@
         },
         "description": "A list response from a pagination request"
       },
+      "UserUpdate": {
+        "title": "UserUpdate",
+        "required": [
+          "name",
+          "picture_url"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string",
+            "description": "The display name for this user",
+            "example": "Ladybug Tools"
+          },
+          "picture_url": {
+            "title": "Picture Url",
+            "type": "string",
+            "description": "URL to the picture associated with this user",
+            "example": "https://avatars1.githubusercontent.com/u/38131342"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string",
+            "description": "A description of the user",
+            "default": "",
+            "example": "Making environmental design knowledge and tools freely accessible to every person, project and design process"
+          }
+        }
+      },
       "ValidationError": {
         "title": "ValidationError",
         "required": [
@@ -17270,7 +17698,6 @@
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
           }
         },
-        "additionalProperties": false,
         "description": "A reference to a fixed file."
       },
       "ValueFolderReference": {
@@ -17301,7 +17728,6 @@
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
           }
         },
-        "additionalProperties": false,
         "description": "A reference to a fixed folder."
       },
       "ValueListReference": {
@@ -17333,7 +17759,6 @@
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
           }
         },
-        "additionalProperties": false,
         "description": "A reference to a fixed value."
       },
       "ValueReference": {
@@ -17363,7 +17788,6 @@
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
           }
         },
-        "additionalProperties": false,
         "description": "A reference to a fixed value."
       }
     },

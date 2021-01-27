@@ -473,7 +473,7 @@ Name | Type | Description  | Notes
 
 ## GetRunSteps
 
-> StepList GetRunSteps (string owner, string name, string runId, string status = null, List<string> stepId = null, int? page = null, int? perPage = null)
+> StepList GetRunSteps (string owner, string name, string runId, string status = null, List<string> stepId = null, string untilGeneration = null, string sinceGeneration = null, int? page = null, int? perPage = null)
 
 Query the steps of a run
 
@@ -508,13 +508,15 @@ namespace Example
             var runId = runId_example;  // string | 
             var status = status_example;  // string |  (optional) 
             var stepId = new List<string>(); // List<string> |  (optional) 
+            var untilGeneration = untilGeneration_example;  // string |  (optional) 
+            var sinceGeneration = sinceGeneration_example;  // string |  (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
                 // Query the steps of a run
-                StepList result = apiInstance.GetRunSteps(owner, name, runId, status, stepId, page, perPage);
+                StepList result = apiInstance.GetRunSteps(owner, name, runId, status, stepId, untilGeneration, sinceGeneration, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -538,6 +540,8 @@ Name | Type | Description  | Notes
  **runId** | **string**|  | 
  **status** | **string**|  | [optional] 
  **stepId** | [**List&lt;string&gt;**](string.md)|  | [optional] 
+ **untilGeneration** | **string**|  | [optional] 
+ **sinceGeneration** | **string**|  | [optional] 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
  **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 

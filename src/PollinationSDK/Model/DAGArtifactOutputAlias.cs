@@ -24,47 +24,48 @@ using QueenbeeSDK;
 namespace PollinationSDK
 {
     /// <summary>
-    /// APITokenPrivate
+    /// Base class for DAG artifact output aliases.  This class add a required input. By default all artifact outputs are required.
     /// </summary>
-    [DataContract(Name = "APITokenPrivate")]
-    public partial class APITokenPrivate : APITokenCreate, IEquatable<APITokenPrivate>, IValidatableObject
+    [DataContract(Name = "_DAGArtifactOutputAlias")]
+    public partial class DAGArtifactOutputAlias : DAGGenericOutputAlias, IEquatable<DAGArtifactOutputAlias>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="APITokenPrivate" /> class.
+        /// Initializes a new instance of the <see cref="DAGArtifactOutputAlias" /> class.
         /// </summary>
         [JsonConstructorAttribute]
-        protected APITokenPrivate() 
+        protected DAGArtifactOutputAlias() 
         { 
             // Set non-required readonly properties with defaultValue
-            this.Type = "APITokenPrivate";
+            this.Type = "DAGGenericOutputAlias";
         }
         
         /// <summary>
-        /// Initializes a new instance of the <see cref="APITokenPrivate" /> class.
+        /// Initializes a new instance of the <see cref="DAGArtifactOutputAlias" /> class.
         /// </summary>
-        /// <param name="token">The decoded API token (required).</param>
-        /// <param name="tokenId">The unique ID of this API token (required).</param>
-        /// <param name="name">The user friendly name of the API token (required).</param>
-        /// <param name="claims">Key value pairs of auth claims the API token is entitled to.</param>
-        public APITokenPrivate
+        /// <param name="required">A boolean to indicate if an artifact output is required. A False value makes the artifact optional. (default to true).</param>
+        /// <param name="name">Output name. (required).</param>
+        /// <param name="annotations">An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries..</param>
+        /// <param name="description">Optional description for output..</param>
+        /// <param name="platform">Name of the client platform (e.g. Grasshopper, Revit, etc). The value can be any strings as long as it has been agreed between client-side developer and author of the recipe. (required).</param>
+        /// <param name="handler">List of process actions to process the input or output value. (required).</param>
+        public DAGArtifactOutputAlias
         (
-            string tokenId, string name, string token, // Required parameters
-            Dictionary<string, string> claims= default // Optional parameters
-        ) : base(tokenId: tokenId, name: name, claims: claims)// BaseClass
+            string name, List<string> platform, List<IOAliasHandler> handler, // Required parameters
+            Dictionary<string, string> annotations= default, string description= default, bool required = true // Optional parameters
+        ) : base(name: name, annotations: annotations, description: description, platform: platform, handler: handler)// BaseClass
         {
-            // to ensure "token" is required (not null)
-            this.Token = token ?? throw new ArgumentNullException("token is a required property for APITokenPrivate and cannot be null");
+            this.Required = required;
 
             // Set non-required readonly properties with defaultValue
-            this.Type = "APITokenPrivate";
+            this.Type = "DAGGenericOutputAlias";
         }
 
         /// <summary>
-        /// The decoded API token
+        /// A boolean to indicate if an artifact output is required. A False value makes the artifact optional.
         /// </summary>
-        /// <value>The decoded API token</value>
-        [DataMember(Name = "token", IsRequired = true, EmitDefaultValue = false)]
-        public string Token { get; set; } 
+        /// <value>A boolean to indicate if an artifact output is required. A False value makes the artifact optional.</value>
+        [DataMember(Name = "required", EmitDefaultValue = true)]
+        public bool Required { get; set; }  = true;
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -72,7 +73,7 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            return "APITokenPrivate";
+            return "DAGArtifactOutputAlias";
         }
 
         /// <summary>
@@ -85,22 +86,24 @@ namespace PollinationSDK
                 return this.ToString();
             
             var sb = new StringBuilder();
-            sb.Append("APITokenPrivate:\n");
+            sb.Append("DAGArtifactOutputAlias:\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
-            sb.Append("  TokenId: ").Append(TokenId).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Claims: ").Append(Claims).Append("\n");
-            sb.Append("  Token: ").Append(Token).Append("\n");
+            sb.Append("  Annotations: ").Append(Annotations).Append("\n");
+            sb.Append("  Description: ").Append(Description).Append("\n");
+            sb.Append("  Platform: ").Append(Platform).Append("\n");
+            sb.Append("  Handler: ").Append(Handler).Append("\n");
+            sb.Append("  Required: ").Append(Required).Append("\n");
             return sb.ToString();
         }
   
         /// <summary>
         /// Returns the object from JSON string
         /// </summary>
-        /// <returns>APITokenPrivate object</returns>
-        public static APITokenPrivate FromJson(string json)
+        /// <returns>DAGArtifactOutputAlias object</returns>
+        public static DAGArtifactOutputAlias FromJson(string json)
         {
-            var obj = JsonConvert.DeserializeObject<APITokenPrivate>(json, JsonSetting.AnyOfConvertSetting);
+            var obj = JsonConvert.DeserializeObject<DAGArtifactOutputAlias>(json, JsonSetting.AnyOfConvertSetting);
             if (obj == null)
                 return null;
             return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
@@ -109,8 +112,8 @@ namespace PollinationSDK
         /// <summary>
         /// Creates a new instance with the same properties.
         /// </summary>
-        /// <returns>APITokenPrivate object</returns>
-        public virtual APITokenPrivate DuplicateAPITokenPrivate()
+        /// <returns>DAGArtifactOutputAlias object</returns>
+        public virtual DAGArtifactOutputAlias DuplicateDAGArtifactOutputAlias()
         {
             return FromJson(this.ToJson());
         }
@@ -121,16 +124,16 @@ namespace PollinationSDK
         /// <returns>OpenAPIGenBaseModel</returns>
         public override OpenAPIGenBaseModel Duplicate()
         {
-            return DuplicateAPITokenPrivate();
+            return DuplicateDAGArtifactOutputAlias();
         }
 
         /// <summary>
         /// Creates a new instance with the same properties.
         /// </summary>
         /// <returns>OpenAPIGenBaseModel</returns>
-        public override APITokenCreate DuplicateAPITokenCreate()
+        public override DAGGenericOutputAlias DuplicateDAGGenericOutputAlias()
         {
-            return DuplicateAPITokenPrivate();
+            return DuplicateDAGArtifactOutputAlias();
         }
      
         /// <summary>
@@ -140,23 +143,23 @@ namespace PollinationSDK
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as APITokenPrivate);
+            return this.Equals(input as DAGArtifactOutputAlias);
         }
 
         /// <summary>
-        /// Returns true if APITokenPrivate instances are equal
+        /// Returns true if DAGArtifactOutputAlias instances are equal
         /// </summary>
-        /// <param name="input">Instance of APITokenPrivate to be compared</param>
+        /// <param name="input">Instance of DAGArtifactOutputAlias to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(APITokenPrivate input)
+        public bool Equals(DAGArtifactOutputAlias input)
         {
             if (input == null)
                 return false;
             return base.Equals(input) && 
                 (
-                    this.Token == input.Token ||
-                    (this.Token != null &&
-                    this.Token.Equals(input.Token))
+                    this.Required == input.Required ||
+                    (this.Required != null &&
+                    this.Required.Equals(input.Required))
                 ) && base.Equals(input) && 
                 (
                     this.Type == input.Type ||
@@ -174,8 +177,8 @@ namespace PollinationSDK
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = base.GetHashCode();
-                if (this.Token != null)
-                    hashCode = hashCode * 59 + this.Token.GetHashCode();
+                if (this.Required != null)
+                    hashCode = hashCode * 59 + this.Required.GetHashCode();
                 if (this.Type != null)
                     hashCode = hashCode * 59 + this.Type.GetHashCode();
                 return hashCode;
@@ -189,11 +192,21 @@ namespace PollinationSDK
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
+            return this.BaseValidate(validationContext);
+        }
+
+        /// <summary>
+        /// To validate all properties of the instance
+        /// </summary>
+        /// <param name="validationContext">Validation context</param>
+        /// <returns>Validation Result</returns>
+        protected IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> BaseValidate(ValidationContext validationContext)
+        {
             foreach(var x in base.BaseValidate(validationContext)) yield return x;
 
             
             // Type (string) pattern
-            Regex regexType = new Regex(@"^APITokenPrivate$", RegexOptions.CultureInvariant);
+            Regex regexType = new Regex(@"^DAGGenericOutputAlias$", RegexOptions.CultureInvariant);
             if (false == regexType.Match(this.Type).Success)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Type, must match a pattern of " + regexType, new [] { "Type" });

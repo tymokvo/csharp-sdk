@@ -43,19 +43,21 @@ namespace PollinationSDK
         /// Initializes a new instance of the <see cref="UserPrivate" /> class.
         /// </summary>
         /// <param name="id">id (required).</param>
-        /// <param name="metadata">metadata.</param>
+        /// <param name="email">email (required).</param>
         /// <param name="username">The lowercase account name for this user (required).</param>
         /// <param name="name">The display name for this user.</param>
+        /// <param name="description">A short description of the user.</param>
         /// <param name="picture">URL to the picture associated with this user.</param>
         public UserPrivate
         (
-            string username, string id, // Required parameters
-            string name= default, string picture= default, UserMetadata metadata= default // Optional parameters
-        ) : base(username: username, name: name, picture: picture)// BaseClass
+            string username, string id, string email, // Required parameters
+            string name= default, string description= default, string picture= default // Optional parameters
+        ) : base(username: username, name: name, description: description, picture: picture)// BaseClass
         {
             // to ensure "id" is required (not null)
             this.Id = id ?? throw new ArgumentNullException("id is a required property for UserPrivate and cannot be null");
-            this.Metadata = metadata;
+            // to ensure "email" is required (not null)
+            this.Email = email ?? throw new ArgumentNullException("email is a required property for UserPrivate and cannot be null");
 
             // Set non-required readonly properties with defaultValue
             this.Type = "UserPrivate";
@@ -67,10 +69,10 @@ namespace PollinationSDK
         [DataMember(Name = "id", IsRequired = true, EmitDefaultValue = false)]
         public string Id { get; set; } 
         /// <summary>
-        /// Gets or Sets Metadata
+        /// Gets or Sets Email
         /// </summary>
-        [DataMember(Name = "metadata", EmitDefaultValue = false)]
-        public UserMetadata Metadata { get; set; } 
+        [DataMember(Name = "email", IsRequired = true, EmitDefaultValue = false)]
+        public string Email { get; set; } 
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -95,9 +97,10 @@ namespace PollinationSDK
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  Username: ").Append(Username).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Picture: ").Append(Picture).Append("\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Metadata: ").Append(Metadata).Append("\n");
+            sb.Append("  Email: ").Append(Email).Append("\n");
             return sb.ToString();
         }
   
@@ -166,9 +169,9 @@ namespace PollinationSDK
                     this.Id.Equals(input.Id))
                 ) && base.Equals(input) && 
                 (
-                    this.Metadata == input.Metadata ||
-                    (this.Metadata != null &&
-                    this.Metadata.Equals(input.Metadata))
+                    this.Email == input.Email ||
+                    (this.Email != null &&
+                    this.Email.Equals(input.Email))
                 ) && base.Equals(input) && 
                 (
                     this.Type == input.Type ||
@@ -188,8 +191,8 @@ namespace PollinationSDK
                 int hashCode = base.GetHashCode();
                 if (this.Id != null)
                     hashCode = hashCode * 59 + this.Id.GetHashCode();
-                if (this.Metadata != null)
-                    hashCode = hashCode * 59 + this.Metadata.GetHashCode();
+                if (this.Email != null)
+                    hashCode = hashCode * 59 + this.Email.GetHashCode();
                 if (this.Type != null)
                     hashCode = hashCode * 59 + this.Type.GetHashCode();
                 return hashCode;

@@ -24,57 +24,65 @@ using QueenbeeSDK;
 namespace PollinationSDK
 {
     /// <summary>
-    /// OrganizationUpdate
+    /// UserCreate
     /// </summary>
-    [DataContract(Name = "OrganizationUpdate")]
-    public partial class OrganizationUpdate : OpenAPIGenBaseModel, IEquatable<OrganizationUpdate>, IValidatableObject
+    [DataContract(Name = "UserCreate")]
+    public partial class UserCreate : UserUpdate, IEquatable<UserCreate>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="OrganizationUpdate" /> class.
+        /// Initializes a new instance of the <see cref="UserCreate" /> class.
         /// </summary>
-        /// <param name="name">The display name for this org.</param>
-        /// <param name="pictureUrl">URL to the picture associated with this org.</param>
-        /// <param name="contactEmail">The contact email for the Organization.</param>
-        /// <param name="description">A description of the org.</param>
-        public OrganizationUpdate
+        [JsonConstructorAttribute]
+        protected UserCreate() 
+        { 
+            // Set non-required readonly properties with defaultValue
+            this.Type = "UserCreate";
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserCreate" /> class.
+        /// </summary>
+        /// <param name="username">The unique name of the user in small case without spaces (required).</param>
+        /// <param name="email">The contact email for the Organization (required).</param>
+        /// <param name="password">A password for this new user to authenticate with (required).</param>
+        /// <param name="name">The display name for this user (required).</param>
+        /// <param name="pictureUrl">URL to the picture associated with this user (required).</param>
+        /// <param name="description">A description of the user (default to &quot;&quot;).</param>
+        public UserCreate
         (
-           // Required parameters
-           string name= default, string pictureUrl= default, string contactEmail= default, string description= default // Optional parameters
-        ) : base()// BaseClass
+            string name, string pictureUrl, string username, string email, string password, // Required parameters
+            string description = "" // Optional parameters
+        ) : base(name: name, pictureUrl: pictureUrl, description: description)// BaseClass
         {
-            this.Name = name;
-            this.PictureUrl = pictureUrl;
-            this.ContactEmail = contactEmail;
-            this.Description = description;
+            // to ensure "username" is required (not null)
+            this.Username = username ?? throw new ArgumentNullException("username is a required property for UserCreate and cannot be null");
+            // to ensure "email" is required (not null)
+            this.Email = email ?? throw new ArgumentNullException("email is a required property for UserCreate and cannot be null");
+            // to ensure "password" is required (not null)
+            this.Password = password ?? throw new ArgumentNullException("password is a required property for UserCreate and cannot be null");
 
             // Set non-required readonly properties with defaultValue
-            this.Type = "OrganizationUpdate";
+            this.Type = "UserCreate";
         }
 
         /// <summary>
-        /// The display name for this org
+        /// The unique name of the user in small case without spaces
         /// </summary>
-        /// <value>The display name for this org</value>
-        [DataMember(Name = "name", EmitDefaultValue = false)]
-        public string Name { get; set; } 
-        /// <summary>
-        /// URL to the picture associated with this org
-        /// </summary>
-        /// <value>URL to the picture associated with this org</value>
-        [DataMember(Name = "picture_url", EmitDefaultValue = false)]
-        public string PictureUrl { get; set; } 
+        /// <value>The unique name of the user in small case without spaces</value>
+        [DataMember(Name = "username", IsRequired = true, EmitDefaultValue = false)]
+        public string Username { get; set; } 
         /// <summary>
         /// The contact email for the Organization
         /// </summary>
         /// <value>The contact email for the Organization</value>
-        [DataMember(Name = "contact_email", EmitDefaultValue = false)]
-        public string ContactEmail { get; set; } 
+        [DataMember(Name = "email", IsRequired = true, EmitDefaultValue = false)]
+        public string Email { get; set; } 
         /// <summary>
-        /// A description of the org
+        /// A password for this new user to authenticate with
         /// </summary>
-        /// <value>A description of the org</value>
-        [DataMember(Name = "description", EmitDefaultValue = false)]
-        public string Description { get; set; } 
+        /// <value>A password for this new user to authenticate with</value>
+        [DataMember(Name = "password", IsRequired = true, EmitDefaultValue = false)]
+        public string Password { get; set; } 
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -82,7 +90,7 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            return "OrganizationUpdate";
+            return "UserCreate";
         }
 
         /// <summary>
@@ -95,22 +103,24 @@ namespace PollinationSDK
                 return this.ToString();
             
             var sb = new StringBuilder();
-            sb.Append("OrganizationUpdate:\n");
+            sb.Append("UserCreate:\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  PictureUrl: ").Append(PictureUrl).Append("\n");
-            sb.Append("  ContactEmail: ").Append(ContactEmail).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
+            sb.Append("  Username: ").Append(Username).Append("\n");
+            sb.Append("  Email: ").Append(Email).Append("\n");
+            sb.Append("  Password: ").Append(Password).Append("\n");
             return sb.ToString();
         }
   
         /// <summary>
         /// Returns the object from JSON string
         /// </summary>
-        /// <returns>OrganizationUpdate object</returns>
-        public static OrganizationUpdate FromJson(string json)
+        /// <returns>UserCreate object</returns>
+        public static UserCreate FromJson(string json)
         {
-            var obj = JsonConvert.DeserializeObject<OrganizationUpdate>(json, JsonSetting.AnyOfConvertSetting);
+            var obj = JsonConvert.DeserializeObject<UserCreate>(json, JsonSetting.AnyOfConvertSetting);
             if (obj == null)
                 return null;
             return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
@@ -119,8 +129,8 @@ namespace PollinationSDK
         /// <summary>
         /// Creates a new instance with the same properties.
         /// </summary>
-        /// <returns>OrganizationUpdate object</returns>
-        public virtual OrganizationUpdate DuplicateOrganizationUpdate()
+        /// <returns>UserCreate object</returns>
+        public virtual UserCreate DuplicateUserCreate()
         {
             return FromJson(this.ToJson());
         }
@@ -131,16 +141,16 @@ namespace PollinationSDK
         /// <returns>OpenAPIGenBaseModel</returns>
         public override OpenAPIGenBaseModel Duplicate()
         {
-            return DuplicateOrganizationUpdate();
+            return DuplicateUserCreate();
         }
 
         /// <summary>
         /// Creates a new instance with the same properties.
         /// </summary>
         /// <returns>OpenAPIGenBaseModel</returns>
-        public override OpenAPIGenBaseModel DuplicateOpenAPIGenBaseModel()
+        public override UserUpdate DuplicateUserUpdate()
         {
-            return DuplicateOrganizationUpdate();
+            return DuplicateUserCreate();
         }
      
         /// <summary>
@@ -150,38 +160,33 @@ namespace PollinationSDK
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as OrganizationUpdate);
+            return this.Equals(input as UserCreate);
         }
 
         /// <summary>
-        /// Returns true if OrganizationUpdate instances are equal
+        /// Returns true if UserCreate instances are equal
         /// </summary>
-        /// <param name="input">Instance of OrganizationUpdate to be compared</param>
+        /// <param name="input">Instance of UserCreate to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(OrganizationUpdate input)
+        public bool Equals(UserCreate input)
         {
             if (input == null)
                 return false;
             return base.Equals(input) && 
                 (
-                    this.Name == input.Name ||
-                    (this.Name != null &&
-                    this.Name.Equals(input.Name))
+                    this.Username == input.Username ||
+                    (this.Username != null &&
+                    this.Username.Equals(input.Username))
                 ) && base.Equals(input) && 
                 (
-                    this.PictureUrl == input.PictureUrl ||
-                    (this.PictureUrl != null &&
-                    this.PictureUrl.Equals(input.PictureUrl))
+                    this.Email == input.Email ||
+                    (this.Email != null &&
+                    this.Email.Equals(input.Email))
                 ) && base.Equals(input) && 
                 (
-                    this.ContactEmail == input.ContactEmail ||
-                    (this.ContactEmail != null &&
-                    this.ContactEmail.Equals(input.ContactEmail))
-                ) && base.Equals(input) && 
-                (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
+                    this.Password == input.Password ||
+                    (this.Password != null &&
+                    this.Password.Equals(input.Password))
                 ) && base.Equals(input) && 
                 (
                     this.Type == input.Type ||
@@ -199,14 +204,12 @@ namespace PollinationSDK
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = base.GetHashCode();
-                if (this.Name != null)
-                    hashCode = hashCode * 59 + this.Name.GetHashCode();
-                if (this.PictureUrl != null)
-                    hashCode = hashCode * 59 + this.PictureUrl.GetHashCode();
-                if (this.ContactEmail != null)
-                    hashCode = hashCode * 59 + this.ContactEmail.GetHashCode();
-                if (this.Description != null)
-                    hashCode = hashCode * 59 + this.Description.GetHashCode();
+                if (this.Username != null)
+                    hashCode = hashCode * 59 + this.Username.GetHashCode();
+                if (this.Email != null)
+                    hashCode = hashCode * 59 + this.Email.GetHashCode();
+                if (this.Password != null)
+                    hashCode = hashCode * 59 + this.Password.GetHashCode();
                 if (this.Type != null)
                     hashCode = hashCode * 59 + this.Type.GetHashCode();
                 return hashCode;
@@ -220,21 +223,11 @@ namespace PollinationSDK
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
-            return this.BaseValidate(validationContext);
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        protected IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> BaseValidate(ValidationContext validationContext)
-        {
             foreach(var x in base.BaseValidate(validationContext)) yield return x;
 
             
             // Type (string) pattern
-            Regex regexType = new Regex(@"^OrganizationUpdate$", RegexOptions.CultureInvariant);
+            Regex regexType = new Regex(@"^UserCreate$", RegexOptions.CultureInvariant);
             if (false == regexType.Match(this.Type).Success)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Type, must match a pattern of " + regexType, new [] { "Type" });

@@ -42,13 +42,14 @@ namespace PollinationSDK
         /// <summary>
         /// Initializes a new instance of the <see cref="APITokenCreate" /> class.
         /// </summary>
+        /// <param name="tokenId">The unique ID of this API token (required).</param>
         /// <param name="name">The user friendly name of the API token (required).</param>
         /// <param name="claims">Key value pairs of auth claims the API token is entitled to.</param>
         public APITokenCreate
         (
-            string name, // Required parameters
+            string tokenId, string name, // Required parameters
             Dictionary<string, string> claims= default // Optional parameters
-        ) : base(name: name, claims: claims)// BaseClass
+        ) : base(tokenId: tokenId, name: name, claims: claims)// BaseClass
         {
 
             // Set non-required readonly properties with defaultValue
@@ -77,6 +78,7 @@ namespace PollinationSDK
             var sb = new StringBuilder();
             sb.Append("APITokenCreate:\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
+            sb.Append("  TokenId: ").Append(TokenId).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  Claims: ").Append(Claims).Append("\n");
             return sb.ToString();

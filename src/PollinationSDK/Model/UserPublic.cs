@@ -44,16 +44,18 @@ namespace PollinationSDK
         /// </summary>
         /// <param name="username">The lowercase account name for this user (required).</param>
         /// <param name="name">The display name for this user.</param>
+        /// <param name="description">A short description of the user.</param>
         /// <param name="picture">URL to the picture associated with this user.</param>
         public UserPublic
         (
            string username, // Required parameters
-           string name= default, string picture= default // Optional parameters
+           string name= default, string description= default, string picture= default // Optional parameters
         ) : base()// BaseClass
         {
             // to ensure "username" is required (not null)
             this.Username = username ?? throw new ArgumentNullException("username is a required property for UserPublic and cannot be null");
             this.Name = name;
+            this.Description = description;
             this.Picture = picture;
 
             // Set non-required readonly properties with defaultValue
@@ -72,6 +74,12 @@ namespace PollinationSDK
         /// <value>The display name for this user</value>
         [DataMember(Name = "name", EmitDefaultValue = false)]
         public string Name { get; set; } 
+        /// <summary>
+        /// A short description of the user
+        /// </summary>
+        /// <value>A short description of the user</value>
+        [DataMember(Name = "description", EmitDefaultValue = false)]
+        public string Description { get; set; } 
         /// <summary>
         /// URL to the picture associated with this user
         /// </summary>
@@ -102,6 +110,7 @@ namespace PollinationSDK
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  Username: ").Append(Username).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
+            sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Picture: ").Append(Picture).Append("\n");
             return sb.ToString();
         }
@@ -176,6 +185,11 @@ namespace PollinationSDK
                     this.Name.Equals(input.Name))
                 ) && base.Equals(input) && 
                 (
+                    this.Description == input.Description ||
+                    (this.Description != null &&
+                    this.Description.Equals(input.Description))
+                ) && base.Equals(input) && 
+                (
                     this.Picture == input.Picture ||
                     (this.Picture != null &&
                     this.Picture.Equals(input.Picture))
@@ -200,6 +214,8 @@ namespace PollinationSDK
                     hashCode = hashCode * 59 + this.Username.GetHashCode();
                 if (this.Name != null)
                     hashCode = hashCode * 59 + this.Name.GetHashCode();
+                if (this.Description != null)
+                    hashCode = hashCode * 59 + this.Description.GetHashCode();
                 if (this.Picture != null)
                     hashCode = hashCode * 59 + this.Picture.GetHashCode();
                 if (this.Type != null)

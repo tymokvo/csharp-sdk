@@ -53,15 +53,15 @@ namespace PollinationSDK
         /// <param name="role">The role the user has within the organization.</param>
         /// <param name="memberCount">The number of members that are part of this org (default to 0).</param>
         /// <param name="teamCount">The number of teams that are part of this org (default to 0).</param>
-        /// <param name="name">The display name for this org (required).</param>
-        /// <param name="picture">URL to the picture associated with this org (required).</param>
-        /// <param name="contactEmail">The contact email for the Organization (required).</param>
-        /// <param name="description">A description of the org (default to &quot;&quot;).</param>
+        /// <param name="name">The display name for this org.</param>
+        /// <param name="pictureUrl">URL to the picture associated with this org.</param>
+        /// <param name="contactEmail">The contact email for the Organization.</param>
+        /// <param name="description">A description of the org.</param>
         public Organization
         (
-            string name, string picture, string contactEmail, string id, AccountPublic owner, // Required parameters
-            string description = "", OrganizationRoleEnum role= default, int memberCount = 0, int teamCount = 0 // Optional parameters
-        ) : base(name: name, picture: picture, contactEmail: contactEmail, description: description)// BaseClass
+           string id, AccountPublic owner, // Required parameters
+            string name= default, string pictureUrl= default, string contactEmail= default, string description= default, OrganizationRoleEnum role= default, int memberCount = 0, int teamCount = 0 // Optional parameters
+        ) : base(name: name, pictureUrl: pictureUrl, contactEmail: contactEmail, description: description)// BaseClass
         {
             // to ensure "id" is required (not null)
             this.Id = id ?? throw new ArgumentNullException("id is a required property for Organization and cannot be null");
@@ -122,7 +122,7 @@ namespace PollinationSDK
             sb.Append("Organization:\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
-            sb.Append("  Picture: ").Append(Picture).Append("\n");
+            sb.Append("  PictureUrl: ").Append(PictureUrl).Append("\n");
             sb.Append("  ContactEmail: ").Append(ContactEmail).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Id: ").Append(Id).Append("\n");

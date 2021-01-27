@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **Job** | [**Job**](Job.md) |  | 
 **Author** | [**AccountPublic**](AccountPublic.md) | author | [optional] 
 **Owner** | [**AccountPublic**](AccountPublic.md) | owner | [optional] 
+**Generation** | **double** | The generation of this run | [optional] 
 **Status** | [**JobStatus**](JobStatus.md) | The status of the run | [optional] 
 **Type** | **string** |  | [optional] [readonly] [default to "Run"]
 

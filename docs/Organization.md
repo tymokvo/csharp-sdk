@@ -5,10 +5,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **string** | The display name for this org | 
-**Picture** | **string** | URL to the picture associated with this org | 
-**ContactEmail** | **string** | The contact email for the Organization | 
-**Description** | **string** | A description of the org | [optional] [default to ""]
+**Name** | **string** | The display name for this org | [optional] 
+**PictureUrl** | **string** | URL to the picture associated with this org | [optional] 
+**ContactEmail** | **string** | The contact email for the Organization | [optional] 
+**Description** | **string** | A description of the org | [optional] 
 **Id** | **string** | The org ID | 
 **Owner** | [**AccountPublic**](AccountPublic.md) | The account the organization represents | 
 **Role** | **OrganizationRoleEnum** | The role the user has within the organization | [optional] 

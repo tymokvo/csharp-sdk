@@ -47,6 +47,27 @@ namespace PollinationSDK.Api
         /// <returns>ApiResponse of APITokenPrivate</returns>
         ApiResponse<APITokenPrivate> CreateTokenWithHttpInfo (APITokenCreate aPITokenCreate);
         /// <summary>
+        /// Delete an API Token
+        /// </summary>
+        /// <remarks>
+        /// Delete a token
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tokenId"></param>
+        /// <returns>object</returns>
+        object DeleteToken (string tokenId);
+
+        /// <summary>
+        /// Delete an API Token
+        /// </summary>
+        /// <remarks>
+        /// Delete a token
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tokenId"></param>
+        /// <returns>ApiResponse of object</returns>
+        ApiResponse<object> DeleteTokenWithHttpInfo (string tokenId);
+        /// <summary>
         /// List user API tokens
         /// </summary>
         /// <remarks>
@@ -69,6 +90,27 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of APITokenList</returns>
         ApiResponse<APITokenList> ListTokensWithHttpInfo (int? page = default, int? perPage = default);
+        /// <summary>
+        /// Regenerate an API token
+        /// </summary>
+        /// <remarks>
+        /// Regenerate a token
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tokenId"></param>
+        /// <returns>APITokenPrivate</returns>
+        APITokenPrivate RegenerateToken (string tokenId);
+
+        /// <summary>
+        /// Regenerate an API token
+        /// </summary>
+        /// <remarks>
+        /// Regenerate a token
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tokenId"></param>
+        /// <returns>ApiResponse of APITokenPrivate</returns>
+        ApiResponse<APITokenPrivate> RegenerateTokenWithHttpInfo (string tokenId);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -95,6 +137,29 @@ namespace PollinationSDK.Api
         /// <returns>Task of ApiResponse (APITokenPrivate)</returns>
         System.Threading.Tasks.Task<ApiResponse<APITokenPrivate>> CreateTokenWithHttpInfoAsync (APITokenCreate aPITokenCreate, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Delete an API Token
+        /// </summary>
+        /// <remarks>
+        /// Delete a token
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tokenId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of object</returns>
+        System.Threading.Tasks.Task<object> DeleteTokenAsync (string tokenId, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Delete an API Token
+        /// </summary>
+        /// <remarks>
+        /// Delete a token
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tokenId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of ApiResponse (object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<object>> DeleteTokenWithHttpInfoAsync (string tokenId, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// List user API tokens
         /// </summary>
         /// <remarks>
@@ -119,6 +184,29 @@ namespace PollinationSDK.Api
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (APITokenList)</returns>
         System.Threading.Tasks.Task<ApiResponse<APITokenList>> ListTokensWithHttpInfoAsync (int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Regenerate an API token
+        /// </summary>
+        /// <remarks>
+        /// Regenerate a token
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tokenId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of APITokenPrivate</returns>
+        System.Threading.Tasks.Task<APITokenPrivate> RegenerateTokenAsync (string tokenId, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Regenerate an API token
+        /// </summary>
+        /// <remarks>
+        /// Regenerate a token
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tokenId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of ApiResponse (APITokenPrivate)</returns>
+        System.Threading.Tasks.Task<ApiResponse<APITokenPrivate>> RegenerateTokenWithHttpInfoAsync (string tokenId, CancellationToken cancellationToken = default(CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -372,6 +460,163 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
+        /// Delete an API Token Delete a token
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tokenId"></param>
+        /// <returns>object</returns>
+        public object DeleteToken (string tokenId)
+        {
+             ApiResponse<object> localVarResponse = DeleteTokenWithHttpInfo(tokenId);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Delete an API Token Delete a token
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tokenId"></param>
+        /// <returns>ApiResponse of object</returns>
+        public ApiResponse<object> DeleteTokenWithHttpInfo (string tokenId)
+        {
+            // verify the required parameter 'tokenId' is set
+            if (tokenId == null)
+                throw new ApiException(400, "Missing required parameter 'tokenId' when calling APITokensApi->DeleteToken");
+
+            var localVarPath = "/tokens/{token_id}";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (tokenId != null) localVarPathParams.Add("token_id", this.Configuration.ApiClient.ParameterToString(tokenId)); // path parameter
+
+            // authentication (APIKeyAuth) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
+            {
+                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
+            }
+            // authentication (JWTAuth) required
+            // http beerer authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.DELETE, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("DeleteToken", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<object>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
+        }
+
+        /// <summary>
+        /// Delete an API Token Delete a token
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tokenId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of object</returns>
+        public async System.Threading.Tasks.Task<object> DeleteTokenAsync (string tokenId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+             ApiResponse<object> localVarResponse = await DeleteTokenWithHttpInfoAsync(tokenId, cancellationToken);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Delete an API Token Delete a token
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tokenId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of ApiResponse (object)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<object>> DeleteTokenWithHttpInfoAsync (string tokenId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // verify the required parameter 'tokenId' is set
+            if (tokenId == null)
+                throw new ApiException(400, "Missing required parameter 'tokenId' when calling APITokensApi->DeleteToken");
+
+            var localVarPath = "/tokens/{token_id}";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (tokenId != null) localVarPathParams.Add("token_id", this.Configuration.ApiClient.ParameterToString(tokenId)); // path parameter
+
+            // authentication (APIKeyAuth) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
+            {
+                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
+            }
+            // authentication (JWTAuth) required
+            // http bearer authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.DELETE, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType, cancellationToken);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("DeleteToken", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<object>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
+        }
+
+        /// <summary>
         /// List user API tokens List API tokens for the authenticated user
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
@@ -526,6 +771,163 @@ namespace PollinationSDK.Api
             return new ApiResponse<APITokenList>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 (APITokenList) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(APITokenList)));
+        }
+
+        /// <summary>
+        /// Regenerate an API token Regenerate a token
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tokenId"></param>
+        /// <returns>APITokenPrivate</returns>
+        public APITokenPrivate RegenerateToken (string tokenId)
+        {
+             ApiResponse<APITokenPrivate> localVarResponse = RegenerateTokenWithHttpInfo(tokenId);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Regenerate an API token Regenerate a token
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tokenId"></param>
+        /// <returns>ApiResponse of APITokenPrivate</returns>
+        public ApiResponse<APITokenPrivate> RegenerateTokenWithHttpInfo (string tokenId)
+        {
+            // verify the required parameter 'tokenId' is set
+            if (tokenId == null)
+                throw new ApiException(400, "Missing required parameter 'tokenId' when calling APITokensApi->RegenerateToken");
+
+            var localVarPath = "/tokens/{token_id}";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (tokenId != null) localVarPathParams.Add("token_id", this.Configuration.ApiClient.ParameterToString(tokenId)); // path parameter
+
+            // authentication (APIKeyAuth) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
+            {
+                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
+            }
+            // authentication (JWTAuth) required
+            // http beerer authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("RegenerateToken", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<APITokenPrivate>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (APITokenPrivate) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(APITokenPrivate)));
+        }
+
+        /// <summary>
+        /// Regenerate an API token Regenerate a token
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tokenId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of APITokenPrivate</returns>
+        public async System.Threading.Tasks.Task<APITokenPrivate> RegenerateTokenAsync (string tokenId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+             ApiResponse<APITokenPrivate> localVarResponse = await RegenerateTokenWithHttpInfoAsync(tokenId, cancellationToken);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Regenerate an API token Regenerate a token
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="tokenId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of ApiResponse (APITokenPrivate)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<APITokenPrivate>> RegenerateTokenWithHttpInfoAsync (string tokenId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // verify the required parameter 'tokenId' is set
+            if (tokenId == null)
+                throw new ApiException(400, "Missing required parameter 'tokenId' when calling APITokensApi->RegenerateToken");
+
+            var localVarPath = "/tokens/{token_id}";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (tokenId != null) localVarPathParams.Add("token_id", this.Configuration.ApiClient.ParameterToString(tokenId)); // path parameter
+
+            // authentication (APIKeyAuth) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
+            {
+                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
+            }
+            // authentication (JWTAuth) required
+            // http bearer authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType, cancellationToken);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("RegenerateToken", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<APITokenPrivate>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (APITokenPrivate) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(APITokenPrivate)));
         }
 
     }
