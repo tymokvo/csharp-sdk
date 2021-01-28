@@ -53,12 +53,12 @@ namespace ConsoleAppDemo
             //}
 
 
-            Console.WriteLine("--------------------Get a recipe-------------------");
-            var recipeOwner = "ladybug-tools";
-            var recipeName = "daylight-factor";
-            var recipeApi = new RecipesApi();
-            var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest").Manifest;
-            Console.WriteLine($"{rec.Source}/{rec.Metadata.Name}/{rec.Metadata.Tag}");
+            //Console.WriteLine("--------------------Get a recipe-------------------");
+            //var recipeOwner = "ladybug-tools";
+            //var recipeName = "daylight-factor";
+            //var recipeApi = new RecipesApi();
+            //var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "*").Manifest;
+            //Console.WriteLine($"{rec.Source}/{rec.Metadata.Name}/{rec.Metadata.Tag}");
 
 
             Console.WriteLine("--------------------Get a project-------------------");
@@ -98,46 +98,65 @@ namespace ConsoleAppDemo
             //DeleteMyProjects(me, newProj);
 
 
-            Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
-            //CreateSimulation(proj);
-            var cts = new System.Threading.CancellationTokenSource();
-            var token = cts.Token;
+            //Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
+            ////CreateSimulation(proj);
+            //var cts = new System.Threading.CancellationTokenSource();
+            //var token = cts.Token;
 
-            //var workflow = CreateWorkflow("ladybug-tools", "annual-daylight");
-            var jobInfo = CreateJob_DaylightFactor();
-            //var jobInfo = CreateJob_AnnualDaylight();
+            ////var workflow = CreateWorkflow("ladybug-tools", "annual-daylight");
+            //var jobInfo = CreateJob_DaylightFactor();
+            ////var jobInfo = CreateJob_AnnualDaylight();
 
-            try
+            //try
+            //{
+            //    jobInfo.SetJobSubFolderPath("round1/test");
+            //    var task = runSimu(proj, jobInfo, (s) => Console.WriteLine(s), token);
+            //    //cts.CancelAfter(60000);
+            //    task.Wait();
+
+            //    Console.WriteLine($"Canceled check: {token.IsCancellationRequested}");
+            //    cts.Dispose();
+
+
+            //}
+            //catch (Exception e)
+            //{
+            //    Console.WriteLine(e.InnerException.Message);
+            //    //throw;
+            //}
+
+
+            Console.WriteLine("--------------------get simulation assets-------------------");
+            var runApi = new PollinationSDK.Api.RunsApi();
+            var run = runApi.GetRun(proj.Owner.Name, proj.Name, "229b7d27-292d-45f8-a06b-da07083d798b");
+            var inputArgs = run.Status.Inputs;
+            foreach (var item in inputArgs)
             {
-                jobInfo.SetJobSubFolderPath("round1/test");
-                var task = runSimu(proj, jobInfo, (s) => Console.WriteLine(s), token);
-                //cts.CancelAfter(60000);
-                task.Wait();
-
-                Console.WriteLine($"Canceled check: {token.IsCancellationRequested}");
-                cts.Dispose();
-
+                var obj = item.Obj;
+                var objType = obj.GetType();
+                var name = objType.GetProperty("Name").GetValue(obj);
+                var value = objType.GetProperty("Value")?.GetValue(obj);
+                if (value == null)
+                {
+                    var path = objType.GetProperty("Path")?.GetValue(obj).ToString();
+                    var url = runApi.DownloadRunArtifact(proj.Owner.Name, proj.Name, run.Id, path);
+                    value = url;
+                    //Console.WriteLine(url);
+                }
+                Console.WriteLine($"{name}: {value}");
+          
 
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.InnerException.Message);
-                //throw;
-            }
-
-
-            //Console.WriteLine("--------------------get simulation outputs-------------------");
-            //var simuApi = new PollinationSDK.Api.SimulationsApi();
-            ////var outputs = simuApi.GetSimulationOutputs(proj.Owner.Name, proj.Name, "e7bd42b9-9878-416d-bc0d-e5f245c6f036");
-            //var output2 = simuApi.ListSimulationArtifacts(proj.Owner.Name, proj.Name, "e7bd42b9-9878-416d-bc0d-e5f245c6f036", 1, 25);
+          
+            //var output2 = runApi.ListRunArtifacts(proj.Owner.Name, proj.Name, run.Id, path: new List<string>() { "inputs"});
 
             //foreach (var item in output2)
             //{
-            //     Console.WriteLine($"{item.FileName}");
-            //    var url = simuApi.DownloadSimulationArtifact(proj.Owner.Name, proj.Name, "e7bd42b9-9878-416d-bc0d-e5f245c6f036", item.FileName).ToString();
+            //    Console.WriteLine($"{item.FileName}");
+            //    var url = runApi.DownloadRunArtifact(proj.Owner.Name, proj.Name, run.Id, item.Key).ToString();
             //    Console.WriteLine(url);
             //}
-            //Console.WriteLine("Done downloading");
+            Console.WriteLine("Done downloading");
 
 
 
@@ -165,6 +184,7 @@ namespace ConsoleAppDemo
 
         }
 
+       
         private static async Task<RunInfo> runSimu(Project proj, JobInfo job, Action<string> msgAction, CancellationToken token)
         {
             try
@@ -332,15 +352,15 @@ namespace ConsoleAppDemo
            
         }
 
-        private async static void DownloadOutputs(RunInfo runInfo, List<string> outputNames)
-        {
-            //var run = new Simulation(proj, simuId);
-            var simuStatus = new PollinationSDK.Api.RunsApi().GetRun(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID).Status;
+        //private async static void DownloadOutputs(RunInfo runInfo, List<string> outputNames)
+        //{
+        //    //var run = new Simulation(proj, simuId);
+        //    var simuStatus = new PollinationSDK.Api.RunsApi().GetRun(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID).Status;
 
-            var filePaths = await runInfo.DownloadOutputArtifactsAsync(outputNames);
+        //    var filePaths = await runInfo.DownloadOutputArtifactsAsync(outputNames);
 
 
-        }
+        //}
 
 
 
