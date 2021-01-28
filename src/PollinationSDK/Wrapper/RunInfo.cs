@@ -93,7 +93,7 @@ namespace PollinationSDK.Wrapper
                 StopSimulaiton();
                 return;
             }
-            var totalTime = DateTime.UtcNow - startTime;
+            var totalTime = status.FinishedAt - startTime;
             var finishMessage = status.Status == "Succeeded" ? $"✔ Succeeded" : $"❌ {status.Status}";
             progressAction?.Invoke($"Task: {status.Status}");
 
@@ -228,89 +228,141 @@ namespace PollinationSDK.Wrapper
         }
 
 
-
         /// <summary>
         /// Download a list of OutputArtifacts from a simulation.
         /// </summary>
-        /// <param name="runInfo"></param>
-        /// <param name="artifacts"></param>
+        /// <param name="inputAssetPaths">asset name, relative path to project folder of file or folder </param>
+        /// <param name="outputAssets">output name</param>
         /// <param name="saveAsDir"></param>
         /// <param name="reportProgressAction"></param>
         /// <returns></returns>
-        public async Task<List<string>> DownloadOutputArtifactsAsync(List<string> artifacts, string saveAsDir = default, Action<int> reportProgressAction = default)
+        public async Task<Dictionary<string, List<string>>> DownloadRunAssetsAsync(Dictionary<string, string> inputAssetPaths, List<string> outputAssets, string saveAsDir = default, Action<int> reportProgressAction = default)
         {
             //_filePaths = new List<string>();
-            var downloadedFiles = new List<string>();
+            var downloadedFiles = new Dictionary<string, List<string>>();
             try
             {
                 var dir = string.IsNullOrEmpty(saveAsDir) ? Helper.GenTempFolder() : saveAsDir;
                 var simuID = this.RunID.Substring(0, 8);
-                dir = Path.Combine(dir, simuID, "outputs");
+                dir = Path.Combine(dir, simuID);
+                var inputDir = Path.Combine(dir, "inputs");
+                var outputDir = Path.Combine(dir, "outputs");
 
-                var tasks = artifacts.Select(_ => DownloadArtifact(this, _, dir)).ToList();
-                //var tasks = artifacts.SelectMany(_ => DownloadArtifactWithItems(simu, _, saveAsDir)).ToList();
+                // assembly download tasks
+                var tasks = new List<Task<string>>();
+                var inputTasks = DownloadInputArtifact(this, inputAssetPaths, inputDir);
+                tasks.AddRange(inputTasks);
+                var outputTasks = DownloadOutputArtifact(this, outputAssets, outputDir);
+                tasks.AddRange(outputTasks);
 
+                // watching tasks
                 var total = tasks.Count();
-                while (tasks.Count() > 0)
+                var completed = 0;
+                while (total - completed < 0)
                 {
-                    var finishedTask = await Task.WhenAny(tasks);
-                    downloadedFiles.Add(finishedTask.Result);
-                    tasks.Remove(finishedTask);
+                    var finishedTask =  await Task.WhenAny(tasks);
+                    await finishedTask;
+                    completed++;
 
-                    var left = tasks.Count();
-                    var finishedPercent = (total - left) / (double)total * 100;
+                    var finishedPercent = completed / (double)total * 100;
                     reportProgressAction?.Invoke((int)finishedPercent);
-
                 }
 
+                var assetNames = inputAssetPaths?.Select(_=> $"IN_{_.Key}")?.ToList() ?? new List<string>();
+                assetNames.AddRange(outputAssets?.Select(_ => $"OUT_{_}"));
+
+                // collect all downloaded assets
+                var works = assetNames.Zip(tasks, (name, task) => new { name, task });
+                foreach (var item in works)
+                {
+                    var savedFolderOrFilePath = await item.task;
+                    var subPaths = CheckIfFolderPath(savedFolderOrFilePath);
+                    downloadedFiles.Add(item.name, subPaths);
+                }
+            
             }
             catch (Exception e)
             {
                 throw e;
             }
 
-            var artifactNames = artifacts.Select(_ => _.ToUpper()).ToList();
-            var filePaths = downloadedFiles.OrderBy(_ => artifactNames.IndexOf(Path.GetFileNameWithoutExtension(_).ToUpper())).ToList();
+            return downloadedFiles;
+            //return finished;
 
-            if (filePaths.Count == 1)
+            List<string> CheckIfFolderPath(string p)
             {
-                //if folder, then return items in folder
-                var path = filePaths[0];
-                if (Directory.Exists(path))
+                if (Directory.Exists(p))
                 {
-                    var items = Directory.EnumerateFileSystemEntries(path, "*", SearchOption.TopDirectoryOnly);
-                    filePaths = items.Any() ? items.ToList() : filePaths;
+                    var items = Directory.EnumerateFileSystemEntries(p, "*", SearchOption.TopDirectoryOnly);
+                    var itemPaths = items.Any() ? items.ToList() : new List<string>() { p };
+                    return itemPaths;
+                }
+                else
+                {
+                    return new List<string>() { p };
                 }
             }
-            return filePaths;
-            //return finished;
         }
 
+
+
+
         /// <summary>
-        /// Download an artifact with one call. It'd be a zip file if the artifact is a folder
+        /// Download output assets with one call
         /// </summary>
         /// <param name="runInfo"></param>
-        /// <param name="artifact"></param>
+        /// <param name="artifactName"></param>
         /// <param name="saveAsDir"></param>
         /// <returns></returns>
-        private static Task<string> DownloadArtifact(RunInfo runInfo, string artifactName, string saveAsDir)
+        private static List<Task<string>> DownloadOutputArtifact(RunInfo runInfo, List<string> artifactNames, string saveAsDir)
         {
-            //var file = string.Empty;
-            //var outputDirOrFile = string.Empty;
-            try
+            var tasks = new List<Task<string>>();
+            if (artifactNames == null || !artifactNames.Any()) return tasks;
+            var api = new PollinationSDK.Api.RunsApi();
+            foreach (var artifactName in artifactNames)
             {
-                var api = new PollinationSDK.Api.RunsApi();
-                //var url = api.GetSimulationOutputArtifact(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID, artifactName).ToString();
-                //var url = "";
-                var url = api.GetRunOutput(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID, artifactName).ToString();
-                var task = Helper.DownloadFromUrlAsync(url, saveAsDir);
-                return task;
+                try
+                {
+                    var url = api.GetRunOutput(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID, artifactName).ToString();
+                    var task = Helper.DownloadFromUrlAsync(url, Path.Combine(saveAsDir, artifactName));
+                    tasks.Add(task);
+                }
+                catch (Exception e)
+                {
+                    throw new ArgumentException($"Failed to download output artifact {artifactName}.\n -{e.Message}");
+                }
+            }
+            return tasks;
 
-            }
-            catch (Exception e)
+        }
+        /// <summary>
+        /// Download input assets with one call.
+        /// </summary>
+        /// <param name="runInfo"></param>
+        /// <param name="assetPaths">Dictionary of input asset's name and path</param>
+        /// <param name="saveAsDir"></param>
+        /// <returns></returns>
+        private static List<Task<string>> DownloadInputArtifact(RunInfo runInfo, Dictionary<string, string> assetPaths, string saveAsDir)
+        {
+            var tasks = new List<Task<string>>();
+            if (assetPaths == null || !assetPaths.Any()) return tasks;
+            var api = new PollinationSDK.Api.RunsApi();
+            foreach (var assetPath in assetPaths)
             {
-                throw new ArgumentException($"Failed to download artifact {artifactName}.\n -{e.Message}");
+                try
+                {
+                    var url = api.DownloadRunArtifact(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID, path: assetPath.Value).ToString();
+                    var task = Helper.DownloadFromUrlAsync(url, Path.Combine(saveAsDir, assetPath.Key));
+                    tasks.Add(task);
+
+                }
+                catch (Exception e)
+                {
+                    throw new ArgumentException($"Failed to download input artifact {assetPath.Key}.\n -{e.Message}");
+                }
             }
+            return tasks;
+
         }
 
 
