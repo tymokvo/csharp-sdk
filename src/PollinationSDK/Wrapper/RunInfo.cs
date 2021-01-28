@@ -64,7 +64,7 @@ namespace PollinationSDK.Wrapper
             var job = api.GetRun(proj.Owner.Name, proj.Name, simuId);
             var status = job.Status;
             var startTime = status.StartedAt;
-            while (status.Status == "Running" || status.Status == "Scheduled")
+            while (status.FinishedAt <= status.StartedAt)
             {
                 var currentSeconds = Math.Round((DateTime.UtcNow - startTime).TotalSeconds);
                 // wait 5 seconds before calling api to re-check the status
@@ -94,7 +94,7 @@ namespace PollinationSDK.Wrapper
                 return;
             }
             var totalTime = status.FinishedAt - startTime;
-            var finishMessage = status.Status == "Succeeded" ? $"✔ Succeeded" : $"❌ {status.Status}";
+            var finishMessage = status.Status == "Succeeded" ? $"✔ {status.Status}" : $"❌ {status.Status}";
             progressAction?.Invoke($"Task: {status.Status}");
 
             // Only get simulation logs when run toggle is set to true by user
