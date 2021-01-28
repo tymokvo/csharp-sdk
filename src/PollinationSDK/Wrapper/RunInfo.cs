@@ -236,7 +236,7 @@ namespace PollinationSDK.Wrapper
         /// <param name="saveAsDir"></param>
         /// <param name="reportProgressAction"></param>
         /// <returns></returns>
-        public async Task<Dictionary<string, List<string>>> DownloadRunAssetsAsync(Dictionary<string, string> inputAssetPaths, List<string> outputAssets, string saveAsDir = default, Action<int> reportProgressAction = default)
+        public async Task<Dictionary<string, List<string>>> DownloadRunAssetsAsync(Dictionary<string, string> inputAssetPaths, List<string> outputAssets, string saveAsDir = default, Action<int> reportProgressAction = default, bool useCached = false)
         {
             //_filePaths = new List<string>();
             var downloadedFiles = new Dictionary<string, List<string>>();
@@ -247,6 +247,10 @@ namespace PollinationSDK.Wrapper
                 dir = Path.Combine(dir, simuID);
                 var inputDir = Path.Combine(dir, "inputs");
                 var outputDir = Path.Combine(dir, "outputs");
+
+                // check if cached
+                if (useCached)
+                    downloadedFiles = CheckCached(ref inputAssetPaths, ref outputAssets, inputDir, outputDir);
 
                 // assembly download tasks
                 var tasks = new List<Task<string>>();
@@ -302,6 +306,39 @@ namespace PollinationSDK.Wrapper
                     return new List<string>() { p };
                 }
             }
+        }
+
+        private static Dictionary<string, List<string>> CheckCached(ref Dictionary<string, string> inputAssetPaths, ref List<string> outputAssets,  string inputDir, string outputDir)
+        {
+            var downloadedFiles = new Dictionary<string, List<string>>();
+
+            var nonCachedInputAssets = new Dictionary<string, string>();
+            foreach (var item in inputAssetPaths)
+            {
+                var assetDir = Path.Combine(inputDir, item.Key);
+                var cached = Directory.EnumerateFileSystemEntries(assetDir, "*", SearchOption.TopDirectoryOnly).ToList();
+                if (cached.Any())
+                    downloadedFiles.Add($"IN_{item.Key}", cached);
+                else
+                    nonCachedInputAssets.Add(item.Key, item.Value);
+            }
+            // override the inputs
+            inputAssetPaths = nonCachedInputAssets;
+
+            var nonCachedOutputAssets = new List<string>();
+            foreach (var item in outputAssets)
+            {
+                var assetDir = Path.Combine(outputDir, item);
+                var cached = Directory.EnumerateFileSystemEntries(assetDir, "*", SearchOption.TopDirectoryOnly).ToList();
+                if (cached.Any())
+                    downloadedFiles.Add($"OUT_{item}", cached);
+                else
+                    nonCachedOutputAssets.Add(item);
+            }
+            // override the outputs
+            outputAssets = nonCachedOutputAssets;
+
+            return downloadedFiles;
         }
 
 
