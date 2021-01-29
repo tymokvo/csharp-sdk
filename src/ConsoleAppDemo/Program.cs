@@ -191,7 +191,7 @@ namespace ConsoleAppDemo
             {
                 var runInfo = await job.RunJobOnCloud(proj, msgAction, token);
                 msgAction($"Starting the job: {runInfo.RunID}");
-                await runInfo.CheckStatusAndGetLogsAsync(msgAction, token);
+                await runInfo.WatchRunStatusAsync(msgAction, token);
 
                 //msgAction(runInfo.Logs);
 
