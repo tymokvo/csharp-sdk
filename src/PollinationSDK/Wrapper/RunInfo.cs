@@ -55,14 +55,14 @@ namespace PollinationSDK.Wrapper
             return $"{this.Project.Owner.Name}/{this.Project.Name}/{this.RunID}";
         }
 
-        public async Task CheckStatusAndGetLogsAsync(Action<string> progressAction = default, System.Threading.CancellationToken cancelToken = default)
+        public async Task<string> WatchRunStatusAsync(Action<string> progressAction = default, System.Threading.CancellationToken cancelToken = default)
         {
             var api = new RunsApi();
             var proj = this.Project;
             var simuId = this.RunID;
 
-            var job = api.GetRun(proj.Owner.Name, proj.Name, simuId);
-            var status = job.Status;
+            var run = api.GetRun(proj.Owner.Name, proj.Name, simuId);
+            var status = run.Status;
             var startTime = status.StartedAt;
             while (status.FinishedAt <= status.StartedAt)
             {
@@ -83,28 +83,25 @@ namespace PollinationSDK.Wrapper
 
                 // update status
                 await Task.Delay(1000);
-                job = api.GetRun(proj.Owner.Name, proj.Name, simuId);
-                status = job.Status;
+                run = api.GetRun(proj.Owner.Name, proj.Name, simuId);
+                status = run.Status;
                 //_simulation = new Simulation(proj, simuId);
             }
+            this.Run = run;
             // suspended by user
             if (cancelToken.IsCancellationRequested)
             {
                 StopSimulaiton();
-                return;
+                return "Canceled";
             }
             var totalTime = status.FinishedAt - startTime;
             var finishMessage = status.Status == "Succeeded" ? $"✔ {status.Status}" : $"❌ {status.Status}";
-            progressAction?.Invoke($"Task: {status.Status}");
+            //progressAction?.Invoke($"Task: {status.Status}");
 
-            // Only get simulation logs when run toggle is set to true by user
-            if (cancelToken.IsCancellationRequested) return;
-            //CheckOutputLogs(api, proj, simuId.ToString());
-            //var outputs = api.GetSimulationLogs(proj.Owner.Name, proj.Name, simuId.ToString());
-            //var logUrl= outputs.ToString();
-            //this.Logs = await GetSimulationOutputLogAsync(progressAction, cancelToken);
-
-            progressAction?.Invoke($"{finishMessage}: [{GetUserFriendlyTimeCounter(totalTime)}]");
+            if (cancelToken.IsCancellationRequested) return "Canceled";
+            finishMessage = $"{finishMessage}: [{GetUserFriendlyTimeCounter(totalTime)}]";
+            progressAction?.Invoke(finishMessage);
+            return finishMessage;
 
             string GetUserFriendlyTimeCounter(TimeSpan timeDelta)
             {
