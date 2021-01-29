@@ -231,9 +231,9 @@ namespace PollinationSDK.Wrapper
         /// <param name="inputAssetPaths">asset name, relative path to project folder of file or folder </param>
         /// <param name="outputAssets">output name</param>
         /// <param name="saveAsDir"></param>
-        /// <param name="reportProgressAction"></param>
+        /// <param name="reportingAction"></param>
         /// <returns></returns>
-        public async Task<Dictionary<string, List<string>>> DownloadRunAssetsAsync(Dictionary<string, string> inputAssetPaths, List<string> outputAssets, string saveAsDir = default, Action<int> reportProgressAction = default, bool useCached = false)
+        public async Task<Dictionary<string, List<string>>> DownloadRunAssetsAsync(Dictionary<string, string> inputAssetPaths, List<string> outputAssets, string saveAsDir = default, Action<string> reportingAction = default, bool useCached = false)
         {
             //_filePaths = new List<string>();
             var downloadedFiles = new Dictionary<string, List<string>>();
@@ -259,15 +259,16 @@ namespace PollinationSDK.Wrapper
                 // watching tasks
                 var total = tasks.Count();
                 var completed = 0;
-                while (total - completed < 0)
+                while (total - completed > 0)
                 {
                     var finishedTask =  await Task.WhenAny(tasks);
                     await finishedTask;
                     completed++;
 
                     var finishedPercent = completed / (double)total * 100;
-                    reportProgressAction?.Invoke((int)finishedPercent);
+                    reportingAction?.Invoke($"{finishedPercent}%");
                 }
+                reportingAction?.Invoke($"{completed}/{total} loaded");
 
                 var assetNames = inputAssetPaths?.Select(_=> $"IN_{_.Key}")?.ToList() ?? new List<string>();
                 assetNames.AddRange(outputAssets?.Select(_ => $"OUT_{_}"));
@@ -313,11 +314,15 @@ namespace PollinationSDK.Wrapper
             foreach (var item in inputAssetPaths)
             {
                 var assetDir = Path.Combine(inputDir, item.Key);
-                var cached = Directory.EnumerateFileSystemEntries(assetDir, "*", SearchOption.TopDirectoryOnly).ToList();
-                if (cached.Any())
-                    downloadedFiles.Add($"IN_{item.Key}", cached);
-                else
-                    nonCachedInputAssets.Add(item.Key, item.Value);
+                if (Directory.Exists(assetDir)) 
+                {
+                    var cached = Directory.EnumerateFileSystemEntries(assetDir, "*", SearchOption.TopDirectoryOnly).ToList();
+                    if (cached.Any())
+                        downloadedFiles.Add($"IN_{item.Key}", cached);
+                    continue;
+                }
+                nonCachedInputAssets.Add(item.Key, item.Value);
+
             }
             // override the inputs
             inputAssetPaths = nonCachedInputAssets;
@@ -326,11 +331,14 @@ namespace PollinationSDK.Wrapper
             foreach (var item in outputAssets)
             {
                 var assetDir = Path.Combine(outputDir, item);
-                var cached = Directory.EnumerateFileSystemEntries(assetDir, "*", SearchOption.TopDirectoryOnly).ToList();
-                if (cached.Any())
-                    downloadedFiles.Add($"OUT_{item}", cached);
-                else
-                    nonCachedOutputAssets.Add(item);
+                if (Directory.Exists(assetDir))
+                {
+                    var cached = Directory.EnumerateFileSystemEntries(assetDir, "*", SearchOption.TopDirectoryOnly).ToList();
+                    if (cached.Any())
+                        downloadedFiles.Add($"OUT_{item}", cached);
+                    continue;
+                }
+                nonCachedOutputAssets.Add(item);
             }
             // override the outputs
             outputAssets = nonCachedOutputAssets;
