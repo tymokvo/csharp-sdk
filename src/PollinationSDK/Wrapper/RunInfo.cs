@@ -71,15 +71,15 @@ namespace PollinationSDK.Wrapper
                 var totalDelaySeconds = status.Status == "Scheduled" ? 3 : 5;
                 for (int i = 0; i < totalDelaySeconds; i++)
                 {
+                    // suspended by user
+                    cancelToken.ThrowIfCancellationRequested();
+
                     progressAction?.Invoke($"{status.Status}: [{GetUserFriendlyTimeCounter(TimeSpan.FromSeconds(currentSeconds))}]");
                     await Task.Delay(1000);
                     currentSeconds++;
-                    // suspended by user
-                    if (cancelToken.IsCancellationRequested) break;
                 }
                 // suspended by user
-                if (cancelToken.IsCancellationRequested) break;
-
+                cancelToken.ThrowIfCancellationRequested();
 
                 // update status
                 await Task.Delay(1000);
@@ -89,16 +89,12 @@ namespace PollinationSDK.Wrapper
             }
             this.Run = run;
             // suspended by user
-            if (cancelToken.IsCancellationRequested)
-            {
-                StopSimulaiton();
-                return "Canceled";
-            }
+            cancelToken.ThrowIfCancellationRequested();
+
             var totalTime = status.FinishedAt - startTime;
             var finishMessage = status.Status == "Succeeded" ? $"✔ {status.Status}" : $"❌ {status.Status}";
             //progressAction?.Invoke($"Task: {status.Status}");
 
-            if (cancelToken.IsCancellationRequested) return "Canceled";
             finishMessage = $"{finishMessage}: [{GetUserFriendlyTimeCounter(totalTime)}]";
             progressAction?.Invoke(finishMessage);
             return finishMessage;
