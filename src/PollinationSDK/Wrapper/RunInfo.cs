@@ -64,7 +64,7 @@ namespace PollinationSDK.Wrapper
             var run = api.GetRun(proj.Owner.Name, proj.Name, simuId);
             var status = run.Status;
             var startTime = status.StartedAt;
-            while (status.FinishedAt <= status.StartedAt)
+            while (status.FinishedAt <= status.StartedAt || status.Status == "Post-Processing")
             {
                 var currentSeconds = Math.Round((DateTime.UtcNow - startTime).TotalSeconds);
                 // wait 5 seconds before calling api to re-check the status
@@ -261,11 +261,12 @@ namespace PollinationSDK.Wrapper
                 var completed = 0;
                 while (total - completed > 0)
                 {
+                    reportingAction?.Invoke($"0%");
                     var finishedTask =  await Task.WhenAny(tasks);
                     await finishedTask;
                     completed++;
 
-                    var finishedPercent = completed / (double)total * 100;
+                    int finishedPercent = (int) (completed / (double)total * 100);
                     reportingAction?.Invoke($"{finishedPercent}%");
                 }
                 reportingAction?.Invoke($"{completed}/{total} loaded");
