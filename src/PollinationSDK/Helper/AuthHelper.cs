@@ -18,16 +18,13 @@ namespace PollinationSDK
         public static string ApiURL => "https://api.pollination.cloud/";
         public static string ApiURL_Dev => "https://api.staging.pollination.cloud/";
 
-        /// <summary>
-        /// Token from previous sign in if any, otherwise this is an empty string. Call SignIn() first for users to login from browser.
-        /// </summary>
-        private static string ID_TOKEN { get; set; } = string.Empty;
         public static async Task SignInAsync(Action ActionWhenDone = default, bool devEnv = false)
         {
             //OutputMessage = string.Empty;
-            var task = PollinationSignIn(devEnv);
+           
             try
             {
+                var task = PollinationSignInAsync(devEnv);
                 var token = await task;
                 if (!string.IsNullOrEmpty(token))
                 {
@@ -36,21 +33,21 @@ namespace PollinationSDK
                     Helper.CurrentUser = Helper.GetUser();
                 }
 
-                if (ActionWhenDone != default)
-                {
-                    ActionWhenDone();
-                }
+                ActionWhenDone?.Invoke();
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
-                throw;
+                //Console.WriteLine(e.Message);
+                throw e;
             }
 
         }
 
-        public static async Task<string> PollinationSignIn(bool devEnv = false)
+        private static async Task<string> PollinationSignInAsync(bool devEnv = false)
         {
+            if (!HttpListener.IsSupported)
+                throw new ArgumentException("PollinationSignIn is not supported on this system");
+
             var redirectUrl = "http://localhost:8645/";
             var loginUrl = devEnv ? LoginURL_Dev : LoginURL;
 
@@ -58,20 +55,25 @@ namespace PollinationSDK
 
             try
             {
+               
                 listener.Prefixes.Add(redirectUrl);
                 listener.Start();
+                //listener.TimeoutManager.IdleConnection = TimeSpan.FromSeconds(30);
+                //listener.TimeoutManager.HeaderWait = TimeSpan.FromSeconds(30);
 
             }
             catch (HttpListenerException e)
             {
-                // it is already listening the port, but users didn't login
+                //it is already listening the port, but users didn't login
                 if (e.ErrorCode == 183)
                 {
                     Console.WriteLine(e.Message);
-                    return null;
+                    //return null;
                 }
-
-                throw;
+                else
+                {
+                    throw e;
+                }
 
             }
 
@@ -98,7 +100,7 @@ namespace PollinationSDK
             var responseOutput = response.OutputStream;
             responseOutput.Write(buffer, 0, buffer.Length);
             responseOutput.Close();
-
+            listener.Stop();
 
             return returnUrl.Split('=').LastOrDefault();
         }
