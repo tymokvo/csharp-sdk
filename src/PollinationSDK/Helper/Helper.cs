@@ -17,6 +17,7 @@ namespace PollinationSDK
 {
     public static class Helper
     {
+        public static Serilog.ILogger Logger { get; set; } = Serilog.Log.Logger;
         public static UserPrivate CurrentUser { get; set; }
 
         public static UserPrivate GetUser()
@@ -46,16 +47,16 @@ namespace PollinationSDK
                 // Project not found and person account, create a default demo project.
                 if (e.ErrorCode == 404 && userName == Helper.CurrentUser.Username)
                 {
+                    Logger.Information($"Project {projectName} is not found in account {userName}. Now creating this project.");
                     var ifPublic = projectName == "demo";
                     var res = api.CreateProject(userName, new ProjectCreate(projectName, _public: ifPublic));
                     return GetAProject(userName, projectName);
                 }
+                Helper.Logger.Error(e, $"GetAProject: failed to get the project {userName}/{projectName}");
                 throw e;
             }
            
             
-            //var d = GetProjects(user).FirstOrDefault(_ => _.Name == projectName);
-            //return d;
         }
 
         public static async Task<bool> UploadDirectoryAsync(Project project, string directory, Action<int> reportProgressAction = default, CancellationToken cancellationToken = default)
@@ -65,6 +66,7 @@ namespace PollinationSDK
             var tasks = files.Select(_ => UploadArtifaceAsync(project, _, _.Replace(directory, ""))).ToList();
             var total = files.Count();
 
+            Helper.Logger.Information($"UploadDirectoryAsync: Uploading {total} assets for project {project.Name}");
 
             var finishedPercent = 0;
             reportProgressAction?.Invoke(finishedPercent);
@@ -73,7 +75,7 @@ namespace PollinationSDK
                 // canceled by user
                 if (cancellationToken.IsCancellationRequested)
                 {
-                    Console.WriteLine("Canceled uploading by user");
+                    Helper.Logger.Information($"Canceled uploading by user");
                     break;
                 }
 
@@ -86,11 +88,11 @@ namespace PollinationSDK
                 reportProgressAction?.Invoke(finishedPercent);
 
             }
+            Helper.Logger.Information($"UploadDirectoryAsync: Finished uploading assets for project {project.Name}");
 
             // canceled by user
             if (cancellationToken.IsCancellationRequested) return false;
 
-            Console.WriteLine("Finished uploading directory");
             return true;
         }
 
@@ -128,7 +130,7 @@ namespace PollinationSDK
             var response = restClient.Execute(restRequest);
             if (response.StatusCode == HttpStatusCode.NoContent)
             {
-                Console.WriteLine($"Done uploading: {fileRelativePath}");
+                Helper.Logger.Information($"UploadArtifaceAsync: Done uploading {fileRelativePath}");
                 return true;
             }
             return false;
@@ -245,12 +247,16 @@ namespace PollinationSDK
             var file = string.Empty;
             var outputDirOrFile = string.Empty;
 
-            Console.WriteLine($"Simulation output link url: {url}");
             var request = new RestRequest(Method.GET);
             var client = new RestClient(url.ToString());
             var response = await client.ExecuteAsync(request);
             if (response.StatusCode != HttpStatusCode.OK)
-                throw new Exception($"Unable to download file");
+            {
+                var e = new ArgumentException($"Unable to download file");
+                Helper.Logger.Error(e, $"DownloadFromUrlAsync: Unable to download file {url}");
+                throw e;
+            }
+                
 
             // prep file path
             var fileName = Path.GetFileName(url).Split(new[] { '?' })[0];
@@ -261,7 +267,11 @@ namespace PollinationSDK
             var b = response.RawBytes;
             File.WriteAllBytes(file, b);
 
-            if (!File.Exists(file)) throw new ArgumentException($"Failed to download {fileName}");
+            if (!File.Exists(file)) {
+                var e=  new ArgumentException($"Failed to download {fileName}");
+                Helper.Logger.Error(e, $"DownloadFromUrlAsync: error");
+                throw e;
+            } 
             outputDirOrFile = file;
 
             // unzip
@@ -271,10 +281,11 @@ namespace PollinationSDK
             }
             catch (Exception e)
             {
+                Helper.Logger.Error(e, $"DownloadFromUrlAsync: Unable to unzip file {Path.GetFileName(file)}");
                 throw new ArgumentException($"Failed to unzip file {Path.GetFileName(file)}.\n -{e.Message}");
             }
 
-            Console.WriteLine($"Finished downloading: {url} to {outputDirOrFile}");
+            Helper.Logger.Information($"Finished downloading: {url} to {outputDirOrFile}");
             return outputDirOrFile;
 
         }

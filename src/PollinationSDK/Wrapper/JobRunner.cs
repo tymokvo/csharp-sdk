@@ -30,7 +30,7 @@ namespace PollinationSDK.Wrapper
                 var runID = await ScheduleRunAsync(project, this.Job, progressReporting, token);
                 runInfo = new RunInfo(project, runID.ToString());
                 progressReporting?.Invoke(runInfo.Run.Status.Status);
-
+                Helper.Logger.Information( $"RunOnCloudAsync: a new run {runID} is started in project {runInfo.Project.Name}");
             }
             catch (Exception e)
             {
@@ -39,6 +39,7 @@ namespace PollinationSDK.Wrapper
                     // Rhino instance has been closed while there was a running simulation.
                     return null;
                 }
+                Helper.Logger.Error(e, $"RunOnCloudAsync: error.");
                 throw e;
                 //this.Message = null;
                 //Eto.Forms.MessageBox.Show(e.Message, Eto.Forms.MessageBoxType.Error);
@@ -92,6 +93,7 @@ namespace PollinationSDK.Wrapper
             if (cancellationToken.IsCancellationRequested)
             {
                 progressLogAction?.Invoke($"Canceled: {cancellationToken.IsCancellationRequested}");
+                Helper.Logger.Information($"ScheduleRunAsync: canceled by user");
                 return emptyID;
             }
 
@@ -102,7 +104,7 @@ namespace PollinationSDK.Wrapper
             // create a new Simulation
             var api = new RunsApi();
             progressLogAction?.Invoke($"Start running.");
-
+            Helper.Logger.Information($"ScheduleRunAsync: Start running.");
             try
             {
                 // schedule a simulation on Pollination.Cloud
@@ -123,6 +125,7 @@ namespace PollinationSDK.Wrapper
                 // suspended by user
                 if (cancellationToken.IsCancellationRequested)
                 {
+                    Helper.Logger.Information($"ScheduleRunAsync: canceled by user");
                     progressLogAction?.Invoke($"Canceled: {cancellationToken.IsCancellationRequested}");
                     return emptyID;
                 }
@@ -133,6 +136,7 @@ namespace PollinationSDK.Wrapper
             catch (Exception ex)
             {
                 //Eto.Forms.MessageBox.Show(e.Message, Eto.Forms.MessageBoxType.Error);
+                Helper.Logger.Error(ex, $"ScheduleRunAsync: failed to run.");
                 throw ex;
             }
 
