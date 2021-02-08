@@ -98,7 +98,7 @@ namespace PollinationSDK.Wrapper
             }
 
             // update Artifact to cloud's relative path after uploaded.
-            var newJob = UpdateArtifactPath(job);
+            var newJob = UpdateArtifactPath(job, this.JobInfo.SubFolderPath);
             //var json = newJob.ToJson();
 
             // create a new Simulation
@@ -293,7 +293,7 @@ namespace PollinationSDK.Wrapper
         /// </summary>
         /// <param name="job"></param>
         /// <returns></returns>
-        private static Job UpdateArtifactPath(Job job)
+        private static Job UpdateArtifactPath(Job job, string subFolderPath)
         {
             var args = job?.Arguments;
             if (args == null)
@@ -313,6 +313,7 @@ namespace PollinationSDK.Wrapper
 
                     // update artifact arguments
                     var newFileOrDirname = Path.GetFileName(projFolderSource.Path);
+                    if (!string.IsNullOrEmpty(subFolderPath)) newFileOrDirname = $"{subFolderPath}/{newFileOrDirname}";
                     var pSource = new ProjectFolder(path: newFileOrDirname);
                     var newPath = new JobPathArgument(path.Name, pSource);
                     newJob.Arguments.Add(newPath);
