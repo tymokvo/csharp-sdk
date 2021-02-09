@@ -28,6 +28,7 @@ build/
 .vs/
 node_modules/
 src/PollinationSDK.Test/
+PublishProfiles/
 
 # NuGet Packages
 *.nupkg
