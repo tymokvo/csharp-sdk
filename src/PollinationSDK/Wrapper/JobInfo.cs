@@ -1,15 +1,7 @@
 ﻿using Newtonsoft.Json;
-using PollinationSDK.Api;
 using QueenbeeSDK;
-using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Runtime.Serialization;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace PollinationSDK.Wrapper
@@ -75,5 +67,13 @@ namespace PollinationSDK.Wrapper
             path = path.Replace('\\', '/').Replace(' ', '_');
             this.SubFolderPath = path;
         }
+
+        public void SetJobKeywords(List<string> keywords)
+        {
+            if (keywords == null) return;
+            this.Job.Labels = new Dictionary<string, string>() { { "keywords", string.Join(",", keywords) } };
+            
+        }
+
     }
 }
