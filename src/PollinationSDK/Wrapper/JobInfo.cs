@@ -72,8 +72,12 @@ namespace PollinationSDK.Wrapper
         {
             if (keywords == null) return;
             this.Job.Labels = new Dictionary<string, string>() { { "keywords", string.Join(",", keywords) } };
-            
         }
+        public void SetJobDescription(string description)
+        {
+            this.Job.Description = description;
+        }
+
 
     }
 }
