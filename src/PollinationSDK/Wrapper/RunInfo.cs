@@ -49,19 +49,11 @@ namespace PollinationSDK.Wrapper
         }
 
 
-        public string ToStringShort()
+        public override string ToString()
         {
             return $"CLOUD:{this.Project.Owner.Name}/{this.Project.Name}/{this.RunID}";
         }
         
-        public override string ToString()
-        {
-            var runId = this.RunID;
-            var runName = this.Run.Job.Name;
-            var recipeName = this.Run.Job.Source.Split('/').Reverse().Take(2).Reverse().FirstOrDefault();
-            runId = string.IsNullOrEmpty(runName) ? runId : $"{runId}#{runName}";
-            return $"CLOUD:{this.Project.Owner.Name}/{this.Project.Name}/{runId}@{recipeName}";
-        }
 
         public async Task<string> WatchRunStatusAsync(Action<string> progressAction = default, System.Threading.CancellationToken cancelToken = default)
         {
