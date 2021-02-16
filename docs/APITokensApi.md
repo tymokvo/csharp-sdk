@@ -1,6 +1,6 @@
 # PollinationSDK.Api.APITokensApi
 
-All URIs are relative to *https://api.pollination.cloud*
+All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -34,7 +34,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            Configuration.Default.BasePath = "http://localhost";
             // Configure API key authorization: APIKeyAuth
             Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -117,7 +117,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            Configuration.Default.BasePath = "http://localhost";
             // Configure API key authorization: APIKeyAuth
             Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -200,7 +200,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            Configuration.Default.BasePath = "http://localhost";
             // Configure API key authorization: APIKeyAuth
             Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -285,7 +285,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            Configuration.Default.BasePath = "http://localhost";
             // Configure API key authorization: APIKeyAuth
             Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed

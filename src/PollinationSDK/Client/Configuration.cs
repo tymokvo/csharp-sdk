@@ -1,5 +1,5 @@
 /* 
- * Pollination Server
+ * pollination-server
  *
  * Pollination Server OpenAPI Definition
  *
@@ -28,7 +28,7 @@ namespace PollinationSDK.Client
         /// Version of the package.
         /// </summary>
         /// <value>Version of the package.</value>
-        public const string Version = "0.10.18";
+        public const string Version = "0.11.0";
 
         /// <summary>
         /// Identifier for ISO 8601 DateTime Format
@@ -113,8 +113,8 @@ namespace PollinationSDK.Client
         /// </summary>
         public Configuration()
         {
-            UserAgent = "OpenAPI-Generator/0.10.18/csharp";
-            BasePath = "https://api.pollination.cloud";
+            UserAgent = "OpenAPI-Generator/0.11.0/csharp";
+            BasePath = "http://localhost";
             DefaultHeader = new ConcurrentDictionary<string, string>();
             ApiKey = new ConcurrentDictionary<string, string>();
             ApiKeyPrefix = new ConcurrentDictionary<string, string>();
@@ -130,7 +130,7 @@ namespace PollinationSDK.Client
             IDictionary<string, string> defaultHeader,
             IDictionary<string, string> apiKey,
             IDictionary<string, string> apiKeyPrefix,
-            string basePath = "https://api.pollination.cloud") : this()
+            string basePath = "http://localhost") : this()
         {
             if (string.IsNullOrWhiteSpace(basePath))
                 throw new ArgumentException("The provided basePath is invalid.", "basePath");
@@ -186,7 +186,7 @@ namespace PollinationSDK.Client
             string tempFolderPath = null,
             string dateTimeFormat = null,
             int timeout = 100000,
-            string userAgent = "OpenAPI-Generator/0.10.18/csharp"
+            string userAgent = "OpenAPI-Generator/0.11.0/csharp"
             // ReSharper restore UnusedParameter.Local
             )
         {
@@ -419,8 +419,8 @@ namespace PollinationSDK.Client
             String report = "C# SDK (PollinationSDK) Debug Report:\n";
             report += "    OS: " + System.Environment.OSVersion + "\n";
             report += "    .NET Framework Version: " + System.Environment.Version  + "\n";
-            report += "    Version of the API: 0.10.18\n";
-            report += "    SDK Package Version: 0.10.18\n";
+            report += "    Version of the API: 0.11.0\n";
+            report += "    SDK Package Version: 0.11.0\n";
 
             return report;
         }

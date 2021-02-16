@@ -1,5 +1,5 @@
 /* 
- * Pollination Server
+ * pollination-server
  *
  * Pollination Server OpenAPI Definition
  *

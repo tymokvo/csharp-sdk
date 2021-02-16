@@ -1,5 +1,5 @@
 /* 
- * Pollination Server
+ * pollination-server
  *
  * Pollination Server OpenAPI Definition
  *
@@ -51,7 +51,7 @@ namespace PollinationSDK
         public Run
         (
            string id, Job job, // Required parameters
-           AccountPublic author= default, AccountPublic owner= default, double generation= default, JobStatus status= default // Optional parameters
+           AccountPublic author= default, AccountPublic owner= default, double generation= default, RunStatus status= default // Optional parameters
         ) : base()// BaseClass
         {
             // to ensure "id" is required (not null)
@@ -101,7 +101,7 @@ namespace PollinationSDK
         /// </summary>
         /// <value>The status of the run</value>
         [DataMember(Name = "status", EmitDefaultValue = false)]
-        public JobStatus Status { get; set; } 
+        public RunStatus Status { get; set; } 
 
         /// <summary>
         /// Returns the string presentation of the object

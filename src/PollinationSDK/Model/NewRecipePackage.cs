@@ -1,5 +1,5 @@
 /* 
- * Pollination Server
+ * pollination-server
  *
  * Pollination Server OpenAPI Definition
  *
@@ -44,19 +44,16 @@ namespace PollinationSDK
         /// </summary>
         /// <param name="manifest">The Recipe manifest to be created (required).</param>
         /// <param name="readme">The README file to attach to this package (default to &quot;&quot;).</param>
-        /// <param name="license">The license file to attach to this package (default to &quot;&quot;).</param>
         public NewRecipePackage
         (
            Recipe manifest, // Required parameters
-           string readme = "", string license = "" // Optional parameters
+           string readme = "" // Optional parameters
         ) : base()// BaseClass
         {
             // to ensure "manifest" is required (not null)
             this.Manifest = manifest ?? throw new ArgumentNullException("manifest is a required property for NewRecipePackage and cannot be null");
             // use default value if no "readme" provided
             this.Readme = readme ?? "";
-            // use default value if no "license" provided
-            this.License = license ?? "";
 
             // Set non-required readonly properties with defaultValue
             this.Type = "NewRecipePackage";
@@ -74,12 +71,6 @@ namespace PollinationSDK
         /// <value>The README file to attach to this package</value>
         [DataMember(Name = "readme", EmitDefaultValue = true)]
         public string Readme { get; set; }  = "";
-        /// <summary>
-        /// The license file to attach to this package
-        /// </summary>
-        /// <value>The license file to attach to this package</value>
-        [DataMember(Name = "license", EmitDefaultValue = true)]
-        public string License { get; set; }  = "";
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -104,7 +95,6 @@ namespace PollinationSDK
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  Manifest: ").Append(Manifest).Append("\n");
             sb.Append("  Readme: ").Append(Readme).Append("\n");
-            sb.Append("  License: ").Append(License).Append("\n");
             return sb.ToString();
         }
   
@@ -178,11 +168,6 @@ namespace PollinationSDK
                     this.Readme.Equals(input.Readme))
                 ) && base.Equals(input) && 
                 (
-                    this.License == input.License ||
-                    (this.License != null &&
-                    this.License.Equals(input.License))
-                ) && base.Equals(input) && 
-                (
                     this.Type == input.Type ||
                     (this.Type != null &&
                     this.Type.Equals(input.Type))
@@ -202,8 +187,6 @@ namespace PollinationSDK
                     hashCode = hashCode * 59 + this.Manifest.GetHashCode();
                 if (this.Readme != null)
                     hashCode = hashCode * 59 + this.Readme.GetHashCode();
-                if (this.License != null)
-                    hashCode = hashCode * 59 + this.License.GetHashCode();
                 if (this.Type != null)
                     hashCode = hashCode * 59 + this.Type.GetHashCode();
                 return hashCode;

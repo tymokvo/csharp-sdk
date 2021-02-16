@@ -1,5 +1,5 @@
 /* 
- * Pollination Server
+ * pollination-server
  *
  * Pollination Server OpenAPI Definition
  *
@@ -56,12 +56,12 @@ namespace PollinationSDK.Client
         public ApiClient()
         {
             Configuration = PollinationSDK.Client.Configuration.Default;
-            RestClient = new RestClient("https://api.pollination.cloud");
+            RestClient = new RestClient("http://localhost");
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ApiClient" /> class
-        /// with default base path (https://api.pollination.cloud).
+        /// with default base path (http://localhost).
         /// </summary>
         /// <param name="config">An instance of Configuration.</param>
         public ApiClient(Configuration config)
@@ -76,7 +76,7 @@ namespace PollinationSDK.Client
         /// with default configuration.
         /// </summary>
         /// <param name="basePath">The base path.</param>
-        public ApiClient(String basePath = "https://api.pollination.cloud")
+        public ApiClient(String basePath = "http://localhost")
         {
            if (String.IsNullOrEmpty(basePath))
                 throw new ArgumentException("basePath cannot be empty");

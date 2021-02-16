@@ -1,5 +1,5 @@
 /* 
- * Pollination Server
+ * pollination-server
  *
  * Pollination Server OpenAPI Definition
  *
@@ -46,13 +46,14 @@ namespace PollinationSDK
         /// <param name="owner">owner (required).</param>
         /// <param name="permissions">permissions (required).</param>
         /// <param name="slug">The project name in slug format (required).</param>
+        /// <param name="usage">The CPU/Memory usage of this project.</param>
         /// <param name="name">The name of the project. Must be unique to a given owner (required).</param>
         /// <param name="description">A description of the project (default to &quot;&quot;).</param>
         /// <param name="_public">Whether or not a project is publicly viewable (default to true).</param>
         public Project
         (
             string name, string id, AccountPublic owner, ProjectUserPermissions permissions, string slug, // Required parameters
-            string description = "", bool _public = true // Optional parameters
+            string description = "", bool _public = true, ProjectUsage usage= default // Optional parameters
         ) : base(name: name, description: description, _public: _public)// BaseClass
         {
             // to ensure "id" is required (not null)
@@ -63,6 +64,7 @@ namespace PollinationSDK
             this.Permissions = permissions ?? throw new ArgumentNullException("permissions is a required property for Project and cannot be null");
             // to ensure "slug" is required (not null)
             this.Slug = slug ?? throw new ArgumentNullException("slug is a required property for Project and cannot be null");
+            this.Usage = usage;
 
             // Set non-required readonly properties with defaultValue
             this.Type = "Project";
@@ -90,6 +92,12 @@ namespace PollinationSDK
         /// <value>The project name in slug format</value>
         [DataMember(Name = "slug", IsRequired = true, EmitDefaultValue = false)]
         public string Slug { get; set; } 
+        /// <summary>
+        /// The CPU/Memory usage of this project
+        /// </summary>
+        /// <value>The CPU/Memory usage of this project</value>
+        [DataMember(Name = "usage", EmitDefaultValue = false)]
+        public ProjectUsage Usage { get; set; } 
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -119,6 +127,7 @@ namespace PollinationSDK
             sb.Append("  Owner: ").Append(Owner).Append("\n");
             sb.Append("  Permissions: ").Append(Permissions).Append("\n");
             sb.Append("  Slug: ").Append(Slug).Append("\n");
+            sb.Append("  Usage: ").Append(Usage).Append("\n");
             return sb.ToString();
         }
   
@@ -202,6 +211,11 @@ namespace PollinationSDK
                     this.Slug.Equals(input.Slug))
                 ) && base.Equals(input) && 
                 (
+                    this.Usage == input.Usage ||
+                    (this.Usage != null &&
+                    this.Usage.Equals(input.Usage))
+                ) && base.Equals(input) && 
+                (
                     this.Type == input.Type ||
                     (this.Type != null &&
                     this.Type.Equals(input.Type))
@@ -225,6 +239,8 @@ namespace PollinationSDK
                     hashCode = hashCode * 59 + this.Permissions.GetHashCode();
                 if (this.Slug != null)
                     hashCode = hashCode * 59 + this.Slug.GetHashCode();
+                if (this.Usage != null)
+                    hashCode = hashCode * 59 + this.Usage.GetHashCode();
                 if (this.Type != null)
                     hashCode = hashCode * 59 + this.Type.GetHashCode();
                 return hashCode;

@@ -1,29 +1,15 @@
 {
   "openapi": "3.0.2",
   "info": {
-    "title": "Pollination Server",
+    "title": "pollination-server",
     "description": "Pollination Server OpenAPI Definition",
-    "version": "0.10.18",
+    "version": "0.11.0",
     "contact": {
       "name": "PollinationSolutions",
       "url": "https://pollination.cloud",
       "email": "info@pollination.cloud"
     }
   },
-  "servers": [
-    {
-      "url": "https://api.pollination.cloud",
-      "description": "The production API server"
-    },
-    {
-      "url": "https://api.staging.pollination.cloud",
-      "description": "The staging/Q&A API server"
-    },
-    {
-      "url": "http://localhost:8000",
-      "description": "The local development server"
-    }
-  ],
   "paths": {
     "/accounts": {
       "get": {
@@ -4888,14 +4874,14 @@
         ]
       }
     },
-    "/projects/{owner}/{name}/runs": {
+    "/projects/{owner}/{name}/jobs": {
       "get": {
         "tags": [
-          "Runs"
+          "Jobs"
         ],
-        "summary": "List runs",
-        "description": "Retrieve a list of runs.",
-        "operationId": "list_runs",
+        "summary": "List Jobs",
+        "description": "Retrieve a list of jobs.",
+        "operationId": "list_jobs",
         "parameters": [
           {
             "required": true,
@@ -4918,7 +4904,7 @@
           {
             "required": false,
             "schema": {
-              "title": "Run IDs",
+              "title": "Job IDs",
               "type": "array",
               "items": {
                 "type": "string"
@@ -4930,7 +4916,7 @@
           {
             "required": false,
             "schema": {
-              "title": "The status of the run",
+              "title": "The status of the job",
               "type": "string"
             },
             "name": "status",
@@ -4969,7 +4955,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RunList"
+                  "$ref": "#/components/schemas/CloudJobList"
                 }
               }
             }
@@ -4996,11 +4982,11 @@
       },
       "post": {
         "tags": [
-          "Runs"
+          "Jobs"
         ],
-        "summary": "Schedule a run",
+        "summary": "Schedule a job",
         "description": "Create a new run.",
-        "operationId": "create_run",
+        "operationId": "create_job",
         "parameters": [
           {
             "required": true,
@@ -5056,6 +5042,289 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CreatedContent"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          },
+          {
+            "APIKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/projects/{owner}/{name}/jobs/{job_id}": {
+      "get": {
+        "tags": [
+          "Jobs"
+        ],
+        "summary": "Get a Job",
+        "description": "Retrieve a job.",
+        "operationId": "get_job",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Project Owner",
+              "type": "string"
+            },
+            "name": "owner",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Project Name",
+              "type": "string"
+            },
+            "name": "name",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Job ID",
+              "type": "string"
+            },
+            "name": "job_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CloudJob"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          },
+          {
+            "APIKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/projects/{owner}/{name}/results": {
+      "get": {
+        "tags": [
+          "Runs"
+        ],
+        "summary": "Query run results",
+        "description": "Retrieve a list of run results.",
+        "operationId": "query_results",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Project Owner",
+              "type": "string"
+            },
+            "name": "owner",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Project Name",
+              "type": "string"
+            },
+            "name": "name",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "The status of the run",
+              "type": "string"
+            },
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Job IDs",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "name": "job_id",
+            "in": "query"
+          },
+          {
+            "description": "Page number starting from 1",
+            "required": false,
+            "schema": {
+              "title": "Page number",
+              "minimum": 1.0,
+              "type": "integer",
+              "description": "Page number starting from 1",
+              "default": 1
+            },
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "title": "Items per page",
+              "maximum": 100.0,
+              "type": "integer",
+              "description": "Number of items per page",
+              "default": 25
+            },
+            "name": "per-page",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunResultList"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          },
+          {
+            "APIKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/projects/{owner}/{name}/runs": {
+      "get": {
+        "tags": [
+          "Runs"
+        ],
+        "summary": "List runs",
+        "description": "Retrieve a list of runs.",
+        "operationId": "list_runs",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Project Owner",
+              "type": "string"
+            },
+            "name": "owner",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Project Name",
+              "type": "string"
+            },
+            "name": "name",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "The status of the run",
+              "type": "string"
+            },
+            "name": "status",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Job IDs",
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "name": "job_id",
+            "in": "query"
+          },
+          {
+            "description": "Page number starting from 1",
+            "required": false,
+            "schema": {
+              "title": "Page number",
+              "minimum": 1.0,
+              "type": "integer",
+              "description": "Page number starting from 1",
+              "default": 1
+            },
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "title": "Items per page",
+              "maximum": 100.0,
+              "type": "integer",
+              "description": "Number of items per page",
+              "default": 25
+            },
+            "name": "per-page",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunList"
                 }
               }
             }
@@ -6749,6 +7018,98 @@
             "format": "binary"
           }
         }
+      },
+      "CloudJob": {
+        "title": "CloudJob",
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "description": "The unique ID for this run"
+          },
+          "author": {
+            "title": "Author",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccountPublic"
+              }
+            ],
+            "description": "author"
+          },
+          "owner": {
+            "title": "Owner",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AccountPublic"
+              }
+            ],
+            "description": "owner"
+          },
+          "status": {
+            "title": "Status",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/JobStatus"
+              }
+            ],
+            "description": "The status of the run"
+          }
+        }
+      },
+      "CloudJobList": {
+        "title": "CloudJobList",
+        "required": [
+          "page",
+          "per_page",
+          "page_count",
+          "total_count",
+          "resources"
+        ],
+        "type": "object",
+        "properties": {
+          "page": {
+            "title": "Page",
+            "type": "integer",
+            "description": "The current page the pagination request is on",
+            "format": "int32"
+          },
+          "per_page": {
+            "title": "Per Page",
+            "type": "integer",
+            "description": "The number of pages per pagination request",
+            "format": "int32"
+          },
+          "page_count": {
+            "title": "Page Count",
+            "type": "integer",
+            "description": "The total number of pages",
+            "format": "int32"
+          },
+          "total_count": {
+            "title": "Total Count",
+            "type": "integer",
+            "description": "The total number of resources matching the list request",
+            "format": "int32"
+          },
+          "resources": {
+            "title": "Resources",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CloudJob"
+            }
+          },
+          "next_page": {
+            "title": "Next Page",
+            "type": "integer",
+            "description": "The next page, if this on is not the last",
+            "format": "int32"
+          }
+        },
+        "description": "A list response from a pagination request"
       },
       "CreatedContent": {
         "title": "CreatedContent",
@@ -12497,14 +12858,17 @@
             "title": "Arguments",
             "type": "array",
             "items": {
-              "anyOf": [
-                {
-                  "$ref": "#/components/schemas/JobArgument"
-                },
-                {
-                  "$ref": "#/components/schemas/JobPathArgument"
-                }
-              ]
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/JobArgument"
+                  },
+                  {
+                    "$ref": "#/components/schemas/JobPathArgument"
+                  }
+                ]
+              }
             },
             "description": "Input arguments for this job."
           },
@@ -12544,7 +12908,6 @@
           },
           "value": {
             "title": "Value",
-            "type": "string",
             "description": "The value of the job argument."
           },
           "type": {
@@ -12614,85 +12977,16 @@
       "JobStatus": {
         "title": "JobStatus",
         "required": [
-          "inputs",
-          "outputs",
+          "id",
           "status",
-          "started_at",
-          "id"
+          "started_at"
         ],
         "type": "object",
         "properties": {
-          "inputs": {
-            "title": "Inputs",
-            "type": "array",
-            "items": {
-              "anyOf": [
-                {
-                  "$ref": "#/components/schemas/StepStringInput"
-                },
-                {
-                  "$ref": "#/components/schemas/StepIntegerInput"
-                },
-                {
-                  "$ref": "#/components/schemas/StepNumberInput"
-                },
-                {
-                  "$ref": "#/components/schemas/StepBooleanInput"
-                },
-                {
-                  "$ref": "#/components/schemas/StepFolderInput"
-                },
-                {
-                  "$ref": "#/components/schemas/StepFileInput"
-                },
-                {
-                  "$ref": "#/components/schemas/StepPathInput"
-                },
-                {
-                  "$ref": "#/components/schemas/StepArrayInput"
-                },
-                {
-                  "$ref": "#/components/schemas/StepJSONObjectInput"
-                }
-              ]
-            },
-            "description": "The inputs used for this job."
-          },
-          "outputs": {
-            "title": "Outputs",
-            "type": "array",
-            "items": {
-              "anyOf": [
-                {
-                  "$ref": "#/components/schemas/StepStringOutput"
-                },
-                {
-                  "$ref": "#/components/schemas/StepIntegerOutput"
-                },
-                {
-                  "$ref": "#/components/schemas/StepNumberOutput"
-                },
-                {
-                  "$ref": "#/components/schemas/StepBooleanOutput"
-                },
-                {
-                  "$ref": "#/components/schemas/StepFolderOutput"
-                },
-                {
-                  "$ref": "#/components/schemas/StepFileOutput"
-                },
-                {
-                  "$ref": "#/components/schemas/StepPathOutput"
-                },
-                {
-                  "$ref": "#/components/schemas/StepArrayOutput"
-                },
-                {
-                  "$ref": "#/components/schemas/StepJSONObjectOutput"
-                }
-              ]
-            },
-            "description": "The outputs produced by this job."
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "description": "The ID of the individual job."
           },
           "status": {
             "title": "Status",
@@ -12704,11 +12998,6 @@
             "type": "string",
             "description": "The time at which the task was started",
             "format": "date-time"
-          },
-          "id": {
-            "title": "Id",
-            "type": "string",
-            "description": "The ID of the individual job."
           },
           "type": {
             "title": "Type",
@@ -12724,6 +13013,13 @@
               "type": "string"
             },
             "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
+          },
+          "api_version": {
+            "title": "Api Version",
+            "pattern": "^v1beta1$",
+            "type": "string",
+            "default": "v1beta1",
+            "readOnly": true
           },
           "message": {
             "title": "Message",
@@ -12741,28 +13037,36 @@
             "type": "string",
             "description": "Source url for the status object. It can be a recipe or a function."
           },
-          "api_version": {
-            "title": "Api Version",
-            "pattern": "^v1beta1$",
-            "type": "string",
-            "default": "v1beta1",
-            "readOnly": true
+          "runs_pending": {
+            "title": "Runs Pending",
+            "type": "integer",
+            "description": "The count of runs that are pending",
+            "default": 0,
+            "format": "int32"
           },
-          "entrypoint": {
-            "title": "Entrypoint",
-            "type": "string",
-            "description": "The ID of the first step in the job."
+          "runs_running": {
+            "title": "Runs Running",
+            "type": "integer",
+            "description": "The count of runs that are running",
+            "default": 0,
+            "format": "int32"
           },
-          "steps": {
-            "title": "Steps",
-            "type": "object",
-            "additionalProperties": {
-              "$ref": "#/components/schemas/StepStatus"
-            },
-            "default": {}
+          "runs_completed": {
+            "title": "Runs Completed",
+            "type": "integer",
+            "description": "The count of runs that have completed",
+            "default": 0,
+            "format": "int32"
+          },
+          "runs_failed": {
+            "title": "Runs Failed",
+            "type": "integer",
+            "description": "The count of runs that have failed",
+            "default": 0,
+            "format": "int32"
           }
         },
-        "description": "Job Status."
+        "description": "Parametric Job Status."
       },
       "KeyRequest": {
         "title": "KeyRequest",
@@ -12987,12 +13291,6 @@
             "type": "string",
             "description": "The README file to attach to this package",
             "default": ""
-          },
-          "license": {
-            "title": "License",
-            "type": "string",
-            "description": "The license file to attach to this package",
-            "default": ""
           }
         }
       },
@@ -13016,12 +13314,6 @@
             "title": "Readme",
             "type": "string",
             "description": "The README file to attach to this package",
-            "default": ""
-          },
-          "license": {
-            "title": "License",
-            "type": "string",
-            "description": "The license file to attach to this package",
             "default": ""
           }
         }
@@ -13738,6 +14030,15 @@
             "type": "boolean",
             "description": "Whether or not a project is publicly viewable",
             "default": true
+          },
+          "usage": {
+            "title": "Usage",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ProjectUsage"
+              }
+            ],
+            "description": "The CPU/Memory usage of this project"
           }
         }
       },
@@ -13845,6 +14146,44 @@
             "type": "boolean",
             "description": "Whether or not a project is publicly viewable",
             "default": true
+          }
+        }
+      },
+      "ProjectDailyUsage": {
+        "title": "ProjectDailyUsage",
+        "required": [
+          "date"
+        ],
+        "type": "object",
+        "properties": {
+          "date": {
+            "title": "Date",
+            "type": "string",
+            "format": "date-time"
+          },
+          "cpu": {
+            "title": "Cpu",
+            "type": "number",
+            "default": 0,
+            "format": "double"
+          },
+          "memory": {
+            "title": "Memory",
+            "type": "number",
+            "default": 0,
+            "format": "double"
+          },
+          "succeeded": {
+            "title": "Succeeded",
+            "type": "number",
+            "default": 0,
+            "format": "double"
+          },
+          "failed": {
+            "title": "Failed",
+            "type": "number",
+            "default": 0,
+            "format": "double"
           }
         }
       },
@@ -14049,6 +14388,58 @@
             "type": "boolean",
             "description": "Whether or not a project is publicly viewable",
             "default": true
+          }
+        }
+      },
+      "ProjectUsage": {
+        "title": "ProjectUsage",
+        "required": [
+          "start",
+          "end"
+        ],
+        "type": "object",
+        "properties": {
+          "start": {
+            "title": "Start",
+            "type": "string",
+            "format": "date-time"
+          },
+          "end": {
+            "title": "End",
+            "type": "string",
+            "format": "date-time"
+          },
+          "cpu": {
+            "title": "Cpu",
+            "type": "number",
+            "default": 0,
+            "format": "double"
+          },
+          "memory": {
+            "title": "Memory",
+            "type": "number",
+            "default": 0,
+            "format": "double"
+          },
+          "succeeded": {
+            "title": "Succeeded",
+            "type": "number",
+            "default": 0,
+            "format": "double"
+          },
+          "failed": {
+            "title": "Failed",
+            "type": "number",
+            "default": 0,
+            "format": "double"
+          },
+          "daily_usage": {
+            "title": "Daily Usage",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectDailyUsage"
+            },
+            "default": []
           }
         }
       },
@@ -14984,7 +15375,7 @@
             "title": "Status",
             "allOf": [
               {
-                "$ref": "#/components/schemas/JobStatus"
+                "$ref": "#/components/schemas/RunStatus"
               }
             ],
             "description": "The status of the run"
@@ -15041,6 +15432,274 @@
           }
         },
         "description": "A list response from a pagination request"
+      },
+      "RunResultList": {
+        "title": "RunResultList",
+        "required": [
+          "page",
+          "per_page",
+          "page_count",
+          "total_count",
+          "resources"
+        ],
+        "type": "object",
+        "properties": {
+          "page": {
+            "title": "Page",
+            "type": "integer",
+            "description": "The current page the pagination request is on",
+            "format": "int32"
+          },
+          "per_page": {
+            "title": "Per Page",
+            "type": "integer",
+            "description": "The number of pages per pagination request",
+            "format": "int32"
+          },
+          "page_count": {
+            "title": "Page Count",
+            "type": "integer",
+            "description": "The total number of pages",
+            "format": "int32"
+          },
+          "total_count": {
+            "title": "Total Count",
+            "type": "integer",
+            "description": "The total number of resources matching the list request",
+            "format": "int32"
+          },
+          "resources": {
+            "title": "Resources",
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/StepStringInput"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StepIntegerInput"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StepNumberInput"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StepBooleanInput"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StepFolderInput"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StepFileInput"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StepPathInput"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StepArrayInput"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StepJSONObjectInput"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StepStringOutput"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StepIntegerOutput"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StepNumberOutput"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StepBooleanOutput"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StepFolderOutput"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StepFileOutput"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StepPathOutput"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StepArrayOutput"
+                  },
+                  {
+                    "$ref": "#/components/schemas/StepJSONObjectOutput"
+                  }
+                ]
+              }
+            }
+          },
+          "next_page": {
+            "title": "Next Page",
+            "type": "integer",
+            "description": "The next page, if this on is not the last",
+            "format": "int32"
+          }
+        },
+        "description": "A list response from a pagination request"
+      },
+      "RunStatus": {
+        "title": "RunStatus",
+        "required": [
+          "inputs",
+          "outputs",
+          "status",
+          "started_at",
+          "id",
+          "job_id"
+        ],
+        "type": "object",
+        "properties": {
+          "inputs": {
+            "title": "Inputs",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/StepStringInput"
+                },
+                {
+                  "$ref": "#/components/schemas/StepIntegerInput"
+                },
+                {
+                  "$ref": "#/components/schemas/StepNumberInput"
+                },
+                {
+                  "$ref": "#/components/schemas/StepBooleanInput"
+                },
+                {
+                  "$ref": "#/components/schemas/StepFolderInput"
+                },
+                {
+                  "$ref": "#/components/schemas/StepFileInput"
+                },
+                {
+                  "$ref": "#/components/schemas/StepPathInput"
+                },
+                {
+                  "$ref": "#/components/schemas/StepArrayInput"
+                },
+                {
+                  "$ref": "#/components/schemas/StepJSONObjectInput"
+                }
+              ]
+            },
+            "description": "The inputs used for this run."
+          },
+          "outputs": {
+            "title": "Outputs",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/StepStringOutput"
+                },
+                {
+                  "$ref": "#/components/schemas/StepIntegerOutput"
+                },
+                {
+                  "$ref": "#/components/schemas/StepNumberOutput"
+                },
+                {
+                  "$ref": "#/components/schemas/StepBooleanOutput"
+                },
+                {
+                  "$ref": "#/components/schemas/StepFolderOutput"
+                },
+                {
+                  "$ref": "#/components/schemas/StepFileOutput"
+                },
+                {
+                  "$ref": "#/components/schemas/StepPathOutput"
+                },
+                {
+                  "$ref": "#/components/schemas/StepArrayOutput"
+                },
+                {
+                  "$ref": "#/components/schemas/StepJSONObjectOutput"
+                }
+              ]
+            },
+            "description": "The outputs produced by this run."
+          },
+          "status": {
+            "title": "Status",
+            "type": "string",
+            "description": "The status of this task. Can be \"Running\", \"Succeeded\", \"Failed\" or \"Error\""
+          },
+          "started_at": {
+            "title": "Started At",
+            "type": "string",
+            "description": "The time at which the task was started",
+            "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "description": "The ID of the individual run."
+          },
+          "job_id": {
+            "title": "Job Id",
+            "type": "string",
+            "description": "The ID of the job that generated this run"
+          },
+          "type": {
+            "title": "Type",
+            "pattern": "^RunStatus$",
+            "type": "string",
+            "default": "RunStatus",
+            "readOnly": true
+          },
+          "annotations": {
+            "title": "Annotations",
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries."
+          },
+          "message": {
+            "title": "Message",
+            "type": "string",
+            "description": "Any message produced by the task. Usually error/debugging hints."
+          },
+          "finished_at": {
+            "title": "Finished At",
+            "type": "string",
+            "description": "The time at which the task was completed",
+            "format": "date-time"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string",
+            "description": "Source url for the status object. It can be a recipe or a function."
+          },
+          "api_version": {
+            "title": "Api Version",
+            "pattern": "^v1beta1$",
+            "type": "string",
+            "default": "v1beta1",
+            "readOnly": true
+          },
+          "entrypoint": {
+            "title": "Entrypoint",
+            "type": "string",
+            "description": "The ID of the first step in the run."
+          },
+          "steps": {
+            "title": "Steps",
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/StepStatus"
+            },
+            "default": {}
+          }
+        },
+        "description": "Job Status."
       },
       "S3": {
         "title": "S3",

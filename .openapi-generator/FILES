@@ -28,6 +28,10 @@ docs/BodyPostPluginRegistriesOwnerPluginsPost.md
 docs/BodyPostPluginRegistriesOwnerPluginsPostAllOf.md
 docs/BodyPostRecipeRegistriesOwnerRecipesPost.md
 docs/BodyPostRecipeRegistriesOwnerRecipesPostAllOf.md
+docs/CloudJob.md
+docs/CloudJobAllOf.md
+docs/CloudJobList.md
+docs/CloudJobListAllOf.md
 docs/CreatedContent.md
 docs/CreatedContentAllOf.md
 docs/DAG.md
@@ -206,6 +210,7 @@ docs/JobPathArgument.md
 docs/JobPathArgumentAllOf.md
 docs/JobStatus.md
 docs/JobStatusAllOf.md
+docs/JobsApi.md
 docs/KeyRequest.md
 docs/KeyRequestAllOf.md
 docs/License.md
@@ -261,6 +266,8 @@ docs/ProjectAccessPolicyListAllOf.md
 docs/ProjectAllOf.md
 docs/ProjectCreate.md
 docs/ProjectCreateAllOf.md
+docs/ProjectDailyUsage.md
+docs/ProjectDailyUsageAllOf.md
 docs/ProjectFolder.md
 docs/ProjectFolderAllOf.md
 docs/ProjectList.md
@@ -273,6 +280,8 @@ docs/ProjectRecipeFilterList.md
 docs/ProjectRecipeFilterListAllOf.md
 docs/ProjectUpdate.md
 docs/ProjectUpdateAllOf.md
+docs/ProjectUsage.md
+docs/ProjectUsageAllOf.md
 docs/ProjectUserPermissions.md
 docs/ProjectUserPermissionsAllOf.md
 docs/ProjectsApi.md
@@ -316,6 +325,10 @@ docs/Run.md
 docs/RunAllOf.md
 docs/RunList.md
 docs/RunListAllOf.md
+docs/RunResultList.md
+docs/RunResultListAllOf.md
+docs/RunStatus.md
+docs/RunStatusAllOf.md
 docs/RunsApi.md
 docs/S3.md
 docs/S3AllOf.md
@@ -424,6 +437,7 @@ docs/ValueReferenceAllOf.md
 src/PollinationSDK.Test/Api/APITokensApiTests.cs
 src/PollinationSDK.Test/Api/AccountsApiTests.cs
 src/PollinationSDK.Test/Api/ArtifactsApiTests.cs
+src/PollinationSDK.Test/Api/JobsApiTests.cs
 src/PollinationSDK.Test/Api/OrgsApiTests.cs
 src/PollinationSDK.Test/Api/PluginsApiTests.cs
 src/PollinationSDK.Test/Api/ProjectsApiTests.cs
@@ -459,6 +473,10 @@ src/PollinationSDK.Test/Model/BodyPostPluginRegistriesOwnerPluginsPostAllOfTests
 src/PollinationSDK.Test/Model/BodyPostPluginRegistriesOwnerPluginsPostTests.cs
 src/PollinationSDK.Test/Model/BodyPostRecipeRegistriesOwnerRecipesPostAllOfTests.cs
 src/PollinationSDK.Test/Model/BodyPostRecipeRegistriesOwnerRecipesPostTests.cs
+src/PollinationSDK.Test/Model/CloudJobAllOfTests.cs
+src/PollinationSDK.Test/Model/CloudJobListAllOfTests.cs
+src/PollinationSDK.Test/Model/CloudJobListTests.cs
+src/PollinationSDK.Test/Model/CloudJobTests.cs
 src/PollinationSDK.Test/Model/CreatedContentAllOfTests.cs
 src/PollinationSDK.Test/Model/CreatedContentTests.cs
 src/PollinationSDK.Test/Model/DAGAllOfTests.cs
@@ -689,6 +707,8 @@ src/PollinationSDK.Test/Model/ProjectAccessPolicyTests.cs
 src/PollinationSDK.Test/Model/ProjectAllOfTests.cs
 src/PollinationSDK.Test/Model/ProjectCreateAllOfTests.cs
 src/PollinationSDK.Test/Model/ProjectCreateTests.cs
+src/PollinationSDK.Test/Model/ProjectDailyUsageAllOfTests.cs
+src/PollinationSDK.Test/Model/ProjectDailyUsageTests.cs
 src/PollinationSDK.Test/Model/ProjectFolderAllOfTests.cs
 src/PollinationSDK.Test/Model/ProjectFolderTests.cs
 src/PollinationSDK.Test/Model/ProjectListAllOfTests.cs
@@ -702,6 +722,8 @@ src/PollinationSDK.Test/Model/ProjectRecipeFilterTests.cs
 src/PollinationSDK.Test/Model/ProjectTests.cs
 src/PollinationSDK.Test/Model/ProjectUpdateAllOfTests.cs
 src/PollinationSDK.Test/Model/ProjectUpdateTests.cs
+src/PollinationSDK.Test/Model/ProjectUsageAllOfTests.cs
+src/PollinationSDK.Test/Model/ProjectUsageTests.cs
 src/PollinationSDK.Test/Model/ProjectUserPermissionsAllOfTests.cs
 src/PollinationSDK.Test/Model/ProjectUserPermissionsTests.cs
 src/PollinationSDK.Test/Model/PublicAccountListAllOfTests.cs
@@ -741,6 +763,10 @@ src/PollinationSDK.Test/Model/RepositoryUserPermissionsTests.cs
 src/PollinationSDK.Test/Model/RunAllOfTests.cs
 src/PollinationSDK.Test/Model/RunListAllOfTests.cs
 src/PollinationSDK.Test/Model/RunListTests.cs
+src/PollinationSDK.Test/Model/RunResultListAllOfTests.cs
+src/PollinationSDK.Test/Model/RunResultListTests.cs
+src/PollinationSDK.Test/Model/RunStatusAllOfTests.cs
+src/PollinationSDK.Test/Model/RunStatusTests.cs
 src/PollinationSDK.Test/Model/RunTests.cs
 src/PollinationSDK.Test/Model/S3AllOfTests.cs
 src/PollinationSDK.Test/Model/S3Tests.cs
@@ -847,6 +873,7 @@ src/PollinationSDK.Test/packages.config
 src/PollinationSDK/Api/APITokensApi.cs
 src/PollinationSDK/Api/AccountsApi.cs
 src/PollinationSDK/Api/ArtifactsApi.cs
+src/PollinationSDK/Api/JobsApi.cs
 src/PollinationSDK/Api/OrgsApi.cs
 src/PollinationSDK/Api/PluginsApi.cs
 src/PollinationSDK/Api/ProjectsApi.cs
@@ -891,6 +918,10 @@ src/PollinationSDK/Model/BodyPostPluginRegistriesOwnerPluginsPost.cs
 src/PollinationSDK/Model/BodyPostPluginRegistriesOwnerPluginsPostAllOf.cs
 src/PollinationSDK/Model/BodyPostRecipeRegistriesOwnerRecipesPost.cs
 src/PollinationSDK/Model/BodyPostRecipeRegistriesOwnerRecipesPostAllOf.cs
+src/PollinationSDK/Model/CloudJob.cs
+src/PollinationSDK/Model/CloudJobAllOf.cs
+src/PollinationSDK/Model/CloudJobList.cs
+src/PollinationSDK/Model/CloudJobListAllOf.cs
 src/PollinationSDK/Model/CreatedContent.cs
 src/PollinationSDK/Model/CreatedContentAllOf.cs
 src/PollinationSDK/Model/DAG.cs
@@ -1122,6 +1153,8 @@ src/PollinationSDK/Model/ProjectAccessPolicyListAllOf.cs
 src/PollinationSDK/Model/ProjectAllOf.cs
 src/PollinationSDK/Model/ProjectCreate.cs
 src/PollinationSDK/Model/ProjectCreateAllOf.cs
+src/PollinationSDK/Model/ProjectDailyUsage.cs
+src/PollinationSDK/Model/ProjectDailyUsageAllOf.cs
 src/PollinationSDK/Model/ProjectFolder.cs
 src/PollinationSDK/Model/ProjectFolderAllOf.cs
 src/PollinationSDK/Model/ProjectList.cs
@@ -1134,6 +1167,8 @@ src/PollinationSDK/Model/ProjectRecipeFilterList.cs
 src/PollinationSDK/Model/ProjectRecipeFilterListAllOf.cs
 src/PollinationSDK/Model/ProjectUpdate.cs
 src/PollinationSDK/Model/ProjectUpdateAllOf.cs
+src/PollinationSDK/Model/ProjectUsage.cs
+src/PollinationSDK/Model/ProjectUsageAllOf.cs
 src/PollinationSDK/Model/ProjectUserPermissions.cs
 src/PollinationSDK/Model/ProjectUserPermissionsAllOf.cs
 src/PollinationSDK/Model/PublicAccountList.cs
@@ -1174,6 +1209,10 @@ src/PollinationSDK/Model/Run.cs
 src/PollinationSDK/Model/RunAllOf.cs
 src/PollinationSDK/Model/RunList.cs
 src/PollinationSDK/Model/RunListAllOf.cs
+src/PollinationSDK/Model/RunResultList.cs
+src/PollinationSDK/Model/RunResultListAllOf.cs
+src/PollinationSDK/Model/RunStatus.cs
+src/PollinationSDK/Model/RunStatusAllOf.cs
 src/PollinationSDK/Model/S3.cs
 src/PollinationSDK/Model/S3AllOf.cs
 src/PollinationSDK/Model/S3UploadRequest.cs

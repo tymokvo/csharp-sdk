@@ -1,6 +1,6 @@
 # PollinationSDK.Api.UsersApi
 
-All URIs are relative to *https://api.pollination.cloud*
+All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -33,7 +33,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            Configuration.Default.BasePath = "http://localhost";
             var apiInstance = new UsersApi(Configuration.Default);
             var username = username_example;  // string | 
 
@@ -109,7 +109,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            Configuration.Default.BasePath = "http://localhost";
             var apiInstance = new UsersApi(Configuration.Default);
             var name = name_example;  // string | 
 
@@ -183,7 +183,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            Configuration.Default.BasePath = "http://localhost";
             var apiInstance = new UsersApi(Configuration.Default);
             var search = new List<string>(); // List<string> | You know, for search (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)

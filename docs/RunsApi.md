@@ -1,10 +1,9 @@
 # PollinationSDK.Api.RunsApi
 
-All URIs are relative to *https://api.pollination.cloud*
+All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreateRun**](RunsApi.md#createrun) | **POST** /projects/{owner}/{name}/runs | Schedule a run
 [**DownloadRunArtifact**](RunsApi.md#downloadrunartifact) | **GET** /projects/{owner}/{name}/runs/{run_id}/artifacts/download | Download an artifact from the run folder
 [**GetRun**](RunsApi.md#getrun) | **GET** /projects/{owner}/{name}/runs/{run_id} | Get a Run
 [**GetRunOutput**](RunsApi.md#getrunoutput) | **GET** /projects/{owner}/{name}/runs/{run_id}/outputs/{output_name} | Get run output by name
@@ -12,101 +11,11 @@ Method | HTTP request | Description
 [**GetRunSteps**](RunsApi.md#getrunsteps) | **GET** /projects/{owner}/{name}/runs/{run_id}/steps | Query the steps of a run
 [**ListRunArtifacts**](RunsApi.md#listrunartifacts) | **GET** /projects/{owner}/{name}/runs/{run_id}/artifacts | List artifacts in a run folder
 [**ListRuns**](RunsApi.md#listruns) | **GET** /projects/{owner}/{name}/runs | List runs
+[**QueryResults**](RunsApi.md#queryresults) | **GET** /projects/{owner}/{name}/results | Query run results
 [**ResumeRun**](RunsApi.md#resumerun) | **PUT** /projects/{owner}/{name}/runs/{run_id}/resume | resume a run
 [**StopRun**](RunsApi.md#stoprun) | **PUT** /projects/{owner}/{name}/runs/{run_id}/stop | Stop a run
 [**SuspendRun**](RunsApi.md#suspendrun) | **PUT** /projects/{owner}/{name}/runs/{run_id}/suspend | Suspend a run
 
-
-
-## CreateRun
-
-> CreatedContent CreateRun (string owner, string name, Job job, string authorization = null, string xPollinationToken = null)
-
-Schedule a run
-
-Create a new run.
-
-### Example
-
-```csharp
-using System.Collections.Generic;
-using System.Diagnostics;
-using PollinationSDK.Api;
-using PollinationSDK.Client;
-using PollinationSDK.Model;
-
-namespace Example
-{
-    public class CreateRunExample
-    {
-        public static void Main()
-        {
-            Configuration.Default.BasePath = "https://api.pollination.cloud";
-            // Configure API key authorization: APIKeyAuth
-            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
-            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
-            // Configure HTTP bearer authorization: JWTAuth
-            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
-
-            var apiInstance = new RunsApi(Configuration.Default);
-            var owner = owner_example;  // string | 
-            var name = name_example;  // string | 
-            var job = new Job(); // Job | 
-            var authorization = authorization_example;  // string |  (optional) 
-            var xPollinationToken = xPollinationToken_example;  // string |  (optional) 
-
-            try
-            {
-                // Schedule a run
-                CreatedContent result = apiInstance.CreateRun(owner, name, job, authorization, xPollinationToken);
-                Debug.WriteLine(result);
-            }
-            catch (ApiException e)
-            {
-                Debug.Print("Exception when calling RunsApi.CreateRun: " + e.Message );
-                Debug.Print("Status Code: "+ e.ErrorCode);
-                Debug.Print(e.StackTrace);
-            }
-        }
-    }
-}
-```
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **owner** | **string**|  | 
- **name** | **string**|  | 
- **job** | [**Job**](Job.md)|  | 
- **authorization** | **string**|  | [optional] 
- **xPollinationToken** | **string**|  | [optional] 
-
-### Return type
-
-[**CreatedContent**](CreatedContent.md)
-
-### Authorization
-
-[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-| **201** | Successful Response |  -  |
-| **422** | Validation Error |  -  |
-
-[[Back to top]](#)
-[[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
 
 
 ## DownloadRunArtifact
@@ -132,7 +41,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            Configuration.Default.BasePath = "http://localhost";
             // Configure API key authorization: APIKeyAuth
             Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -225,7 +134,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            Configuration.Default.BasePath = "http://localhost";
             // Configure API key authorization: APIKeyAuth
             Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -312,7 +221,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            Configuration.Default.BasePath = "http://localhost";
             // Configure API key authorization: APIKeyAuth
             Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -405,7 +314,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            Configuration.Default.BasePath = "http://localhost";
             // Configure API key authorization: APIKeyAuth
             Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -494,7 +403,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            Configuration.Default.BasePath = "http://localhost";
             // Configure API key authorization: APIKeyAuth
             Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -593,7 +502,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            Configuration.Default.BasePath = "http://localhost";
             // Configure API key authorization: APIKeyAuth
             Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -665,7 +574,7 @@ Name | Type | Description  | Notes
 
 ## ListRuns
 
-> RunList ListRuns (string owner, string name, List<string> ids = null, string status = null, int? page = null, int? perPage = null)
+> RunList ListRuns (string owner, string name, string status = null, List<string> jobId = null, int? page = null, int? perPage = null)
 
 List runs
 
@@ -686,7 +595,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            Configuration.Default.BasePath = "http://localhost";
             // Configure API key authorization: APIKeyAuth
             Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -697,15 +606,15 @@ namespace Example
             var apiInstance = new RunsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var ids = new List<string>(); // List<string> |  (optional) 
             var status = status_example;  // string |  (optional) 
+            var jobId = new List<string>(); // List<string> |  (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
                 // List runs
-                RunList result = apiInstance.ListRuns(owner, name, ids, status, page, perPage);
+                RunList result = apiInstance.ListRuns(owner, name, status, jobId, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -726,14 +635,107 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **ids** | [**List&lt;string&gt;**](string.md)|  | [optional] 
  **status** | **string**|  | [optional] 
+ **jobId** | [**List&lt;string&gt;**](string.md)|  | [optional] 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
  **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
 ### Return type
 
 [**RunList**](RunList.md)
+
+### Authorization
+
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | Retrieved |  -  |
+| **422** | Validation Error |  -  |
+
+[[Back to top]](#)
+[[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## QueryResults
+
+> RunResultList QueryResults (string owner, string name, string status = null, List<string> jobId = null, int? page = null, int? perPage = null)
+
+Query run results
+
+Retrieve a list of run results.
+
+### Example
+
+```csharp
+using System.Collections.Generic;
+using System.Diagnostics;
+using PollinationSDK.Api;
+using PollinationSDK.Client;
+using PollinationSDK.Model;
+
+namespace Example
+{
+    public class QueryResultsExample
+    {
+        public static void Main()
+        {
+            Configuration.Default.BasePath = "http://localhost";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
+            var apiInstance = new RunsApi(Configuration.Default);
+            var owner = owner_example;  // string | 
+            var name = name_example;  // string | 
+            var status = status_example;  // string |  (optional) 
+            var jobId = new List<string>(); // List<string> |  (optional) 
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
+
+            try
+            {
+                // Query run results
+                RunResultList result = apiInstance.QueryResults(owner, name, status, jobId, page, perPage);
+                Debug.WriteLine(result);
+            }
+            catch (ApiException e)
+            {
+                Debug.Print("Exception when calling RunsApi.QueryResults: " + e.Message );
+                Debug.Print("Status Code: "+ e.ErrorCode);
+                Debug.Print(e.StackTrace);
+            }
+        }
+    }
+}
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **owner** | **string**|  | 
+ **name** | **string**|  | 
+ **status** | **string**|  | [optional] 
+ **jobId** | [**List&lt;string&gt;**](string.md)|  | [optional] 
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
+
+### Return type
+
+[**RunResultList**](RunResultList.md)
 
 ### Authorization
 
@@ -779,7 +781,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            Configuration.Default.BasePath = "http://localhost";
             // Configure API key authorization: APIKeyAuth
             Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -866,7 +868,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            Configuration.Default.BasePath = "http://localhost";
             // Configure API key authorization: APIKeyAuth
             Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -953,7 +955,7 @@ namespace Example
     {
         public static void Main()
         {
-            Configuration.Default.BasePath = "https://api.pollination.cloud";
+            Configuration.Default.BasePath = "http://localhost";
             // Configure API key authorization: APIKeyAuth
             Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
             // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed

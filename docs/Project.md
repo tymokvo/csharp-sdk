@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **Owner** | [**AccountPublic**](AccountPublic.md) |  | 
 **Permissions** | [**ProjectUserPermissions**](ProjectUserPermissions.md) |  | 
 **Slug** | **string** | The project name in slug format | 
+**Usage** | [**ProjectUsage**](ProjectUsage.md) | The CPU/Memory usage of this project | [optional] 
 **Type** | **string** |  | [optional] [readonly] [default to "Project"]
 
 [[Back to Model list]](../README.md#documentation-for-models)
