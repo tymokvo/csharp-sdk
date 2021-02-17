@@ -1,6 +1,7 @@
 ﻿using PollinationSDK.Api;
 using QueenbeeSDK;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -21,16 +22,15 @@ namespace PollinationSDK.Wrapper
             this.JobInfo = job;
         }
        
-        public async Task<RunInfo> RunOnCloudAsync(Project project, Action<string> progressReporting, System.Threading.CancellationToken token)
+        public async Task<CloudJob> RunOnCloudAsync(Project project, Action<string> progressReporting, System.Threading.CancellationToken token)
         {
 
-            RunInfo runInfo = null;
+            CloudJob cloudJob = null;
             try
             {
-                var runID = await ScheduleRunAsync(project, this.Job, progressReporting, token);
-                runInfo = new RunInfo(project, runID.ToString());
-                progressReporting?.Invoke(runInfo.Run.Status.Status);
-                Helper.Logger.Information( $"RunOnCloudAsync: a new run {runID} is started in project {runInfo.Project.Name}");
+                cloudJob = await ScheduleCloudJobAsync(project, this.Job, progressReporting, token);
+                progressReporting?.Invoke(cloudJob.Status.Status);
+                Helper.Logger.Information( $"RunOnCloudAsync: a new cloud job {cloudJob.Id} is started in project {runInfo.Project.Name}");
             }
             catch (Exception e)
             {
@@ -46,7 +46,7 @@ namespace PollinationSDK.Wrapper
 
             }
 
-            return runInfo;
+            return cloudJob;
 
         }
 
@@ -59,14 +59,13 @@ namespace PollinationSDK.Wrapper
         /// <param name="cancelFunc"></param>
         /// <param name="actionWhenDone"></param>
         /// <returns></returns>
-        private async Task<Guid> ScheduleRunAsync(
+        private async Task<CloudJob> ScheduleCloudJobAsync(
             Project project,
             Job job,
             Action<string> progressLogAction = default,
             CancellationToken cancellationToken = default,
             Action actionWhenDone = default)
         {
-
             // Get project
             var proj = project;
             //var job = this._Job;
@@ -94,7 +93,7 @@ namespace PollinationSDK.Wrapper
             {
                 progressLogAction?.Invoke($"Canceled: {cancellationToken.IsCancellationRequested}");
                 Helper.Logger.Information($"ScheduleRunAsync: canceled by user");
-                return emptyID;
+                return null;
             }
 
             // update Artifact to cloud's relative path after uploaded.
@@ -102,14 +101,13 @@ namespace PollinationSDK.Wrapper
             //var json = newJob.ToJson();
 
             // create a new Simulation
-            var api = new RunsApi();
+            var api = new JobsApi();
             progressLogAction?.Invoke($"Start running.");
             Helper.Logger.Information($"ScheduleRunAsync: Start running.");
             try
             {
                 // schedule a simulation on Pollination.Cloud
-                var run = await api.CreateRunAsync(proj.Owner.Name, proj.Name, newJob);
-                var runJobID = run.Id;
+                var runJob = await api.CreateJobAsync(proj.Owner.Name, proj.Name, newJob);
                 progressLogAction?.Invoke($"Start running..");
 
                 // give server a moment to start the simulation after it's scheduled.
@@ -118,20 +116,17 @@ namespace PollinationSDK.Wrapper
                 // monitoring the running simulation
                 progressLogAction?.Invoke($"Start running...");
 
-                //Action<string> updateMessageProgressForStatus = (string p) => { progressLogAction?.Invoke(p); };
-                //await runningSimulaiton.CheckStatusAsync(updateMessageProgressForStatus, cancellationToken);
-
-
                 // suspended by user
                 if (cancellationToken.IsCancellationRequested)
                 {
                     Helper.Logger.Information($"ScheduleRunAsync: canceled by user");
                     progressLogAction?.Invoke($"Canceled: {cancellationToken.IsCancellationRequested}");
-                    return emptyID;
+                    return null;
                 }
+                var cloudJob = await api.GetJobAsync(proj.Owner.Name, proj.Name, runJob.Id.ToString());
 
                 actionWhenDone?.Invoke();
-                return runJobID;
+                return cloudJob;
             }
             catch (Exception ex)
             {
@@ -295,33 +290,43 @@ namespace PollinationSDK.Wrapper
         /// <returns></returns>
         private static Job UpdateArtifactPath(Job job, string subFolderPath)
         {
-            var args = job?.Arguments;
-            if (args == null)
+            var argSets = job?.Arguments;
+            if (argSets == null)
                 return job;
 
             //var checkedArtis = new List<JobPathArgument>();
             var newJob = job.DuplicateJob();
             newJob.Arguments.Clear();
 
-            foreach (var item in args)
+            foreach (var argSet in argSets)
             {
-                if (item.Obj is JobPathArgument path)
+                //add an empty argument set.
+                newJob.AddArgumentSet();
+                foreach (var item in argSet)
                 {
-                    // only update the path for ProjectFolderSource for a relative path
-                    var projFolderSource = path.Source.Obj as ProjectFolder;
-                    if (projFolderSource == null) continue;
+                    if (item.Obj is JobPathArgument path)
+                    {
+                        // only update the path for ProjectFolderSource for a relative path
+                        var projFolderSource = path.Source.Obj as ProjectFolder;
+                        if (projFolderSource == null) continue;
 
-                    // update artifact arguments
-                    var newFileOrDirname = Path.GetFileName(projFolderSource.Path);
-                    if (!string.IsNullOrEmpty(subFolderPath)) newFileOrDirname = $"{subFolderPath}/{newFileOrDirname}";
-                    var pSource = new ProjectFolder(path: newFileOrDirname);
-                    var newPath = new JobPathArgument(path.Name, pSource);
-                    newJob.Arguments.Add(newPath);
+                        // update artifact arguments
+                        var newFileOrDirname = Path.GetFileName(projFolderSource.Path);
+                        if (!string.IsNullOrEmpty(subFolderPath)) newFileOrDirname = $"{subFolderPath}/{newFileOrDirname}";
+                        var pSource = new ProjectFolder(path: newFileOrDirname);
+                        var newPath = new JobPathArgument(path.Name, pSource);
+
+                        // add it to the last available argument set.
+                        newJob.AddArgument(newPath);
+                    }
+                    else if (item.Obj is JobArgument valueArg)
+                    {
+                        // add it to the last available argument set.
+                        newJob.AddArgument(valueArg);
+                    }
                 }
-                else if (item.Obj is JobArgument valueArg)
-                {
-                    newJob.Arguments.Add(valueArg);
-                }
+
+               
 
             }
 

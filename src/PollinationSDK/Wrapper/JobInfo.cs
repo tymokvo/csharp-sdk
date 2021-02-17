@@ -19,7 +19,7 @@ namespace PollinationSDK.Wrapper
             this.Recipe = recpie;
 
             this.Job = new Job(recpie.Source);
-            this.Job.Arguments = new List<AnyOf<JobArgument, JobPathArgument>>();
+            this.Job.Arguments = new List<List<AnyOf<JobArgument, JobPathArgument>>>();
         }
 
        
@@ -40,16 +40,19 @@ namespace PollinationSDK.Wrapper
             return FromJson(this.ToJson());
         }
 
-        public RunInfo RunJobOnLocal(int cpuNum = 2)
+        //public RunInfo RunJobOnLocal(int cpuNum = 2)
+        //{
+        //    var runner = new JobRunner(this);
+        //    var projPath = runner.RunOnLocalMachine(cpuNum);
+        //    return new RunInfo(projPath);
+        //}
+        public async Task<ScheduledJobInfo> RunJobOnCloud(Project proj, Action<string> progressReporting = default, System.Threading.CancellationToken token = default)
         {
             var runner = new JobRunner(this);
-            var projPath = runner.RunOnLocalMachine(cpuNum);
-            return new RunInfo(projPath);
-        }
-        public async Task<RunInfo> RunJobOnCloud(Project proj, Action<string> progressReporting = default, System.Threading.CancellationToken token = default)
-        {
-            var runner = new JobRunner(this);
-            return await runner.RunOnCloudAsync(proj, progressReporting, token);
+            var cloudJob =  await runner.RunOnCloudAsync(proj, progressReporting, token);
+            return new ScheduledJobInfo(proj, cloudJob);
+
+
         }
 
         public void AddArgument(JobArgument arg) => this.Job.AddArgument(arg);
