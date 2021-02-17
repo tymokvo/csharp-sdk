@@ -185,23 +185,23 @@ namespace ConsoleAppDemo
         }
 
        
-        private static async Task<RunInfo> runSimu(Project proj, JobInfo job, Action<string> msgAction, CancellationToken token)
+        private static async Task<ScheduledJobInfo> runSimu(Project proj, JobInfo job, Action<string> msgAction, CancellationToken token)
         {
             try
             {
-                var runInfo = await job.RunJobOnCloud(proj, msgAction, token);
-                msgAction($"Starting the job: {runInfo.RunID}");
-                await runInfo.WatchRunStatusAsync(msgAction, token);
+                var scheduledJobInfo = await job.RunJobOnCloud(proj, msgAction, token);
+                msgAction($"Starting the job: {scheduledJobInfo.JobID}");
+                //await scheduledJobInfo.WatchRunStatusAsync(msgAction, token);
 
                 //msgAction(runInfo.Logs);
 
                 if (!token.IsCancellationRequested)
                 {
-                    msgAction($"Finished the job: {runInfo.RunID}");
+                    msgAction($"Finished the job: {scheduledJobInfo.JobID}");
                 }
 
                 msgAction($"Canceled by user: {token.IsCancellationRequested}");
-                return runInfo;
+                return scheduledJobInfo;
 
             }
             catch (Exception e)
