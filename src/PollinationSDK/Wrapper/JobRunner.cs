@@ -24,13 +24,13 @@ namespace PollinationSDK.Wrapper
        
         public async Task<CloudJob> RunOnCloudAsync(Project project, Action<string> progressReporting, System.Threading.CancellationToken token)
         {
-
+            
             CloudJob cloudJob = null;
             try
             {
                 cloudJob = await ScheduleCloudJobAsync(project, this.Job, progressReporting, token);
                 progressReporting?.Invoke(cloudJob.Status.Status);
-                Helper.Logger.Information( $"RunOnCloudAsync: a new cloud job {cloudJob.Id} is started in project {runInfo.Project.Name}");
+                Helper.Logger.Information( $"RunOnCloudAsync: a new cloud job {cloudJob.Id} is started in project {project.Name}");
             }
             catch (Exception e)
             {
