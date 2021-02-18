@@ -107,7 +107,10 @@ namespace PollinationSDK.Wrapper
             try
             {
                 // schedule a simulation on Pollination.Cloud
-                Helper.Logger.Information($"ScheduleRunAsync: Scheduling a job in {proj.Owner.Name}/{proj.Name}\n{newJob.ToJson()}");
+                var jobForLog = newJob.DuplicateJob();
+                jobForLog.Arguments = jobForLog.Arguments.Take(3).ToList();
+                Helper.Logger.Information($"ScheduleRunAsync: Scheduling a job in {proj.Owner.Name}/{proj.Name}");
+                Helper.Logger.Information($"ONLY PRINTING OUT THE FIRST THREE ARGUMENTS \n{jobForLog.ToJson()}");
                 var runJob = await api.CreateJobAsync(proj.Owner.Name, proj.Name, newJob);
                 Helper.Logger.Information($"ScheduleRunAsync: Job scheduled\n{runJob.ToJson()}");
                 progressLogAction?.Invoke($"Start running..");

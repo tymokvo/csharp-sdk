@@ -229,10 +229,10 @@ namespace PollinationSDK.Wrapper
         /// <param name="saveAsDir"></param>
         /// <param name="reportingAction"></param>
         /// <returns></returns>
-        public async Task<Dictionary<string, List<string>>> DownloadRunAssetsAsync(Dictionary<string, string> inputAssetPaths, List<string> outputAssets, string saveAsDir = default, Action<string> reportingAction = default, bool useCached = false)
+        public async Task<Dictionary<string, string>> DownloadRunAssetsAsync(Dictionary<string, string> inputAssetPaths, List<string> outputAssets, string saveAsDir = default, Action<string> reportingAction = default, bool useCached = false)
         {
             //_filePaths = new List<string>();
-            var downloadedFiles = new Dictionary<string, List<string>>();
+            var downloadedFiles = new Dictionary<string, string>();
             try
             {
                 var dir = string.IsNullOrEmpty(saveAsDir) ? Helper.GenTempFolder() : saveAsDir;
@@ -275,8 +275,8 @@ namespace PollinationSDK.Wrapper
                 foreach (var item in works)
                 {
                     var savedFolderOrFilePath = await item.task;
-                    var subPaths = CheckIfFolderPath(savedFolderOrFilePath);
-                    downloadedFiles.Add(item.name, subPaths);
+                    //var subPaths = CheckIfFolderPath(savedFolderOrFilePath);
+                    downloadedFiles.Add(item.name, savedFolderOrFilePath);
                 }
             
             }
@@ -288,24 +288,24 @@ namespace PollinationSDK.Wrapper
             return downloadedFiles;
             //return finished;
 
-            List<string> CheckIfFolderPath(string p)
-            {
-                if (Directory.Exists(p))
-                {
-                    var items = Directory.EnumerateFileSystemEntries(p, "*", SearchOption.TopDirectoryOnly);
-                    var itemPaths = items.Any() ? items.ToList() : new List<string>() { p };
-                    return itemPaths;
-                }
-                else
-                {
-                    return new List<string>() { p };
-                }
-            }
+            //List<string> CheckIfFolderPath(string p)
+            //{
+            //    if (Directory.Exists(p))
+            //    {
+            //        var items = Directory.EnumerateFileSystemEntries(p, "*", SearchOption.TopDirectoryOnly);
+            //        var itemPaths = items.Any() ? items.ToList() : new List<string>() { p };
+            //        return itemPaths;
+            //    }
+            //    else
+            //    {
+            //        return new List<string>() { p };
+            //    }
+            //}
         }
 
-        private static Dictionary<string, List<string>> CheckCached(ref Dictionary<string, string> inputAssetPaths, ref List<string> outputAssets,  string inputDir, string outputDir)
+        private static Dictionary<string, string> CheckCached(ref Dictionary<string, string> inputAssetPaths, ref List<string> outputAssets,  string inputDir, string outputDir)
         {
-            var downloadedFiles = new Dictionary<string, List<string>>();
+            var downloadedFiles = new Dictionary<string, string>();
 
             var nonCachedInputAssets = new Dictionary<string, string>();
             foreach (var item in inputAssetPaths)
@@ -315,7 +315,7 @@ namespace PollinationSDK.Wrapper
                 {
                     var cached = Directory.EnumerateFileSystemEntries(assetDir, "*", SearchOption.TopDirectoryOnly).ToList();
                     if (cached.Any())
-                        downloadedFiles.Add($"IN_{item.Key}", cached);
+                        downloadedFiles.Add($"IN_{item.Key}", assetDir);
                     continue;
                 }
                 nonCachedInputAssets.Add(item.Key, item.Value);
@@ -332,7 +332,7 @@ namespace PollinationSDK.Wrapper
                 {
                     var cached = Directory.EnumerateFileSystemEntries(assetDir, "*", SearchOption.TopDirectoryOnly).ToList();
                     if (cached.Any())
-                        downloadedFiles.Add($"OUT_{item}", cached);
+                        downloadedFiles.Add($"OUT_{item}", assetDir);
                     continue;
                 }
                 nonCachedOutputAssets.Add(item);
