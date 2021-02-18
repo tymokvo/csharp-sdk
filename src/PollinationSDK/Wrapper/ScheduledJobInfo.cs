@@ -66,13 +66,15 @@ namespace PollinationSDK.Wrapper
 
                 var running = status.RunsPending + status.RunsRunning;
                 var done = status.RunsFailed + status.RunsCompleted;
+                var total = running + done;
+
                 for (int i = 0; i < totalDelaySeconds; i++)
                 {
                     // suspended by user
                     cancelToken.ThrowIfCancellationRequested();
 
                     var timer = GetUserFriendlyTimeCounter(TimeSpan.FromSeconds(currentSeconds));
-                    var message = $"{status.Status}: [{running}/{done}]\n{timer}";
+                    var message = total > 1 ? $"{status.Status}: [{done}/{total}]\n{timer}": $"{status.Status}: [{timer}]";
                     progressAction?.Invoke(message);
 
                     await Task.Delay(1000);
