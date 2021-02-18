@@ -107,7 +107,9 @@ namespace PollinationSDK.Wrapper
             try
             {
                 // schedule a simulation on Pollination.Cloud
+                Helper.Logger.Information($"ScheduleRunAsync: Scheduling a job in {proj.Owner.Name}/{proj.Name}\n{newJob.ToJson()}");
                 var runJob = await api.CreateJobAsync(proj.Owner.Name, proj.Name, newJob);
+                Helper.Logger.Information($"ScheduleRunAsync: Job scheduled\n{runJob.ToJson()}");
                 progressLogAction?.Invoke($"Start running..");
 
                 // give server a moment to start the simulation after it's scheduled.
@@ -221,7 +223,7 @@ namespace PollinationSDK.Wrapper
             var temp = string.Empty;
             var arg = job.Arguments;
 
-            var artis = arg.OfType<JobPathArgument>();
+            var artis = arg.SelectMany(_=>_.OfType<JobPathArgument>());
             if (artis == null || !artis.Any()) return temp;
 
             // remove old temp files first
