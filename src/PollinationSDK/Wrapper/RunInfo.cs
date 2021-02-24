@@ -28,7 +28,7 @@ namespace PollinationSDK.Wrapper
         {
             this.Run = run;
             this.Project = proj;
-            this.Recipe = GetRecipe(this.Run.Job.Source);
+            this.Recipe = GetRecipe(this.Run.Status.Source);
         }
 
         public RunInfo(string localRunPath)
