@@ -3,7 +3,7 @@
   "info": {
     "title": "pollination-server",
     "description": "Pollination Server OpenAPI Definition",
-    "version": "0.11.0",
+    "version": "0.11.1",
     "contact": {
       "name": "PollinationSolutions",
       "url": "https://pollination.cloud",
@@ -7056,7 +7056,7 @@
                 "$ref": "#/components/schemas/JobStatus"
               }
             ],
-            "description": "The status of the run"
+            "description": "The status of the job"
           }
         }
       },
@@ -15334,8 +15334,7 @@
       "Run": {
         "title": "Run",
         "required": [
-          "id",
-          "job"
+          "id"
         ],
         "type": "object",
         "properties": {
@@ -15343,9 +15342,6 @@
             "title": "Id",
             "type": "string",
             "description": "The unique ID for this run"
-          },
-          "job": {
-            "$ref": "#/components/schemas/Job"
           },
           "author": {
             "title": "Author",

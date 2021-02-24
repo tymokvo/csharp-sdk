@@ -6,7 +6,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** | The unique ID for this run | 
-**Job** | [**Job**](Job.md) |  | 
 **Author** | [**AccountPublic**](AccountPublic.md) | author | [optional] 
 **Owner** | [**AccountPublic**](AccountPublic.md) | owner | [optional] 
 **Generation** | **double** | The generation of this run | [optional] 

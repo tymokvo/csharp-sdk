@@ -43,21 +43,18 @@ namespace PollinationSDK
         /// Initializes a new instance of the <see cref="Run" /> class.
         /// </summary>
         /// <param name="id">The unique ID for this run (required).</param>
-        /// <param name="job">job (required).</param>
         /// <param name="author">author.</param>
         /// <param name="owner">owner.</param>
         /// <param name="generation">The generation of this run.</param>
         /// <param name="status">The status of the run.</param>
         public Run
         (
-           string id, Job job, // Required parameters
+           string id, // Required parameters
            AccountPublic author= default, AccountPublic owner= default, double generation= default, RunStatus status= default // Optional parameters
         ) : base()// BaseClass
         {
             // to ensure "id" is required (not null)
             this.Id = id ?? throw new ArgumentNullException("id is a required property for Run and cannot be null");
-            // to ensure "job" is required (not null)
-            this.Job = job ?? throw new ArgumentNullException("job is a required property for Run and cannot be null");
             this.Author = author;
             this.Owner = owner;
             this.Generation = generation;
@@ -73,11 +70,6 @@ namespace PollinationSDK
         /// <value>The unique ID for this run</value>
         [DataMember(Name = "id", IsRequired = true, EmitDefaultValue = false)]
         public string Id { get; set; } 
-        /// <summary>
-        /// Gets or Sets Job
-        /// </summary>
-        [DataMember(Name = "job", IsRequired = true, EmitDefaultValue = false)]
-        public Job Job { get; set; } 
         /// <summary>
         /// author
         /// </summary>
@@ -125,7 +117,6 @@ namespace PollinationSDK
             sb.Append("Run:\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
-            sb.Append("  Job: ").Append(Job).Append("\n");
             sb.Append("  Author: ").Append(Author).Append("\n");
             sb.Append("  Owner: ").Append(Owner).Append("\n");
             sb.Append("  Generation: ").Append(Generation).Append("\n");
@@ -198,11 +189,6 @@ namespace PollinationSDK
                     this.Id.Equals(input.Id))
                 ) && base.Equals(input) && 
                 (
-                    this.Job == input.Job ||
-                    (this.Job != null &&
-                    this.Job.Equals(input.Job))
-                ) && base.Equals(input) && 
-                (
                     this.Author == input.Author ||
                     (this.Author != null &&
                     this.Author.Equals(input.Author))
@@ -240,8 +226,6 @@ namespace PollinationSDK
                 int hashCode = base.GetHashCode();
                 if (this.Id != null)
                     hashCode = hashCode * 59 + this.Id.GetHashCode();
-                if (this.Job != null)
-                    hashCode = hashCode * 59 + this.Job.GetHashCode();
                 if (this.Author != null)
                     hashCode = hashCode * 59 + this.Author.GetHashCode();
                 if (this.Owner != null)

@@ -45,7 +45,7 @@ namespace PollinationSDK
         /// <param name="id">The unique ID for this run (required).</param>
         /// <param name="author">author.</param>
         /// <param name="owner">owner.</param>
-        /// <param name="status">The status of the run.</param>
+        /// <param name="status">The status of the job.</param>
         public CloudJob
         (
            string id, // Required parameters
@@ -81,9 +81,9 @@ namespace PollinationSDK
         [DataMember(Name = "owner", EmitDefaultValue = false)]
         public AccountPublic Owner { get; set; } 
         /// <summary>
-        /// The status of the run
+        /// The status of the job
         /// </summary>
-        /// <value>The status of the run</value>
+        /// <value>The status of the job</value>
         [DataMember(Name = "status", EmitDefaultValue = false)]
         public JobStatus Status { get; set; } 
 
