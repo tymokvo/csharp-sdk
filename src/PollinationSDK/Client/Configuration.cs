@@ -28,7 +28,7 @@ namespace PollinationSDK.Client
         /// Version of the package.
         /// </summary>
         /// <value>Version of the package.</value>
-        public const string Version = "0.11.1";
+        public const string Version = "0.12.0";
 
         /// <summary>
         /// Identifier for ISO 8601 DateTime Format
@@ -113,7 +113,7 @@ namespace PollinationSDK.Client
         /// </summary>
         public Configuration()
         {
-            UserAgent = "OpenAPI-Generator/0.11.1/csharp";
+            UserAgent = "OpenAPI-Generator/0.12.0/csharp";
             BasePath = "http://localhost";
             DefaultHeader = new ConcurrentDictionary<string, string>();
             ApiKey = new ConcurrentDictionary<string, string>();
@@ -186,7 +186,7 @@ namespace PollinationSDK.Client
             string tempFolderPath = null,
             string dateTimeFormat = null,
             int timeout = 100000,
-            string userAgent = "OpenAPI-Generator/0.11.1/csharp"
+            string userAgent = "OpenAPI-Generator/0.12.0/csharp"
             // ReSharper restore UnusedParameter.Local
             )
         {
@@ -419,8 +419,8 @@ namespace PollinationSDK.Client
             String report = "C# SDK (PollinationSDK) Debug Report:\n";
             report += "    OS: " + System.Environment.OSVersion + "\n";
             report += "    .NET Framework Version: " + System.Environment.Version  + "\n";
-            report += "    Version of the API: 0.11.1\n";
-            report += "    SDK Package Version: 0.11.1\n";
+            report += "    Version of the API: 0.12.0\n";
+            report += "    SDK Package Version: 0.12.0\n";
 
             return report;
         }

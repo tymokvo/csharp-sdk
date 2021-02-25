@@ -43,19 +43,24 @@ namespace PollinationSDK
         /// Initializes a new instance of the <see cref="CloudJob" /> class.
         /// </summary>
         /// <param name="id">The unique ID for this run (required).</param>
+        /// <param name="spec">The job specification (required).</param>
         /// <param name="author">author.</param>
         /// <param name="owner">owner.</param>
+        /// <param name="recipe">The recipe used to generate this .</param>
         /// <param name="status">The status of the job.</param>
         public CloudJob
         (
-           string id, // Required parameters
-           AccountPublic author= default, AccountPublic owner= default, JobStatus status= default // Optional parameters
+           string id, Job spec, // Required parameters
+           AccountPublic author= default, AccountPublic owner= default, RecipeInterface recipe= default, JobStatus status= default // Optional parameters
         ) : base()// BaseClass
         {
             // to ensure "id" is required (not null)
             this.Id = id ?? throw new ArgumentNullException("id is a required property for CloudJob and cannot be null");
+            // to ensure "spec" is required (not null)
+            this.Spec = spec ?? throw new ArgumentNullException("spec is a required property for CloudJob and cannot be null");
             this.Author = author;
             this.Owner = owner;
+            this.Recipe = recipe;
             this.Status = status;
 
             // Set non-required readonly properties with defaultValue
@@ -69,6 +74,12 @@ namespace PollinationSDK
         [DataMember(Name = "id", IsRequired = true, EmitDefaultValue = false)]
         public string Id { get; set; } 
         /// <summary>
+        /// The job specification
+        /// </summary>
+        /// <value>The job specification</value>
+        [DataMember(Name = "spec", IsRequired = true, EmitDefaultValue = false)]
+        public Job Spec { get; set; } 
+        /// <summary>
         /// author
         /// </summary>
         /// <value>author</value>
@@ -80,6 +91,12 @@ namespace PollinationSDK
         /// <value>owner</value>
         [DataMember(Name = "owner", EmitDefaultValue = false)]
         public AccountPublic Owner { get; set; } 
+        /// <summary>
+        /// The recipe used to generate this 
+        /// </summary>
+        /// <value>The recipe used to generate this </value>
+        [DataMember(Name = "recipe", EmitDefaultValue = false)]
+        public RecipeInterface Recipe { get; set; } 
         /// <summary>
         /// The status of the job
         /// </summary>
@@ -109,8 +126,10 @@ namespace PollinationSDK
             sb.Append("CloudJob:\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  Id: ").Append(Id).Append("\n");
+            sb.Append("  Spec: ").Append(Spec).Append("\n");
             sb.Append("  Author: ").Append(Author).Append("\n");
             sb.Append("  Owner: ").Append(Owner).Append("\n");
+            sb.Append("  Recipe: ").Append(Recipe).Append("\n");
             sb.Append("  Status: ").Append(Status).Append("\n");
             return sb.ToString();
         }
@@ -180,6 +199,11 @@ namespace PollinationSDK
                     this.Id.Equals(input.Id))
                 ) && base.Equals(input) && 
                 (
+                    this.Spec == input.Spec ||
+                    (this.Spec != null &&
+                    this.Spec.Equals(input.Spec))
+                ) && base.Equals(input) && 
+                (
                     this.Author == input.Author ||
                     (this.Author != null &&
                     this.Author.Equals(input.Author))
@@ -188,6 +212,11 @@ namespace PollinationSDK
                     this.Owner == input.Owner ||
                     (this.Owner != null &&
                     this.Owner.Equals(input.Owner))
+                ) && base.Equals(input) && 
+                (
+                    this.Recipe == input.Recipe ||
+                    (this.Recipe != null &&
+                    this.Recipe.Equals(input.Recipe))
                 ) && base.Equals(input) && 
                 (
                     this.Status == input.Status ||
@@ -212,10 +241,14 @@ namespace PollinationSDK
                 int hashCode = base.GetHashCode();
                 if (this.Id != null)
                     hashCode = hashCode * 59 + this.Id.GetHashCode();
+                if (this.Spec != null)
+                    hashCode = hashCode * 59 + this.Spec.GetHashCode();
                 if (this.Author != null)
                     hashCode = hashCode * 59 + this.Author.GetHashCode();
                 if (this.Owner != null)
                     hashCode = hashCode * 59 + this.Owner.GetHashCode();
+                if (this.Recipe != null)
+                    hashCode = hashCode * 59 + this.Recipe.GetHashCode();
                 if (this.Status != null)
                     hashCode = hashCode * 59 + this.Status.GetHashCode();
                 if (this.Type != null)

@@ -317,7 +317,7 @@ else:
 name_space = get_package_name()
 mapper_json = json_file.replace("inheritance.json", "mapper.json")
 
-time.sleep(1)
+time.sleep(3)
 # clean up first
 cleanup(name_space)
 print(f"post processing {json_file} with {mapper_json}")

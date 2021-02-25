@@ -22,7 +22,7 @@ namespace PollinationSDK.Wrapper
         {
             this.CloudJob = run;
             this.Project = proj;
-            this.Recipe = GetRecipe(this.CloudJob.Status.Source);
+            this.Recipe = this.CloudJob.Recipe;
         }
 
         public ScheduledJobInfo(string localRunPath)
@@ -36,11 +36,11 @@ namespace PollinationSDK.Wrapper
             return job;
         }
 
-        private static RecipeInterface GetRecipe(string url)
-        {
-            Helper.GetRecipeFromRecipeSourceURL(url, out var recipe);
-            return recipe;
-        }
+        //private static RecipeInterface GetRecipe(string url)
+        //{
+        //    Helper.GetRecipeFromRecipeSourceURL(url, out var recipe);
+        //    return recipe;
+        //}
 
 
         public override string ToString()

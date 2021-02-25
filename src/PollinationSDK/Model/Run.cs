@@ -45,18 +45,20 @@ namespace PollinationSDK
         /// <param name="id">The unique ID for this run (required).</param>
         /// <param name="author">author.</param>
         /// <param name="owner">owner.</param>
+        /// <param name="recipe">The recipe used to generate this .</param>
         /// <param name="generation">The generation of this run.</param>
         /// <param name="status">The status of the run.</param>
         public Run
         (
            string id, // Required parameters
-           AccountPublic author= default, AccountPublic owner= default, double generation= default, RunStatus status= default // Optional parameters
+           AccountPublic author= default, AccountPublic owner= default, RecipeInterface recipe= default, double generation= default, RunStatus status= default // Optional parameters
         ) : base()// BaseClass
         {
             // to ensure "id" is required (not null)
             this.Id = id ?? throw new ArgumentNullException("id is a required property for Run and cannot be null");
             this.Author = author;
             this.Owner = owner;
+            this.Recipe = recipe;
             this.Generation = generation;
             this.Status = status;
 
@@ -82,6 +84,12 @@ namespace PollinationSDK
         /// <value>owner</value>
         [DataMember(Name = "owner", EmitDefaultValue = false)]
         public AccountPublic Owner { get; set; } 
+        /// <summary>
+        /// The recipe used to generate this 
+        /// </summary>
+        /// <value>The recipe used to generate this </value>
+        [DataMember(Name = "recipe", EmitDefaultValue = false)]
+        public RecipeInterface Recipe { get; set; } 
         /// <summary>
         /// The generation of this run
         /// </summary>
@@ -119,6 +127,7 @@ namespace PollinationSDK
             sb.Append("  Id: ").Append(Id).Append("\n");
             sb.Append("  Author: ").Append(Author).Append("\n");
             sb.Append("  Owner: ").Append(Owner).Append("\n");
+            sb.Append("  Recipe: ").Append(Recipe).Append("\n");
             sb.Append("  Generation: ").Append(Generation).Append("\n");
             sb.Append("  Status: ").Append(Status).Append("\n");
             return sb.ToString();
@@ -199,6 +208,11 @@ namespace PollinationSDK
                     this.Owner.Equals(input.Owner))
                 ) && base.Equals(input) && 
                 (
+                    this.Recipe == input.Recipe ||
+                    (this.Recipe != null &&
+                    this.Recipe.Equals(input.Recipe))
+                ) && base.Equals(input) && 
+                (
                     this.Generation == input.Generation ||
                     (this.Generation != null &&
                     this.Generation.Equals(input.Generation))
@@ -230,6 +244,8 @@ namespace PollinationSDK
                     hashCode = hashCode * 59 + this.Author.GetHashCode();
                 if (this.Owner != null)
                     hashCode = hashCode * 59 + this.Owner.GetHashCode();
+                if (this.Recipe != null)
+                    hashCode = hashCode * 59 + this.Recipe.GetHashCode();
                 if (this.Generation != null)
                     hashCode = hashCode * 59 + this.Generation.GetHashCode();
                 if (this.Status != null)
