@@ -143,6 +143,8 @@ namespace PollinationSDK
         {
             //var recipeSource = this.Run.Job.Source;
             var isRecipe = Helper.GetRecipeFromRecipeSourceURL(recipeSource, out var recOwner, out var recName, out var recVersion);
+            if (!isRecipe)
+                throw new ArgumentException($"Invalid recipe source URL {recipeSource}.\nThe correct formate should be something like:https://api.staging.pollination.cloud/registries/ladybug-tools/recipe/annual-daylight/0.2.0");
             var recApi = new RecipesApi();
             recipe = recApi.GetRecipeByTag(recOwner, recName, recVersion).Manifest;
             return recipe != null;
@@ -156,16 +158,22 @@ namespace PollinationSDK
             recipeVersion = null;
 
             //https://api.staging.pollination.cloud/registries/ladybug-tools/recipe/annual-daylight/0.2.0
+            // /registries/ladybug-tools/recipes/daylight-factor/567bbf4cb9e82dd4e266ab131160df8f85596272c6db6913b7cada187db017a5
 
             //var recipeSource = job.Source;
             if (string.IsNullOrEmpty(recipeSource)) return false;
-            if (!recipeSource.Contains("pollination.cloud/registries/")) return false;
-            var items = recipeSource.Split(new[] { "pollination.cloud/registries/" }, StringSplitOptions.RemoveEmptyEntries);
-            items = items[1].Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-            if (items.Count() != 4) return false;
-            recipeOwner = items[0];
-            recipeName = items[2];
-            recipeVersion = items[3];
+            string pattern = @"(?=[\w\W]*)\/registries\/[\w\d-]*\/recipes?\/[\w\d-]*\/[\d\w.]*";
+            var m = System.Text.RegularExpressions.Regex.Match(recipeSource, pattern);
+            if (!m.Success) return false;
+
+            // /registries/ladybug-tools/recipe/annual-daylight/0.2.0
+            recipeVersion = m.Value;
+
+            var items = recipeVersion.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+            if (items.Count() != 5) return false;
+            recipeOwner = items[1];
+            recipeName = items[3];
+            recipeVersion = items[4];
             return true;
         }
 
