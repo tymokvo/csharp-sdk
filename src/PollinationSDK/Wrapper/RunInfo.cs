@@ -28,7 +28,7 @@ namespace PollinationSDK.Wrapper
         {
             this.Run = run;
             this.Project = proj;
-            this.Recipe = GetRecipe(this.Run.Status.Source);
+            this.Recipe = this.Run.Recipe;
         }
 
         public RunInfo(string localRunPath)
@@ -42,11 +42,11 @@ namespace PollinationSDK.Wrapper
             return run;
         }
 
-        private static RecipeInterface GetRecipe(string url)
-        {
-            Helper.GetRecipeFromRecipeSourceURL(url, out var recipe);
-            return recipe;
-        }
+        //private static RecipeInterface GetRecipe(string url)
+        //{
+        //    Helper.GetRecipeFromRecipeSourceURL(url, out var recipe);
+        //    return recipe;
+        //}
 
 
         public override string ToString()
@@ -303,48 +303,85 @@ namespace PollinationSDK.Wrapper
             //}
         }
 
-        private static Dictionary<string, string> CheckCached(ref Dictionary<string, string> inputAssetPaths, ref List<string> outputAssets,  string inputDir, string outputDir)
+        private static Dictionary<string, string> CheckCached(ref Dictionary<string, string> inputAssetPaths, ref List<string> outputAssets, string inputDir, string outputDir)
         {
             var downloadedFiles = new Dictionary<string, string>();
 
+            // check inputs 
+            var query = inputAssetPaths.GroupBy(_ => CheckIfAssetCached(_.Key, _.Value, inputDir));
+          
             var nonCachedInputAssets = new Dictionary<string, string>();
             foreach (var item in inputAssetPaths)
             {
-                var assetDir = Path.Combine(inputDir, item.Key);
-                if (Directory.Exists(assetDir)) 
-                {
-                    var cached = Directory.EnumerateFileSystemEntries(assetDir, "*", SearchOption.TopDirectoryOnly).ToList();
-                    if (cached.Any())
-                        downloadedFiles.Add($"IN_{item.Key}", assetDir);
-                    continue;
-                }
-                nonCachedInputAssets.Add(item.Key, item.Value);
-
+                var isCached = CheckIfAssetCached(item.Key, item.Value, inputDir);
+                if (isCached)
+                    GetCachedAsset(ref downloadedFiles, item.Key, item.Value, inputDir, "IN");
+                else
+                    nonCachedInputAssets.Add(item.Key, item.Value);
             }
             // override the inputs
             inputAssetPaths = nonCachedInputAssets;
 
-            var nonCachedOutputAssets = new List<string>();
+
+            // check outputs 
+            var nonCachedOutputAssets = new Dictionary<string, string>();
             foreach (var item in outputAssets)
             {
-                var assetDir = Path.Combine(outputDir, item);
-                if (Directory.Exists(assetDir))
-                {
-                    var cached = Directory.EnumerateFileSystemEntries(assetDir, "*", SearchOption.TopDirectoryOnly).ToList();
-                    if (cached.Any())
-                        downloadedFiles.Add($"OUT_{item}", assetDir);
-                    continue;
-                }
-                nonCachedOutputAssets.Add(item);
+                var isCached = CheckIfAssetCached(item, item, outputDir);
+                if (isCached)
+                    GetCachedAsset(ref downloadedFiles, item, item, outputDir, "OUT");
+                else
+                    nonCachedOutputAssets.Add(item, item);
             }
             // override the outputs
-            outputAssets = nonCachedOutputAssets;
+            outputAssets = nonCachedOutputAssets.Values.ToList();
 
             return downloadedFiles;
+
+
+
+
+
+            // local method
+            bool CheckIfAssetCached(string assetName, string assetPath, string dir)
+            {
+                var assetDir = Path.Combine(dir, assetName);
+                if (!Directory.Exists(assetDir))
+                    return false;
+
+                // check if folder is empty
+                var cached = Directory.EnumerateFileSystemEntries(assetDir, "*", SearchOption.TopDirectoryOnly).ToList();
+                if (!cached.Any())
+                    return false;
+
+                // folder asset is a zip file, assetDir has all unzipped files
+                if (assetPath.EndsWith(".zip"))
+                    return true;
+                else // file asset
+                    return File.Exists(Path.Combine(assetDir, Path.GetFileName(assetPath)));
+            }
+
+            void GetCachedAsset(ref Dictionary<string, string> cachedAsset, string assetName, string assetPath, string dir, string assetPrefix)
+            {
+                var assetDir = Path.Combine(dir, assetName);
+                // folder asset is a zip file 
+                if (assetPath.EndsWith(".zip"))
+                {
+                    // assetDir has all unzipped files
+                    cachedAsset.Add($"{assetPrefix}_{assetName}", assetDir);
+                }
+                else // file asset
+                {
+                    var assetFile = Path.Combine(assetDir, Path.GetFileName(assetPath));
+                    if (File.Exists(assetFile))
+                        cachedAsset.Add($"{assetPrefix}_{assetName}", assetFile);
+                }
+
+            }
+
         }
 
-
-
+      
 
         /// <summary>
         /// Download output assets with one call

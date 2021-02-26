@@ -6,10 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using PollinationSDK;
-using RestSharp;
-using System.Net;
-using RestSharp.Extensions;
-using System.IO;
 using PollinationSDK.Wrapper;
 using System.Threading;
 using QueenbeeSDK;
@@ -33,14 +29,14 @@ namespace ConsoleAppDemo
             Console.WriteLine($"You are: {me.Username}");
 
 
-            Console.WriteLine("--------------------Get recipes-------------------");
-            var api = new RecipesApi();
-            var recipeList = api.ListRecipes(1, 25);
-            var recs = recipeList.Resources;
-            foreach (var item in recs)
-            {
-                Console.WriteLine($"{item.Owner.Name}/{item.Name}/{item.LatestTag}");
-            }
+            //Console.WriteLine("--------------------Get recipes-------------------");
+            //var api = new RecipesApi();
+            //var recipeList = api.ListRecipes(1, 25);
+            //var recs = recipeList.Resources;
+            //foreach (var item in recs)
+            //{
+            //    Console.WriteLine($"{item.Owner.Name}/{item.Name}/{item.LatestTag}");
+            //}
 
 
             //Console.WriteLine("--------------------Get projects-------------------");
@@ -126,9 +122,11 @@ namespace ConsoleAppDemo
             //}
 
 
+            //CLOUD:mingbo/demo/1b933dfb-009c-4c18-a463-0d273cf42c43/results#OUT_daylight_factor
+
             Console.WriteLine("--------------------get simulation assets-------------------");
             var runApi = new PollinationSDK.Api.RunsApi();
-            var run = runApi.GetRun(proj.Owner.Name, proj.Name, "229b7d27-292d-45f8-a06b-da07083d798b");
+            var run = runApi.ListRuns(proj.Owner.Name, proj.Name, perPage: 1).Resources.First();
             var inputArgs = run.Status.Inputs;
             foreach (var item in inputArgs)
             {
@@ -138,17 +136,19 @@ namespace ConsoleAppDemo
                 var value = objType.GetProperty("Value")?.GetValue(obj);
                 if (value == null)
                 {
-                    var path = objType.GetProperty("Path")?.GetValue(obj).ToString();
+                    var source = objType.GetProperty("Source")?.GetValue(obj) as AnyOf;
+                    var path = (source.Obj as ProjectFolder).Path.ToString();
                     var url = runApi.DownloadRunArtifact(proj.Owner.Name, proj.Name, run.Id, path);
                     value = url;
                     //Console.WriteLine(url);
                 }
                 Console.WriteLine($"{name}: {value}");
           
-
             }
-          
-            //var output2 = runApi.ListRunArtifacts(proj.Owner.Name, proj.Name, run.Id, path: new List<string>() { "inputs"});
+
+       
+
+            //var output2 = runApi.ListRunArtifacts(proj.Owner.Name, proj.Name, run.Id);
 
             //foreach (var item in output2)
             //{
@@ -156,6 +156,12 @@ namespace ConsoleAppDemo
             //    var url = runApi.DownloadRunArtifact(proj.Owner.Name, proj.Name, run.Id, item.Key).ToString();
             //    Console.WriteLine(url);
             //}
+            //var res = runApi.QueryResults(proj.Owner.Name, proj.Name);
+
+            Console.WriteLine("Done downloading");
+
+            var res2 = runApi.GetRunOutput(proj.Owner.Name, proj.Name, run.Id, "results");
+            //runApi.DownloadRunArtifact
             Console.WriteLine("Done downloading");
 
 
