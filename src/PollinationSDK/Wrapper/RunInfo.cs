@@ -60,11 +60,10 @@ namespace PollinationSDK.Wrapper
             var api = new RunsApi();
             var proj = this.Project;
             var simuId = this.RunID;
-
             var run = api.GetRun(proj.Owner.Name, proj.Name, simuId);
             var status = run.Status;
             var startTime = status.StartedAt;
-            while (status.FinishedAt <= status.StartedAt || status.Status == "Post-Processing")
+            while (status.FinishedAt <= status.StartedAt)
             {
                 var currentSeconds = Math.Round((DateTime.UtcNow - startTime).TotalSeconds);
                 // wait 5 seconds before calling api to re-check the status
@@ -92,7 +91,7 @@ namespace PollinationSDK.Wrapper
             cancelToken.ThrowIfCancellationRequested();
 
             var totalTime = status.FinishedAt - startTime;
-            var finishMessage = status.Status == "Succeeded" ? $"✔ {status.Status}" : $"❌ {status.Status}";
+            var finishMessage = status.Status == "Completed" ? $"✔ {status.Status}" : $"❌ {status.Status}";
             //progressAction?.Invoke($"Task: {status.Status}");
 
             finishMessage = $"{finishMessage}: [{GetUserFriendlyTimeCounter(totalTime)}]";
