@@ -8,9 +8,9 @@ namespace PollinationSDK.Wrapper
 {
     public class JobInfo
     {
-        public RecipeInterface Recipe { get; set; }
-        public Job Job { get; set; }
-        public string SubFolderPath { get; set; }
+        public RecipeInterface Recipe { get; private set; }
+        public Job Job { get; private set; }
+        public string SubFolderPath { get; private set; }
 
 
         public JobInfo(RecipeInterface recpie)
