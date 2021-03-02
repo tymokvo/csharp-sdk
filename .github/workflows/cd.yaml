@@ -29,5 +29,5 @@ jobs:
       - name: Deploy
         working-directory: src/PollinationSDK
         run: |
-          dotnet pack --configuration Release
+          dotnet pack --configuration Release -o nuget -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg
           dotnet nuget push bin\Release\PollinationSDK.*.nupkg -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
