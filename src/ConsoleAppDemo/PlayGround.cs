@@ -13,7 +13,7 @@ using QueenbeeSDK;
 
 namespace ConsoleAppDemo
 {
-    class Program
+    class PlayGround
     {
 
         static void Main(string[] args)
@@ -22,6 +22,7 @@ namespace ConsoleAppDemo
             Console.ReadKey();
 
 
+          
             AuthHelper.SignInAsync( devEnv: true).Wait();
 
             var me = Helper.CurrentUser;
@@ -93,16 +94,66 @@ namespace ConsoleAppDemo
             //DeleteMyProjects(me, newProj);
 
 
-            //Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
-            //ScheduleNewJob(proj);
+            Console.WriteLine("--------------------Creating a new Simulaiton-------------------");
+            var cts = new System.Threading.CancellationTokenSource();
+            var token = cts.Token;
 
+            var jobInfo = CreateJob_DaylightFactor();
+            //var jobInfo = CreateJob_AnnualDaylight();
+            try
+            {
+                jobInfo.SetJobSubFolderPath("round1/test");
+                jobInfo.SetJobName("A new daylight simulation");
+
+                // run a job
+                var task = jobInfo.RunJobOnCloud(proj, (s) => Console.WriteLine(s), token);
+               
+                //cts.CancelAfter(60000);
+                var scheduledJob = task.Result;
+
+                // watch status
+                var watchTask = scheduledJob.WatchJobStatusAsync((s) => Console.WriteLine(s), token);
+                watchTask.Wait();
+                Console.WriteLine($"Canceled check: {token.IsCancellationRequested}");
+                cts.Dispose();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.InnerException.Message);
+                //throw;
+            }
+
+
+         
 
             //CLOUD:mingbo/demo/1b933dfb-009c-4c18-a463-0d273cf42c43/results#OUT_daylight_factor
 
             Console.WriteLine("--------------------get simulation assets-------------------");
-            DownloadAssets(proj);
+            var runApi = new PollinationSDK.Api.RunsApi();
+            var run = runApi.ListRuns(proj.Owner.Name, proj.Name, perPage: 1).Resources.First();
+            var inputArgs = run.Status.Inputs;
+            foreach (var item in inputArgs)
+            {
+                var obj = item.Obj;
+                var objType = obj.GetType();
+                var name = objType.GetProperty("Name").GetValue(obj);
+                var value = objType.GetProperty("Value")?.GetValue(obj);
+                if (value == null)
+                {
+                    var source = objType.GetProperty("Source")?.GetValue(obj) as AnyOf;
+                    var path = (source.Obj as ProjectFolder).Path.ToString();
+                    var url = runApi.DownloadRunArtifact(proj.Owner.Name, proj.Name, run.Id, path);
+                    value = url;
+                    //Console.WriteLine(url);
+                }
+                Console.WriteLine($"{name}: {value}");
+          
+            }
 
+            var firstRun = runApi.ListRuns(proj.Owner.Name, proj.Name, page:1, perPage: 1).Resources.First();
+            var runInfo = new RunInfo(proj, firstRun);
 
+      
             //var output2 = runApi.ListRunArtifacts(proj.Owner.Name, proj.Name, run.Id);
 
             //foreach (var item in output2)
@@ -114,6 +165,11 @@ namespace ConsoleAppDemo
             //var res = runApi.QueryResults(proj.Owner.Name, proj.Name);
 
             Console.WriteLine("Done downloading");
+
+            var res2 = runApi.GetRunOutput(proj.Owner.Name, proj.Name, run.Id, "results");
+            //runApi.DownloadRunArtifact
+            Console.WriteLine("Done downloading");
+
 
 
             //Console.WriteLine("--------------------Download simulation output-------------------");
@@ -140,37 +196,7 @@ namespace ConsoleAppDemo
 
         }
 
-        private static void ScheduleNewJob(Project proj)
-        {
-            var cts = new System.Threading.CancellationTokenSource();
-            var token = cts.Token;
-
-            var jobInfo = CreateJob_DaylightFactor();
-            //var jobInfo = CreateJob_AnnualDaylight();
-            try
-            {
-                jobInfo.SetJobSubFolderPath("round1/test");
-                jobInfo.SetJobName("A new daylight simulation");
-
-                // run a job
-                var task = jobInfo.RunJobOnCloud(proj, (s) => Console.WriteLine(s), token);
-
-                //cts.CancelAfter(60000);
-                var scheduledJob = task.Result;
-
-                // watch status
-                var watchTask = scheduledJob.WatchJobStatusAsync((s) => Console.WriteLine(s), token);
-                watchTask.Wait();
-                Console.WriteLine($"Canceled check: {token.IsCancellationRequested}");
-                cts.Dispose();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.InnerException.Message);
-                //throw;
-            }
-        }
-
+       
         private static async Task<ScheduledJobInfo> runSimu(Project proj, JobInfo job, Action<string> msgAction, CancellationToken token)
         {
             try
@@ -213,7 +239,7 @@ namespace ConsoleAppDemo
             var api = new RecipesApi();
             //var d = api.ListRecipes(owner: new[] { "ladybug-tools" }.ToList()).Resources.First(_ => _.Name == "annual-energy-use");
 
-            var rec = api.GetRecipeByTag("ladybug-tools", "annual-energy-use", "*").Manifest;
+            var rec = api.GetRecipeByTag("ladybug-tools", "annual-energy-use", "latest").Manifest;
             //var recTag = api.GetRecipeByTag("ladybug-tools", "annual-energy-use", "c2657adb0b13db6cd3ff706d9d6db59b98ef8f994d2809d23c3ed449c19b52ea");
        
             var inputs = rec.Inputs.OfType<QueenbeeSDK.GenericInput>();
@@ -314,35 +340,11 @@ namespace ConsoleAppDemo
            
         }
 
-        private static void DownloadAssets(Project proj)
-        {
 
-            var runApi = new PollinationSDK.Api.RunsApi();
-
-            var firstRun = runApi.ListRuns(proj.Owner.Name, proj.Name, page: 1, perPage: 1).Resources.First();
-            var runInfo = new RunInfo(proj, firstRun);
-
-            // get all output assets to download
-            var outputNames = runInfo.Recipe.Outputs
-                .OfType<QueenbeeSDK.Interface.Io.Outputs.IDag>()
-                .Select(_ => _.Name).ToList();
-
-            var savedPath = System.IO.Path.GetTempPath();
-            var task = Task.Run(async () => await DownloadAsync(runInfo, null, outputNames, savedPath));
-            task.Wait();
-            var filePaths = task.Result;
-
-            foreach (var item in filePaths)
-            {
-                Console.WriteLine($"Asset: {item.Key}\nSaved Path: {item.Value}");
-            }
-
-        }
-
-        private static async Task<Dictionary<string, string>> DownloadAsync(RunInfo runInfo, Dictionary<string, string> inputAssets, List<string> outputAssets, string saveAsDir = default)
+        private async Task DownloadAsync(RunInfo runInfo, Dictionary<string, string> inputAssets, List<string> outputAssets, string saveAsDir = default)
         {
             // Load run's input arguments data
-            var inputAssetPathes = inputAssets ?? new Dictionary<string, string>();
+            var inputAssetsDic = inputAssets ?? new Dictionary<string, string>();
 
             // download run's output assets
             var outputAssetNames = outputAssets ?? new List<string>();
@@ -354,15 +356,19 @@ namespace ConsoleAppDemo
             var useCachedAssets = false;
 
             // download all assets
-            var task = runInfo.DownloadRunAssetsAsync(inputAssetPathes, outputAssetNames, saveAsDir, UpdateProgressMessage, useCachedAssets);
+            var task = runInfo.DownloadRunAssetsAsync(inputAssetsDic, outputAssetNames, saveAsDir, UpdateProgressMessage, useCachedAssets);
             var filePaths = await task;
 
             //await Task.Delay(3000);
             if (task.IsFaulted && task.Exception != null)
                 throw task.Exception;
 
-            return filePaths;
-            
+            foreach (var item in filePaths)
+            {
+                // item.Key; // "IN_AssetName", "OUT_AssetName"
+                Console.WriteLine($"Asset: {item.Key}\nSaved Path: {item.Value}");
+            }
+
 
         }
 
