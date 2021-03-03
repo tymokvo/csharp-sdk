@@ -202,17 +202,36 @@ namespace PollinationSDK.Wrapper
 
         }
 
-
-        private static void CheckRecipeInProject(string recipeSource, Project project)
+        
+        private static string CheckRecipeInProject(string recipeSource, Project project)
         {
             var found = Helper.GetRecipeFromRecipeSourceURL(recipeSource, out var recOwner, out var recName, out var recVersion);
-            if (!found) return;
+            if (!found) 
+            {
+                var msg = $"CheckRecipeInProject: invalid recipe source {recipeSource}";
+                Helper.Logger.Error(msg);
+                throw new ArgumentException(msg);
+            }
 
+            return CheckRecipeInProject(recOwner, recName, project);
+
+        }
+
+        public static string CheckRecipeInProject(string recOwner, string recName, Project project)
+        {
             //// Check if recipe can be used in this project
             var projAPi = new ProjectsApi();
             var recipeFilter = new ProjectRecipeFilter(recOwner, recName);
             var result = projAPi.CreateProjectRecipeFilter(project.Owner.Name, project.Name, recipeFilter);
             var status = result?.Status;
+            if (string.IsNullOrEmpty(status) || status != "accepted")
+            {
+                var msg = $"CheckRecipeInProject: failed to add recipe [{recName}] to project {project.Name}: {status}";
+                Helper.Logger.Error(msg);
+                throw new ArgumentException(msg);
+            }
+            Helper.Logger.Information(status);
+            return status;
 
         }
 
