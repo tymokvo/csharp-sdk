@@ -49,6 +49,36 @@ namespace PollinationSDK
 
         }
 
+        public static async Task SignInWithApiAuthAsync(string apiAuth, Action ActionWhenDone = default, bool devEnv = false)
+        {
+            //OutputMessage = string.Empty;
+
+            try
+            {
+                if (!string.IsNullOrEmpty(apiAuth))
+                {
+                    Configuration.Default.BasePath = devEnv ? ApiURL_Dev : ApiURL;
+                    Configuration.Default.AddApiKey("x-pollination-token", apiAuth);
+                    Helper.CurrentUser = Helper.GetUser();
+                    Helper.Logger.Information($"SignInWithApiAuthAsync: logged in as {Helper.CurrentUser.Username}");
+                }
+                else
+                {
+                    Helper.Logger.Warning($"SignInWithApiAuthAsync: Invalid apiAuth");
+                }
+
+                ActionWhenDone?.Invoke();
+            }
+            catch (Exception e)
+            {
+                Helper.Logger?.Error(e, "Failed to sign in");
+                //Console.WriteLine(e.Message);
+                throw e;
+            }
+
+        }
+
+
         private static async Task<string> PollinationSignInAsync(bool devEnv = false)
         {
             if (!HttpListener.IsSupported) {
