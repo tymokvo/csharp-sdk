@@ -9,6 +9,8 @@ using NUnit.Framework;
 
 using PollinationSDK.Client;
 using PollinationSDK.Api;
+using PollinationSDK;
+using QueenbeeSDK;
 
 namespace PollinationSDK.Test
 {
@@ -39,7 +41,7 @@ namespace PollinationSDK.Test
         [Test]
         public void GetAnnualEnergyTest()
         {
-            var rec = api.GetRecipeByTag("ladybug-tools", "annual-energy-use", "*").Manifest;
+            var rec = api.GetRecipeByTag("ladybug-tools", "annual-energy-use", "latest").Manifest;
             var inputs = rec.Inputs.OfType<QueenbeeSDK.GenericInput>();
             var ParamNames = inputs.Select(_ => _.Name);
             Assert.IsTrue(ParamNames.Any());

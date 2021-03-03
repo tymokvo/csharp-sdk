@@ -18,8 +18,13 @@ namespace PollinationSDK.Test
                 key = System.IO.File.ReadAllText(@"../../../ApiKey.txt");
             }
 
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentException("Invalid Pollination ApiKey");
+            
+
             var apiAuthentication = key;
-            AuthHelper.SignInWithApiAuthAsync(apiAuthentication, null, devEnv: true).Wait();
+            var task = System.Threading.Tasks.Task.Run(async () => await AuthHelper.SignInWithApiAuthAsync(apiAuthentication, null, devEnv: true));
+            task.Wait();
         }
     }
 }
