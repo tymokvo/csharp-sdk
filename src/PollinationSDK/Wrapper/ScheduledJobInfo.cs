@@ -94,7 +94,7 @@ namespace PollinationSDK.Wrapper
             cancelToken.ThrowIfCancellationRequested();
 
             var totalTime = status.FinishedAt - startTime;
-            var finishMessage = status.Status == "Succeeded" ? $"✔ {status.Status}" : $"❌ {status.Status}";
+            var finishMessage = status.Status;
             //progressAction?.Invoke($"Task: {status.Status}");
 
             finishMessage = $"{finishMessage}: [{GetUserFriendlyTimeCounter(totalTime)}]";
