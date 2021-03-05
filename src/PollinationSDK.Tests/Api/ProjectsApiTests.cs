@@ -1,16 +1,7 @@
-
-using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reflection;
-using RestSharp;
 using NUnit.Framework;
-
-using PollinationSDK.Client;
 using PollinationSDK.Api;
-using PollinationSDK.Wrapper;
 
 
 namespace PollinationSDK.Test
@@ -18,7 +9,7 @@ namespace PollinationSDK.Test
     [TestFixture]
     public class ProjectsApiTests
     {
-        private ProjectsApi instance;
+        private ProjectsApi api;
         private string NewProject = "MyNewProjectTest2";
         private Project Project;
 
@@ -28,7 +19,7 @@ namespace PollinationSDK.Test
         [OneTimeSetUp]
         public void Init()
         {
-            instance = new ProjectsApi();
+            api = new ProjectsApi();
             Project = CreateProject(NewProject);
            
 
@@ -43,33 +34,25 @@ namespace PollinationSDK.Test
             DeleteProject(NewProject);
         }
 
-        /// <summary>
-        /// Test an instance of ProjectsApi
-        /// </summary>
-        [Test]
-        public void InstanceTest()
-        {
-            // TODO uncomment below to test 'IsInstanceOf' ProjectsApi
-            //Assert.IsInstanceOf(typeof(ProjectsApi), instance);
-        }
 
         
         public Project CreateProject(string projName)
         {
-            var projs = instance.ListProjects(owner: new List<string>() { Helper.CurrentUser.Username }).Resources;
+            var projs = api.ListProjects(owner: new List<string>() { Helper.CurrentUser.Username }).Resources;
             var found = projs.FirstOrDefault(_ => _.Name == this.NewProject);
 
             var owner = Helper.CurrentUser.Username;
             var projectCreate = new ProjectCreate(projName);
-            var response = instance.CreateProject(owner, projectCreate);
-            var proj = instance.GetProject(owner, projName);
+            var response = api.CreateProject(owner, projectCreate);
+            var proj = api.GetProject(owner, projName);
             return proj;
         }
 
         public void DeleteProject(string projName)
         {
             var owner = Helper.CurrentUser.Username;
-            instance.DeleteProject(owner, projName);
+            api.DeleteProject(owner, projName);
+            
         }
 
         [Test]
@@ -85,6 +68,8 @@ namespace PollinationSDK.Test
             //instance.DeleteProjectRecipeFilter(this.Project.Owner.Name, this.Project.Name, projectRecipeFilter);
         }
         
+
+       
         
         
         /// <summary>
@@ -93,7 +78,7 @@ namespace PollinationSDK.Test
         [Test]
         public void ListProjectsTest()
         {
-            var response = instance.ListProjects(owner: new List<string>() {Helper.CurrentUser.Username });
+            var response = api.ListProjects(owner: new List<string>() {Helper.CurrentUser.Username });
             var projs = response.Resources;
             Assert.IsTrue(projs.Count > 1);
 

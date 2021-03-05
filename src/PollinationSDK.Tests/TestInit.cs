@@ -10,13 +10,14 @@ namespace PollinationSDK.Test
         [OneTimeSetUp]
         public void Init()
         {
-            // environment
-            var key = Environment.GetEnvironmentVariable("PollinationApiKey");
-            if (string.IsNullOrEmpty(key))
-            {
-                // for local development tests, you must add Api key to ApiKey.txt
-                key = System.IO.File.ReadAllText(@"../../../ApiKey.txt");
-            }
+            var key = string.Empty;
+            // for local development tests, you must add Api key to ApiKey.txt
+            var keyPath = @"../../../ApiKey.txt";
+            if (System.IO.File.Exists(keyPath))
+                key = System.IO.File.ReadAllText(keyPath);
+            else
+                key = Environment.GetEnvironmentVariable("PollinationApiKey");
+
 
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentException("Invalid Pollination ApiKey");

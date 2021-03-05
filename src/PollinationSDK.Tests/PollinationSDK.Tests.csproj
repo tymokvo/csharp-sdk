@@ -16,4 +16,8 @@
     <ProjectReference Include="..\PollinationSDK\PollinationSDK.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TestSample\" />
+  </ItemGroup>
+
 </Project>
