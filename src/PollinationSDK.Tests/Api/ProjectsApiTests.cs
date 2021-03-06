@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
@@ -10,7 +11,7 @@ namespace PollinationSDK.Test
     public class ProjectsApiTests
     {
         private ProjectsApi api;
-        private string NewProject = "MyNewProjectTest2";
+        private string NewProject = $"{Guid.NewGuid().ToString().Substring(0, 8)}";
         private Project Project;
 
         /// <summary>
