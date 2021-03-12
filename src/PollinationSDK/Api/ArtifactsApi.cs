@@ -15,7 +15,6 @@ using System.Threading;
 using RestSharp;
 using PollinationSDK.Client;
 using PollinationSDK.Model;
-using QueenbeeSDK;
 
 namespace PollinationSDK.Api
 {

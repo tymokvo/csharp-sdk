@@ -1,5 +1,4 @@
 ﻿using PollinationSDK.Api;
-using QueenbeeSDK;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -29,7 +28,7 @@ namespace PollinationSDK.Wrapper
             try
             {
                 cloudJob = await ScheduleCloudJobAsync(project, this.Job, progressReporting, token);
-                progressReporting?.Invoke(cloudJob.Status.Status);
+                progressReporting?.Invoke(cloudJob.Status.Status.ToString());
                 Helper.Logger.Information( $"RunOnCloudAsync: a new cloud job {cloudJob.Id} is started in project {project.Name}");
             }
             catch (Exception e)

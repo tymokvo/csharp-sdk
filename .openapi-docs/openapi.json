@@ -3,7 +3,7 @@
   "info": {
     "title": "pollination-server",
     "description": "Pollination Server OpenAPI Definition",
-    "version": "0.12.0",
+    "version": "0.12.2",
     "contact": {
       "name": "PollinationSolutions",
       "url": "https://pollination.cloud",
@@ -4917,7 +4917,11 @@
             "required": false,
             "schema": {
               "title": "The status of the job",
-              "type": "string"
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/JobStatusEnum"
+                }
+              ]
             },
             "name": "status",
             "in": "query"
@@ -5136,6 +5140,276 @@
         ]
       }
     },
+    "/projects/{owner}/{name}/jobs/{job_id}/cancel": {
+      "put": {
+        "tags": [
+          "Jobs"
+        ],
+        "summary": "Cancel a Job",
+        "description": "Retrieve a job.",
+        "operationId": "cancel_job",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Project Owner",
+              "type": "string"
+            },
+            "name": "owner",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Project Name",
+              "type": "string"
+            },
+            "name": "name",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Job ID",
+              "type": "string"
+            },
+            "name": "job_id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          },
+          {
+            "APIKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/projects/{owner}/{name}/jobs/{job_id}/artifacts": {
+      "get": {
+        "tags": [
+          "Jobs"
+        ],
+        "summary": "List files/folders in a job folder",
+        "description": "Retrieve a list of artifacts in a job folder",
+        "operationId": "search_job_folder",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Project Owner",
+              "type": "string"
+            },
+            "name": "owner",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Project Name",
+              "type": "string"
+            },
+            "name": "name",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Job id",
+              "type": "string"
+            },
+            "name": "job_id",
+            "in": "path"
+          },
+          {
+            "description": "Page number starting from 1",
+            "required": false,
+            "schema": {
+              "title": "Page number",
+              "minimum": 1.0,
+              "type": "integer",
+              "description": "Page number starting from 1",
+              "default": 1
+            },
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "description": "Number of items per page",
+            "required": false,
+            "schema": {
+              "title": "Items per page",
+              "maximum": 100.0,
+              "type": "integer",
+              "description": "Number of items per page",
+              "default": 25
+            },
+            "name": "per-page",
+            "in": "query"
+          },
+          {
+            "description": "The path to an file within a project folder",
+            "required": false,
+            "schema": {
+              "title": "Project File Path",
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "The path to an file within a project folder"
+            },
+            "name": "path",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Search Job Folder Projects  Owner   Name  Jobs  Job Id  Artifacts Get",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FileMeta"
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          },
+          {
+            "APIKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/projects/{owner}/{name}/jobs/{job_id}/artifacts/download": {
+      "get": {
+        "tags": [
+          "Jobs"
+        ],
+        "summary": "Download an artifact from the job folder",
+        "description": "Get a download link for an artifact in a job folder",
+        "operationId": "download_job_artifact",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Project Owner",
+              "type": "string"
+            },
+            "name": "owner",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Project Name",
+              "type": "string"
+            },
+            "name": "name",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Job id",
+              "type": "string"
+            },
+            "name": "job_id",
+            "in": "path"
+          },
+          {
+            "description": "The path to an file within a project folder",
+            "required": false,
+            "schema": {
+              "title": "Project File Path",
+              "type": "string",
+              "description": "The path to an file within a project folder"
+            },
+            "name": "path",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "403": {
+            "description": "Access forbidden"
+          },
+          "500": {
+            "description": "Server error"
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTAuth": []
+          },
+          {
+            "APIKeyAuth": []
+          }
+        ]
+      }
+    },
     "/projects/{owner}/{name}/results": {
       "get": {
         "tags": [
@@ -5167,7 +5441,11 @@
             "required": false,
             "schema": {
               "title": "The status of the run",
-              "type": "string"
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/RunStatusEnum"
+                }
+              ]
             },
             "name": "status",
             "in": "query"
@@ -5274,7 +5552,11 @@
             "required": false,
             "schema": {
               "title": "The status of the run",
-              "type": "string"
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/RunStatusEnum"
+                }
+              ]
             },
             "name": "status",
             "in": "query"
@@ -5419,14 +5701,14 @@
         ]
       }
     },
-    "/projects/{owner}/{name}/runs/{run_id}/stop": {
+    "/projects/{owner}/{name}/runs/{run_id}/cancel": {
       "put": {
         "tags": [
           "Runs"
         ],
-        "summary": "Stop a run",
+        "summary": "Cancel a run",
         "description": "Stop a run.",
-        "operationId": "stop_run",
+        "operationId": "cancel_run",
         "parameters": [
           {
             "required": true,
@@ -5461,147 +5743,7 @@
             "description": "Accepted",
             "content": {
               "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Accepted"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWTAuth": []
-          },
-          {
-            "APIKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/projects/{owner}/{name}/runs/{run_id}/suspend": {
-      "put": {
-        "tags": [
-          "Runs"
-        ],
-        "summary": "Suspend a run",
-        "description": "Stop a run.",
-        "operationId": "suspend_run",
-        "parameters": [
-          {
-            "required": true,
-            "schema": {
-              "title": "Project Owner",
-              "type": "string"
-            },
-            "name": "owner",
-            "in": "path"
-          },
-          {
-            "required": true,
-            "schema": {
-              "title": "Project Name",
-              "type": "string"
-            },
-            "name": "name",
-            "in": "path"
-          },
-          {
-            "required": true,
-            "schema": {
-              "title": "Run id.",
-              "type": "string"
-            },
-            "name": "run_id",
-            "in": "path"
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Accepted"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWTAuth": []
-          },
-          {
-            "APIKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/projects/{owner}/{name}/runs/{run_id}/resume": {
-      "put": {
-        "tags": [
-          "Runs"
-        ],
-        "summary": "resume a run",
-        "description": "resume a run",
-        "operationId": "resume_run",
-        "parameters": [
-          {
-            "required": true,
-            "schema": {
-              "title": "Project Owner",
-              "type": "string"
-            },
-            "name": "owner",
-            "in": "path"
-          },
-          {
-            "required": true,
-            "schema": {
-              "title": "Project Name",
-              "type": "string"
-            },
-            "name": "name",
-            "in": "path"
-          },
-          {
-            "required": true,
-            "schema": {
-              "title": "Run id.",
-              "type": "string"
-            },
-            "name": "run_id",
-            "in": "path"
-          }
-        ],
-        "responses": {
-          "202": {
-            "description": "Accepted",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Accepted"
-                }
+                "schema": {}
               }
             }
           },
@@ -5754,7 +5896,11 @@
             "required": false,
             "schema": {
               "title": "The status of the task",
-              "type": "string"
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/StepStatusEnum"
+                }
+              ]
             },
             "name": "status",
             "in": "query"
@@ -6030,6 +6176,7 @@
             }
           }
         },
+        "deprecated": true,
         "security": [
           {
             "JWTAuth": []
@@ -6120,6 +6267,7 @@
             }
           }
         },
+        "deprecated": true,
         "security": [
           {
             "JWTAuth": []
@@ -6924,31 +7072,6 @@
             "default": {}
           }
         }
-      },
-      "Accepted": {
-        "title": "Accepted",
-        "required": [
-          "url"
-        ],
-        "type": "object",
-        "properties": {
-          "url": {
-            "title": "Url",
-            "maxLength": 2083,
-            "minLength": 1,
-            "type": "string",
-            "description": "Url to access the requested resource.",
-            "format": "uri"
-          },
-          "message": {
-            "title": "Message",
-            "type": "string",
-            "description": " A human readable message",
-            "default": "The request is accepted. Use url to access the resource once ready.",
-            "example": "The request is accepted. Use url to access the resource once ready."
-          }
-        },
-        "description": "Accepted request response."
       },
       "AccountPublic": {
         "title": "AccountPublic",
@@ -12997,7 +13120,6 @@
         "title": "JobStatus",
         "required": [
           "id",
-          "status",
           "started_at"
         ],
         "type": "object",
@@ -13007,15 +13129,10 @@
             "type": "string",
             "description": "The ID of the individual job."
           },
-          "status": {
-            "title": "Status",
-            "type": "string",
-            "description": "The status of this task. Can be \"Running\", \"Succeeded\", \"Failed\" or \"Error\""
-          },
           "started_at": {
             "title": "Started At",
             "type": "string",
-            "description": "The time at which the task was started",
+            "description": "The time at which the job was started",
             "format": "date-time"
           },
           "type": {
@@ -13040,10 +13157,19 @@
             "default": "v1beta1",
             "readOnly": true
           },
+          "status": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/JobStatusEnum"
+              }
+            ],
+            "description": "The status of this job.",
+            "default": "Unknown"
+          },
           "message": {
             "title": "Message",
             "type": "string",
-            "description": "Any message produced by the task. Usually error/debugging hints."
+            "description": "Any message produced by the job. Usually error/debugging hints."
           },
           "finished_at": {
             "title": "Finished At",
@@ -13086,6 +13212,20 @@
           }
         },
         "description": "Parametric Job Status."
+      },
+      "JobStatusEnum": {
+        "title": "JobStatusEnum",
+        "enum": [
+          "Created",
+          "Pre-Processing",
+          "Running",
+          "Failed",
+          "Cancelled",
+          "Completed",
+          "Unknown"
+        ],
+        "type": "string",
+        "description": "Enumaration of allowable status strings"
       },
       "KeyRequest": {
         "title": "KeyRequest",
@@ -15571,7 +15711,6 @@
         "required": [
           "inputs",
           "outputs",
-          "status",
           "started_at",
           "id",
           "job_id"
@@ -15650,11 +15789,6 @@
             },
             "description": "The outputs produced by this run."
           },
-          "status": {
-            "title": "Status",
-            "type": "string",
-            "description": "The status of this task. Can be \"Running\", \"Succeeded\", \"Failed\" or \"Error\""
-          },
           "started_at": {
             "title": "Started At",
             "type": "string",
@@ -15669,7 +15803,7 @@
           "job_id": {
             "title": "Job Id",
             "type": "string",
-            "description": "The ID of the job that generated this run"
+            "description": "The ID of the job that generated this run."
           },
           "type": {
             "title": "Type",
@@ -15714,6 +15848,15 @@
             "type": "string",
             "description": "The ID of the first step in the run."
           },
+          "status": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/RunStatusEnum"
+              }
+            ],
+            "description": "The status of this run.",
+            "default": "Unknown"
+          },
           "steps": {
             "title": "Steps",
             "type": "object",
@@ -15724,6 +15867,21 @@
           }
         },
         "description": "Job Status."
+      },
+      "RunStatusEnum": {
+        "title": "RunStatusEnum",
+        "enum": [
+          "Created",
+          "Scheduled",
+          "Running",
+          "Post-Processing",
+          "Failed",
+          "Cancelled",
+          "Succeeded",
+          "Unknown"
+        ],
+        "type": "string",
+        "description": "Enumaration of allowable status strings"
       },
       "S3": {
         "title": "S3",
@@ -17214,7 +17372,6 @@
         "required": [
           "inputs",
           "outputs",
-          "status",
           "started_at",
           "id",
           "name",
@@ -17297,11 +17454,6 @@
             },
             "description": "The outputs produced by this step."
           },
-          "status": {
-            "title": "Status",
-            "type": "string",
-            "description": "The status of this task. Can be \"Running\", \"Succeeded\", \"Failed\" or \"Error\""
-          },
           "started_at": {
             "title": "Started At",
             "type": "string",
@@ -17378,6 +17530,15 @@
             "type": "string",
             "description": "Source url for the status object. It can be a recipe or a function."
           },
+          "status": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/StepStatusEnum"
+              }
+            ],
+            "description": "The status of this step.",
+            "default": "Unknown"
+          },
           "command": {
             "title": "Command",
             "type": "string",
@@ -17390,6 +17551,19 @@
           }
         },
         "description": "The Status of a Job Step"
+      },
+      "StepStatusEnum": {
+        "title": "StepStatusEnum",
+        "enum": [
+          "Scheduled",
+          "Running",
+          "Failed",
+          "Succeeded",
+          "Skipped",
+          "Unknown"
+        ],
+        "type": "string",
+        "description": "Enumaration of allowable status strings"
       },
       "StepStringInput": {
         "title": "StepStringInput",

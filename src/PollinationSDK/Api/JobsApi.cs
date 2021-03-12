@@ -15,7 +15,6 @@ using System.Threading;
 using RestSharp;
 using PollinationSDK.Client;
 using PollinationSDK.Model;
-using QueenbeeSDK;
 
 namespace PollinationSDK.Api
 {
@@ -25,6 +24,31 @@ namespace PollinationSDK.Api
     public interface IJobsApi : IApiAccessor
     {
         #region Synchronous Operations
+        /// <summary>
+        /// Cancel a Job
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a job.
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <returns>object</returns>
+        object CancelJob (string owner, string name, string jobId);
+
+        /// <summary>
+        /// Cancel a Job
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a job.
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <returns>ApiResponse of object</returns>
+        ApiResponse<object> CancelJobWithHttpInfo (string owner, string name, string jobId);
         /// <summary>
         /// Schedule a job
         /// </summary>
@@ -54,6 +78,33 @@ namespace PollinationSDK.Api
         /// <param name="xPollinationToken"> (optional)</param>
         /// <returns>ApiResponse of CreatedContent</returns>
         ApiResponse<CreatedContent> CreateJobWithHttpInfo (string owner, string name, Job job, string authorization = default, string xPollinationToken = default);
+        /// <summary>
+        /// Download an artifact from the job folder
+        /// </summary>
+        /// <remarks>
+        /// Get a download link for an artifact in a job folder
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
+        /// <returns>object</returns>
+        object DownloadJobArtifact (string owner, string name, string jobId, string path = default);
+
+        /// <summary>
+        /// Download an artifact from the job folder
+        /// </summary>
+        /// <remarks>
+        /// Get a download link for an artifact in a job folder
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
+        /// <returns>ApiResponse of object</returns>
+        ApiResponse<object> DownloadJobArtifactWithHttpInfo (string owner, string name, string jobId, string path = default);
         /// <summary>
         /// Get a Job
         /// </summary>
@@ -93,7 +144,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>CloudJobList</returns>
-        CloudJobList ListJobs (string owner, string name, List<string> ids = default, string status = default, int? page = default, int? perPage = default);
+        CloudJobList ListJobs (string owner, string name, List<string> ids = default, JobStatusEnum? status = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// List Jobs
@@ -109,9 +160,67 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of CloudJobList</returns>
-        ApiResponse<CloudJobList> ListJobsWithHttpInfo (string owner, string name, List<string> ids = default, string status = default, int? page = default, int? perPage = default);
+        ApiResponse<CloudJobList> ListJobsWithHttpInfo (string owner, string name, List<string> ids = default, JobStatusEnum? status = default, int? page = default, int? perPage = default);
+        /// <summary>
+        /// List files/folders in a job folder
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a list of artifacts in a job folder
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
+        /// <returns>List&lt;FileMeta&gt;</returns>
+        List<FileMeta> SearchJobFolder (string owner, string name, string jobId, int? page = default, int? perPage = default, List<string> path = default);
+
+        /// <summary>
+        /// List files/folders in a job folder
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a list of artifacts in a job folder
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
+        /// <returns>ApiResponse of List&lt;FileMeta&gt;</returns>
+        ApiResponse<List<FileMeta>> SearchJobFolderWithHttpInfo (string owner, string name, string jobId, int? page = default, int? perPage = default, List<string> path = default);
         #endregion Synchronous Operations
         #region Asynchronous Operations
+        /// <summary>
+        /// Cancel a Job
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a job.
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of object</returns>
+        System.Threading.Tasks.Task<object> CancelJobAsync (string owner, string name, string jobId, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Cancel a Job
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a job.
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of ApiResponse (object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<object>> CancelJobWithHttpInfoAsync (string owner, string name, string jobId, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Schedule a job
         /// </summary>
@@ -143,6 +252,35 @@ namespace PollinationSDK.Api
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (CreatedContent)</returns>
         System.Threading.Tasks.Task<ApiResponse<CreatedContent>> CreateJobWithHttpInfoAsync (string owner, string name, Job job, string authorization = default, string xPollinationToken = default, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Download an artifact from the job folder
+        /// </summary>
+        /// <remarks>
+        /// Get a download link for an artifact in a job folder
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of object</returns>
+        System.Threading.Tasks.Task<object> DownloadJobArtifactAsync (string owner, string name, string jobId, string path = default, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Download an artifact from the job folder
+        /// </summary>
+        /// <remarks>
+        /// Get a download link for an artifact in a job folder
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of ApiResponse (object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<object>> DownloadJobArtifactWithHttpInfoAsync (string owner, string name, string jobId, string path = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a Job
         /// </summary>
@@ -185,7 +323,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of CloudJobList</returns>
-        System.Threading.Tasks.Task<CloudJobList> ListJobsAsync (string owner, string name, List<string> ids = default, string status = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<CloudJobList> ListJobsAsync (string owner, string name, List<string> ids = default, JobStatusEnum? status = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List Jobs
@@ -202,7 +340,40 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (CloudJobList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<CloudJobList>> ListJobsWithHttpInfoAsync (string owner, string name, List<string> ids = default, string status = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<CloudJobList>> ListJobsWithHttpInfoAsync (string owner, string name, List<string> ids = default, JobStatusEnum? status = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List files/folders in a job folder
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a list of artifacts in a job folder
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of List&lt;FileMeta&gt;</returns>
+        System.Threading.Tasks.Task<List<FileMeta>> SearchJobFolderAsync (string owner, string name, string jobId, int? page = default, int? perPage = default, List<string> path = default, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// List files/folders in a job folder
+        /// </summary>
+        /// <remarks>
+        /// Retrieve a list of artifacts in a job folder
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of ApiResponse (List&lt;FileMeta&gt;)</returns>
+        System.Threading.Tasks.Task<ApiResponse<List<FileMeta>>> SearchJobFolderWithHttpInfoAsync (string owner, string name, string jobId, int? page = default, int? perPage = default, List<string> path = default, CancellationToken cancellationToken = default(CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -280,6 +451,187 @@ namespace PollinationSDK.Api
                 return _exceptionFactory;
             }
             set { _exceptionFactory = value; }
+        }
+
+        /// <summary>
+        /// Cancel a Job Retrieve a job.
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <returns>object</returns>
+        public object CancelJob (string owner, string name, string jobId)
+        {
+             ApiResponse<object> localVarResponse = CancelJobWithHttpInfo(owner, name, jobId);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Cancel a Job Retrieve a job.
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <returns>ApiResponse of object</returns>
+        public ApiResponse<object> CancelJobWithHttpInfo (string owner, string name, string jobId)
+        {
+            // verify the required parameter 'owner' is set
+            if (owner == null)
+                throw new ApiException(400, "Missing required parameter 'owner' when calling JobsApi->CancelJob");
+            // verify the required parameter 'name' is set
+            if (name == null)
+                throw new ApiException(400, "Missing required parameter 'name' when calling JobsApi->CancelJob");
+            // verify the required parameter 'jobId' is set
+            if (jobId == null)
+                throw new ApiException(400, "Missing required parameter 'jobId' when calling JobsApi->CancelJob");
+
+            var localVarPath = "/projects/{owner}/{name}/jobs/{job_id}/cancel";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
+            if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
+            if (jobId != null) localVarPathParams.Add("job_id", this.Configuration.ApiClient.ParameterToString(jobId)); // path parameter
+
+            // authentication (APIKeyAuth) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
+            {
+                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
+            }
+            // authentication (JWTAuth) required
+            // http beerer authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("CancelJob", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<object>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
+        }
+
+        /// <summary>
+        /// Cancel a Job Retrieve a job.
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of object</returns>
+        public async System.Threading.Tasks.Task<object> CancelJobAsync (string owner, string name, string jobId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+             ApiResponse<object> localVarResponse = await CancelJobWithHttpInfoAsync(owner, name, jobId, cancellationToken);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Cancel a Job Retrieve a job.
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of ApiResponse (object)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<object>> CancelJobWithHttpInfoAsync (string owner, string name, string jobId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // verify the required parameter 'owner' is set
+            if (owner == null)
+                throw new ApiException(400, "Missing required parameter 'owner' when calling JobsApi->CancelJob");
+            // verify the required parameter 'name' is set
+            if (name == null)
+                throw new ApiException(400, "Missing required parameter 'name' when calling JobsApi->CancelJob");
+            // verify the required parameter 'jobId' is set
+            if (jobId == null)
+                throw new ApiException(400, "Missing required parameter 'jobId' when calling JobsApi->CancelJob");
+
+            var localVarPath = "/projects/{owner}/{name}/jobs/{job_id}/cancel";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
+            if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
+            if (jobId != null) localVarPathParams.Add("job_id", this.Configuration.ApiClient.ParameterToString(jobId)); // path parameter
+
+            // authentication (APIKeyAuth) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
+            {
+                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
+            }
+            // authentication (JWTAuth) required
+            // http bearer authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType, cancellationToken);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("CancelJob", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<object>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>
@@ -492,6 +844,193 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
+        /// Download an artifact from the job folder Get a download link for an artifact in a job folder
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
+        /// <returns>object</returns>
+        public object DownloadJobArtifact (string owner, string name, string jobId, string path = default)
+        {
+             ApiResponse<object> localVarResponse = DownloadJobArtifactWithHttpInfo(owner, name, jobId, path);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Download an artifact from the job folder Get a download link for an artifact in a job folder
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
+        /// <returns>ApiResponse of object</returns>
+        public ApiResponse<object> DownloadJobArtifactWithHttpInfo (string owner, string name, string jobId, string path = default)
+        {
+            // verify the required parameter 'owner' is set
+            if (owner == null)
+                throw new ApiException(400, "Missing required parameter 'owner' when calling JobsApi->DownloadJobArtifact");
+            // verify the required parameter 'name' is set
+            if (name == null)
+                throw new ApiException(400, "Missing required parameter 'name' when calling JobsApi->DownloadJobArtifact");
+            // verify the required parameter 'jobId' is set
+            if (jobId == null)
+                throw new ApiException(400, "Missing required parameter 'jobId' when calling JobsApi->DownloadJobArtifact");
+
+            var localVarPath = "/projects/{owner}/{name}/jobs/{job_id}/artifacts/download";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
+            if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
+            if (jobId != null) localVarPathParams.Add("job_id", this.Configuration.ApiClient.ParameterToString(jobId)); // path parameter
+            if (path != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "path", path)); // query parameter
+
+            // authentication (APIKeyAuth) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
+            {
+                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
+            }
+            // authentication (JWTAuth) required
+            // http beerer authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("DownloadJobArtifact", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<object>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
+        }
+
+        /// <summary>
+        /// Download an artifact from the job folder Get a download link for an artifact in a job folder
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of object</returns>
+        public async System.Threading.Tasks.Task<object> DownloadJobArtifactAsync (string owner, string name, string jobId, string path = default, CancellationToken cancellationToken = default(CancellationToken))
+        {
+             ApiResponse<object> localVarResponse = await DownloadJobArtifactWithHttpInfoAsync(owner, name, jobId, path, cancellationToken);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Download an artifact from the job folder Get a download link for an artifact in a job folder
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of ApiResponse (object)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<object>> DownloadJobArtifactWithHttpInfoAsync (string owner, string name, string jobId, string path = default, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // verify the required parameter 'owner' is set
+            if (owner == null)
+                throw new ApiException(400, "Missing required parameter 'owner' when calling JobsApi->DownloadJobArtifact");
+            // verify the required parameter 'name' is set
+            if (name == null)
+                throw new ApiException(400, "Missing required parameter 'name' when calling JobsApi->DownloadJobArtifact");
+            // verify the required parameter 'jobId' is set
+            if (jobId == null)
+                throw new ApiException(400, "Missing required parameter 'jobId' when calling JobsApi->DownloadJobArtifact");
+
+            var localVarPath = "/projects/{owner}/{name}/jobs/{job_id}/artifacts/download";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
+            if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
+            if (jobId != null) localVarPathParams.Add("job_id", this.Configuration.ApiClient.ParameterToString(jobId)); // path parameter
+            if (path != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "path", path)); // query parameter
+
+            // authentication (APIKeyAuth) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
+            {
+                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
+            }
+            // authentication (JWTAuth) required
+            // http bearer authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType, cancellationToken);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("DownloadJobArtifact", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<object>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
+        }
+
+        /// <summary>
         /// Get a Job Retrieve a job.
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
@@ -683,7 +1222,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>CloudJobList</returns>
-        public CloudJobList ListJobs (string owner, string name, List<string> ids = default, string status = default, int? page = default, int? perPage = default)
+        public CloudJobList ListJobs (string owner, string name, List<string> ids = default, JobStatusEnum? status = default, int? page = default, int? perPage = default)
         {
              ApiResponse<CloudJobList> localVarResponse = ListJobsWithHttpInfo(owner, name, ids, status, page, perPage);
              return localVarResponse.Data;
@@ -700,7 +1239,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of CloudJobList</returns>
-        public ApiResponse<CloudJobList> ListJobsWithHttpInfo (string owner, string name, List<string> ids = default, string status = default, int? page = default, int? perPage = default)
+        public ApiResponse<CloudJobList> ListJobsWithHttpInfo (string owner, string name, List<string> ids = default, JobStatusEnum? status = default, int? page = default, int? perPage = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -779,7 +1318,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of CloudJobList</returns>
-        public async System.Threading.Tasks.Task<CloudJobList> ListJobsAsync (string owner, string name, List<string> ids = default, string status = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<CloudJobList> ListJobsAsync (string owner, string name, List<string> ids = default, JobStatusEnum? status = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
              ApiResponse<CloudJobList> localVarResponse = await ListJobsWithHttpInfoAsync(owner, name, ids, status, page, perPage, cancellationToken);
              return localVarResponse.Data;
@@ -798,7 +1337,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (CloudJobList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<CloudJobList>> ListJobsWithHttpInfoAsync (string owner, string name, List<string> ids = default, string status = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<CloudJobList>> ListJobsWithHttpInfoAsync (string owner, string name, List<string> ids = default, JobStatusEnum? status = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -863,6 +1402,205 @@ namespace PollinationSDK.Api
             return new ApiResponse<CloudJobList>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 (CloudJobList) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(CloudJobList)));
+        }
+
+        /// <summary>
+        /// List files/folders in a job folder Retrieve a list of artifacts in a job folder
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
+        /// <returns>List&lt;FileMeta&gt;</returns>
+        public List<FileMeta> SearchJobFolder (string owner, string name, string jobId, int? page = default, int? perPage = default, List<string> path = default)
+        {
+             ApiResponse<List<FileMeta>> localVarResponse = SearchJobFolderWithHttpInfo(owner, name, jobId, page, perPage, path);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// List files/folders in a job folder Retrieve a list of artifacts in a job folder
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
+        /// <returns>ApiResponse of List&lt;FileMeta&gt;</returns>
+        public ApiResponse<List<FileMeta>> SearchJobFolderWithHttpInfo (string owner, string name, string jobId, int? page = default, int? perPage = default, List<string> path = default)
+        {
+            // verify the required parameter 'owner' is set
+            if (owner == null)
+                throw new ApiException(400, "Missing required parameter 'owner' when calling JobsApi->SearchJobFolder");
+            // verify the required parameter 'name' is set
+            if (name == null)
+                throw new ApiException(400, "Missing required parameter 'name' when calling JobsApi->SearchJobFolder");
+            // verify the required parameter 'jobId' is set
+            if (jobId == null)
+                throw new ApiException(400, "Missing required parameter 'jobId' when calling JobsApi->SearchJobFolder");
+
+            var localVarPath = "/projects/{owner}/{name}/jobs/{job_id}/artifacts";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
+            if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
+            if (jobId != null) localVarPathParams.Add("job_id", this.Configuration.ApiClient.ParameterToString(jobId)); // path parameter
+            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
+            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
+            if (path != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "path", path)); // query parameter
+
+            // authentication (APIKeyAuth) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
+            {
+                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
+            }
+            // authentication (JWTAuth) required
+            // http beerer authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("SearchJobFolder", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<FileMeta>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (List<FileMeta>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<FileMeta>)));
+        }
+
+        /// <summary>
+        /// List files/folders in a job folder Retrieve a list of artifacts in a job folder
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of List&lt;FileMeta&gt;</returns>
+        public async System.Threading.Tasks.Task<List<FileMeta>> SearchJobFolderAsync (string owner, string name, string jobId, int? page = default, int? perPage = default, List<string> path = default, CancellationToken cancellationToken = default(CancellationToken))
+        {
+             ApiResponse<List<FileMeta>> localVarResponse = await SearchJobFolderWithHttpInfoAsync(owner, name, jobId, page, perPage, path, cancellationToken);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// List files/folders in a job folder Retrieve a list of artifacts in a job folder
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="jobId"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of ApiResponse (List&lt;FileMeta&gt;)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<List<FileMeta>>> SearchJobFolderWithHttpInfoAsync (string owner, string name, string jobId, int? page = default, int? perPage = default, List<string> path = default, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // verify the required parameter 'owner' is set
+            if (owner == null)
+                throw new ApiException(400, "Missing required parameter 'owner' when calling JobsApi->SearchJobFolder");
+            // verify the required parameter 'name' is set
+            if (name == null)
+                throw new ApiException(400, "Missing required parameter 'name' when calling JobsApi->SearchJobFolder");
+            // verify the required parameter 'jobId' is set
+            if (jobId == null)
+                throw new ApiException(400, "Missing required parameter 'jobId' when calling JobsApi->SearchJobFolder");
+
+            var localVarPath = "/projects/{owner}/{name}/jobs/{job_id}/artifacts";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
+            if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
+            if (jobId != null) localVarPathParams.Add("job_id", this.Configuration.ApiClient.ParameterToString(jobId)); // path parameter
+            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
+            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
+            if (path != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "path", path)); // query parameter
+
+            // authentication (APIKeyAuth) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
+            {
+                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
+            }
+            // authentication (JWTAuth) required
+            // http bearer authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.GET, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType, cancellationToken);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("SearchJobFolder", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<List<FileMeta>>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (List<FileMeta>) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(List<FileMeta>)));
         }
 
     }

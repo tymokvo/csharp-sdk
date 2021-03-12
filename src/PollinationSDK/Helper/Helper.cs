@@ -11,7 +11,6 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using QueenbeeSDK;
 
 namespace PollinationSDK
 {
@@ -305,7 +304,7 @@ namespace PollinationSDK
         /// <param name="artifact"></param>
         /// <param name="saveAsDir"></param>
         /// <returns></returns>
-        public static List<Task<string>> DownloadArtifactWithItems(RunInfo simu, QueenbeeSDK.DAGPathOutput artifact, string saveAsDir)
+        public static List<Task<string>> DownloadArtifactWithItems(RunInfo simu, DAGPathOutput artifact, string saveAsDir)
         {
             var file = string.Empty;
             var outputDirOrFile = string.Empty;
@@ -324,8 +323,6 @@ namespace PollinationSDK
                 ListFilesFromFolder(ref tasks, dir, simu.Project.Owner.Name, simu.Project.Name, simu.RunID, found, api);
 
                 return tasks;
-
-               
 
             }
             catch (Exception e)

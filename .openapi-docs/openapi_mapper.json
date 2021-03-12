@@ -4,7 +4,6 @@
     "APITokenCreate": "app.modules.api_tokens.interface",
     "APITokenList": "app.modules.api_tokens.interface",
     "APITokenPrivate": "app.modules.api_tokens.interface",
-    "Accepted": "honeycomb_wax.schema.responses",
     "AccessPolicy": "app.modules.access_policy.dto",
     "AccessPolicyList": "app.modules.access_policy.dto",
     "AccountPublic": "app.modules.accounts.dto",
@@ -209,18 +208,17 @@
     "_TaskReferenceBase": "queenbee.io.reference",
     "app__modules__access_policy__dto__Permission": "app.modules.access_policy.dto",
     "app__modules__access_policy__dto__SubjectType": "app.modules.access_policy.dto",
-    "app__modules__orgs__dto__orgs__OrganizationRoleEnum": "app.modules.orgs.dto.orgs",
-    "app__modules__orgs__dto__teams__TeamRoleEnum": "app.modules.orgs.dto.teams",
-    "queenbee__io__common__ItemType": "queenbee.io.common",
-    "queenbee__job__run__StatusType": "queenbee.job.run",
-    "queenbee__recipe__dependency__DependencyKind": "queenbee.recipe.dependency"
+    "app__modules__orgs__dto__orgs__OrganizationRoleEnum": "app.modules.orgs.dto.orgs"
   },
   "enums": {
     "DependencyKind": "queenbee.recipe.dependency",
     "ItemType": "queenbee.io.common",
+    "JobStatusEnum": "queenbee.job.job",
     "OrganizationRoleEnum": "app.modules.orgs.dto.orgs",
     "Permission": "app.modules.access_policy.dto",
+    "RunStatusEnum": "queenbee.job.run",
     "StatusType": "queenbee.job.run",
+    "StepStatusEnum": "queenbee.job.run",
     "SubjectType": "app.modules.access_policy.dto",
     "TeamRoleEnum": "app.modules.orgs.dto.teams"
   }

@@ -15,7 +15,6 @@ using System.Threading;
 using RestSharp;
 using PollinationSDK.Client;
 using PollinationSDK.Model;
-using QueenbeeSDK;
 
 namespace PollinationSDK.Api
 {
@@ -25,6 +24,31 @@ namespace PollinationSDK.Api
     public interface IRunsApi : IApiAccessor
     {
         #region Synchronous Operations
+        /// <summary>
+        /// Cancel a run
+        /// </summary>
+        /// <remarks>
+        /// Stop a run.
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="runId"></param>
+        /// <returns>object</returns>
+        object CancelRun (string owner, string name, string runId);
+
+        /// <summary>
+        /// Cancel a run
+        /// </summary>
+        /// <remarks>
+        /// Stop a run.
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="runId"></param>
+        /// <returns>ApiResponse of object</returns>
+        ApiResponse<object> CancelRunWithHttpInfo (string owner, string name, string runId);
         /// <summary>
         /// Download an artifact from the run folder
         /// </summary>
@@ -148,7 +172,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>StepList</returns>
-        StepList GetRunSteps (string owner, string name, string runId, string status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default);
+        StepList GetRunSteps (string owner, string name, string runId, StepStatusEnum? status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// Query the steps of a run
@@ -167,7 +191,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of StepList</returns>
-        ApiResponse<StepList> GetRunStepsWithHttpInfo (string owner, string name, string runId, string status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default);
+        ApiResponse<StepList> GetRunStepsWithHttpInfo (string owner, string name, string runId, StepStatusEnum? status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default);
         /// <summary>
         /// List artifacts in a run folder
         /// </summary>
@@ -213,7 +237,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>RunList</returns>
-        RunList ListRuns (string owner, string name, string status = default, List<string> jobId = default, int? page = default, int? perPage = default);
+        RunList ListRuns (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// List runs
@@ -229,7 +253,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of RunList</returns>
-        ApiResponse<RunList> ListRunsWithHttpInfo (string owner, string name, string status = default, List<string> jobId = default, int? page = default, int? perPage = default);
+        ApiResponse<RunList> ListRunsWithHttpInfo (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default);
         /// <summary>
         /// Query run results
         /// </summary>
@@ -244,7 +268,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>RunResultList</returns>
-        RunResultList QueryResults (string owner, string name, string status = default, List<string> jobId = default, int? page = default, int? perPage = default);
+        RunResultList QueryResults (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// Query run results
@@ -260,84 +284,36 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of RunResultList</returns>
-        ApiResponse<RunResultList> QueryResultsWithHttpInfo (string owner, string name, string status = default, List<string> jobId = default, int? page = default, int? perPage = default);
-        /// <summary>
-        /// resume a run
-        /// </summary>
-        /// <remarks>
-        /// resume a run
-        /// </remarks>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <returns>Accepted</returns>
-        Accepted ResumeRun (string owner, string name, string runId);
-
-        /// <summary>
-        /// resume a run
-        /// </summary>
-        /// <remarks>
-        /// resume a run
-        /// </remarks>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <returns>ApiResponse of Accepted</returns>
-        ApiResponse<Accepted> ResumeRunWithHttpInfo (string owner, string name, string runId);
-        /// <summary>
-        /// Stop a run
-        /// </summary>
-        /// <remarks>
-        /// Stop a run.
-        /// </remarks>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <returns>Accepted</returns>
-        Accepted StopRun (string owner, string name, string runId);
-
-        /// <summary>
-        /// Stop a run
-        /// </summary>
-        /// <remarks>
-        /// Stop a run.
-        /// </remarks>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <returns>ApiResponse of Accepted</returns>
-        ApiResponse<Accepted> StopRunWithHttpInfo (string owner, string name, string runId);
-        /// <summary>
-        /// Suspend a run
-        /// </summary>
-        /// <remarks>
-        /// Stop a run.
-        /// </remarks>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <returns>Accepted</returns>
-        Accepted SuspendRun (string owner, string name, string runId);
-
-        /// <summary>
-        /// Suspend a run
-        /// </summary>
-        /// <remarks>
-        /// Stop a run.
-        /// </remarks>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <returns>ApiResponse of Accepted</returns>
-        ApiResponse<Accepted> SuspendRunWithHttpInfo (string owner, string name, string runId);
+        ApiResponse<RunResultList> QueryResultsWithHttpInfo (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default);
         #endregion Synchronous Operations
         #region Asynchronous Operations
+        /// <summary>
+        /// Cancel a run
+        /// </summary>
+        /// <remarks>
+        /// Stop a run.
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="runId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of object</returns>
+        System.Threading.Tasks.Task<object> CancelRunAsync (string owner, string name, string runId, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Cancel a run
+        /// </summary>
+        /// <remarks>
+        /// Stop a run.
+        /// </remarks>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="runId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of ApiResponse (object)</returns>
+        System.Threading.Tasks.Task<ApiResponse<object>> CancelRunWithHttpInfoAsync (string owner, string name, string runId, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Download an artifact from the run folder
         /// </summary>
@@ -470,7 +446,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of StepList</returns>
-        System.Threading.Tasks.Task<StepList> GetRunStepsAsync (string owner, string name, string runId, string status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<StepList> GetRunStepsAsync (string owner, string name, string runId, StepStatusEnum? status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Query the steps of a run
@@ -490,7 +466,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (StepList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<StepList>> GetRunStepsWithHttpInfoAsync (string owner, string name, string runId, string status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<StepList>> GetRunStepsWithHttpInfoAsync (string owner, string name, string runId, StepStatusEnum? status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List artifacts in a run folder
         /// </summary>
@@ -539,7 +515,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of RunList</returns>
-        System.Threading.Tasks.Task<RunList> ListRunsAsync (string owner, string name, string status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<RunList> ListRunsAsync (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List runs
@@ -556,7 +532,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (RunList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<RunList>> ListRunsWithHttpInfoAsync (string owner, string name, string status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<RunList>> ListRunsWithHttpInfoAsync (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Query run results
         /// </summary>
@@ -572,7 +548,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of RunResultList</returns>
-        System.Threading.Tasks.Task<RunResultList> QueryResultsAsync (string owner, string name, string status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<RunResultList> QueryResultsAsync (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Query run results
@@ -589,88 +565,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (RunResultList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<RunResultList>> QueryResultsWithHttpInfoAsync (string owner, string name, string status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// resume a run
-        /// </summary>
-        /// <remarks>
-        /// resume a run
-        /// </remarks>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of Accepted</returns>
-        System.Threading.Tasks.Task<Accepted> ResumeRunAsync (string owner, string name, string runId, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// resume a run
-        /// </summary>
-        /// <remarks>
-        /// resume a run
-        /// </remarks>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of ApiResponse (Accepted)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Accepted>> ResumeRunWithHttpInfoAsync (string owner, string name, string runId, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Stop a run
-        /// </summary>
-        /// <remarks>
-        /// Stop a run.
-        /// </remarks>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of Accepted</returns>
-        System.Threading.Tasks.Task<Accepted> StopRunAsync (string owner, string name, string runId, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Stop a run
-        /// </summary>
-        /// <remarks>
-        /// Stop a run.
-        /// </remarks>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of ApiResponse (Accepted)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Accepted>> StopRunWithHttpInfoAsync (string owner, string name, string runId, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Suspend a run
-        /// </summary>
-        /// <remarks>
-        /// Stop a run.
-        /// </remarks>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of Accepted</returns>
-        System.Threading.Tasks.Task<Accepted> SuspendRunAsync (string owner, string name, string runId, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Suspend a run
-        /// </summary>
-        /// <remarks>
-        /// Stop a run.
-        /// </remarks>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of ApiResponse (Accepted)</returns>
-        System.Threading.Tasks.Task<ApiResponse<Accepted>> SuspendRunWithHttpInfoAsync (string owner, string name, string runId, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<RunResultList>> QueryResultsWithHttpInfoAsync (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -748,6 +643,187 @@ namespace PollinationSDK.Api
                 return _exceptionFactory;
             }
             set { _exceptionFactory = value; }
+        }
+
+        /// <summary>
+        /// Cancel a run Stop a run.
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="runId"></param>
+        /// <returns>object</returns>
+        public object CancelRun (string owner, string name, string runId)
+        {
+             ApiResponse<object> localVarResponse = CancelRunWithHttpInfo(owner, name, runId);
+             return localVarResponse.Data;
+        }
+
+        /// <summary>
+        /// Cancel a run Stop a run.
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="runId"></param>
+        /// <returns>ApiResponse of object</returns>
+        public ApiResponse<object> CancelRunWithHttpInfo (string owner, string name, string runId)
+        {
+            // verify the required parameter 'owner' is set
+            if (owner == null)
+                throw new ApiException(400, "Missing required parameter 'owner' when calling RunsApi->CancelRun");
+            // verify the required parameter 'name' is set
+            if (name == null)
+                throw new ApiException(400, "Missing required parameter 'name' when calling RunsApi->CancelRun");
+            // verify the required parameter 'runId' is set
+            if (runId == null)
+                throw new ApiException(400, "Missing required parameter 'runId' when calling RunsApi->CancelRun");
+
+            var localVarPath = "/projects/{owner}/{name}/runs/{run_id}/cancel";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
+            if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
+            if (runId != null) localVarPathParams.Add("run_id", this.Configuration.ApiClient.ParameterToString(runId)); // path parameter
+
+            // authentication (APIKeyAuth) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
+            {
+                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
+            }
+            // authentication (JWTAuth) required
+            // http beerer authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
+                Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("CancelRun", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<object>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
+        }
+
+        /// <summary>
+        /// Cancel a run Stop a run.
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="runId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of object</returns>
+        public async System.Threading.Tasks.Task<object> CancelRunAsync (string owner, string name, string runId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+             ApiResponse<object> localVarResponse = await CancelRunWithHttpInfoAsync(owner, name, runId, cancellationToken);
+             return localVarResponse.Data;
+
+        }
+
+        /// <summary>
+        /// Cancel a run Stop a run.
+        /// </summary>
+        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
+        /// <param name="owner"></param>
+        /// <param name="name"></param>
+        /// <param name="runId"></param>
+        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
+        /// <returns>Task of ApiResponse (object)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<object>> CancelRunWithHttpInfoAsync (string owner, string name, string runId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // verify the required parameter 'owner' is set
+            if (owner == null)
+                throw new ApiException(400, "Missing required parameter 'owner' when calling RunsApi->CancelRun");
+            // verify the required parameter 'name' is set
+            if (name == null)
+                throw new ApiException(400, "Missing required parameter 'name' when calling RunsApi->CancelRun");
+            // verify the required parameter 'runId' is set
+            if (runId == null)
+                throw new ApiException(400, "Missing required parameter 'runId' when calling RunsApi->CancelRun");
+
+            var localVarPath = "/projects/{owner}/{name}/runs/{run_id}/cancel";
+            var localVarPathParams = new Dictionary<String, String>();
+            var localVarQueryParams = new List<KeyValuePair<String, String>>();
+            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
+            var localVarFormParams = new Dictionary<String, String>();
+            var localVarFileParams = new Dictionary<String, FileParameter>();
+            Object localVarPostBody = null;
+
+            // to determine the Content-Type header
+            String[] localVarHttpContentTypes = new String[] {
+            };
+            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
+
+            // to determine the Accept header
+            String[] localVarHttpHeaderAccepts = new String[] {
+                "application/json"
+            };
+            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
+            if (localVarHttpHeaderAccept != null)
+                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
+
+            if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
+            if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
+            if (runId != null) localVarPathParams.Add("run_id", this.Configuration.ApiClient.ParameterToString(runId)); // path parameter
+
+            // authentication (APIKeyAuth) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
+            {
+                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
+            }
+            // authentication (JWTAuth) required
+            // http bearer authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
+
+            // make the HTTP request
+            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
+                Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
+                localVarPathParams, localVarHttpContentType, cancellationToken);
+
+            int localVarStatusCode = (int) localVarResponse.StatusCode;
+
+            if (ExceptionFactory != null)
+            {
+                Exception exception = ExceptionFactory("CancelRun", localVarResponse);
+                if (exception != null) throw exception;
+            }
+
+            return new ApiResponse<object>(localVarStatusCode,
+                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
+                (object) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(object)));
         }
 
         /// <summary>
@@ -1518,7 +1594,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>StepList</returns>
-        public StepList GetRunSteps (string owner, string name, string runId, string status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default)
+        public StepList GetRunSteps (string owner, string name, string runId, StepStatusEnum? status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default)
         {
              ApiResponse<StepList> localVarResponse = GetRunStepsWithHttpInfo(owner, name, runId, status, stepId, untilGeneration, sinceGeneration, page, perPage);
              return localVarResponse.Data;
@@ -1538,7 +1614,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of StepList</returns>
-        public ApiResponse<StepList> GetRunStepsWithHttpInfo (string owner, string name, string runId, string status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default)
+        public ApiResponse<StepList> GetRunStepsWithHttpInfo (string owner, string name, string runId, StepStatusEnum? status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1626,7 +1702,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of StepList</returns>
-        public async System.Threading.Tasks.Task<StepList> GetRunStepsAsync (string owner, string name, string runId, string status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<StepList> GetRunStepsAsync (string owner, string name, string runId, StepStatusEnum? status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
              ApiResponse<StepList> localVarResponse = await GetRunStepsWithHttpInfoAsync(owner, name, runId, status, stepId, untilGeneration, sinceGeneration, page, perPage, cancellationToken);
              return localVarResponse.Data;
@@ -1648,7 +1724,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (StepList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<StepList>> GetRunStepsWithHttpInfoAsync (string owner, string name, string runId, string status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<StepList>> GetRunStepsWithHttpInfoAsync (string owner, string name, string runId, StepStatusEnum? status = default, List<string> stepId = default, string untilGeneration = default, string sinceGeneration = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1931,7 +2007,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>RunList</returns>
-        public RunList ListRuns (string owner, string name, string status = default, List<string> jobId = default, int? page = default, int? perPage = default)
+        public RunList ListRuns (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default)
         {
              ApiResponse<RunList> localVarResponse = ListRunsWithHttpInfo(owner, name, status, jobId, page, perPage);
              return localVarResponse.Data;
@@ -1948,7 +2024,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of RunList</returns>
-        public ApiResponse<RunList> ListRunsWithHttpInfo (string owner, string name, string status = default, List<string> jobId = default, int? page = default, int? perPage = default)
+        public ApiResponse<RunList> ListRunsWithHttpInfo (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2027,7 +2103,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of RunList</returns>
-        public async System.Threading.Tasks.Task<RunList> ListRunsAsync (string owner, string name, string status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<RunList> ListRunsAsync (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
              ApiResponse<RunList> localVarResponse = await ListRunsWithHttpInfoAsync(owner, name, status, jobId, page, perPage, cancellationToken);
              return localVarResponse.Data;
@@ -2046,7 +2122,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (RunList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<RunList>> ListRunsWithHttpInfoAsync (string owner, string name, string status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<RunList>> ListRunsWithHttpInfoAsync (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2124,7 +2200,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>RunResultList</returns>
-        public RunResultList QueryResults (string owner, string name, string status = default, List<string> jobId = default, int? page = default, int? perPage = default)
+        public RunResultList QueryResults (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default)
         {
              ApiResponse<RunResultList> localVarResponse = QueryResultsWithHttpInfo(owner, name, status, jobId, page, perPage);
              return localVarResponse.Data;
@@ -2141,7 +2217,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of RunResultList</returns>
-        public ApiResponse<RunResultList> QueryResultsWithHttpInfo (string owner, string name, string status = default, List<string> jobId = default, int? page = default, int? perPage = default)
+        public ApiResponse<RunResultList> QueryResultsWithHttpInfo (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2220,7 +2296,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of RunResultList</returns>
-        public async System.Threading.Tasks.Task<RunResultList> QueryResultsAsync (string owner, string name, string status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<RunResultList> QueryResultsAsync (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
              ApiResponse<RunResultList> localVarResponse = await QueryResultsWithHttpInfoAsync(owner, name, status, jobId, page, perPage, cancellationToken);
              return localVarResponse.Data;
@@ -2239,7 +2315,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (RunResultList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<RunResultList>> QueryResultsWithHttpInfoAsync (string owner, string name, string status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<RunResultList>> QueryResultsWithHttpInfoAsync (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2304,549 +2380,6 @@ namespace PollinationSDK.Api
             return new ApiResponse<RunResultList>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
                 (RunResultList) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(RunResultList)));
-        }
-
-        /// <summary>
-        /// resume a run resume a run
-        /// </summary>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <returns>Accepted</returns>
-        public Accepted ResumeRun (string owner, string name, string runId)
-        {
-             ApiResponse<Accepted> localVarResponse = ResumeRunWithHttpInfo(owner, name, runId);
-             return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// resume a run resume a run
-        /// </summary>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <returns>ApiResponse of Accepted</returns>
-        public ApiResponse<Accepted> ResumeRunWithHttpInfo (string owner, string name, string runId)
-        {
-            // verify the required parameter 'owner' is set
-            if (owner == null)
-                throw new ApiException(400, "Missing required parameter 'owner' when calling RunsApi->ResumeRun");
-            // verify the required parameter 'name' is set
-            if (name == null)
-                throw new ApiException(400, "Missing required parameter 'name' when calling RunsApi->ResumeRun");
-            // verify the required parameter 'runId' is set
-            if (runId == null)
-                throw new ApiException(400, "Missing required parameter 'runId' when calling RunsApi->ResumeRun");
-
-            var localVarPath = "/projects/{owner}/{name}/runs/{run_id}/resume";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
-
-            // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
-            };
-            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
-
-            // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
-                "application/json"
-            };
-            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
-            if (localVarHttpHeaderAccept != null)
-                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
-
-            if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
-            if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
-            if (runId != null) localVarPathParams.Add("run_id", this.Configuration.ApiClient.ParameterToString(runId)); // path parameter
-
-            // authentication (APIKeyAuth) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
-            {
-                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
-            }
-            // authentication (JWTAuth) required
-            // http beerer authentication required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
-            }
-
-            // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
-                Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
-
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
-
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("ResumeRun", localVarResponse);
-                if (exception != null) throw exception;
-            }
-
-            return new ApiResponse<Accepted>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (Accepted) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Accepted)));
-        }
-
-        /// <summary>
-        /// resume a run resume a run
-        /// </summary>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of Accepted</returns>
-        public async System.Threading.Tasks.Task<Accepted> ResumeRunAsync (string owner, string name, string runId, CancellationToken cancellationToken = default(CancellationToken))
-        {
-             ApiResponse<Accepted> localVarResponse = await ResumeRunWithHttpInfoAsync(owner, name, runId, cancellationToken);
-             return localVarResponse.Data;
-
-        }
-
-        /// <summary>
-        /// resume a run resume a run
-        /// </summary>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of ApiResponse (Accepted)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Accepted>> ResumeRunWithHttpInfoAsync (string owner, string name, string runId, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // verify the required parameter 'owner' is set
-            if (owner == null)
-                throw new ApiException(400, "Missing required parameter 'owner' when calling RunsApi->ResumeRun");
-            // verify the required parameter 'name' is set
-            if (name == null)
-                throw new ApiException(400, "Missing required parameter 'name' when calling RunsApi->ResumeRun");
-            // verify the required parameter 'runId' is set
-            if (runId == null)
-                throw new ApiException(400, "Missing required parameter 'runId' when calling RunsApi->ResumeRun");
-
-            var localVarPath = "/projects/{owner}/{name}/runs/{run_id}/resume";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
-
-            // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
-            };
-            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
-
-            // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
-                "application/json"
-            };
-            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
-            if (localVarHttpHeaderAccept != null)
-                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
-
-            if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
-            if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
-            if (runId != null) localVarPathParams.Add("run_id", this.Configuration.ApiClient.ParameterToString(runId)); // path parameter
-
-            // authentication (APIKeyAuth) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
-            {
-                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
-            }
-            // authentication (JWTAuth) required
-            // http bearer authentication required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
-            }
-
-            // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
-                Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType, cancellationToken);
-
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
-
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("ResumeRun", localVarResponse);
-                if (exception != null) throw exception;
-            }
-
-            return new ApiResponse<Accepted>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (Accepted) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Accepted)));
-        }
-
-        /// <summary>
-        /// Stop a run Stop a run.
-        /// </summary>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <returns>Accepted</returns>
-        public Accepted StopRun (string owner, string name, string runId)
-        {
-             ApiResponse<Accepted> localVarResponse = StopRunWithHttpInfo(owner, name, runId);
-             return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Stop a run Stop a run.
-        /// </summary>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <returns>ApiResponse of Accepted</returns>
-        public ApiResponse<Accepted> StopRunWithHttpInfo (string owner, string name, string runId)
-        {
-            // verify the required parameter 'owner' is set
-            if (owner == null)
-                throw new ApiException(400, "Missing required parameter 'owner' when calling RunsApi->StopRun");
-            // verify the required parameter 'name' is set
-            if (name == null)
-                throw new ApiException(400, "Missing required parameter 'name' when calling RunsApi->StopRun");
-            // verify the required parameter 'runId' is set
-            if (runId == null)
-                throw new ApiException(400, "Missing required parameter 'runId' when calling RunsApi->StopRun");
-
-            var localVarPath = "/projects/{owner}/{name}/runs/{run_id}/stop";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
-
-            // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
-            };
-            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
-
-            // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
-                "application/json"
-            };
-            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
-            if (localVarHttpHeaderAccept != null)
-                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
-
-            if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
-            if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
-            if (runId != null) localVarPathParams.Add("run_id", this.Configuration.ApiClient.ParameterToString(runId)); // path parameter
-
-            // authentication (APIKeyAuth) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
-            {
-                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
-            }
-            // authentication (JWTAuth) required
-            // http beerer authentication required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
-            }
-
-            // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
-                Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
-
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
-
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("StopRun", localVarResponse);
-                if (exception != null) throw exception;
-            }
-
-            return new ApiResponse<Accepted>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (Accepted) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Accepted)));
-        }
-
-        /// <summary>
-        /// Stop a run Stop a run.
-        /// </summary>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of Accepted</returns>
-        public async System.Threading.Tasks.Task<Accepted> StopRunAsync (string owner, string name, string runId, CancellationToken cancellationToken = default(CancellationToken))
-        {
-             ApiResponse<Accepted> localVarResponse = await StopRunWithHttpInfoAsync(owner, name, runId, cancellationToken);
-             return localVarResponse.Data;
-
-        }
-
-        /// <summary>
-        /// Stop a run Stop a run.
-        /// </summary>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of ApiResponse (Accepted)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Accepted>> StopRunWithHttpInfoAsync (string owner, string name, string runId, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // verify the required parameter 'owner' is set
-            if (owner == null)
-                throw new ApiException(400, "Missing required parameter 'owner' when calling RunsApi->StopRun");
-            // verify the required parameter 'name' is set
-            if (name == null)
-                throw new ApiException(400, "Missing required parameter 'name' when calling RunsApi->StopRun");
-            // verify the required parameter 'runId' is set
-            if (runId == null)
-                throw new ApiException(400, "Missing required parameter 'runId' when calling RunsApi->StopRun");
-
-            var localVarPath = "/projects/{owner}/{name}/runs/{run_id}/stop";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
-
-            // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
-            };
-            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
-
-            // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
-                "application/json"
-            };
-            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
-            if (localVarHttpHeaderAccept != null)
-                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
-
-            if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
-            if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
-            if (runId != null) localVarPathParams.Add("run_id", this.Configuration.ApiClient.ParameterToString(runId)); // path parameter
-
-            // authentication (APIKeyAuth) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
-            {
-                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
-            }
-            // authentication (JWTAuth) required
-            // http bearer authentication required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
-            }
-
-            // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
-                Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType, cancellationToken);
-
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
-
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("StopRun", localVarResponse);
-                if (exception != null) throw exception;
-            }
-
-            return new ApiResponse<Accepted>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (Accepted) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Accepted)));
-        }
-
-        /// <summary>
-        /// Suspend a run Stop a run.
-        /// </summary>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <returns>Accepted</returns>
-        public Accepted SuspendRun (string owner, string name, string runId)
-        {
-             ApiResponse<Accepted> localVarResponse = SuspendRunWithHttpInfo(owner, name, runId);
-             return localVarResponse.Data;
-        }
-
-        /// <summary>
-        /// Suspend a run Stop a run.
-        /// </summary>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <returns>ApiResponse of Accepted</returns>
-        public ApiResponse<Accepted> SuspendRunWithHttpInfo (string owner, string name, string runId)
-        {
-            // verify the required parameter 'owner' is set
-            if (owner == null)
-                throw new ApiException(400, "Missing required parameter 'owner' when calling RunsApi->SuspendRun");
-            // verify the required parameter 'name' is set
-            if (name == null)
-                throw new ApiException(400, "Missing required parameter 'name' when calling RunsApi->SuspendRun");
-            // verify the required parameter 'runId' is set
-            if (runId == null)
-                throw new ApiException(400, "Missing required parameter 'runId' when calling RunsApi->SuspendRun");
-
-            var localVarPath = "/projects/{owner}/{name}/runs/{run_id}/suspend";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
-
-            // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
-            };
-            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
-
-            // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
-                "application/json"
-            };
-            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
-            if (localVarHttpHeaderAccept != null)
-                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
-
-            if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
-            if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
-            if (runId != null) localVarPathParams.Add("run_id", this.Configuration.ApiClient.ParameterToString(runId)); // path parameter
-
-            // authentication (APIKeyAuth) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
-            {
-                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
-            }
-            // authentication (JWTAuth) required
-            // http beerer authentication required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
-            }
-
-            // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
-                Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType);
-
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
-
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("SuspendRun", localVarResponse);
-                if (exception != null) throw exception;
-            }
-
-            return new ApiResponse<Accepted>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (Accepted) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Accepted)));
-        }
-
-        /// <summary>
-        /// Suspend a run Stop a run.
-        /// </summary>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of Accepted</returns>
-        public async System.Threading.Tasks.Task<Accepted> SuspendRunAsync (string owner, string name, string runId, CancellationToken cancellationToken = default(CancellationToken))
-        {
-             ApiResponse<Accepted> localVarResponse = await SuspendRunWithHttpInfoAsync(owner, name, runId, cancellationToken);
-             return localVarResponse.Data;
-
-        }
-
-        /// <summary>
-        /// Suspend a run Stop a run.
-        /// </summary>
-        /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="owner"></param>
-        /// <param name="name"></param>
-        /// <param name="runId"></param>
-        /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of ApiResponse (Accepted)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<Accepted>> SuspendRunWithHttpInfoAsync (string owner, string name, string runId, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // verify the required parameter 'owner' is set
-            if (owner == null)
-                throw new ApiException(400, "Missing required parameter 'owner' when calling RunsApi->SuspendRun");
-            // verify the required parameter 'name' is set
-            if (name == null)
-                throw new ApiException(400, "Missing required parameter 'name' when calling RunsApi->SuspendRun");
-            // verify the required parameter 'runId' is set
-            if (runId == null)
-                throw new ApiException(400, "Missing required parameter 'runId' when calling RunsApi->SuspendRun");
-
-            var localVarPath = "/projects/{owner}/{name}/runs/{run_id}/suspend";
-            var localVarPathParams = new Dictionary<String, String>();
-            var localVarQueryParams = new List<KeyValuePair<String, String>>();
-            var localVarHeaderParams = new Dictionary<String, String>(this.Configuration.DefaultHeader);
-            var localVarFormParams = new Dictionary<String, String>();
-            var localVarFileParams = new Dictionary<String, FileParameter>();
-            Object localVarPostBody = null;
-
-            // to determine the Content-Type header
-            String[] localVarHttpContentTypes = new String[] {
-            };
-            String localVarHttpContentType = this.Configuration.ApiClient.SelectHeaderContentType(localVarHttpContentTypes);
-
-            // to determine the Accept header
-            String[] localVarHttpHeaderAccepts = new String[] {
-                "application/json"
-            };
-            String localVarHttpHeaderAccept = this.Configuration.ApiClient.SelectHeaderAccept(localVarHttpHeaderAccepts);
-            if (localVarHttpHeaderAccept != null)
-                localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
-
-            if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
-            if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
-            if (runId != null) localVarPathParams.Add("run_id", this.Configuration.ApiClient.ParameterToString(runId)); // path parameter
-
-            // authentication (APIKeyAuth) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
-            {
-                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
-            }
-            // authentication (JWTAuth) required
-            // http bearer authentication required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
-            }
-
-            // make the HTTP request
-            IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
-                Method.PUT, localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarFileParams,
-                localVarPathParams, localVarHttpContentType, cancellationToken);
-
-            int localVarStatusCode = (int) localVarResponse.StatusCode;
-
-            if (ExceptionFactory != null)
-            {
-                Exception exception = ExceptionFactory("SuspendRun", localVarResponse);
-                if (exception != null) throw exception;
-            }
-
-            return new ApiResponse<Accepted>(localVarStatusCode,
-                localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (Accepted) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(Accepted)));
         }
 
     }

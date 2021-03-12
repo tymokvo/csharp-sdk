@@ -19,7 +19,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
-using QueenbeeSDK;
+
 
 namespace PollinationSDK
 {
@@ -74,6 +74,13 @@ namespace PollinationSDK
             // Set non-required readonly properties with defaultValue
             this.Type = "Organization";
         }
+
+        //============================================== is ReadOnly 
+        /// <summary>
+        /// Gets or Sets Type
+        /// </summary>
+        [DataMember(Name = "type", EmitDefaultValue = true)]
+        public string Type { get; protected internal set; }  = "Organization";
 
         /// <summary>
         /// The org ID
@@ -179,6 +186,7 @@ namespace PollinationSDK
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
+            input = input is AnyOf anyOf ? anyOf.Obj : input;
             return this.Equals(input as Organization);
         }
 

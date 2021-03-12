@@ -8,7 +8,6 @@ Name | Type | Description | Notes
 **Annotations** | **Dictionary&lt;string, string&gt;** | An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries. | [optional] 
 **Inputs** | [**List&lt;AnyType&gt;**](AnyType.md) | Place-holder. Overwrite this! | [optional] 
 **Outputs** | [**List&lt;AnyType&gt;**](AnyType.md) | Place-holder. Overwrite this! | [optional] 
-**Status** | **string** | The status of this task. Can be \&quot;Running\&quot;, \&quot;Succeeded\&quot;, \&quot;Failed\&quot; or \&quot;Error\&quot; | 
 **StartedAt** | **DateTime** | The time at which the task was started | 
 **Message** | **string** | Any message produced by the task. Usually error/debugging hints. | [optional] 
 **FinishedAt** | **DateTime** | The time at which the task was completed | [optional] 

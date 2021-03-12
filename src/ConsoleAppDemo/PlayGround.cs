@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 using PollinationSDK;
 using PollinationSDK.Wrapper;
 using System.Threading;
-using QueenbeeSDK;
-
 
 namespace ConsoleAppDemo
 {
@@ -242,7 +240,7 @@ namespace ConsoleAppDemo
             var rec = api.GetRecipeByTag("ladybug-tools", "annual-energy-use", "latest").Manifest;
             //var recTag = api.GetRecipeByTag("ladybug-tools", "annual-energy-use", "c2657adb0b13db6cd3ff706d9d6db59b98ef8f994d2809d23c3ed449c19b52ea");
        
-            var inputs = rec.Inputs.OfType<QueenbeeSDK.GenericInput>();
+            var inputs = rec.Inputs.OfType<GenericInput>();
             var ParamNames = inputs.Select(_ => _.Name);
             Console.WriteLine("------------------Getting Recipe Input Params---------------------");
             Console.WriteLine(string.Join("\n", ParamNames));

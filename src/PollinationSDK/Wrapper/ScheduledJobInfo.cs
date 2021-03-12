@@ -1,7 +1,6 @@
 ﻿using PollinationSDK.Api;
 using System;
 using System.Threading.Tasks;
-using QueenbeeSDK;
 
 namespace PollinationSDK.Wrapper
 {
@@ -58,11 +57,11 @@ namespace PollinationSDK.Wrapper
             var cloudJob = api.GetJob(proj.Owner.Name, proj.Name, jobId);
             var status = cloudJob.Status;
             var startTime = status.StartedAt;
-            while (status.FinishedAt <= status.StartedAt || status.Status == "Post-Processing")
+            while (status.FinishedAt <= status.StartedAt)
             {
                 var currentSeconds = Math.Round((DateTime.UtcNow - startTime).TotalSeconds);
                 // wait 5 seconds before calling api to re-check the status
-                var totalDelaySeconds = status.Status == "Scheduled" ? 3 : 5;
+                var totalDelaySeconds = status.Status == JobStatusEnum.Created ? 3 : 5;
 
                 var running = status.RunsPending + status.RunsRunning;
                 var done = status.RunsFailed + status.RunsCompleted;
@@ -94,7 +93,7 @@ namespace PollinationSDK.Wrapper
             cancelToken.ThrowIfCancellationRequested();
 
             var totalTime = status.FinishedAt - startTime;
-            var finishMessage = status.Status;
+            var finishMessage = status.Status.ToString();
             //progressAction?.Invoke($"Task: {status.Status}");
 
             finishMessage = $"{finishMessage}: [{GetUserFriendlyTimeCounter(totalTime)}]";

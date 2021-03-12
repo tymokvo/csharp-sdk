@@ -19,58 +19,53 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
-using QueenbeeSDK;
+
 
 namespace PollinationSDK
 {
     /// <summary>
-    /// Accepted request response.
+    /// Loop configuration for the task.  This will run the template provided multiple times and in parallel relative to an input or task parameter which should be a list.
     /// </summary>
-    [DataContract(Name = "Accepted")]
-    public partial class Accepted : OpenAPIGenBaseModel, IEquatable<Accepted>, IValidatableObject
+    [DataContract(Name = "DAGTaskLoop")]
+    public partial class DAGTaskLoop : OpenAPIGenBaseModel, IEquatable<DAGTaskLoop>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Accepted" /> class.
+        /// Initializes a new instance of the <see cref="DAGTaskLoop" /> class.
         /// </summary>
-        [JsonConstructorAttribute]
-        protected Accepted() 
-        { 
-            // Set non-required readonly properties with defaultValue
-            this.Type = "Accepted";
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Accepted" /> class.
-        /// </summary>
-        /// <param name="url">Url to access the requested resource. (required).</param>
-        /// <param name="message"> A human readable message (default to &quot;The request is accepted. Use url to access the resource once ready.&quot;).</param>
-        public Accepted
+        /// <param name="annotations">An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries..</param>
+        /// <param name="from">The task or DAG parameter to loop over (must be iterable)..</param>
+        public DAGTaskLoop
         (
-           string url, // Required parameters
-           string message = "The request is accepted. Use url to access the resource once ready." // Optional parameters
+           // Required parameters
+           Dictionary<string, string> annotations= default, AnyOf<InputReference,TaskReference,ValueListReference> from= default// Optional parameters
         ) : base()// BaseClass
         {
-            // to ensure "url" is required (not null)
-            this.Url = url ?? throw new ArgumentNullException("url is a required property for Accepted and cannot be null");
-            // use default value if no "message" provided
-            this.Message = message ?? "The request is accepted. Use url to access the resource once ready.";
+            this.Annotations = annotations;
+            this.From = from;
 
             // Set non-required readonly properties with defaultValue
-            this.Type = "Accepted";
+            this.Type = "DAGTaskLoop";
         }
 
+        //============================================== is ReadOnly 
         /// <summary>
-        /// Url to access the requested resource.
+        /// Gets or Sets Type
         /// </summary>
-        /// <value>Url to access the requested resource.</value>
-        [DataMember(Name = "url", IsRequired = true, EmitDefaultValue = false)]
-        public string Url { get; set; } 
+        [DataMember(Name = "type", EmitDefaultValue = true)]
+        public string Type { get; protected internal set; }  = "DAGTaskLoop";
+
         /// <summary>
-        ///  A human readable message
+        /// An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries.
         /// </summary>
-        /// <value> A human readable message</value>
-        [DataMember(Name = "message", EmitDefaultValue = true)]
-        public string Message { get; set; }  = "The request is accepted. Use url to access the resource once ready.";
+        /// <value>An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries.</value>
+        [DataMember(Name = "annotations", EmitDefaultValue = false)]
+        public Dictionary<string, string> Annotations { get; set; } 
+        /// <summary>
+        /// The task or DAG parameter to loop over (must be iterable).
+        /// </summary>
+        /// <value>The task or DAG parameter to loop over (must be iterable).</value>
+        [DataMember(Name = "from", EmitDefaultValue = false)]
+        public AnyOf<InputReference,TaskReference,ValueListReference> From { get; set; } 
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -78,7 +73,7 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            return "Accepted";
+            return "DAGTaskLoop";
         }
 
         /// <summary>
@@ -91,20 +86,20 @@ namespace PollinationSDK
                 return this.ToString();
             
             var sb = new StringBuilder();
-            sb.Append("Accepted:\n");
+            sb.Append("DAGTaskLoop:\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
-            sb.Append("  Url: ").Append(Url).Append("\n");
-            sb.Append("  Message: ").Append(Message).Append("\n");
+            sb.Append("  Annotations: ").Append(Annotations).Append("\n");
+            sb.Append("  From: ").Append(From).Append("\n");
             return sb.ToString();
         }
   
         /// <summary>
         /// Returns the object from JSON string
         /// </summary>
-        /// <returns>Accepted object</returns>
-        public static Accepted FromJson(string json)
+        /// <returns>DAGTaskLoop object</returns>
+        public static DAGTaskLoop FromJson(string json)
         {
-            var obj = JsonConvert.DeserializeObject<Accepted>(json, JsonSetting.AnyOfConvertSetting);
+            var obj = JsonConvert.DeserializeObject<DAGTaskLoop>(json, JsonSetting.AnyOfConvertSetting);
             if (obj == null)
                 return null;
             return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
@@ -113,8 +108,8 @@ namespace PollinationSDK
         /// <summary>
         /// Creates a new instance with the same properties.
         /// </summary>
-        /// <returns>Accepted object</returns>
-        public virtual Accepted DuplicateAccepted()
+        /// <returns>DAGTaskLoop object</returns>
+        public virtual DAGTaskLoop DuplicateDAGTaskLoop()
         {
             return FromJson(this.ToJson());
         }
@@ -125,7 +120,7 @@ namespace PollinationSDK
         /// <returns>OpenAPIGenBaseModel</returns>
         public override OpenAPIGenBaseModel Duplicate()
         {
-            return DuplicateAccepted();
+            return DuplicateDAGTaskLoop();
         }
 
         /// <summary>
@@ -134,7 +129,7 @@ namespace PollinationSDK
         /// <returns>OpenAPIGenBaseModel</returns>
         public override OpenAPIGenBaseModel DuplicateOpenAPIGenBaseModel()
         {
-            return DuplicateAccepted();
+            return DuplicateDAGTaskLoop();
         }
      
         /// <summary>
@@ -144,33 +139,35 @@ namespace PollinationSDK
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as Accepted);
+            input = input is AnyOf anyOf ? anyOf.Obj : input;
+            return this.Equals(input as DAGTaskLoop);
         }
 
         /// <summary>
-        /// Returns true if Accepted instances are equal
+        /// Returns true if DAGTaskLoop instances are equal
         /// </summary>
-        /// <param name="input">Instance of Accepted to be compared</param>
+        /// <param name="input">Instance of DAGTaskLoop to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(Accepted input)
+        public bool Equals(DAGTaskLoop input)
         {
             if (input == null)
                 return false;
             return base.Equals(input) && 
                 (
-                    this.Url == input.Url ||
-                    (this.Url != null &&
-                    this.Url.Equals(input.Url))
-                ) && base.Equals(input) && 
-                (
-                    this.Message == input.Message ||
-                    (this.Message != null &&
-                    this.Message.Equals(input.Message))
-                ) && base.Equals(input) && 
-                (
                     this.Type == input.Type ||
                     (this.Type != null &&
                     this.Type.Equals(input.Type))
+                ) && base.Equals(input) && 
+                (
+                    this.Annotations == input.Annotations ||
+                    this.Annotations != null &&
+                    input.Annotations != null &&
+                    this.Annotations.SequenceEqual(input.Annotations)
+                ) && base.Equals(input) && 
+                (
+                    this.From == input.From ||
+                    (this.From != null &&
+                    this.From.Equals(input.From))
                 );
         }
 
@@ -183,12 +180,12 @@ namespace PollinationSDK
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = base.GetHashCode();
-                if (this.Url != null)
-                    hashCode = hashCode * 59 + this.Url.GetHashCode();
-                if (this.Message != null)
-                    hashCode = hashCode * 59 + this.Message.GetHashCode();
                 if (this.Type != null)
                     hashCode = hashCode * 59 + this.Type.GetHashCode();
+                if (this.Annotations != null)
+                    hashCode = hashCode * 59 + this.Annotations.GetHashCode();
+                if (this.From != null)
+                    hashCode = hashCode * 59 + this.From.GetHashCode();
                 return hashCode;
             }
         }
@@ -201,22 +198,10 @@ namespace PollinationSDK
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             foreach(var x in base.BaseValidate(validationContext)) yield return x;
-            // Url (string) maxLength
-            if(this.Url != null && this.Url.Length > 2083)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Url, length must be less than 2083.", new [] { "Url" });
-            }
-
-            // Url (string) minLength
-            if(this.Url != null && this.Url.Length < 1)
-            {
-                yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Url, length must be greater than 1.", new [] { "Url" });
-            }
-            
 
             
             // Type (string) pattern
-            Regex regexType = new Regex(@"^Accepted$", RegexOptions.CultureInvariant);
+            Regex regexType = new Regex(@"^DAGTaskLoop$", RegexOptions.CultureInvariant);
             if (false == regexType.Match(this.Type).Success)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Type, must match a pattern of " + regexType, new [] { "Type" });
