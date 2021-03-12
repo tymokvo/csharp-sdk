@@ -8,8 +8,6 @@ docs/APITokenListAllOf.md
 docs/APITokenPrivate.md
 docs/APITokenPrivateAllOf.md
 docs/APITokensApi.md
-docs/Accepted.md
-docs/AcceptedAllOf.md
 docs/AccessPolicy.md
 docs/AccessPolicyAllOf.md
 docs/AccessPolicyList.md
@@ -210,6 +208,7 @@ docs/JobPathArgument.md
 docs/JobPathArgumentAllOf.md
 docs/JobStatus.md
 docs/JobStatusAllOf.md
+docs/JobStatusEnum.md
 docs/JobsApi.md
 docs/KeyRequest.md
 docs/KeyRequestAllOf.md
@@ -329,6 +328,7 @@ docs/RunResultList.md
 docs/RunResultListAllOf.md
 docs/RunStatus.md
 docs/RunStatusAllOf.md
+docs/RunStatusEnum.md
 docs/RunsApi.md
 docs/S3.md
 docs/S3AllOf.md
@@ -371,6 +371,7 @@ docs/StepPathOutput.md
 docs/StepPathOutputAllOf.md
 docs/StepStatus.md
 docs/StepStatusAllOf.md
+docs/StepStatusEnum.md
 docs/StepStringInput.md
 docs/StepStringInputAllOf.md
 docs/StepStringOutput.md
@@ -455,8 +456,6 @@ src/PollinationSDK.Test/Model/APITokenListTests.cs
 src/PollinationSDK.Test/Model/APITokenPrivateAllOfTests.cs
 src/PollinationSDK.Test/Model/APITokenPrivateTests.cs
 src/PollinationSDK.Test/Model/APITokenTests.cs
-src/PollinationSDK.Test/Model/AcceptedAllOfTests.cs
-src/PollinationSDK.Test/Model/AcceptedTests.cs
 src/PollinationSDK.Test/Model/AccessPolicyAllOfTests.cs
 src/PollinationSDK.Test/Model/AccessPolicyListAllOfTests.cs
 src/PollinationSDK.Test/Model/AccessPolicyListTests.cs
@@ -653,6 +652,7 @@ src/PollinationSDK.Test/Model/JobArgumentTests.cs
 src/PollinationSDK.Test/Model/JobPathArgumentAllOfTests.cs
 src/PollinationSDK.Test/Model/JobPathArgumentTests.cs
 src/PollinationSDK.Test/Model/JobStatusAllOfTests.cs
+src/PollinationSDK.Test/Model/JobStatusEnumTests.cs
 src/PollinationSDK.Test/Model/JobStatusTests.cs
 src/PollinationSDK.Test/Model/JobTests.cs
 src/PollinationSDK.Test/Model/KeyRequestAllOfTests.cs
@@ -766,6 +766,7 @@ src/PollinationSDK.Test/Model/RunListTests.cs
 src/PollinationSDK.Test/Model/RunResultListAllOfTests.cs
 src/PollinationSDK.Test/Model/RunResultListTests.cs
 src/PollinationSDK.Test/Model/RunStatusAllOfTests.cs
+src/PollinationSDK.Test/Model/RunStatusEnumTests.cs
 src/PollinationSDK.Test/Model/RunStatusTests.cs
 src/PollinationSDK.Test/Model/RunTests.cs
 src/PollinationSDK.Test/Model/S3AllOfTests.cs
@@ -808,6 +809,7 @@ src/PollinationSDK.Test/Model/StepPathInputTests.cs
 src/PollinationSDK.Test/Model/StepPathOutputAllOfTests.cs
 src/PollinationSDK.Test/Model/StepPathOutputTests.cs
 src/PollinationSDK.Test/Model/StepStatusAllOfTests.cs
+src/PollinationSDK.Test/Model/StepStatusEnumTests.cs
 src/PollinationSDK.Test/Model/StepStatusTests.cs
 src/PollinationSDK.Test/Model/StepStringInputAllOfTests.cs
 src/PollinationSDK.Test/Model/StepStringInputTests.cs
@@ -900,8 +902,6 @@ src/PollinationSDK/Model/APITokenList.cs
 src/PollinationSDK/Model/APITokenListAllOf.cs
 src/PollinationSDK/Model/APITokenPrivate.cs
 src/PollinationSDK/Model/APITokenPrivateAllOf.cs
-src/PollinationSDK/Model/Accepted.cs
-src/PollinationSDK/Model/AcceptedAllOf.cs
 src/PollinationSDK/Model/AccessPolicy.cs
 src/PollinationSDK/Model/AccessPolicyAllOf.cs
 src/PollinationSDK/Model/AccessPolicyList.cs
@@ -1100,6 +1100,7 @@ src/PollinationSDK/Model/JobPathArgument.cs
 src/PollinationSDK/Model/JobPathArgumentAllOf.cs
 src/PollinationSDK/Model/JobStatus.cs
 src/PollinationSDK/Model/JobStatusAllOf.cs
+src/PollinationSDK/Model/JobStatusEnum.cs
 src/PollinationSDK/Model/KeyRequest.cs
 src/PollinationSDK/Model/KeyRequestAllOf.cs
 src/PollinationSDK/Model/License.cs
@@ -1213,6 +1214,7 @@ src/PollinationSDK/Model/RunResultList.cs
 src/PollinationSDK/Model/RunResultListAllOf.cs
 src/PollinationSDK/Model/RunStatus.cs
 src/PollinationSDK/Model/RunStatusAllOf.cs
+src/PollinationSDK/Model/RunStatusEnum.cs
 src/PollinationSDK/Model/S3.cs
 src/PollinationSDK/Model/S3AllOf.cs
 src/PollinationSDK/Model/S3UploadRequest.cs
@@ -1254,6 +1256,7 @@ src/PollinationSDK/Model/StepPathOutput.cs
 src/PollinationSDK/Model/StepPathOutputAllOf.cs
 src/PollinationSDK/Model/StepStatus.cs
 src/PollinationSDK/Model/StepStatusAllOf.cs
+src/PollinationSDK/Model/StepStatusEnum.cs
 src/PollinationSDK/Model/StepStringInput.cs
 src/PollinationSDK/Model/StepStringInputAllOf.cs
 src/PollinationSDK/Model/StepStringOutput.cs

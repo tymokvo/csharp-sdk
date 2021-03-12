@@ -35,7 +35,7 @@ def gen_interfaces(source_json):
         if name_space not in interfaces:
             interfaces[name_space] = []
         
-        if key != '' and not key.startswith('_'):
+        if key != '' and '_' not in key:
             interfaces[name_space].append(key)
 
         # print(f"  |-{data[key]}")
@@ -55,8 +55,12 @@ def create_interface(dir, space_name, child_classes):
     if space_name == f"{lib_Name}.Model":
         return
 
+    if child_classes == []:
+        return
+
     layers = space_name.split('.')
     layers[0] = lib_Name
+    
     sub_folders = layers[1:-1]
     sub_dir = os.path.join(dir, *sub_folders)
 
@@ -64,7 +68,9 @@ def create_interface(dir, space_name, child_classes):
     if interface_name == '_Base':
         return
 
-    space_full_name = ".".join(layers[:-1])
+    namespace_items = layers[:-1]
+    namespace_items.insert(1, 'Interface')
+    space_full_name = ".".join(namespace_items)
 
 
     if not os.path.exists(sub_dir):

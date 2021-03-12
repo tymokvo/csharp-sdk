@@ -39,12 +39,12 @@ subprocess.call(f"python3 {generator_folder}/update_assembly_version.py", shell=
 
 # remove honeybee files
 time.sleep(1)
-# python3 .openapi-generator/remove_queenbee_schema.py ".openapi-docs/openapi_mapper.json"
+# python3 .openapi-generator/create_interface.py ".openapi-docs/openapi_mapper.json"
 mapper = os.path.join(doc_folder, 'openapi_mapper.json')
-subprocess.call(f"python3 {generator_folder}/remove_queenbee_schema.py {mapper}", shell=True)
+subprocess.call(f"python3 {generator_folder}/create_interface.py {mapper}", shell=True)
 
 
 # test to build the project
-# dotnet build -c Release -f netstandard2.0 src/HoneybeeSchema
+# dotnet build -c Release /nowarn:CS0472,CS0108,CS0114
 time.sleep(1)
-subprocess.call("dotnet build -c Release /nowarn:CS0472,CS0108,CS0114", shell=True)
+subprocess.call("dotnet build -c Release /nowarn:CS0472,CS0108,CS0114,CS0168", shell=True)
