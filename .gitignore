@@ -15,7 +15,7 @@ packages.config
 *.user
 *.sln.docstates
 ./nuget
-
+.vscode
 
 # Build results
 
