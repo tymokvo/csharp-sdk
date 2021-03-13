@@ -6,7 +6,6 @@ using System.Linq;
 using NUnit.Framework;
 using PollinationSDK.Api;
 using PollinationSDK.Wrapper;
-using QueenbeeSDK;
 using System.Threading.Tasks;
 
 namespace PollinationSDK.Test
@@ -109,7 +108,7 @@ namespace PollinationSDK.Test
 
             // get all output assets to download
             var outputNames = runInfo.Recipe.Outputs
-                .OfType<QueenbeeSDK.Interface.Io.Outputs.IDag>()
+                .OfType<PollinationSDK.Interface.Io.Outputs.IDag>()
                 .Select(_ => _.Name).ToList();
 
             var savedPath = System.IO.Path.GetTempPath();

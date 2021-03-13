@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using NUnit.Framework;
 using PollinationSDK.Api;
-using QueenbeeSDK;
 
 namespace PollinationSDK.Test
 {
@@ -65,7 +64,7 @@ namespace PollinationSDK.Test
         {
             var rec = api.GetRecipeByTag("ladybug-tools", "annual-energy-use", "latest").Manifest;
 
-            var inputs = rec.Inputs.OfType<QueenbeeSDK.GenericInput>();
+            var inputs = rec.Inputs.OfType<GenericInput>();
             foreach (var item in inputs)
             {
                 Console.WriteLine($"{item.Name}: {item.Type}");

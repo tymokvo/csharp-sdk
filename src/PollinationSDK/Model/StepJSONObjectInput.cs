@@ -218,11 +218,6 @@ namespace PollinationSDK
                     this.Required.Equals(input.Required))
                 ) && base.Equals(input) && 
                 (
-                    this.Spec == input.Spec ||
-                    (this.Spec != null &&
-                    this.Spec.Equals(input.Spec))
-                ) && base.Equals(input) && 
-                (
                     this.Type == input.Type ||
                     (this.Type != null &&
                     this.Type.Equals(input.Type))

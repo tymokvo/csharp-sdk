@@ -27,7 +27,7 @@ subprocess.call(f"npx @openapitools/openapi-generator-cli generate -i {json1} -t
 
 # post process files
 # python3 .openapi-generator/post_gen_script.py ".openapi-docs/openapi_inheritance.json"
-time.sleep(1)
+time.sleep(3)
 subprocess.call(f"python3 {generator_folder}/post_gen_script.py {json1}", shell=True)
 
 

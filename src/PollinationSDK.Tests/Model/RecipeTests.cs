@@ -1,16 +1,7 @@
 
 using NUnit.Framework;
-
-using System;
 using System.Linq;
-using System.IO;
-using System.Collections.Generic;
-using PollinationSDK.Api;
-using PollinationSDK.Client;
-using System.Reflection;
-using Newtonsoft.Json;
 using System.Net;
-using QueenbeeSDK;
 
 namespace PollinationSDK.Test
 {
@@ -95,21 +86,36 @@ namespace PollinationSDK.Test
         [Test]
         public void ToJson()
         {
+            var dup = this.annualDaylight.DuplicateRecipeInterface();
+            Assert.IsTrue(this.annualDaylight.Metadata.Equals(dup.Metadata));
             Assert.IsTrue(this.annualDaylight.Metadata.Equals(this.annualDaylight.Metadata.DuplicateMetaData()));
 
+            // check if all inputs are GenericInput
             var inputs = this.annualDaylight.Inputs.OfType<GenericInput>();
             Assert.IsTrue(inputs.Count() == this.annualDaylight.Inputs.Count);
-            foreach (var item in inputs)
+
+            // check inputs 
+            for (int i = 0; i < this.annualDaylight.Inputs.Count; i++)
             {
-                Assert.IsTrue(item.Equals(item.Duplicate()));
+                var item = this.annualDaylight.Inputs[i];
+                var itemDup = dup.Inputs[i];
+                Assert.IsTrue(item.ToJson().Equals(itemDup.ToJson()));
+                Assert.IsTrue(item.Equals(itemDup));
             }
 
+            Assert.IsTrue(this.annualDaylight.Inputs.SequenceEqual(dup.Inputs));
+
+            // check outputs 
             var outputs = this.annualDaylight.Outputs.OfType<GenericOutput>();
             Assert.IsTrue(outputs.Count() == this.annualDaylight.Outputs.Count);
-            foreach (var item in outputs)
+            for (int i = 0; i < this.annualDaylight.Outputs.Count; i++)
             {
-                Assert.IsTrue(item.Equals(item.Duplicate()));
+                var item = this.annualDaylight.Outputs[i];
+                var itemDup = dup.Outputs[i];
+                Assert.IsTrue(item.ToJson().Equals(itemDup.ToJson()));
+                Assert.IsTrue(item.Equals(itemDup));
             }
+            Assert.IsTrue(this.annualDaylight.Outputs.SequenceEqual(dup.Outputs));
 
 
             //Assert.IsTrue(this.annualDaylight.Inputs.First().Equals(this.annualDaylight.Inputs.First().));
@@ -118,7 +124,6 @@ namespace PollinationSDK.Test
             Assert.IsTrue(dup1.Equals(this.annualDaylight));
 
             var dup2 = this.daylightFactor.DuplicateRecipeInterface();
-            var a = this.daylightFactor.Duplicate();
             Assert.IsTrue(this.daylightFactor.Equals(dup2));
         }
 

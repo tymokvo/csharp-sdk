@@ -234,6 +234,9 @@ def check_csfiles(source_folder, anyof_types):
         # replace decimal/number to double
         # data = replace_decimal(data)
         data = fix_constructor(data)
+
+        # remove spec parameter in DAG inputs's Equals
+        data = remove_spec_in_equals(data)
         f.close()
 
         # save data
@@ -279,6 +282,12 @@ def check_types(source_json_url, mapper_json):
         check_csfiles(source_folder, all_types)
 
 
+def remove_spec_in_equals(read_data):
+    rex = r" && base\.Equals\(input\) &&\s+\(\s+this\.Spec == input\.Spec[\w\W]*input\.Spec\)\)\s*\)"
+    replace = ''
+    if re.findall(rex, read_data) != []:
+        read_data = re.sub(rex, replace, read_data)
+    return read_data
 
 
 def cleanup(projectName):

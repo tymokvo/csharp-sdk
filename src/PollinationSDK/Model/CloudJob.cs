@@ -207,11 +207,6 @@ namespace PollinationSDK
                     this.Id.Equals(input.Id))
                 ) && base.Equals(input) && 
                 (
-                    this.Spec == input.Spec ||
-                    (this.Spec != null &&
-                    this.Spec.Equals(input.Spec))
-                ) && base.Equals(input) && 
-                (
                     this.Author == input.Author ||
                     (this.Author != null &&
                     this.Author.Equals(input.Author))
