@@ -115,13 +115,11 @@ namespace PollinationSDK.Wrapper
             }
         }
 
-        public void StopSimulaiton()
+        public void CancelJob()
         {
             var proj = this.Project;
-            var simuId = this.JobID;
-
-            //var api = new JobsApi();
-            //api.(proj.Owner.Name, proj.Name, simuId);
+            var api = new JobsApi();
+            api.CancelJobAsync(proj.Owner.Name, proj.Name, this.JobID);
         }
 
 
