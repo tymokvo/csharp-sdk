@@ -27,6 +27,15 @@ namespace PollinationSDK.Test
 
         }
 
+        /// <summary>
+        /// Test GetMe
+        /// </summary>
+        [Test]
+        public void IsLadybugTest()
+        {
+            var user = instance.GetMe();
+            Assert.IsTrue(user.Email.ToLower().EndsWith("@ladybug.tools"));
+        }
 
         /// <summary>
         /// Test GetMe
