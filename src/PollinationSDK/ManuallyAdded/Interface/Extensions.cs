@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
+using System.Collections.Generic;
 
 namespace PollinationSDK
 {
@@ -30,6 +32,42 @@ namespace PollinationSDK
             return ioBase.GetType().GetProperty(propertyName).GetValue(ioBase, null);
         }
 
+        private static JsonSchema GetSpecSchema(this Interface.Io.Inputs.IoBase ioBase)
+        {
+            if (ioBase.Spec == null) return null;
+            var specJson = ioBase.Spec.ToString();
+            return JsonSchema.Parse(specJson);
+        }
+
+        public static bool ValidateWithSpec(this Interface.Io.Inputs.IoBase ioBase, object value, out IList<string> outputMessages)
+        {
+            outputMessages = null;
+            if (ioBase.Spec == null) return true;
+            var spec = ioBase.GetSpecSchema();
+
+            var data = JToken.FromObject(value);
+            var valid  = data.IsValid(spec, out outputMessages);
+           
+
+            return valid;
+        }
+        /// <summary>
+        /// Validate input value against spec schema
+        /// </summary>
+        /// <param name="ioBase"></param>
+        /// <param name="value"></param>
+        /// <returns>Returns true, otherwise throw ArgumentException if value is not valid</returns>
+        public static bool ValidateWithSpec(this Interface.Io.Inputs.IoBase ioBase, object value)
+        {
+            
+            if (!ioBase.ValidateWithSpec(value, out var messages))
+            {
+                var msg = string.Join("\n", messages);
+                throw new System.ArgumentException(msg);
+            }
+
+            return true;
+        }
 
         public static bool IsValueType(this Interface.Io.Inputs.IStep inputStep)
         {

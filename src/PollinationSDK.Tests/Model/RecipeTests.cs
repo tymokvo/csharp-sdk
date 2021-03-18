@@ -79,9 +79,27 @@ namespace PollinationSDK.Test
         public void TagTest()
         {
             Assert.IsTrue(this.annualDaylight.Metadata.Tag != "latest");
-
             Assert.IsTrue(this.daylightFactor.Metadata.Tag != "latest");
         }
+
+        [Test]
+        public void ValidateInputTest()
+        {
+            var numInput = this.daylightFactor.Inputs.OfType<DAGIntegerInput>().First();
+            var isValid = numInput.ValidateWithSpec(1);
+            Assert.IsTrue(isValid);
+
+            // invalid type
+            isValid = numInput.ValidateWithSpec(0.5, out var msgFailed);
+            Assert.IsTrue(!isValid);
+            Assert.IsTrue(msgFailed.Any());
+
+            // invalid value
+            isValid = numInput.ValidateWithSpec(0, out var msgFailed2);
+            Assert.IsTrue(!isValid);
+            Assert.IsTrue(msgFailed2.Any());
+        }
+
 
         [Test]
         public void ToJson()
