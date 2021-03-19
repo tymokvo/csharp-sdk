@@ -60,13 +60,18 @@ namespace PollinationSDK.Test
         public void CreateProjectRecipeFilterTest()
         {
             //ISSUE: https://github.com/pollination/pollination-server/issues/128
+            Wrapper.JobRunner.CheckRecipeInProject("ladybug-tools", "daylight-factor", this.Project);
+            //Assert.IsTrue(!string.IsNullOrEmpty(response));
 
-            //var response = JobRunner.CheckRecipeInProject("ladybug-tools", "daylight-factor", this.Project);
-            //Assert.IsTrue(!string.IsNullOrEmpty( response));
+            var filters = api.GetProjectRecipeFilters(Helper.CurrentUser.Username, Project.Name).Resources;
+            Assert.IsTrue(filters.FirstOrDefault().Name == "daylight-factor");
 
-            //// delete recipe filter test
-            //var projectRecipeFilter = new ProjectRecipeFilter("ladybug-tools", "daylight-factor");
-            //instance.DeleteProjectRecipeFilter(this.Project.Owner.Name, this.Project.Name, projectRecipeFilter);
+            // delete recipe filter test
+            var projectRecipeFilter = new ProjectRecipeFilter("ladybug-tools", "daylight-factor");
+            api.DeleteProjectRecipeFilter(this.Project.Owner.Name, this.Project.Name, projectRecipeFilter);
+
+            filters = api.GetProjectRecipeFilters(Helper.CurrentUser.Username, Project.Name).Resources;
+            Assert.IsTrue(filters.Count == 0);
         }
         
 
