@@ -16,6 +16,7 @@ namespace PollinationSDK.Test
     {
         private RecipeInterface daylightFactor;
         private RecipeInterface annualDaylight;
+        private RecipeInterface annualEnergyUse;
 
         [SetUp]
         public void Init()
@@ -32,6 +33,11 @@ namespace PollinationSDK.Test
                 url = @"https://api.staging.pollination.cloud/recipes/ladybug-tools/daylight-factor/tags/latest";
                 json = wc.DownloadString(url);
                 this.daylightFactor = RecipePackage.FromJson(json).Manifest;
+
+                // Daylight factor
+                url = @"https://api.staging.pollination.cloud/recipes/ladybug-tools/annual-energy-use/tags/latest";
+                json = wc.DownloadString(url);
+                this.annualEnergyUse = RecipePackage.FromJson(json).Manifest;
             }
 
             //var file = @"../../../testResources/RecipePackage.json";
@@ -143,6 +149,17 @@ namespace PollinationSDK.Test
 
             var dup2 = this.daylightFactor.DuplicateRecipeInterface();
             Assert.IsTrue(this.daylightFactor.Equals(dup2));
+        }
+
+        [Test]
+        public void AnnualEnergyUseTest()
+        {
+            var rec = this.annualEnergyUse;
+            var filterInput = rec.Inputs.OfType<DAGStringInput>().First(_ => _.Name == "filter-des-days");
+            var alias = filterInput.Alias.OfType<DAGGenericInputAlias>().First();
+
+
+            Assert.IsTrue(alias.Default == true.ToString());
         }
 
     }
