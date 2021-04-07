@@ -78,6 +78,7 @@ namespace PollinationSDK.Test
             // run a job
             var task = jobInfo.RunJobOnCloud(Project, (s) => Console.WriteLine(s));
 
+
             //cts.CancelAfter(60000);
             ScheduledJob = task.Result;
 
@@ -100,24 +101,18 @@ namespace PollinationSDK.Test
         [Test, Order(3)]
         public void CheckJobResultTest()
         {
-            var runApi = new PollinationSDK.Api.RunsApi();
-            var proj = this.Project;
-
-            var firstRun = runApi.ListRuns(proj.Owner.Name, proj.Name, page: 1, perPage: 1).Resources.First();
-            var runInfo = new RunInfo(proj, firstRun);
-
-            // get all output assets to download
-            var outputNames = runInfo.Recipe.Outputs
-                .OfType<PollinationSDK.Interface.Io.Outputs.IDag>()
-                .Select(_ => _.Name).ToList();
 
             var savedPath = System.IO.Path.GetTempPath();
 
-            // Load run's input arguments data // Don't download inputs for now
-            var inputAssetPathes =  new Dictionary<string, string>();
+            // get the first runInfo from a job
+            var runInfo = ScheduledJob.GetRunInfo(0);
 
-            // download run's output assets
-            var outputAssetNames = outputNames ?? new List<string>();
+            // get all output assets to download
+            var outputNames = runInfo.GetOutputAssets();
+
+
+            // Load run's input arguments data 
+            var inputAssetPathes = runInfo.GetInputPathAssets();
 
             // progress reporter
             Action<string> UpdateProgressMessage = (s) => Console.WriteLine(s);
@@ -126,7 +121,7 @@ namespace PollinationSDK.Test
             var useCachedAssets = false;
 
             // download all assets
-            var task = Task<Dictionary<string, string>>.Run(async () => await runInfo.DownloadRunAssetsAsync(inputAssetPathes, outputAssetNames, savedPath, UpdateProgressMessage, useCachedAssets));
+            var task = Task<Dictionary<string, string>>.Run(async () => await runInfo.DownloadRunAssetsAsync(inputAssetPathes, outputNames, savedPath, UpdateProgressMessage, useCachedAssets));
             task.Wait();
 
             //await Task.Delay(3000);
@@ -148,6 +143,18 @@ namespace PollinationSDK.Test
             }
 
             Assert.IsTrue(filePaths.Any());
+
+
+
+            // get run's value type input arguments that don't need to download
+            var inputValueAssets = runInfo.GetInputValueAssets();
+            foreach (var item in inputValueAssets)
+            {
+                Console.WriteLine($"Asset: {item.Key}\nUser input: {item.Value}");
+            }
+
+            Assert.IsTrue(inputValueAssets.Any());
+
         }
 
         /// <summary>
