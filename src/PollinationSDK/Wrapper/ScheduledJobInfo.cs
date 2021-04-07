@@ -1,5 +1,7 @@
 ﻿using PollinationSDK.Api;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PollinationSDK.Wrapper
@@ -122,6 +124,29 @@ namespace PollinationSDK.Wrapper
             api.CancelJobAsync(proj.Owner.Name, proj.Name, this.JobID);
         }
 
+
+        public RunInfo GetRunInfo(int runIndex)
+        {
+            var jobInfo = this;
+            // only get the first run asset for now
+            var job = jobInfo.CloudJob;
+
+            //check run index if valid
+            var page = runIndex + 1;
+            var totalRuns = job.Status.RunsCompleted + job.Status.RunsFailed + job.Status.RunsPending + job.Status.RunsRunning;
+            if (totalRuns == 0 || job.Status.FinishedAt < job.Status.StartedAt)
+                throw new ArgumentException($"This job is [{job.Status.Status}]. If job is scheduled but not started, please check it again in a few seconds;");
+
+            if (page > totalRuns)
+                throw new ArgumentException($"This job has {totalRuns} runs in total, a valid run index could from 0 to { totalRuns - 1};");
+
+            var api = new PollinationSDK.Api.RunsApi();
+            var runs = api.ListRuns(jobInfo.Project.Owner.Name, jobInfo.Project.Name, jobId: new List<string>() { job.Id }, page: page, perPage: 1).Resources;
+            var firstRun = runs.FirstOrDefault();
+            var runInfo = new RunInfo(jobInfo.Project, firstRun);
+
+            return runInfo;
+        }
 
     }
 }
