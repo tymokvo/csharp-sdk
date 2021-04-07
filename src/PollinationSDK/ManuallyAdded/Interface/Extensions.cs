@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PollinationSDK
 {
@@ -25,6 +26,48 @@ namespace PollinationSDK
             // use this dummy is for future-proofing. Just in case "Default" is changed in the future
             StepStringInput dummy;
             return inputStep.GetPropertyValue(nameof(dummy.Default));
+        }
+
+        /// <summary>
+        /// Get user's argument of value type inputs (string, int, double, etc)
+        /// </summary>
+        /// <param name="inputStep"></param>
+        /// <returns>return an empty list if inputStep is a path type, which need to be downloaded</returns>
+        public static List<string> GetInputValueAsset(this Interface.Io.Inputs.IStep inputStep)
+        {
+            List<string> value = new List<string>();
+
+            if (inputStep.IsPathType()) return value;
+
+            if (inputStep is StepArrayInput s)
+                value.AddRange(s.Value.Select(_ => _.ToString()));
+            else
+            {
+                var v = inputStep.GetValue().ToString();
+                value.Add(v);
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Get asset path of ProjectFolder type to be downloaded
+        /// </summary>
+        /// <param name="inputStep"></param>
+        /// <returns>return empty if it is not a path type input</returns>
+        public static string GetInputPathAsset(this Interface.Io.Inputs.IStep inputStep)
+        {
+            var value = string.Empty;
+            if (inputStep.IsPathType())
+            {
+                var pathSource = inputStep.GetPathSource();
+                if (pathSource.Obj is ProjectFolder file)
+                    value = file.Path;
+                else
+                    throw new System.ArgumentException($"The source of {inputStep.Name} is {pathSource.Obj.GetType()}, which is not supported ProjectFolder type");
+
+            }
+            return value;
         }
 
         private static object GetPropertyValue(this Interface.Io.Inputs.IoBase ioBase, string propertyName)

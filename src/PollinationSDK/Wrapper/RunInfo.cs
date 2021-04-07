@@ -52,7 +52,7 @@ namespace PollinationSDK.Wrapper
         {
             return $"CLOUD:{this.Project.Owner.Name}/{this.Project.Name}/{this.RunID}";
         }
-        
+
 
         //public async Task<string> WatchRunStatusAsync(Action<string> progressAction = default, System.Threading.CancellationToken cancelToken = default)
         //{
@@ -113,7 +113,7 @@ namespace PollinationSDK.Wrapper
         //    }
         //}
 
-       
+
 
 
 
@@ -212,6 +212,78 @@ namespace PollinationSDK.Wrapper
         //    }
 
         //}
+
+
+        public List<Interface.Io.Outputs.IDag> GetOutputs()
+        {
+            var outputs = this.Recipe.Outputs
+                .OfType<Interface.Io.Outputs.IDag>().ToList();
+
+            return outputs;
+        }
+
+
+        public List<Interface.Io.Inputs.IStep> GetInputs()
+        {
+            var inputs = this.Run.Status.Inputs
+                  .OfType<Interface.Io.Inputs.IStep>().ToList();
+           
+            return inputs;
+        }
+
+
+        /// <summary>
+        /// Get a run's output asset names as an input of DownloadRunAssetsAsync()
+        /// </summary>
+        /// <returns>Asset names</returns>
+        public List<string> GetOutputAssets()
+        {
+            var outputNames = this.GetOutputs().Select(_ => _.Name).ToList();
+            return outputNames;
+        }
+
+
+        /// <summary>
+        /// Get a run's input asset name and cloud path as an input of DownloadRunAssetsAsync()
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, string> GetInputPathAssets()
+        {
+            var inputAssetsDic = new Dictionary<string, string>();
+            var inputAssets = this.GetInputs();
+
+            foreach (var stepInput in inputAssets)
+            {
+                var path = stepInput.GetInputPathAsset();
+                if (string.IsNullOrEmpty(path))
+                    continue;
+                inputAssetsDic.Add(stepInput.Name, path);
+            }
+
+            return inputAssetsDic;
+        }
+
+        /// <summary>
+        ///  Get a run's input value assets that doesn't required to be downloaded.
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, List<string>> GetInputValueAssets()
+        {
+            var inputAssetsDic = new Dictionary<string, List<string>>();
+            var inputAssets = this.GetInputs();
+
+            foreach (var stepInput in inputAssets)
+            {
+                var values = stepInput.GetInputValueAsset();
+                if (!values.Any())
+                    continue;
+                inputAssetsDic.Add(stepInput.Name, values);
+            }
+
+            return inputAssetsDic;
+          
+        }
+
 
 
         /// <summary>
