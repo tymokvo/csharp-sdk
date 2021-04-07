@@ -180,5 +180,31 @@ namespace PollinationSDK
             }
 
         }
+
+        /// <summary>
+        /// Get an alias for a platform (rhino, grasshopper, revit, etc)
+        /// </summary>
+        /// <param name="inputDag"></param>
+        /// <param name="platform">platform name (rhino, grasshopper, revit, etc)</param>
+        /// <returns></returns>
+        public static Interface.Io.Inputs.IAlias GetAlias(this Interface.Io.Inputs.IDag inputDag, string platform)
+        {
+            return inputDag.Alias?.OfType<Interface.Io.Inputs.IAlias>()?.FirstOrDefault(_ => _.Platform.Contains(platform));
+
+        }
+
+        /// <summary>
+        /// Get an alias for a platform (rhino, grasshopper, revit, etc)
+        /// </summary>
+        /// <param name="outputDag"></param>
+        /// <param name="platform">platform name (rhino, grasshopper, revit, etc)</param>
+        /// <returns></returns>
+        public static Interface.Io.Outputs.IAlias GetAlias(this Interface.Io.Outputs.IDag outputDag, string platform)
+        {
+            return outputDag.Alias?.OfType<Interface.Io.Outputs.IAlias>()?.FirstOrDefault(_ => _.Platform.Contains(platform));
+
+        }
+
+
     }
 }
