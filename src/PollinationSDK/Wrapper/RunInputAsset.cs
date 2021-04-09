@@ -26,7 +26,7 @@ namespace PollinationSDK.Wrapper
             this.Value = dagInput.GetInputValue();
 
             // keep cloud source: CLOUD:mingbo/demo/1D725BD1-44E1-4C3C-85D6-4D98F558DE7C
-            this.CloudRunSource = dagInput.IsPathType() ? cloudRunSource : null;
+            this.CloudRunSource = cloudRunSource;
             dagInput.GetInputValue();
         }
 
