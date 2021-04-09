@@ -33,17 +33,17 @@ namespace PollinationSDK
         /// </summary>
         /// <param name="inputStep"></param>
         /// <returns>return an empty list if inputStep is a path type, which need to be downloaded</returns>
-        public static List<string> GetInputValueAsset(this Interface.Io.Inputs.IStep inputStep)
+        public static List<object> GetInputValue(this Interface.Io.Inputs.IStep inputStep)
         {
-            List<string> value = new List<string>();
+            var value = new List<object>();
 
             if (inputStep.IsPathType()) return value;
 
             if (inputStep is StepArrayInput s)
-                value.AddRange(s.Value.Select(_ => _.ToString()));
+                value.AddRange(s.Value);
             else
             {
-                var v = inputStep.GetValue().ToString();
+                var v = inputStep.GetValue();
                 value.Add(v);
             }
 
@@ -55,7 +55,7 @@ namespace PollinationSDK
         /// </summary>
         /// <param name="inputStep"></param>
         /// <returns>return empty if it is not a path type input</returns>
-        public static string GetInputPathAsset(this Interface.Io.Inputs.IStep inputStep)
+        public static string GetInputPath(this Interface.Io.Inputs.IStep inputStep)
         {
             var value = string.Empty;
             if (inputStep.IsPathType())

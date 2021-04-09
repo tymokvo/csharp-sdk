@@ -30,6 +30,14 @@ namespace PollinationSDK.Wrapper
         {
         }
 
+        public ScheduledJobInfo(string clouldProjectName, string projectOwner, string jobID)
+        {
+            var projApi = new ProjectsApi();
+            this.Project = projApi.GetProject(projectOwner, clouldProjectName);
+            this.CloudJob = GetJob(this.Project, jobID);
+            this.Recipe = this.CloudJob.Recipe;
+        }
+
         private static CloudJob GetJob(Project proj, string jobID)
         {
             var api = new JobsApi();

@@ -233,71 +233,35 @@ namespace PollinationSDK.Wrapper
 
 
         /// <summary>
-        /// Get a run's output asset names as an input of DownloadRunAssetsAsync()
+        /// Get a run's output assets
         /// </summary>
-        /// <returns>Asset names</returns>
-        public List<string> GetOutputAssets()
+        /// <returns></returns>
+        public List<RunOutputAsset> GetOutputAssets(string platform)
         {
-            var outputNames = this.GetOutputs().Select(_ => _.Name).ToList();
-            return outputNames;
+            var cloudSource = this.ToString();
+            var assets = this.GetOutputs().Select(_ => new RunOutputAsset(_, platform, cloudSource)).ToList();
+            return assets;
         }
 
 
         /// <summary>
-        /// Get a run's input asset name and cloud path as an input of DownloadRunAssetsAsync()
+        /// Get a run's input assets
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, string> GetInputPathAssets()
+        public List<RunInputAsset> GetInputAssets()
         {
-            var inputAssetsDic = new Dictionary<string, string>();
-            var inputAssets = this.GetInputs();
+            var cloudSource = this.ToString();
+            var assets = this.GetInputs().Select(_ => new RunInputAsset(_, cloudSource)).ToList();
+            return assets;
 
-            foreach (var stepInput in inputAssets)
-            {
-                var path = stepInput.GetInputPathAsset();
-                if (string.IsNullOrEmpty(path))
-                    continue;
-                inputAssetsDic.Add(stepInput.Name, path);
-            }
-
-            return inputAssetsDic;
         }
 
-        /// <summary>
-        ///  Get a run's input value assets that doesn't required to be downloaded.
-        /// </summary>
-        /// <returns></returns>
-        public Dictionary<string, List<string>> GetInputValueAssets()
+        
+
+        public async Task<List<RunAssetBase>> DownloadRunAssetsAsync(List<RunAssetBase> runAssets, string saveAsDir = default, Action<string> reportingAction = default, bool useCached = false)
         {
-            var inputAssetsDic = new Dictionary<string, List<string>>();
-            var inputAssets = this.GetInputs();
+            var downloadedAssets = new List<RunAssetBase>();
 
-            foreach (var stepInput in inputAssets)
-            {
-                var values = stepInput.GetInputValueAsset();
-                if (!values.Any())
-                    continue;
-                inputAssetsDic.Add(stepInput.Name, values);
-            }
-
-            return inputAssetsDic;
-          
-        }
-
-
-
-        /// <summary>
-        /// Download a list of OutputArtifacts from a simulation.
-        /// </summary>
-        /// <param name="inputAssetPaths">asset name, relative path to project folder of file or folder </param>
-        /// <param name="outputAssets">output name</param>
-        /// <param name="saveAsDir"></param>
-        /// <param name="reportingAction"></param>
-        /// <returns></returns>
-        public async Task<Dictionary<string, string>> DownloadRunAssetsAsync(Dictionary<string, string> inputAssetPaths, List<string> outputAssets, string saveAsDir = default, Action<string> reportingAction = default, bool useCached = false)
-        {
-            //_filePaths = new List<string>();
-            var downloadedFiles = new Dictionary<string, string>();
             try
             {
                 var dir = string.IsNullOrEmpty(saveAsDir) ? Helper.GenTempFolder() : saveAsDir;
@@ -306,13 +270,19 @@ namespace PollinationSDK.Wrapper
                 var inputDir = Path.Combine(dir, "inputs");
                 var outputDir = Path.Combine(dir, "outputs");
 
+                var inputAssets = runAssets.OfType<RunInputAsset>();
+                var outputAssets = runAssets.OfType<RunOutputAsset>();
+
                 // check if cached
                 if (useCached)
-                    downloadedFiles = CheckCached(ref inputAssetPaths, ref outputAssets, inputDir, outputDir);
-
+                {
+                    inputAssets = CheckCached(inputAssets, inputDir).OfType<RunInputAsset>();
+                    outputAssets = CheckCached(outputAssets, outputDir).OfType<RunOutputAsset>();
+                }
+                
                 // assembly download tasks
                 var tasks = new List<Task<string>>();
-                var inputTasks = DownloadInputArtifact(this, inputAssetPaths, inputDir);
+                var inputTasks = DownloadInputArtifact(this, inputAssets, inputDir);
                 tasks.AddRange(inputTasks);
                 var outputTasks = DownloadOutputArtifact(this, outputAssets, outputDir);
                 tasks.AddRange(outputTasks);
@@ -323,130 +293,58 @@ namespace PollinationSDK.Wrapper
                 while (total - completed > 0)
                 {
                     reportingAction?.Invoke($"0%");
-                    var finishedTask =  await Task.WhenAny(tasks);
+                    var finishedTask = await Task.WhenAny(tasks);
                     await finishedTask;
                     completed++;
 
-                    int finishedPercent = (int) (completed / (double)total * 100);
+                    int finishedPercent = (int)(completed / (double)total * 100);
                     reportingAction?.Invoke($"{finishedPercent}%");
                 }
                 reportingAction?.Invoke($"{completed}/{total} loaded");
 
-                var assetNames = inputAssetPaths?.Select(_=> $"IN_{_.Key}")?.ToList() ?? new List<string>();
-                assetNames.AddRange(outputAssets?.Select(_ => $"OUT_{_}"));
+                var allAssets = new List<RunAssetBase>();
+                allAssets.AddRange(inputAssets);
+                allAssets.AddRange(outputAssets);
 
                 // collect all downloaded assets
-                var works = assetNames.Zip(tasks, (name, task) => new { name, task });
+                var works = allAssets.Zip(tasks, (asset, task) => new { asset, task });
                 foreach (var item in works)
                 {
                     var savedFolderOrFilePath = await item.task;
-                    //var subPaths = CheckIfFolderPath(savedFolderOrFilePath);
-                    downloadedFiles.Add(item.name, savedFolderOrFilePath);
+                    var dup = item.asset.Duplicate();
+                    dup.LocalPath = savedFolderOrFilePath;
+                    downloadedAssets.Add(dup);
                 }
-            
+
             }
             catch (Exception e)
             {
                 throw e;
             }
 
-            return downloadedFiles;
-            //return finished;
+            return downloadedAssets;
 
-            //List<string> CheckIfFolderPath(string p)
-            //{
-            //    if (Directory.Exists(p))
-            //    {
-            //        var items = Directory.EnumerateFileSystemEntries(p, "*", SearchOption.TopDirectoryOnly);
-            //        var itemPaths = items.Any() ? items.ToList() : new List<string>() { p };
-            //        return itemPaths;
-            //    }
-            //    else
-            //    {
-            //        return new List<string>() { p };
-            //    }
-            //}
         }
 
-        private static Dictionary<string, string> CheckCached(ref Dictionary<string, string> inputAssetPaths, ref List<string> outputAssets, string inputDir, string outputDir)
+        private static IEnumerable<RunAssetBase> CheckCached(IEnumerable<RunAssetBase> outputAssets, string dir)
         {
-            var downloadedFiles = new Dictionary<string, string>();
-
-            // check inputs 
-            var query = inputAssetPaths.GroupBy(_ => CheckIfAssetCached(_.Key, _.Value, inputDir));
-          
-            var nonCachedInputAssets = new Dictionary<string, string>();
-            foreach (var item in inputAssetPaths)
-            {
-                var isCached = CheckIfAssetCached(item.Key, item.Value, inputDir);
-                if (isCached)
-                    GetCachedAsset(ref downloadedFiles, item.Key, item.Value, inputDir, "IN");
-                else
-                    nonCachedInputAssets.Add(item.Key, item.Value);
-            }
-            // override the inputs
-            inputAssetPaths = nonCachedInputAssets;
-
-
-            // check outputs 
-            var nonCachedOutputAssets = new Dictionary<string, string>();
+            var inputDir = dir;
+            var checkedAssets = new List<RunAssetBase>();
             foreach (var item in outputAssets)
             {
-                var isCached = CheckIfAssetCached(item, item, outputDir);
+                var dupObj = item.Duplicate();
+                var isCached = item.CheckIfAssetCached(inputDir);
                 if (isCached)
-                    GetCachedAsset(ref downloadedFiles, item, item, outputDir, "OUT");
-                else
-                    nonCachedOutputAssets.Add(item, item);
-            }
-            // override the outputs
-            outputAssets = nonCachedOutputAssets.Values.ToList();
-
-            return downloadedFiles;
-
-
-
-
-
-            // local method
-            bool CheckIfAssetCached(string assetName, string assetPath, string dir)
-            {
-                var assetDir = Path.Combine(dir, assetName);
-                if (!Directory.Exists(assetDir))
-                    return false;
-
-                // check if folder is empty
-                var cached = Directory.EnumerateFileSystemEntries(assetDir, "*", SearchOption.TopDirectoryOnly).ToList();
-                if (!cached.Any())
-                    return false;
-
-                // folder asset is a zip file, assetDir has all unzipped files
-                if (assetPath.EndsWith(".zip"))
-                    return true;
-                else // file asset
-                    return File.Exists(Path.Combine(assetDir, Path.GetFileName(assetPath)));
-            }
-
-            void GetCachedAsset(ref Dictionary<string, string> cachedAsset, string assetName, string assetPath, string dir, string assetPrefix)
-            {
-                var assetDir = Path.Combine(dir, assetName);
-                // folder asset is a zip file 
-                if (assetPath.EndsWith(".zip"))
                 {
-                    // assetDir has all unzipped files
-                    cachedAsset.Add($"{assetPrefix}_{assetName}", assetDir);
-                }
-                else // file asset
-                {
-                    var assetFile = Path.Combine(assetDir, Path.GetFileName(assetPath));
-                    if (File.Exists(assetFile))
-                        cachedAsset.Add($"{assetPrefix}_{assetName}", assetFile);
+                    var cachedPath = item.GetCachedAsset(inputDir);
+                    dupObj.LocalPath = cachedPath;
                 }
 
+                checkedAssets.Add(dupObj);
             }
-
+            return checkedAssets;
         }
 
-      
 
         /// <summary>
         /// Download output assets with one call
@@ -455,22 +353,30 @@ namespace PollinationSDK.Wrapper
         /// <param name="artifactName"></param>
         /// <param name="saveAsDir"></param>
         /// <returns></returns>
-        private static List<Task<string>> DownloadOutputArtifact(RunInfo runInfo, List<string> artifactNames, string saveAsDir)
+        private static List<Task<string>> DownloadOutputArtifact(RunInfo runInfo, IEnumerable<RunOutputAsset> assets, string saveAsDir)
         {
             var tasks = new List<Task<string>>();
-            if (artifactNames == null || !artifactNames.Any()) return tasks;
+            if (assets == null || !assets.Any()) return tasks;
             var api = new PollinationSDK.Api.RunsApi();
-            foreach (var artifactName in artifactNames)
+            foreach (var asset in assets)
             {
                 try
                 {
-                    var url = api.GetRunOutput(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID, artifactName).ToString();
-                    var task = Helper.DownloadFromUrlAsync(url, Path.Combine(saveAsDir, artifactName));
-                    tasks.Add(task);
+                    if (asset.IsDownloadable() && !asset.IsSaved())
+                    {
+                        var url = api.GetRunOutput(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID, asset.Name).ToString();
+                        var task = Helper.DownloadFromUrlAsync(url, Path.Combine(saveAsDir, asset.Name));
+                        tasks.Add(task);
+                       
+                    }
+                    else
+                    {
+                        tasks.Add(Task.Run(() => asset.LocalPath));
+                    }
                 }
                 catch (Exception e)
                 {
-                    throw new ArgumentException($"Failed to download output artifact {artifactName}.\n -{e.Message}");
+                    throw new ArgumentException($"Failed to download output artifact {asset.Name}.\n -{e.Message}");
                 }
             }
             return tasks;
@@ -480,26 +386,33 @@ namespace PollinationSDK.Wrapper
         /// Download input assets with one call.
         /// </summary>
         /// <param name="runInfo"></param>
-        /// <param name="assetPaths">Dictionary of input asset's name and path</param>
+        /// <param name="assets">RunInputAssets</param>
         /// <param name="saveAsDir"></param>
-        /// <returns></returns>
-        private static List<Task<string>> DownloadInputArtifact(RunInfo runInfo, Dictionary<string, string> assetPaths, string saveAsDir)
+        /// <returns>Saved path</returns>
+        private static List<Task<string>> DownloadInputArtifact(RunInfo runInfo, IEnumerable<RunInputAsset> assets, string saveAsDir)
         {
             var tasks = new List<Task<string>>();
-            if (assetPaths == null || !assetPaths.Any()) return tasks;
+            if (assets == null || !assets.Any()) return tasks;
             var api = new PollinationSDK.Api.RunsApi();
-            foreach (var assetPath in assetPaths)
+            foreach (var asset in assets)
             {
                 try
                 {
-                    var url = api.DownloadRunArtifact(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID, path: assetPath.Value).ToString();
-                    var task = Helper.DownloadFromUrlAsync(url, Path.Combine(saveAsDir, assetPath.Key));
-                    tasks.Add(task);
-
+                    if (asset.IsDownloadable() && !asset.IsSaved())
+                    {
+                        var url = api.DownloadRunArtifact(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID, path: asset.CloudPath).ToString();
+                        var task = Helper.DownloadFromUrlAsync(url, Path.Combine(saveAsDir, asset.Name));
+                        tasks.Add(task);
+                    }
+                    else
+                    {
+                        tasks.Add(Task.Run(() => asset.LocalPath));
+                    }
+          
                 }
                 catch (Exception e)
                 {
-                    throw new ArgumentException($"Failed to download input artifact {assetPath.Key}.\n -{e.Message}");
+                    throw new ArgumentException($"Failed to download input artifact {asset.Name}.\n -{e.Message}");
                 }
             }
             return tasks;
