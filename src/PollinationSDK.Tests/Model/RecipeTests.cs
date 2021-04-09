@@ -162,6 +162,23 @@ namespace PollinationSDK.Test
             Assert.IsTrue(alias.Default == true.ToString());
         }
 
+
+        [Test]
+        public void RunAssetsTest()
+        {
+            var DAG = this.daylightFactor.Outputs.OfType<DAGFolderOutput>().First();
+            var asset = new Wrapper.RunOutputAsset(DAG, "grasshopper", "mingbo/demo/adoe2-54sd4f6s54f454a");
+            Assert.IsTrue(asset.Handlers.Any());
+
+
+            var dup = asset.Duplicate() as Wrapper.RunOutputAsset;
+
+            Assert.IsTrue(dup.Name == asset.Name);
+            Assert.IsTrue(dup.CloudRunSource == asset.CloudRunSource);
+            Assert.IsTrue(dup.CloudPath == asset.CloudPath);
+            Assert.IsTrue(dup.Handlers.First().Function == asset.Handlers.First().Function);
+
+        }
     }
 
 }
