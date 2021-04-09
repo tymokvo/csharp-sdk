@@ -34,7 +34,7 @@ namespace PollinationSDK.Wrapper
             this.CloudPath = this.Name;
         }
 
-        public object CheckOutputWithHandler(object inputData, HandlerChecker handlerChecker)
+        public override object CheckOutputWithHandler(object inputData, HandlerChecker handlerChecker)
         {
             handlerChecker = handlerChecker ?? DefaultHandlerChecker.Instance;
             return handlerChecker.CheckWithHandlers(inputData, this.Handlers);

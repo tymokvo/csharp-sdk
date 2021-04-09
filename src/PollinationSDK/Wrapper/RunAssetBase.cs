@@ -39,6 +39,10 @@ namespace PollinationSDK.Wrapper
 
         public abstract RunAssetBase Duplicate();
 
+        /// <summary>
+        /// Check if a path type asset saved to local drive (LocalPath).
+        /// </summary>
+        /// <returns></returns>
         public bool IsSaved()
         {
             var path = this.LocalPath;
@@ -53,6 +57,11 @@ namespace PollinationSDK.Wrapper
                 return File.Exists(path);
         }
 
+        /// <summary>
+        /// Check if this asset is value type or path type asset. If it is path type, then check if its CloudRunSource is valid.
+        /// Lastly, if it is an input asset, check if CloudPath is valid.
+        /// </summary>
+        /// <returns></returns>
         public bool IsDownloadable()
         {
             if (this.Value != null && this.Value.Any())
@@ -68,7 +77,7 @@ namespace PollinationSDK.Wrapper
 
         }
   
-        public bool CheckIfAssetCached(string dir)
+        internal bool CheckIfAssetCached(string dir)
         {
             var assetName = this.Name;
          
@@ -96,7 +105,7 @@ namespace PollinationSDK.Wrapper
 
         }
 
-        public string GetCachedAsset(string dir)
+        internal string GetCachedAsset(string dir)
         {
             var assetName = this.Name;
             var assetPath = this.CloudPath;
@@ -126,6 +135,73 @@ namespace PollinationSDK.Wrapper
             }
           
             return cachedPath;
+        }
+
+
+        public override string ToString()
+        {
+            if (this.Value != null && this.Value.Any())
+                return base.ToString();
+
+            var v = $"{CloudRunSource}/{Name}";
+
+            if (this is RunOutputAsset outputAsset)
+            {
+                v = $"{v}#{outputAsset.AliasName}";
+            }
+            return v;
+        }
+
+
+
+        public Run GetRun()
+        {
+            string[] items = CheckRunSource();
+            var source = new { owner = items[0], proj = items[1], runId = items[2] };
+
+            var api = new Api.RunsApi();
+            var run = api.GetRun(source.owner, source.proj, source.runId);
+            //run.Status.JobId
+            return run;
+        }
+
+        private string[] CheckRunSource()
+        {
+            //CLOUD:mingbo/demo/1D725BD1-44E1-4C3C-85D6-4D98F558DE7C
+            var runID = this.CloudRunSource;
+            if (string.IsNullOrEmpty(runID))
+                throw new ArgumentException($"Not valid cloud run source");
+            if (runID.StartsWith("CLOUD:"))
+                runID = runID.Substring(6);
+
+            var items = runID.Split('/');
+            return items;
+        }
+
+        public Project GetRoject()
+        {
+            string[] items = CheckRunSource();
+            var source = new { owner = items[0], proj = items[1], runId = items[2] };
+
+            var api = new Api.ProjectsApi();
+            var proj = api.GetProject(source.owner, source.proj);
+       
+            return proj;
+        }
+
+        public RunInfo GetRunInfo()
+        {
+            var run = GetRun();
+            var proj = GetRoject();
+      
+            var runInfo = new RunInfo(proj, run);
+            return runInfo;
+        }
+
+
+        public virtual object CheckOutputWithHandler(object inputData, HandlerChecker handlerChecker)
+        {
+            return inputData;
         }
 
     }
