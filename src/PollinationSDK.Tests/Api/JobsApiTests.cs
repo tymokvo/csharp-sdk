@@ -234,7 +234,7 @@ namespace PollinationSDK.Test
         public void RunInputsTest()
         {
             var response = api.ListJobs(Helper.CurrentUser.Username, "demo");
-            var jobs = response.Resources;
+            var jobs = response.Resources.Take(2);
 
        
             var runApi = new Api.RunsApi();
