@@ -14,6 +14,9 @@ namespace PollinationSDK.Wrapper
         public string Name { get; protected set; }
 
         [JsonProperty]
+        public string Description { get; protected set; }
+
+        [JsonProperty]
         /// <summary>
         /// This is valid only if the asset is non-path type: string, int, double, etc
         /// </summary>

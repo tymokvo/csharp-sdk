@@ -22,12 +22,13 @@ namespace PollinationSDK.Wrapper
                 return;
 
             this.Name = dagOutput.Name;
-
+   
             //var platform = "grasshopper";
             var dagOutputAlias = dagOutput.GetAlias(platform);
             // override the name and description
             this.AliasName = dagOutputAlias?.Name ?? this.Name;
             this.Handlers = dagOutputAlias?.Handler;
+            this.Description = dagOutputAlias?.Description ?? dagOutput.Description;
 
             // keep cloud source: CLOUD:mingbo/demo/1D725BD1-44E1-4C3C-85D6-4D98F558DE7C
             this.CloudRunSource = cloudRunSource;

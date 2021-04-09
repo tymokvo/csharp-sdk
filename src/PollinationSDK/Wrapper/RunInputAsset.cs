@@ -17,6 +17,7 @@ namespace PollinationSDK.Wrapper
 
             // get name
             this.Name = dagInput.Name;
+            this.Description = dagInput.Description;
 
             // check path type
             this.CloudPath = dagInput.GetInputPath();
