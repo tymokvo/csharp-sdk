@@ -321,29 +321,22 @@ namespace ConsoleAppDemo
             var runInfo = new RunInfo(proj, firstRun);
 
             // get all output assets to download
-            var outputNames = runInfo.Recipe.Outputs
-                .OfType<PollinationSDK.Interface.Io.Outputs.IDag>()
-                .Select(_ => _.Name).ToList();
+            var assets = runInfo.GetOutputAssets("grasshopper").OfType<RunAssetBase>().ToList();
 
             var savedPath = System.IO.Path.GetTempPath();
-            var task = Task.Run(async () => await DownloadAsync(runInfo, null, outputNames, savedPath));
+            var task = Task.Run(async () => await DownloadAsync(runInfo, assets, savedPath));
             task.Wait();
             var filePaths = task.Result;
 
             foreach (var item in filePaths)
             {
-                Console.WriteLine($"Asset: {item.Key}\nSaved Path: {item.Value}");
+                Console.WriteLine($"Asset: {item.Name}\nSaved Path: {item.LocalPath}");
             }
 
         }
 
-        private static async Task<Dictionary<string, string>> DownloadAsync(RunInfo runInfo, Dictionary<string, string> inputAssets, List<string> outputAssets, string saveAsDir = default)
+        private static async Task<List<RunAssetBase>> DownloadAsync(RunInfo runInfo, List<RunAssetBase> outputAssets, string saveAsDir = default)
         {
-            // Load run's input arguments data
-            var inputAssetPathes = inputAssets ?? new Dictionary<string, string>();
-
-            // download run's output assets
-            var outputAssetNames = outputAssets ?? new List<string>();
 
             // progress reporter
             Action<string> UpdateProgressMessage = (s) => Console.WriteLine(s);
@@ -352,7 +345,7 @@ namespace ConsoleAppDemo
             var useCachedAssets = false;
 
             // download all assets
-            var task = runInfo.DownloadRunAssetsAsync(inputAssetPathes, outputAssetNames, saveAsDir, UpdateProgressMessage, useCachedAssets);
+            var task = runInfo.DownloadRunAssetsAsync(outputAssets, saveAsDir, UpdateProgressMessage, useCachedAssets);
             var filePaths = await task;
 
             //await Task.Delay(3000);
