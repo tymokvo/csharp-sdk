@@ -7,9 +7,6 @@ update_configs:
       - match:
           dependency_name: "LBT.RestSharp"
           update_type: "all"
-      - match:
-          dependency_name: "QueenbeeSDK"
-          update_type: "all"
     ignored_updates:
       - match:
           dependency_name: "System.ComponentModel.Annotations"
