@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PollinationSDK.Wrapper
 {
@@ -10,6 +11,11 @@ namespace PollinationSDK.Wrapper
 
         [JsonProperty]
         public string AliasName { get; private set; }
+
+        /// <summary>
+        /// loaded the content of path type asset
+        /// </summary>
+        public object PreloadedPath { get; set; }
 
         [JsonConstructorAttribute]
         protected RunOutputAsset()
@@ -41,6 +47,16 @@ namespace PollinationSDK.Wrapper
             return handlerChecker.CheckWithHandlers(inputData, this.Handlers);
         }
 
+
+        public object PreloadLinkedOutputWithHandler(object inputData, HandlerChecker handlerChecker)
+        {
+            handlerChecker = handlerChecker ?? DefaultHandlerChecker.Instance;
+            if (this.Handlers.Count != 2)
+                throw new System.ArgumentException("Linked Output requires 2 handlers");
+            // the first handler is for preloading
+            var handlerForPreload = this.Handlers?.Skip(1)?.ToList();
+            return handlerChecker.CheckWithHandlers(inputData, handlerForPreload);
+        }
 
         public override RunAssetBase Duplicate()
         {
