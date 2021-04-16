@@ -12,10 +12,7 @@ namespace PollinationSDK.Wrapper
         [JsonProperty]
         public string AliasName { get; private set; }
 
-        /// <summary>
-        /// loaded the content of path type asset
-        /// </summary>
-        public object PreloadedPath { get; set; }
+
 
         [JsonConstructorAttribute]
         protected RunOutputAsset()

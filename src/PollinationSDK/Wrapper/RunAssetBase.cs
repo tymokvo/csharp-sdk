@@ -38,6 +38,12 @@ namespace PollinationSDK.Wrapper
         [JsonProperty]
         public string LocalPath { get; set; }
 
+        /// <summary>
+        /// Load the content of from LacalPath,
+        /// This property is not serialize-able and will not be duplicated.
+        /// </summary>
+        public object PreloadedPath { get; set; }
+
         public bool IsInputAsset => this is RunInputAsset;
 
         public abstract RunAssetBase Duplicate();
