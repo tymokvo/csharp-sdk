@@ -1,5 +1,5 @@
 ﻿using PollinationSDK.Api;
-using RestSharp;
+using PollinationSDK;
 using System;
 using System.IO;
 using System.Linq;
@@ -214,13 +214,7 @@ namespace PollinationSDK.Wrapper
         //}
 
 
-        public List<Interface.Io.Outputs.IDag> GetOutputs()
-        {
-            var outputs = this.Recipe.Outputs
-                .OfType<Interface.Io.Outputs.IDag>().ToList();
-
-            return outputs;
-        }
+        public List<Interface.Io.Outputs.IDag> GetOutputs() => this.Recipe.GetOutputs();
 
 
         public List<Interface.Io.Inputs.IStep> GetInputs()
