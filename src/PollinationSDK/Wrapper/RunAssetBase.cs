@@ -76,8 +76,9 @@ namespace PollinationSDK.Wrapper
             if (this.Value != null && this.Value.Any())
                 return false;
 
-            if (string.IsNullOrEmpty(CloudRunSource))
-                return false;
+            // CloudRunSource is not required to download the asset since downloading assets also need RunInfo
+            //if (string.IsNullOrEmpty(CloudRunSource))
+            //    return false;
 
             if (this.IsInputAsset)
                 return !string.IsNullOrEmpty(CloudPath);
