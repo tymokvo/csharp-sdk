@@ -48,10 +48,11 @@ namespace PollinationSDK.Wrapper
         public object PreloadLinkedOutputWithHandler(object inputData, HandlerChecker handlerChecker)
         {
             handlerChecker = handlerChecker ?? DefaultHandlerChecker.Instance;
-            if (this.Handlers.Count != 2)
-                throw new System.ArgumentException("Linked Output requires 2 handlers");
+            if (this.Handlers?.Count != 2)
+                throw new System.ArgumentException("Linked Output requires 2 handlers, and the first handler is used for preloading.");
+            
             // the first handler is for preloading
-            var handlerForPreload = this.Handlers?.Skip(1)?.ToList();
+            var handlerForPreload = this.Handlers.Take(1).ToList();
             return handlerChecker.CheckWithHandlers(inputData, handlerForPreload);
         }
 
