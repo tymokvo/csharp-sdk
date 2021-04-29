@@ -1,0 +1,21 @@
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: Serilog.Sinks.File
+    versions:
+    - ">= 0"
+  - dependency-name: System.ComponentModel.Annotations
+    versions:
+    - ">= 0"
+  - dependency-name: Microsoft.NET.Test.Sdk
+    versions:
+    - 16.9.1
+    - 16.9.4
+  commit-message:
+    prefix: fix
+    include: scope
