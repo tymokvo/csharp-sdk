@@ -79,6 +79,8 @@ namespace PollinationSDK
                 }
 
                 var finishedTask = await Task.WhenAny(tasks);
+                if (finishedTask.IsFaulted || finishedTask.Exception != null)
+                    throw finishedTask.Exception;
 
                 tasks.Remove(finishedTask);
 
