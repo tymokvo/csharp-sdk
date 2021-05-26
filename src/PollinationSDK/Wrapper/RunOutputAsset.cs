@@ -12,7 +12,8 @@ namespace PollinationSDK.Wrapper
         [JsonProperty]
         public string AliasName { get; private set; }
 
-
+        [JsonProperty]
+        public bool IsLinkedAsset { get; private set; }
 
         [JsonConstructorAttribute]
         protected RunOutputAsset()
@@ -25,6 +26,7 @@ namespace PollinationSDK.Wrapper
                 return;
 
             this.Name = dagOutput.Name;
+            this.IsLinkedAsset = dagOutput is DAGLinkedOutputAlias;
    
             //var platform = "grasshopper";
             var dagOutputAlias = dagOutput.GetAlias(platform);
@@ -47,8 +49,10 @@ namespace PollinationSDK.Wrapper
 
         public object PreloadLinkedOutputWithHandler(object inputData, HandlerChecker handlerChecker)
         {
+            if (!this.IsLinkedAsset) return inputData;
+
             handlerChecker = handlerChecker ?? DefaultHandlerChecker.Instance;
-            if (this.Handlers?.Count != 2)
+            if ( this.Handlers?.Count != 2)
                 throw new System.ArgumentException("Linked Output requires 2 handlers, and the first handler is used for preloading.");
             
             // the first handler is for preloading
