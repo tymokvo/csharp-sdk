@@ -284,9 +284,9 @@ namespace PollinationSDK.Wrapper
                 // watching tasks
                 var total = tasks.Count();
                 var completed = 0;
+                reportingAction?.Invoke($"0%");
                 while (total - completed > 0)
                 {
-                    reportingAction?.Invoke($"0%");
                     var finishedTask = await Task.WhenAny(tasks);
                     await finishedTask;
                     completed++;
