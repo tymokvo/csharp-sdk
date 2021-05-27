@@ -74,7 +74,7 @@ namespace PollinationSDK.Wrapper
                 var totalDelaySeconds = status.Status == JobStatusEnum.Created ? 3 : 5;
 
                 var running = status.RunsPending + status.RunsRunning;
-                var done = status.RunsFailed + status.RunsCompleted;
+                var done = status.RunsFailed + status.RunsCompleted + status.RunsCancelled;
                 var total = running + done;
 
                 for (int i = 0; i < totalDelaySeconds; i++)
