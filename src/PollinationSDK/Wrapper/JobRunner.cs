@@ -222,16 +222,7 @@ namespace PollinationSDK.Wrapper
             var projAPi = new ProjectsApi();
             var recipeFilter = new ProjectRecipeFilter(recOwner, recName);
             var result = projAPi.CreateProjectRecipeFilter(project.Owner.Name, project.Name, recipeFilter);
-            var status = result?.Status;
-
-            if (string.IsNullOrEmpty(status) || status != "accepted")
-            {
-                var msg = $"CheckRecipeInProject: failed to add recipe [{recName}] to project {project.Name}: {status}";
-                Helper.Logger.Error(msg);
-                throw new ArgumentException(msg);
-            }
-            Helper.Logger.Information(status);
-            return status;
+            return result.Name;
 
         }
 
