@@ -300,10 +300,8 @@ namespace PollinationSDK.Wrapper
                 allAssets.AddRange(inputAssets);
                 allAssets.AddRange(outputAssets);
 
-                var savedAssets = tasks.Select(_ => _.Result);
-
                 // collect all downloaded assets
-                var works = allAssets.Zip(savedAssets, (asset, saved) => new { asset, saved });
+                var works = allAssets.Zip(tasks, (asset, saved) => new { asset, saved });
                 foreach (var item in works)
                 {
                     var dup = item.asset.Duplicate();
@@ -311,7 +309,7 @@ namespace PollinationSDK.Wrapper
                     // get saved path type assets
                     if (item.asset.IsDownloadable())
                     {
-                        var savedFolderOrFilePath = item.saved;
+                        var savedFolderOrFilePath = await item.saved;
                         // check folder
                         if (!Path.HasExtension(savedFolderOrFilePath))
                         {
