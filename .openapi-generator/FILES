@@ -126,6 +126,8 @@ docs/DAGTask.md
 docs/DAGTaskAllOf.md
 docs/DAGTaskLoop.md
 docs/DAGTaskLoopAllOf.md
+docs/DailyUsage.md
+docs/DailyUsageAllOf.md
 docs/Dependency.md
 docs/DependencyAllOf.md
 docs/DependencyKind.md
@@ -265,8 +267,6 @@ docs/ProjectAccessPolicyListAllOf.md
 docs/ProjectAllOf.md
 docs/ProjectCreate.md
 docs/ProjectCreateAllOf.md
-docs/ProjectDailyUsage.md
-docs/ProjectDailyUsageAllOf.md
 docs/ProjectFolder.md
 docs/ProjectFolderAllOf.md
 docs/ProjectList.md
@@ -279,10 +279,6 @@ docs/ProjectRecipeFilterList.md
 docs/ProjectRecipeFilterListAllOf.md
 docs/ProjectUpdate.md
 docs/ProjectUpdateAllOf.md
-docs/ProjectUsage.md
-docs/ProjectUsageAllOf.md
-docs/ProjectUserPermissions.md
-docs/ProjectUserPermissionsAllOf.md
 docs/ProjectsApi.md
 docs/PublicAccountList.md
 docs/PublicAccountListAllOf.md
@@ -409,10 +405,10 @@ docs/TeamRoleEnum.md
 docs/TeamUpdate.md
 docs/TeamUpdateAllOf.md
 docs/TeamsApi.md
-docs/Update.md
 docs/UpdateAccepted.md
 docs/UpdateAcceptedAllOf.md
-docs/UpdateAllOf.md
+docs/Usage.md
+docs/UsageAllOf.md
 docs/UserApi.md
 docs/UserCreate.md
 docs/UserCreateAllOf.md
@@ -572,6 +568,8 @@ src/PollinationSDK.Test/Model/DAGTaskLoopAllOfTests.cs
 src/PollinationSDK.Test/Model/DAGTaskLoopTests.cs
 src/PollinationSDK.Test/Model/DAGTaskTests.cs
 src/PollinationSDK.Test/Model/DAGTests.cs
+src/PollinationSDK.Test/Model/DailyUsageAllOfTests.cs
+src/PollinationSDK.Test/Model/DailyUsageTests.cs
 src/PollinationSDK.Test/Model/DependencyAllOfTests.cs
 src/PollinationSDK.Test/Model/DependencyKindTests.cs
 src/PollinationSDK.Test/Model/DependencyTests.cs
@@ -707,8 +705,6 @@ src/PollinationSDK.Test/Model/ProjectAccessPolicyTests.cs
 src/PollinationSDK.Test/Model/ProjectAllOfTests.cs
 src/PollinationSDK.Test/Model/ProjectCreateAllOfTests.cs
 src/PollinationSDK.Test/Model/ProjectCreateTests.cs
-src/PollinationSDK.Test/Model/ProjectDailyUsageAllOfTests.cs
-src/PollinationSDK.Test/Model/ProjectDailyUsageTests.cs
 src/PollinationSDK.Test/Model/ProjectFolderAllOfTests.cs
 src/PollinationSDK.Test/Model/ProjectFolderTests.cs
 src/PollinationSDK.Test/Model/ProjectListAllOfTests.cs
@@ -722,10 +718,6 @@ src/PollinationSDK.Test/Model/ProjectRecipeFilterTests.cs
 src/PollinationSDK.Test/Model/ProjectTests.cs
 src/PollinationSDK.Test/Model/ProjectUpdateAllOfTests.cs
 src/PollinationSDK.Test/Model/ProjectUpdateTests.cs
-src/PollinationSDK.Test/Model/ProjectUsageAllOfTests.cs
-src/PollinationSDK.Test/Model/ProjectUsageTests.cs
-src/PollinationSDK.Test/Model/ProjectUserPermissionsAllOfTests.cs
-src/PollinationSDK.Test/Model/ProjectUserPermissionsTests.cs
 src/PollinationSDK.Test/Model/PublicAccountListAllOfTests.cs
 src/PollinationSDK.Test/Model/PublicAccountListTests.cs
 src/PollinationSDK.Test/Model/RecipeAllOfTests.cs
@@ -849,8 +841,8 @@ src/PollinationSDK.Test/Model/TeamUpdateAllOfTests.cs
 src/PollinationSDK.Test/Model/TeamUpdateTests.cs
 src/PollinationSDK.Test/Model/UpdateAcceptedAllOfTests.cs
 src/PollinationSDK.Test/Model/UpdateAcceptedTests.cs
-src/PollinationSDK.Test/Model/UpdateAllOfTests.cs
-src/PollinationSDK.Test/Model/UpdateTests.cs
+src/PollinationSDK.Test/Model/UsageAllOfTests.cs
+src/PollinationSDK.Test/Model/UsageTests.cs
 src/PollinationSDK.Test/Model/UserCreateAllOfTests.cs
 src/PollinationSDK.Test/Model/UserCreateTests.cs
 src/PollinationSDK.Test/Model/UserPermissionAllOfTests.cs
@@ -1018,6 +1010,8 @@ src/PollinationSDK/Model/DAGTask.cs
 src/PollinationSDK/Model/DAGTaskAllOf.cs
 src/PollinationSDK/Model/DAGTaskLoop.cs
 src/PollinationSDK/Model/DAGTaskLoopAllOf.cs
+src/PollinationSDK/Model/DailyUsage.cs
+src/PollinationSDK/Model/DailyUsageAllOf.cs
 src/PollinationSDK/Model/Dependency.cs
 src/PollinationSDK/Model/DependencyAllOf.cs
 src/PollinationSDK/Model/DependencyKind.cs
@@ -1154,8 +1148,6 @@ src/PollinationSDK/Model/ProjectAccessPolicyListAllOf.cs
 src/PollinationSDK/Model/ProjectAllOf.cs
 src/PollinationSDK/Model/ProjectCreate.cs
 src/PollinationSDK/Model/ProjectCreateAllOf.cs
-src/PollinationSDK/Model/ProjectDailyUsage.cs
-src/PollinationSDK/Model/ProjectDailyUsageAllOf.cs
 src/PollinationSDK/Model/ProjectFolder.cs
 src/PollinationSDK/Model/ProjectFolderAllOf.cs
 src/PollinationSDK/Model/ProjectList.cs
@@ -1168,10 +1160,6 @@ src/PollinationSDK/Model/ProjectRecipeFilterList.cs
 src/PollinationSDK/Model/ProjectRecipeFilterListAllOf.cs
 src/PollinationSDK/Model/ProjectUpdate.cs
 src/PollinationSDK/Model/ProjectUpdateAllOf.cs
-src/PollinationSDK/Model/ProjectUsage.cs
-src/PollinationSDK/Model/ProjectUsageAllOf.cs
-src/PollinationSDK/Model/ProjectUserPermissions.cs
-src/PollinationSDK/Model/ProjectUserPermissionsAllOf.cs
 src/PollinationSDK/Model/PublicAccountList.cs
 src/PollinationSDK/Model/PublicAccountListAllOf.cs
 src/PollinationSDK/Model/Recipe.cs
@@ -1293,10 +1281,10 @@ src/PollinationSDK/Model/TeamMemberListAllOf.cs
 src/PollinationSDK/Model/TeamRoleEnum.cs
 src/PollinationSDK/Model/TeamUpdate.cs
 src/PollinationSDK/Model/TeamUpdateAllOf.cs
-src/PollinationSDK/Model/Update.cs
 src/PollinationSDK/Model/UpdateAccepted.cs
 src/PollinationSDK/Model/UpdateAcceptedAllOf.cs
-src/PollinationSDK/Model/UpdateAllOf.cs
+src/PollinationSDK/Model/Usage.cs
+src/PollinationSDK/Model/UsageAllOf.cs
 src/PollinationSDK/Model/UserCreate.cs
 src/PollinationSDK/Model/UserCreateAllOf.cs
 src/PollinationSDK/Model/UserPermission.cs

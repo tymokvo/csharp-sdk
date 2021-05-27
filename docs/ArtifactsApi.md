@@ -17,8 +17,6 @@ Method | HTTP request | Description
 
 Get an Artifact upload link.
 
-Create a new artifact.
-
 ### Example
 
 ```csharp
@@ -100,11 +98,9 @@ Name | Type | Description  | Notes
 
 ## DeleteArtifact
 
-> UpdateAccepted DeleteArtifact (string owner, string name, List<string> path = null)
+> void DeleteArtifact (string owner, string name, List<string> path = null, int? page = null, int? perPage = null)
 
 Delete one or many artifacts by key/prefix
-
-Delete one or multiple artifacts based on key prefix
 
 ### Example
 
@@ -133,12 +129,13 @@ namespace Example
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
             var path = new List<string>(); // List<string> | The path to an file within a project folder (optional) 
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
                 // Delete one or many artifacts by key/prefix
-                UpdateAccepted result = apiInstance.DeleteArtifact(owner, name, path);
-                Debug.WriteLine(result);
+                apiInstance.DeleteArtifact(owner, name, path, page, perPage);
             }
             catch (ApiException e)
             {
@@ -159,10 +156,12 @@ Name | Type | Description  | Notes
  **owner** | **string**|  | 
  **name** | **string**|  | 
  **path** | [**List&lt;string&gt;**](string.md)| The path to an file within a project folder | [optional] 
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
 ### Return type
 
-[**UpdateAccepted**](UpdateAccepted.md)
+void (empty response body)
 
 ### Authorization
 
@@ -176,7 +175,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-| **202** | Successful Response |  -  |
+| **204** | Successful Response |  -  |
 | **422** | Validation Error |  -  |
 
 [[Back to top]](#)
@@ -190,8 +189,6 @@ Name | Type | Description  | Notes
 > AnyType DownloadArtifact (string owner, string name, string path = null)
 
 Download an artifact from the project folder
-
-Retrieve a list of artifacts.
 
 ### Example
 
@@ -278,11 +275,9 @@ Name | Type | Description  | Notes
 
 ## ListArtifacts
 
-> List&lt;FileMeta&gt; ListArtifacts (string owner, string name, int? page = null, int? perPage = null, List<string> path = null)
+> List&lt;FileMeta&gt; ListArtifacts (string owner, string name, List<string> path = null, int? page = null, int? perPage = null)
 
 List artifacts in a project folder
-
-Retrieve a list of artifacts.
 
 ### Example
 
@@ -310,14 +305,14 @@ namespace Example
             var apiInstance = new ArtifactsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
+            var path = new List<string>(); // List<string> | The path to an file within a project folder (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
-            var path = new List<string>(); // List<string> | The path to an file within a project folder (optional) 
 
             try
             {
                 // List artifacts in a project folder
-                List<FileMeta> result = apiInstance.ListArtifacts(owner, name, page, perPage, path);
+                List<FileMeta> result = apiInstance.ListArtifacts(owner, name, path, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -338,9 +333,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
+ **path** | [**List&lt;string&gt;**](string.md)| The path to an file within a project folder | [optional] 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
  **perPage** | **int?**| Number of items per page | [optional] [default to 25]
- **path** | [**List&lt;string&gt;**](string.md)| The path to an file within a project folder | [optional] 
 
 ### Return type
 

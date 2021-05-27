@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **RunsRunning** | **int** | The count of runs that are running | [optional] [default to 0]
 **RunsCompleted** | **int** | The count of runs that have completed | [optional] [default to 0]
 **RunsFailed** | **int** | The count of runs that have failed | [optional] [default to 0]
+**RunsCancelled** | **int** | The count of runs that have been cancelled | [optional] [default to 0]
 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)

@@ -27,7 +27,7 @@ namespace PollinationSDK
     /// ProjectCreate
     /// </summary>
     [DataContract(Name = "ProjectCreate")]
-    public partial class ProjectCreate : ProjectUpdate, IEquatable<ProjectCreate>, IValidatableObject
+    public partial class ProjectCreate : OpenAPIGenBaseModel, IEquatable<ProjectCreate>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectCreate" /> class.
@@ -47,10 +47,15 @@ namespace PollinationSDK
         /// <param name="_public">Whether or not a project is publicly viewable (default to true).</param>
         public ProjectCreate
         (
-            string name, // Required parameters
-            string description = "", bool _public = true // Optional parameters
-        ) : base(name: name, description: description, _public: _public)// BaseClass
+           string name, // Required parameters
+           string description = "", bool _public = true // Optional parameters
+        ) : base()// BaseClass
         {
+            // to ensure "name" is required (not null)
+            this.Name = name ?? throw new ArgumentNullException("name is a required property for ProjectCreate and cannot be null");
+            // use default value if no "description" provided
+            this.Description = description ?? "";
+            this.Public = _public;
 
             // Set non-required readonly properties with defaultValue
             this.Type = "ProjectCreate";
@@ -63,6 +68,24 @@ namespace PollinationSDK
         [DataMember(Name = "type", EmitDefaultValue = true)]
         public string Type { get; protected internal set; }  = "ProjectCreate";
 
+        /// <summary>
+        /// The name of the project. Must be unique to a given owner
+        /// </summary>
+        /// <value>The name of the project. Must be unique to a given owner</value>
+        [DataMember(Name = "name", IsRequired = true, EmitDefaultValue = false)]
+        public string Name { get; set; } 
+        /// <summary>
+        /// A description of the project
+        /// </summary>
+        /// <value>A description of the project</value>
+        [DataMember(Name = "description", EmitDefaultValue = true)]
+        public string Description { get; set; }  = "";
+        /// <summary>
+        /// Whether or not a project is publicly viewable
+        /// </summary>
+        /// <value>Whether or not a project is publicly viewable</value>
+        [DataMember(Name = "public", EmitDefaultValue = true)]
+        public bool Public { get; set; }  = true;
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -125,7 +148,7 @@ namespace PollinationSDK
         /// Creates a new instance with the same properties.
         /// </summary>
         /// <returns>OpenAPIGenBaseModel</returns>
-        public override ProjectUpdate DuplicateProjectUpdate()
+        public override OpenAPIGenBaseModel DuplicateOpenAPIGenBaseModel()
         {
             return DuplicateProjectCreate();
         }
@@ -152,6 +175,21 @@ namespace PollinationSDK
                 return false;
             return base.Equals(input) && 
                 (
+                    this.Name == input.Name ||
+                    (this.Name != null &&
+                    this.Name.Equals(input.Name))
+                ) && base.Equals(input) && 
+                (
+                    this.Description == input.Description ||
+                    (this.Description != null &&
+                    this.Description.Equals(input.Description))
+                ) && base.Equals(input) && 
+                (
+                    this.Public == input.Public ||
+                    (this.Public != null &&
+                    this.Public.Equals(input.Public))
+                ) && base.Equals(input) && 
+                (
                     this.Type == input.Type ||
                     (this.Type != null &&
                     this.Type.Equals(input.Type))
@@ -167,6 +205,12 @@ namespace PollinationSDK
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = base.GetHashCode();
+                if (this.Name != null)
+                    hashCode = hashCode * 59 + this.Name.GetHashCode();
+                if (this.Description != null)
+                    hashCode = hashCode * 59 + this.Description.GetHashCode();
+                if (this.Public != null)
+                    hashCode = hashCode * 59 + this.Public.GetHashCode();
                 if (this.Type != null)
                     hashCode = hashCode * 59 + this.Type.GetHashCode();
                 return hashCode;

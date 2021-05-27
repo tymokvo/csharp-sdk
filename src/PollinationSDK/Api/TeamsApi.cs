@@ -104,10 +104,8 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgName"></param>
         /// <param name="teamSlug"></param>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>TeamMemberList</returns>
-        TeamMemberList GetOrgTeamMembers (string orgName, string teamSlug, int? page = default, int? perPage = default);
+        TeamMemberList GetOrgTeamMembers (string orgName, string teamSlug);
 
         /// <summary>
         /// List team members
@@ -118,10 +116,8 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgName"></param>
         /// <param name="teamSlug"></param>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of TeamMemberList</returns>
-        ApiResponse<TeamMemberList> GetOrgTeamMembersWithHttpInfo (string orgName, string teamSlug, int? page = default, int? perPage = default);
+        ApiResponse<TeamMemberList> GetOrgTeamMembersWithHttpInfo (string orgName, string teamSlug);
         /// <summary>
         /// Get a Team
         /// </summary>
@@ -153,13 +149,13 @@ namespace PollinationSDK.Api
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgName"></param>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">You know, for search (optional)</param>
         /// <param name="name">The account name (optional)</param>
         /// <param name="member">The ID of a user (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>TeamList</returns>
-        TeamList ListOrgTeams (string orgName, int? page = default, int? perPage = default, List<string> search = default, List<string> name = default, List<string> member = default);
+        TeamList ListOrgTeams (string orgName, List<string> search = default, List<string> name = default, List<string> member = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// List Teams
@@ -169,13 +165,13 @@ namespace PollinationSDK.Api
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgName"></param>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">You know, for search (optional)</param>
         /// <param name="name">The account name (optional)</param>
         /// <param name="member">The ID of a user (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of TeamList</returns>
-        ApiResponse<TeamList> ListOrgTeamsWithHttpInfo (string orgName, int? page = default, int? perPage = default, List<string> search = default, List<string> name = default, List<string> member = default);
+        ApiResponse<TeamList> ListOrgTeamsWithHttpInfo (string orgName, List<string> search = default, List<string> name = default, List<string> member = default, int? page = default, int? perPage = default);
         /// <summary>
         /// Update a Team
         /// </summary>
@@ -316,11 +312,9 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgName"></param>
         /// <param name="teamSlug"></param>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of TeamMemberList</returns>
-        System.Threading.Tasks.Task<TeamMemberList> GetOrgTeamMembersAsync (string orgName, string teamSlug, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<TeamMemberList> GetOrgTeamMembersAsync (string orgName, string teamSlug, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List team members
@@ -331,11 +325,9 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgName"></param>
         /// <param name="teamSlug"></param>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (TeamMemberList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<TeamMemberList>> GetOrgTeamMembersWithHttpInfoAsync (string orgName, string teamSlug, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<TeamMemberList>> GetOrgTeamMembersWithHttpInfoAsync (string orgName, string teamSlug, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a Team
         /// </summary>
@@ -369,14 +361,14 @@ namespace PollinationSDK.Api
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgName"></param>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">You know, for search (optional)</param>
         /// <param name="name">The account name (optional)</param>
         /// <param name="member">The ID of a user (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of TeamList</returns>
-        System.Threading.Tasks.Task<TeamList> ListOrgTeamsAsync (string orgName, int? page = default, int? perPage = default, List<string> search = default, List<string> name = default, List<string> member = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<TeamList> ListOrgTeamsAsync (string orgName, List<string> search = default, List<string> name = default, List<string> member = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List Teams
@@ -386,14 +378,14 @@ namespace PollinationSDK.Api
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgName"></param>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">You know, for search (optional)</param>
         /// <param name="name">The account name (optional)</param>
         /// <param name="member">The ID of a user (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (TeamList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<TeamList>> ListOrgTeamsWithHttpInfoAsync (string orgName, int? page = default, int? perPage = default, List<string> search = default, List<string> name = default, List<string> member = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<TeamList>> ListOrgTeamsWithHttpInfoAsync (string orgName, List<string> search = default, List<string> name = default, List<string> member = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update a Team
         /// </summary>
@@ -1066,12 +1058,10 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgName"></param>
         /// <param name="teamSlug"></param>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>TeamMemberList</returns>
-        public TeamMemberList GetOrgTeamMembers (string orgName, string teamSlug, int? page = default, int? perPage = default)
+        public TeamMemberList GetOrgTeamMembers (string orgName, string teamSlug)
         {
-             ApiResponse<TeamMemberList> localVarResponse = GetOrgTeamMembersWithHttpInfo(orgName, teamSlug, page, perPage);
+             ApiResponse<TeamMemberList> localVarResponse = GetOrgTeamMembersWithHttpInfo(orgName, teamSlug);
              return localVarResponse.Data;
         }
 
@@ -1081,10 +1071,8 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgName"></param>
         /// <param name="teamSlug"></param>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of TeamMemberList</returns>
-        public ApiResponse<TeamMemberList> GetOrgTeamMembersWithHttpInfo (string orgName, string teamSlug, int? page = default, int? perPage = default)
+        public ApiResponse<TeamMemberList> GetOrgTeamMembersWithHttpInfo (string orgName, string teamSlug)
         {
             // verify the required parameter 'orgName' is set
             if (orgName == null)
@@ -1116,8 +1104,6 @@ namespace PollinationSDK.Api
 
             if (orgName != null) localVarPathParams.Add("org_name", this.Configuration.ApiClient.ParameterToString(orgName)); // path parameter
             if (teamSlug != null) localVarPathParams.Add("team_slug", this.Configuration.ApiClient.ParameterToString(teamSlug)); // path parameter
-            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
 
             // make the HTTP request
@@ -1144,13 +1130,11 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgName"></param>
         /// <param name="teamSlug"></param>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of TeamMemberList</returns>
-        public async System.Threading.Tasks.Task<TeamMemberList> GetOrgTeamMembersAsync (string orgName, string teamSlug, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<TeamMemberList> GetOrgTeamMembersAsync (string orgName, string teamSlug, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<TeamMemberList> localVarResponse = await GetOrgTeamMembersWithHttpInfoAsync(orgName, teamSlug, page, perPage, cancellationToken);
+             ApiResponse<TeamMemberList> localVarResponse = await GetOrgTeamMembersWithHttpInfoAsync(orgName, teamSlug, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -1161,11 +1145,9 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgName"></param>
         /// <param name="teamSlug"></param>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (TeamMemberList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<TeamMemberList>> GetOrgTeamMembersWithHttpInfoAsync (string orgName, string teamSlug, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<TeamMemberList>> GetOrgTeamMembersWithHttpInfoAsync (string orgName, string teamSlug, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'orgName' is set
             if (orgName == null)
@@ -1197,8 +1179,6 @@ namespace PollinationSDK.Api
 
             if (orgName != null) localVarPathParams.Add("org_name", this.Configuration.ApiClient.ParameterToString(orgName)); // path parameter
             if (teamSlug != null) localVarPathParams.Add("team_slug", this.Configuration.ApiClient.ParameterToString(teamSlug)); // path parameter
-            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
 
             // make the HTTP request
@@ -1371,15 +1351,15 @@ namespace PollinationSDK.Api
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgName"></param>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">You know, for search (optional)</param>
         /// <param name="name">The account name (optional)</param>
         /// <param name="member">The ID of a user (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>TeamList</returns>
-        public TeamList ListOrgTeams (string orgName, int? page = default, int? perPage = default, List<string> search = default, List<string> name = default, List<string> member = default)
+        public TeamList ListOrgTeams (string orgName, List<string> search = default, List<string> name = default, List<string> member = default, int? page = default, int? perPage = default)
         {
-             ApiResponse<TeamList> localVarResponse = ListOrgTeamsWithHttpInfo(orgName, page, perPage, search, name, member);
+             ApiResponse<TeamList> localVarResponse = ListOrgTeamsWithHttpInfo(orgName, search, name, member, page, perPage);
              return localVarResponse.Data;
         }
 
@@ -1388,13 +1368,13 @@ namespace PollinationSDK.Api
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgName"></param>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">You know, for search (optional)</param>
         /// <param name="name">The account name (optional)</param>
         /// <param name="member">The ID of a user (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of TeamList</returns>
-        public ApiResponse<TeamList> ListOrgTeamsWithHttpInfo (string orgName, int? page = default, int? perPage = default, List<string> search = default, List<string> name = default, List<string> member = default)
+        public ApiResponse<TeamList> ListOrgTeamsWithHttpInfo (string orgName, List<string> search = default, List<string> name = default, List<string> member = default, int? page = default, int? perPage = default)
         {
             // verify the required parameter 'orgName' is set
             if (orgName == null)
@@ -1422,11 +1402,11 @@ namespace PollinationSDK.Api
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
             if (orgName != null) localVarPathParams.Add("org_name", this.Configuration.ApiClient.ParameterToString(orgName)); // path parameter
-            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
             if (search != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "search", search)); // query parameter
             if (name != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "name", name)); // query parameter
             if (member != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "member", member)); // query parameter
+            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
+            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
 
             // make the HTTP request
@@ -1452,16 +1432,16 @@ namespace PollinationSDK.Api
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgName"></param>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">You know, for search (optional)</param>
         /// <param name="name">The account name (optional)</param>
         /// <param name="member">The ID of a user (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of TeamList</returns>
-        public async System.Threading.Tasks.Task<TeamList> ListOrgTeamsAsync (string orgName, int? page = default, int? perPage = default, List<string> search = default, List<string> name = default, List<string> member = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<TeamList> ListOrgTeamsAsync (string orgName, List<string> search = default, List<string> name = default, List<string> member = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<TeamList> localVarResponse = await ListOrgTeamsWithHttpInfoAsync(orgName, page, perPage, search, name, member, cancellationToken);
+             ApiResponse<TeamList> localVarResponse = await ListOrgTeamsWithHttpInfoAsync(orgName, search, name, member, page, perPage, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -1471,14 +1451,14 @@ namespace PollinationSDK.Api
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="orgName"></param>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">You know, for search (optional)</param>
         /// <param name="name">The account name (optional)</param>
         /// <param name="member">The ID of a user (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (TeamList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<TeamList>> ListOrgTeamsWithHttpInfoAsync (string orgName, int? page = default, int? perPage = default, List<string> search = default, List<string> name = default, List<string> member = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<TeamList>> ListOrgTeamsWithHttpInfoAsync (string orgName, List<string> search = default, List<string> name = default, List<string> member = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'orgName' is set
             if (orgName == null)
@@ -1506,11 +1486,11 @@ namespace PollinationSDK.Api
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
             if (orgName != null) localVarPathParams.Add("org_name", this.Configuration.ApiClient.ParameterToString(orgName)); // path parameter
-            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
             if (search != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "search", search)); // query parameter
             if (name != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "name", name)); // query parameter
             if (member != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "member", member)); // query parameter
+            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
+            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
 
             // make the HTTP request

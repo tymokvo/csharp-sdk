@@ -566,7 +566,7 @@ Name | Type | Description  | Notes
 
 ## ListRunArtifacts
 
-> List&lt;FileMeta&gt; ListRunArtifacts (string owner, string name, string runId, int? page = null, int? perPage = null, List<string> path = null)
+> List&lt;FileMeta&gt; ListRunArtifacts (string owner, string name, string runId, List<string> path = null, int? page = null, int? perPage = null)
 
 List artifacts in a run folder
 
@@ -599,14 +599,14 @@ namespace Example
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
             var runId = runId_example;  // string | 
+            var path = new List<string>(); // List<string> | The path to an file within a project folder (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
-            var path = new List<string>(); // List<string> | The path to an file within a project folder (optional) 
 
             try
             {
                 // List artifacts in a run folder
-                List<FileMeta> result = apiInstance.ListRunArtifacts(owner, name, runId, page, perPage, path);
+                List<FileMeta> result = apiInstance.ListRunArtifacts(owner, name, runId, path, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -628,9 +628,9 @@ Name | Type | Description  | Notes
  **owner** | **string**|  | 
  **name** | **string**|  | 
  **runId** | **string**|  | 
+ **path** | [**List&lt;string&gt;**](string.md)| The path to an file within a project folder | [optional] 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
  **perPage** | **int?**| Number of items per page | [optional] [default to 25]
- **path** | [**List&lt;string&gt;**](string.md)| The path to an file within a project folder | [optional] 
 
 ### Return type
 
@@ -659,7 +659,7 @@ Name | Type | Description  | Notes
 
 ## ListRuns
 
-> RunList ListRuns (string owner, string name, RunStatusEnum? status = null, List<string> jobId = null, int? page = null, int? perPage = null)
+> RunList ListRuns (string owner, string name, List<string> jobId = null, RunStatusEnum? status = null, int? page = null, int? perPage = null)
 
 List runs
 
@@ -691,15 +691,15 @@ namespace Example
             var apiInstance = new RunsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var status = ;  // RunStatusEnum? |  (optional) 
             var jobId = new List<string>(); // List<string> |  (optional) 
+            var status = ;  // RunStatusEnum? |  (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
                 // List runs
-                RunList result = apiInstance.ListRuns(owner, name, status, jobId, page, perPage);
+                RunList result = apiInstance.ListRuns(owner, name, jobId, status, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -720,8 +720,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **status** | **RunStatusEnum?**|  | [optional] 
  **jobId** | [**List&lt;string&gt;**](string.md)|  | [optional] 
+ **status** | **RunStatusEnum?**|  | [optional] 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
  **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
@@ -752,7 +752,7 @@ Name | Type | Description  | Notes
 
 ## QueryResults
 
-> RunResultList QueryResults (string owner, string name, RunStatusEnum? status = null, List<string> jobId = null, int? page = null, int? perPage = null)
+> RunResultList QueryResults (string owner, string name, List<string> jobId = null, RunStatusEnum? status = null, int? page = null, int? perPage = null)
 
 Query run results
 
@@ -784,15 +784,15 @@ namespace Example
             var apiInstance = new RunsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var status = ;  // RunStatusEnum? |  (optional) 
             var jobId = new List<string>(); // List<string> |  (optional) 
+            var status = ;  // RunStatusEnum? |  (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
                 // Query run results
-                RunResultList result = apiInstance.QueryResults(owner, name, status, jobId, page, perPage);
+                RunResultList result = apiInstance.QueryResults(owner, name, jobId, status, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -813,8 +813,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **status** | **RunStatusEnum?**|  | [optional] 
  **jobId** | [**List&lt;string&gt;**](string.md)|  | [optional] 
+ **status** | **RunStatusEnum?**|  | [optional] 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
  **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 

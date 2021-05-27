@@ -87,7 +87,7 @@ No authorization required
 
 ## ListAccounts
 
-> PublicAccountList ListAccounts (int? page = null, int? perPage = null, string search = null, string type = null)
+> PublicAccountList ListAccounts (string search = null, string type = null, RoleEnum role = null, int? page = null, int? perPage = null)
 
 List Accounts on the Pollination platform
 
@@ -109,16 +109,24 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
+            // Configure API key authorization: APIKeyAuth
+            Configuration.Default.AddApiKey("x-pollination-token", "YOUR_API_KEY");
+            // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+            // Configuration.Default.AddApiKeyPrefix("x-pollination-token", "Bearer");
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
             var apiInstance = new AccountsApi(Configuration.Default);
-            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
             var search = search_example;  // string | Search string to find accounts (optional) 
             var type = type_example;  // string | Whether the account is for a user or an org (optional) 
+            var role = new RoleEnum(); // RoleEnum | The role the user has in relation to this account (optional) 
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
                 // List Accounts on the Pollination platform
-                PublicAccountList result = apiInstance.ListAccounts(page, perPage, search, type);
+                PublicAccountList result = apiInstance.ListAccounts(search, type, role, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -137,10 +145,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int?**| Number of items per page | [optional] [default to 25]
  **search** | **string**| Search string to find accounts | [optional] 
  **type** | **string**| Whether the account is for a user or an org | [optional] 
+ **role** | [**RoleEnum**](RoleEnum.md)| The role the user has in relation to this account | [optional] 
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
 ### Return type
 
@@ -148,7 +157,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[APIKeyAuth](../README.md#APIKeyAuth), [JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 

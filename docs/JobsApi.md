@@ -106,7 +106,7 @@ Name | Type | Description  | Notes
 
 Schedule a job
 
-Create a new run.
+Create a new job.
 
 ### Example
 
@@ -466,7 +466,7 @@ Name | Type | Description  | Notes
 
 ## SearchJobFolder
 
-> List&lt;FileMeta&gt; SearchJobFolder (string owner, string name, string jobId, int? page = null, int? perPage = null, List<string> path = null)
+> List&lt;FileMeta&gt; SearchJobFolder (string owner, string name, string jobId, List<string> path = null, int? page = null, int? perPage = null)
 
 List files/folders in a job folder
 
@@ -499,14 +499,14 @@ namespace Example
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
             var jobId = jobId_example;  // string | 
+            var path = new List<string>(); // List<string> | The path to an file within a project folder (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
-            var path = new List<string>(); // List<string> | The path to an file within a project folder (optional) 
 
             try
             {
                 // List files/folders in a job folder
-                List<FileMeta> result = apiInstance.SearchJobFolder(owner, name, jobId, page, perPage, path);
+                List<FileMeta> result = apiInstance.SearchJobFolder(owner, name, jobId, path, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -528,9 +528,9 @@ Name | Type | Description  | Notes
  **owner** | **string**|  | 
  **name** | **string**|  | 
  **jobId** | **string**|  | 
+ **path** | [**List&lt;string&gt;**](string.md)| The path to an file within a project folder | [optional] 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
  **perPage** | **int?**| Number of items per page | [optional] [default to 25]
- **path** | [**List&lt;string&gt;**](string.md)| The path to an file within a project folder | [optional] 
 
 ### Return type
 

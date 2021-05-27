@@ -8,7 +8,7 @@ Method | HTTP request | Description
 [**CreateProjectRecipeFilter**](ProjectsApi.md#createprojectrecipefilter) | **POST** /projects/{owner}/{name}/recipes/filters | Upsert a recipe filter to a project
 [**DeleteProject**](ProjectsApi.md#deleteproject) | **DELETE** /projects/{owner}/{name} | Delete a Project
 [**DeleteProjectOrgPermission**](ProjectsApi.md#deleteprojectorgpermission) | **DELETE** /projects/{owner}/{name}/permissions | Remove a Project permissions
-[**DeleteProjectRecipeFilter**](ProjectsApi.md#deleteprojectrecipefilter) | **DELETE** /projects/{owner}/{name}/recipes/filters | Remove a Project permissions
+[**DeleteProjectRecipeFilter**](ProjectsApi.md#deleteprojectrecipefilter) | **DELETE** /projects/{owner}/{name}/recipes/filters | Remove a Project recipe filter
 [**GetProject**](ProjectsApi.md#getproject) | **GET** /projects/{owner}/{name} | Get a project
 [**GetProjectAccessPermissions**](ProjectsApi.md#getprojectaccesspermissions) | **GET** /projects/{owner}/{name}/permissions | Get project access permissions
 [**GetProjectRecipeFilters**](ProjectsApi.md#getprojectrecipefilters) | **GET** /projects/{owner}/{name}/recipes/filters | Get project recipe filters
@@ -24,8 +24,6 @@ Method | HTTP request | Description
 > CreatedContent CreateProject (string owner, ProjectCreate projectCreate)
 
 Create a Project
-
-Create a new project.
 
 ### Example
 
@@ -110,11 +108,9 @@ Name | Type | Description  | Notes
 
 ## CreateProjectRecipeFilter
 
-> UpdateAccepted CreateProjectRecipeFilter (string owner, string name, ProjectRecipeFilter projectRecipeFilter)
+> ProjectRecipeFilter CreateProjectRecipeFilter (string owner, string name, ProjectRecipeFilter projectRecipeFilter)
 
 Upsert a recipe filter to a project
-
-Upsert a project's access policy (must have `admin` permission)
 
 ### Example
 
@@ -147,7 +143,7 @@ namespace Example
             try
             {
                 // Upsert a recipe filter to a project
-                UpdateAccepted result = apiInstance.CreateProjectRecipeFilter(owner, name, projectRecipeFilter);
+                ProjectRecipeFilter result = apiInstance.CreateProjectRecipeFilter(owner, name, projectRecipeFilter);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -172,7 +168,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**UpdateAccepted**](UpdateAccepted.md)
+[**ProjectRecipeFilter**](ProjectRecipeFilter.md)
 
 ### Authorization
 
@@ -204,8 +200,6 @@ Name | Type | Description  | Notes
 > void DeleteProject (string owner, string name)
 
 Delete a Project
-
-Delete a project (must have `admin` permission)
 
 ### Example
 
@@ -292,8 +286,6 @@ void (empty response body)
 
 Remove a Project permissions
 
-Delete a project's access policy (must have `admin` permission)
-
 ### Example
 
 ```csharp
@@ -379,9 +371,7 @@ void (empty response body)
 
 > void DeleteProjectRecipeFilter (string owner, string name, ProjectRecipeFilter projectRecipeFilter)
 
-Remove a Project permissions
-
-Delete a project's access policy (must have `admin` permission)
+Remove a Project recipe filter
 
 ### Example
 
@@ -413,7 +403,7 @@ namespace Example
 
             try
             {
-                // Remove a Project permissions
+                // Remove a Project recipe filter
                 apiInstance.DeleteProjectRecipeFilter(owner, name, projectRecipeFilter);
             }
             catch (ApiException e)
@@ -469,8 +459,6 @@ void (empty response body)
 > Project GetProject (string owner, string name)
 
 Get a project
-
-Retrieve a project by name
 
 ### Example
 
@@ -558,8 +546,6 @@ Name | Type | Description  | Notes
 > ProjectAccessPolicyList GetProjectAccessPermissions (string owner, string name, int? page = null, int? perPage = null, List<string> subjectType = null, List<string> permission = null)
 
 Get project access permissions
-
-Retrieve a project's access permissions (must have `contribute` permission)
 
 ### Example
 
@@ -651,11 +637,9 @@ Name | Type | Description  | Notes
 
 ## GetProjectRecipeFilters
 
-> ProjectRecipeFilterList GetProjectRecipeFilters (string owner, string name)
+> ProjectRecipeFilterList GetProjectRecipeFilters (string owner, string name, int? page = null, int? perPage = null)
 
 Get project recipe filters
-
-Retrieve a project's access permissions (must have `read` permission)
 
 ### Example
 
@@ -683,11 +667,13 @@ namespace Example
             var apiInstance = new ProjectsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
                 // Get project recipe filters
-                ProjectRecipeFilterList result = apiInstance.GetProjectRecipeFilters(owner, name);
+                ProjectRecipeFilterList result = apiInstance.GetProjectRecipeFilters(owner, name, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -708,6 +694,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
 ### Return type
 
@@ -739,11 +727,9 @@ Name | Type | Description  | Notes
 
 ## GetProjectRecipes
 
-> RecipeInterfaceList GetProjectRecipes (string owner, string name, string search = null, int? page = null, int? perPage = null)
+> RecipeInterfaceList GetProjectRecipes (string owner, string name, int? page = null, int? perPage = null)
 
 Get project recipes
-
-Retrieve a project's access permissions (must have `read` permission)
 
 ### Example
 
@@ -771,14 +757,13 @@ namespace Example
             var apiInstance = new ProjectsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
-            var search = search_example;  // string |  (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
                 // Get project recipes
-                RecipeInterfaceList result = apiInstance.GetProjectRecipes(owner, name, search, page, perPage);
+                RecipeInterfaceList result = apiInstance.GetProjectRecipes(owner, name, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -799,7 +784,6 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
- **search** | **string**|  | [optional] 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
  **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
@@ -833,11 +817,9 @@ Name | Type | Description  | Notes
 
 ## ListProjects
 
-> ProjectList ListProjects (int? page = null, int? perPage = null, List<string> search = null, List<string> id = null, List<string> name = null, List<string> owner = null, bool? _public = null, List<string> permission = null)
+> ProjectList ListProjects (string search = null, List<string> ids = null, List<string> names = null, List<string> owner = null, bool? _public = null, List<string> permissions = null, int? page = null, int? perPage = null)
 
 List Projects
-
-search for projects using query parameters
 
 ### Example
 
@@ -863,19 +845,19 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
-            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
-            var search = new List<string>(); // List<string> | You know, for search (optional) 
-            var id = new List<string>(); // List<string> | The ID of a project to search for (optional) 
-            var name = new List<string>(); // List<string> | The account name (optional) 
+            var search = search_example;  // string | Search string to find accounts (optional) 
+            var ids = new List<string>(); // List<string> | The ID of a project to search for (optional) 
+            var names = new List<string>(); // List<string> | The name of the project (optional) 
             var owner = new List<string>(); // List<string> | Owner of the project (optional) 
             var _public = true;  // bool? | Boolean check for public/private projects (optional) 
-            var permission = new List<string>(); // List<string> | Filter by permission on given resource (optional) 
+            var permissions = new List<string>(); // List<string> | Filter by permission on given resource (optional) 
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
                 // List Projects
-                ProjectList result = apiInstance.ListProjects(page, perPage, search, id, name, owner, _public, permission);
+                ProjectList result = apiInstance.ListProjects(search, ids, names, owner, _public, permissions, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -894,14 +876,14 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int?**| Number of items per page | [optional] [default to 25]
- **search** | [**List&lt;string&gt;**](string.md)| You know, for search | [optional] 
- **id** | [**List&lt;string&gt;**](string.md)| The ID of a project to search for | [optional] 
- **name** | [**List&lt;string&gt;**](string.md)| The account name | [optional] 
+ **search** | **string**| Search string to find accounts | [optional] 
+ **ids** | [**List&lt;string&gt;**](string.md)| The ID of a project to search for | [optional] 
+ **names** | [**List&lt;string&gt;**](string.md)| The name of the project | [optional] 
  **owner** | [**List&lt;string&gt;**](string.md)| Owner of the project | [optional] 
  **_public** | **bool?**| Boolean check for public/private projects | [optional] 
- **permission** | [**List&lt;string&gt;**](string.md)| Filter by permission on given resource | [optional] 
+ **permissions** | [**List&lt;string&gt;**](string.md)| Filter by permission on given resource | [optional] 
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
 ### Return type
 
@@ -936,8 +918,6 @@ Name | Type | Description  | Notes
 > UpdateAccepted Update (string owner, string name, ProjectUpdate projectUpdate)
 
 Update a Project
-
-Update a project (must have `contribute` permission)
 
 ### Example
 
@@ -1027,8 +1007,6 @@ Name | Type | Description  | Notes
 > UpdateAccepted UpsertProjectPermission (string owner, string name, ProjectAccessPolicy projectAccessPolicy)
 
 Upsert a new permission to a project
-
-Upsert a project's access policy (must have `admin` permission)
 
 ### Example
 

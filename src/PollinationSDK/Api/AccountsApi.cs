@@ -52,12 +52,13 @@ namespace PollinationSDK.Api
         /// List accounts
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">Search string to find accounts (optional)</param>
         /// <param name="type">Whether the account is for a user or an org (optional)</param>
+        /// <param name="role">The role the user has in relation to this account (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>PublicAccountList</returns>
-        PublicAccountList ListAccounts (int? page = default, int? perPage = default, string search = default, string type = default);
+        PublicAccountList ListAccounts (string search = default, string type = default, RoleEnum role = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// List Accounts on the Pollination platform
@@ -66,12 +67,13 @@ namespace PollinationSDK.Api
         /// List accounts
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">Search string to find accounts (optional)</param>
         /// <param name="type">Whether the account is for a user or an org (optional)</param>
+        /// <param name="role">The role the user has in relation to this account (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of PublicAccountList</returns>
-        ApiResponse<PublicAccountList> ListAccountsWithHttpInfo (int? page = default, int? perPage = default, string search = default, string type = default);
+        ApiResponse<PublicAccountList> ListAccountsWithHttpInfo (string search = default, string type = default, RoleEnum role = default, int? page = default, int? perPage = default);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -104,13 +106,14 @@ namespace PollinationSDK.Api
         /// List accounts
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">Search string to find accounts (optional)</param>
         /// <param name="type">Whether the account is for a user or an org (optional)</param>
+        /// <param name="role">The role the user has in relation to this account (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of PublicAccountList</returns>
-        System.Threading.Tasks.Task<PublicAccountList> ListAccountsAsync (int? page = default, int? perPage = default, string search = default, string type = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<PublicAccountList> ListAccountsAsync (string search = default, string type = default, RoleEnum role = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List Accounts on the Pollination platform
@@ -119,13 +122,14 @@ namespace PollinationSDK.Api
         /// List accounts
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">Search string to find accounts (optional)</param>
         /// <param name="type">Whether the account is for a user or an org (optional)</param>
+        /// <param name="role">The role the user has in relation to this account (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (PublicAccountList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PublicAccountList>> ListAccountsWithHttpInfoAsync (int? page = default, int? perPage = default, string search = default, string type = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<PublicAccountList>> ListAccountsWithHttpInfoAsync (string search = default, string type = default, RoleEnum role = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -344,14 +348,15 @@ namespace PollinationSDK.Api
         /// List Accounts on the Pollination platform List accounts
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">Search string to find accounts (optional)</param>
         /// <param name="type">Whether the account is for a user or an org (optional)</param>
+        /// <param name="role">The role the user has in relation to this account (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>PublicAccountList</returns>
-        public PublicAccountList ListAccounts (int? page = default, int? perPage = default, string search = default, string type = default)
+        public PublicAccountList ListAccounts (string search = default, string type = default, RoleEnum role = default, int? page = default, int? perPage = default)
         {
-             ApiResponse<PublicAccountList> localVarResponse = ListAccountsWithHttpInfo(page, perPage, search, type);
+             ApiResponse<PublicAccountList> localVarResponse = ListAccountsWithHttpInfo(search, type, role, page, perPage);
              return localVarResponse.Data;
         }
 
@@ -359,12 +364,13 @@ namespace PollinationSDK.Api
         /// List Accounts on the Pollination platform List accounts
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">Search string to find accounts (optional)</param>
         /// <param name="type">Whether the account is for a user or an org (optional)</param>
+        /// <param name="role">The role the user has in relation to this account (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of PublicAccountList</returns>
-        public ApiResponse<PublicAccountList> ListAccountsWithHttpInfo (int? page = default, int? perPage = default, string search = default, string type = default)
+        public ApiResponse<PublicAccountList> ListAccountsWithHttpInfo (string search = default, string type = default, RoleEnum role = default, int? page = default, int? perPage = default)
         {
 
             var localVarPath = "/accounts";
@@ -388,11 +394,23 @@ namespace PollinationSDK.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
             if (search != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "search", search)); // query parameter
             if (type != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "type", type)); // query parameter
+            if (role != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "role", role)); // query parameter
+            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
+            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
+            // authentication (APIKeyAuth) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
+            {
+                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
+            }
+            // authentication (JWTAuth) required
+            // http beerer authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
 
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
@@ -416,15 +434,16 @@ namespace PollinationSDK.Api
         /// List Accounts on the Pollination platform List accounts
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">Search string to find accounts (optional)</param>
         /// <param name="type">Whether the account is for a user or an org (optional)</param>
+        /// <param name="role">The role the user has in relation to this account (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of PublicAccountList</returns>
-        public async System.Threading.Tasks.Task<PublicAccountList> ListAccountsAsync (int? page = default, int? perPage = default, string search = default, string type = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<PublicAccountList> ListAccountsAsync (string search = default, string type = default, RoleEnum role = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<PublicAccountList> localVarResponse = await ListAccountsWithHttpInfoAsync(page, perPage, search, type, cancellationToken);
+             ApiResponse<PublicAccountList> localVarResponse = await ListAccountsWithHttpInfoAsync(search, type, role, page, perPage, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -433,13 +452,14 @@ namespace PollinationSDK.Api
         /// List Accounts on the Pollination platform List accounts
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">Search string to find accounts (optional)</param>
         /// <param name="type">Whether the account is for a user or an org (optional)</param>
+        /// <param name="role">The role the user has in relation to this account (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (PublicAccountList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<PublicAccountList>> ListAccountsWithHttpInfoAsync (int? page = default, int? perPage = default, string search = default, string type = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<PublicAccountList>> ListAccountsWithHttpInfoAsync (string search = default, string type = default, RoleEnum role = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
 
             var localVarPath = "/accounts";
@@ -463,11 +483,23 @@ namespace PollinationSDK.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
             if (search != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "search", search)); // query parameter
             if (type != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "type", type)); // query parameter
+            if (role != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "role", role)); // query parameter
+            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
+            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
+            // authentication (APIKeyAuth) required
+            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
+            {
+                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
+            }
+            // authentication (JWTAuth) required
+            // http bearer authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
 
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,

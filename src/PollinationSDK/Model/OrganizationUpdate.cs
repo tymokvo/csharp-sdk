@@ -32,6 +32,7 @@ namespace PollinationSDK
         /// <summary>
         /// Initializes a new instance of the <see cref="OrganizationUpdate" /> class.
         /// </summary>
+        /// <param name="accountName">The unique name of the org in small case without spaces.</param>
         /// <param name="name">The display name for this org.</param>
         /// <param name="pictureUrl">URL to the picture associated with this org.</param>
         /// <param name="contactEmail">The contact email for the Organization.</param>
@@ -39,9 +40,10 @@ namespace PollinationSDK
         public OrganizationUpdate
         (
            // Required parameters
-           string name= default, string pictureUrl= default, string contactEmail= default, string description= default // Optional parameters
+           string accountName= default, string name= default, string pictureUrl= default, string contactEmail= default, string description= default // Optional parameters
         ) : base()// BaseClass
         {
+            this.AccountName = accountName;
             this.Name = name;
             this.PictureUrl = pictureUrl;
             this.ContactEmail = contactEmail;
@@ -58,6 +60,12 @@ namespace PollinationSDK
         [DataMember(Name = "type", EmitDefaultValue = true)]
         public string Type { get; protected internal set; }  = "OrganizationUpdate";
 
+        /// <summary>
+        /// The unique name of the org in small case without spaces
+        /// </summary>
+        /// <value>The unique name of the org in small case without spaces</value>
+        [DataMember(Name = "account_name", EmitDefaultValue = false)]
+        public string AccountName { get; set; } 
         /// <summary>
         /// The display name for this org
         /// </summary>
@@ -104,6 +112,7 @@ namespace PollinationSDK
             var sb = new StringBuilder();
             sb.Append("OrganizationUpdate:\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
+            sb.Append("  AccountName: ").Append(AccountName).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  PictureUrl: ").Append(PictureUrl).Append("\n");
             sb.Append("  ContactEmail: ").Append(ContactEmail).Append("\n");
@@ -172,6 +181,11 @@ namespace PollinationSDK
                 return false;
             return base.Equals(input) && 
                 (
+                    this.AccountName == input.AccountName ||
+                    (this.AccountName != null &&
+                    this.AccountName.Equals(input.AccountName))
+                ) && base.Equals(input) && 
+                (
                     this.Name == input.Name ||
                     (this.Name != null &&
                     this.Name.Equals(input.Name))
@@ -207,6 +221,8 @@ namespace PollinationSDK
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = base.GetHashCode();
+                if (this.AccountName != null)
+                    hashCode = hashCode * 59 + this.AccountName.GetHashCode();
                 if (this.Name != null)
                     hashCode = hashCode * 59 + this.Name.GetHashCode();
                 if (this.PictureUrl != null)

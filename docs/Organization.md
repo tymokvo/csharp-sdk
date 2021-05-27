@@ -5,6 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**AccountName** | **string** | The unique name of the org in small case without spaces | [optional] 
 **Name** | **string** | The display name for this org | [optional] 
 **PictureUrl** | **string** | URL to the picture associated with this org | [optional] 
 **ContactEmail** | **string** | The contact email for the Organization | [optional] 

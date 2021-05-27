@@ -202,11 +202,11 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="runId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <returns>List&lt;FileMeta&gt;</returns>
-        List<FileMeta> ListRunArtifacts (string owner, string name, string runId, int? page = default, int? perPage = default, List<string> path = default);
+        List<FileMeta> ListRunArtifacts (string owner, string name, string runId, List<string> path = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// List artifacts in a run folder
@@ -218,11 +218,11 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="runId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <returns>ApiResponse of List&lt;FileMeta&gt;</returns>
-        ApiResponse<List<FileMeta>> ListRunArtifactsWithHttpInfo (string owner, string name, string runId, int? page = default, int? perPage = default, List<string> path = default);
+        ApiResponse<List<FileMeta>> ListRunArtifactsWithHttpInfo (string owner, string name, string runId, List<string> path = default, int? page = default, int? perPage = default);
         /// <summary>
         /// List runs
         /// </summary>
@@ -232,12 +232,12 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="status"> (optional)</param>
         /// <param name="jobId"> (optional)</param>
+        /// <param name="status"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>RunList</returns>
-        RunList ListRuns (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default);
+        RunList ListRuns (string owner, string name, List<string> jobId = default, RunStatusEnum? status = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// List runs
@@ -248,12 +248,12 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="status"> (optional)</param>
         /// <param name="jobId"> (optional)</param>
+        /// <param name="status"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of RunList</returns>
-        ApiResponse<RunList> ListRunsWithHttpInfo (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default);
+        ApiResponse<RunList> ListRunsWithHttpInfo (string owner, string name, List<string> jobId = default, RunStatusEnum? status = default, int? page = default, int? perPage = default);
         /// <summary>
         /// Query run results
         /// </summary>
@@ -263,12 +263,12 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="status"> (optional)</param>
         /// <param name="jobId"> (optional)</param>
+        /// <param name="status"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>RunResultList</returns>
-        RunResultList QueryResults (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default);
+        RunResultList QueryResults (string owner, string name, List<string> jobId = default, RunStatusEnum? status = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// Query run results
@@ -279,12 +279,12 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="status"> (optional)</param>
         /// <param name="jobId"> (optional)</param>
+        /// <param name="status"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of RunResultList</returns>
-        ApiResponse<RunResultList> QueryResultsWithHttpInfo (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default);
+        ApiResponse<RunResultList> QueryResultsWithHttpInfo (string owner, string name, List<string> jobId = default, RunStatusEnum? status = default, int? page = default, int? perPage = default);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -477,12 +477,12 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="runId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of List&lt;FileMeta&gt;</returns>
-        System.Threading.Tasks.Task<List<FileMeta>> ListRunArtifactsAsync (string owner, string name, string runId, int? page = default, int? perPage = default, List<string> path = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<List<FileMeta>> ListRunArtifactsAsync (string owner, string name, string runId, List<string> path = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List artifacts in a run folder
@@ -494,12 +494,12 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="runId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (List&lt;FileMeta&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<FileMeta>>> ListRunArtifactsWithHttpInfoAsync (string owner, string name, string runId, int? page = default, int? perPage = default, List<string> path = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<List<FileMeta>>> ListRunArtifactsWithHttpInfoAsync (string owner, string name, string runId, List<string> path = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List runs
         /// </summary>
@@ -509,13 +509,13 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="status"> (optional)</param>
         /// <param name="jobId"> (optional)</param>
+        /// <param name="status"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of RunList</returns>
-        System.Threading.Tasks.Task<RunList> ListRunsAsync (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<RunList> ListRunsAsync (string owner, string name, List<string> jobId = default, RunStatusEnum? status = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List runs
@@ -526,13 +526,13 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="status"> (optional)</param>
         /// <param name="jobId"> (optional)</param>
+        /// <param name="status"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (RunList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<RunList>> ListRunsWithHttpInfoAsync (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<RunList>> ListRunsWithHttpInfoAsync (string owner, string name, List<string> jobId = default, RunStatusEnum? status = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Query run results
         /// </summary>
@@ -542,13 +542,13 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="status"> (optional)</param>
         /// <param name="jobId"> (optional)</param>
+        /// <param name="status"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of RunResultList</returns>
-        System.Threading.Tasks.Task<RunResultList> QueryResultsAsync (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<RunResultList> QueryResultsAsync (string owner, string name, List<string> jobId = default, RunStatusEnum? status = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Query run results
@@ -559,13 +559,13 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="status"> (optional)</param>
         /// <param name="jobId"> (optional)</param>
+        /// <param name="status"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (RunResultList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<RunResultList>> QueryResultsWithHttpInfoAsync (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<RunResultList>> QueryResultsWithHttpInfoAsync (string owner, string name, List<string> jobId = default, RunStatusEnum? status = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -1804,13 +1804,13 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="runId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <returns>List&lt;FileMeta&gt;</returns>
-        public List<FileMeta> ListRunArtifacts (string owner, string name, string runId, int? page = default, int? perPage = default, List<string> path = default)
+        public List<FileMeta> ListRunArtifacts (string owner, string name, string runId, List<string> path = default, int? page = default, int? perPage = default)
         {
-             ApiResponse<List<FileMeta>> localVarResponse = ListRunArtifactsWithHttpInfo(owner, name, runId, page, perPage, path);
+             ApiResponse<List<FileMeta>> localVarResponse = ListRunArtifactsWithHttpInfo(owner, name, runId, path, page, perPage);
              return localVarResponse.Data;
         }
 
@@ -1821,11 +1821,11 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="runId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <returns>ApiResponse of List&lt;FileMeta&gt;</returns>
-        public ApiResponse<List<FileMeta>> ListRunArtifactsWithHttpInfo (string owner, string name, string runId, int? page = default, int? perPage = default, List<string> path = default)
+        public ApiResponse<List<FileMeta>> ListRunArtifactsWithHttpInfo (string owner, string name, string runId, List<string> path = default, int? page = default, int? perPage = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1861,9 +1861,9 @@ namespace PollinationSDK.Api
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
             if (runId != null) localVarPathParams.Add("run_id", this.Configuration.ApiClient.ParameterToString(runId)); // path parameter
+            if (path != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "path", path)); // query parameter
             if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
             if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
-            if (path != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "path", path)); // query parameter
 
             // authentication (APIKeyAuth) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
@@ -1902,14 +1902,14 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="runId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of List&lt;FileMeta&gt;</returns>
-        public async System.Threading.Tasks.Task<List<FileMeta>> ListRunArtifactsAsync (string owner, string name, string runId, int? page = default, int? perPage = default, List<string> path = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<List<FileMeta>> ListRunArtifactsAsync (string owner, string name, string runId, List<string> path = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<List<FileMeta>> localVarResponse = await ListRunArtifactsWithHttpInfoAsync(owner, name, runId, page, perPage, path, cancellationToken);
+             ApiResponse<List<FileMeta>> localVarResponse = await ListRunArtifactsWithHttpInfoAsync(owner, name, runId, path, page, perPage, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -1921,12 +1921,12 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="runId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (List&lt;FileMeta&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<FileMeta>>> ListRunArtifactsWithHttpInfoAsync (string owner, string name, string runId, int? page = default, int? perPage = default, List<string> path = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<List<FileMeta>>> ListRunArtifactsWithHttpInfoAsync (string owner, string name, string runId, List<string> path = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1962,9 +1962,9 @@ namespace PollinationSDK.Api
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
             if (runId != null) localVarPathParams.Add("run_id", this.Configuration.ApiClient.ParameterToString(runId)); // path parameter
+            if (path != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "path", path)); // query parameter
             if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
             if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
-            if (path != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "path", path)); // query parameter
 
             // authentication (APIKeyAuth) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
@@ -2002,14 +2002,14 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="status"> (optional)</param>
         /// <param name="jobId"> (optional)</param>
+        /// <param name="status"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>RunList</returns>
-        public RunList ListRuns (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default)
+        public RunList ListRuns (string owner, string name, List<string> jobId = default, RunStatusEnum? status = default, int? page = default, int? perPage = default)
         {
-             ApiResponse<RunList> localVarResponse = ListRunsWithHttpInfo(owner, name, status, jobId, page, perPage);
+             ApiResponse<RunList> localVarResponse = ListRunsWithHttpInfo(owner, name, jobId, status, page, perPage);
              return localVarResponse.Data;
         }
 
@@ -2019,12 +2019,12 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="status"> (optional)</param>
         /// <param name="jobId"> (optional)</param>
+        /// <param name="status"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of RunList</returns>
-        public ApiResponse<RunList> ListRunsWithHttpInfo (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default)
+        public ApiResponse<RunList> ListRunsWithHttpInfo (string owner, string name, List<string> jobId = default, RunStatusEnum? status = default, int? page = default, int? perPage = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2056,8 +2056,8 @@ namespace PollinationSDK.Api
 
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
-            if (status != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "status", status)); // query parameter
             if (jobId != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "job_id", jobId)); // query parameter
+            if (status != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "status", status)); // query parameter
             if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
             if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
@@ -2097,15 +2097,15 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="status"> (optional)</param>
         /// <param name="jobId"> (optional)</param>
+        /// <param name="status"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of RunList</returns>
-        public async System.Threading.Tasks.Task<RunList> ListRunsAsync (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<RunList> ListRunsAsync (string owner, string name, List<string> jobId = default, RunStatusEnum? status = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<RunList> localVarResponse = await ListRunsWithHttpInfoAsync(owner, name, status, jobId, page, perPage, cancellationToken);
+             ApiResponse<RunList> localVarResponse = await ListRunsWithHttpInfoAsync(owner, name, jobId, status, page, perPage, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -2116,13 +2116,13 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="status"> (optional)</param>
         /// <param name="jobId"> (optional)</param>
+        /// <param name="status"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (RunList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<RunList>> ListRunsWithHttpInfoAsync (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<RunList>> ListRunsWithHttpInfoAsync (string owner, string name, List<string> jobId = default, RunStatusEnum? status = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2154,8 +2154,8 @@ namespace PollinationSDK.Api
 
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
-            if (status != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "status", status)); // query parameter
             if (jobId != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "job_id", jobId)); // query parameter
+            if (status != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "status", status)); // query parameter
             if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
             if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
@@ -2195,14 +2195,14 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="status"> (optional)</param>
         /// <param name="jobId"> (optional)</param>
+        /// <param name="status"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>RunResultList</returns>
-        public RunResultList QueryResults (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default)
+        public RunResultList QueryResults (string owner, string name, List<string> jobId = default, RunStatusEnum? status = default, int? page = default, int? perPage = default)
         {
-             ApiResponse<RunResultList> localVarResponse = QueryResultsWithHttpInfo(owner, name, status, jobId, page, perPage);
+             ApiResponse<RunResultList> localVarResponse = QueryResultsWithHttpInfo(owner, name, jobId, status, page, perPage);
              return localVarResponse.Data;
         }
 
@@ -2212,12 +2212,12 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="status"> (optional)</param>
         /// <param name="jobId"> (optional)</param>
+        /// <param name="status"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of RunResultList</returns>
-        public ApiResponse<RunResultList> QueryResultsWithHttpInfo (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default)
+        public ApiResponse<RunResultList> QueryResultsWithHttpInfo (string owner, string name, List<string> jobId = default, RunStatusEnum? status = default, int? page = default, int? perPage = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2249,8 +2249,8 @@ namespace PollinationSDK.Api
 
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
-            if (status != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "status", status)); // query parameter
             if (jobId != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "job_id", jobId)); // query parameter
+            if (status != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "status", status)); // query parameter
             if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
             if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
@@ -2290,15 +2290,15 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="status"> (optional)</param>
         /// <param name="jobId"> (optional)</param>
+        /// <param name="status"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of RunResultList</returns>
-        public async System.Threading.Tasks.Task<RunResultList> QueryResultsAsync (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<RunResultList> QueryResultsAsync (string owner, string name, List<string> jobId = default, RunStatusEnum? status = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<RunResultList> localVarResponse = await QueryResultsWithHttpInfoAsync(owner, name, status, jobId, page, perPage, cancellationToken);
+             ApiResponse<RunResultList> localVarResponse = await QueryResultsWithHttpInfoAsync(owner, name, jobId, status, page, perPage, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -2309,13 +2309,13 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="status"> (optional)</param>
         /// <param name="jobId"> (optional)</param>
+        /// <param name="status"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (RunResultList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<RunResultList>> QueryResultsWithHttpInfoAsync (string owner, string name, RunStatusEnum? status = default, List<string> jobId = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<RunResultList>> QueryResultsWithHttpInfoAsync (string owner, string name, List<string> jobId = default, RunStatusEnum? status = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2347,8 +2347,8 @@ namespace PollinationSDK.Api
 
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
-            if (status != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "status", status)); // query parameter
             if (jobId != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "job_id", jobId)); // query parameter
+            if (status != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "status", status)); // query parameter
             if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
             if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 

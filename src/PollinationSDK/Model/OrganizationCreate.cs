@@ -27,41 +27,22 @@ namespace PollinationSDK
     /// OrganizationCreate
     /// </summary>
     [DataContract(Name = "OrganizationCreate")]
-    public partial class OrganizationCreate : OpenAPIGenBaseModel, IEquatable<OrganizationCreate>, IValidatableObject
+    public partial class OrganizationCreate : OrganizationUpdate, IEquatable<OrganizationCreate>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="OrganizationCreate" /> class.
         /// </summary>
-        [JsonConstructorAttribute]
-        protected OrganizationCreate() 
-        { 
-            // Set non-required readonly properties with defaultValue
-            this.Type = "OrganizationCreate";
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the <see cref="OrganizationCreate" /> class.
-        /// </summary>
-        /// <param name="accountName">The unique name of the org in small case without spaces (required).</param>
-        /// <param name="name">The display name for this org (required).</param>
-        /// <param name="pictureUrl">URL to the picture associated with this org (required).</param>
-        /// <param name="contactEmail">The contact email for the Organization (required).</param>
+        /// <param name="accountName">The unique name of the org in small case without spaces.</param>
+        /// <param name="name">The display name for this org.</param>
+        /// <param name="pictureUrl">URL to the picture associated with this org.</param>
+        /// <param name="contactEmail">The contact email for the Organization.</param>
         /// <param name="description">A description of the org.</param>
         public OrganizationCreate
         (
-           string accountName, string name, string pictureUrl, string contactEmail, // Required parameters
-           string description= default // Optional parameters
-        ) : base()// BaseClass
+           // Required parameters
+            string accountName= default, string name= default, string pictureUrl= default, string contactEmail= default, string description= default // Optional parameters
+        ) : base(accountName: accountName, name: name, pictureUrl: pictureUrl, contactEmail: contactEmail, description: description)// BaseClass
         {
-            // to ensure "accountName" is required (not null)
-            this.AccountName = accountName ?? throw new ArgumentNullException("accountName is a required property for OrganizationCreate and cannot be null");
-            // to ensure "name" is required (not null)
-            this.Name = name ?? throw new ArgumentNullException("name is a required property for OrganizationCreate and cannot be null");
-            // to ensure "pictureUrl" is required (not null)
-            this.PictureUrl = pictureUrl ?? throw new ArgumentNullException("pictureUrl is a required property for OrganizationCreate and cannot be null");
-            // to ensure "contactEmail" is required (not null)
-            this.ContactEmail = contactEmail ?? throw new ArgumentNullException("contactEmail is a required property for OrganizationCreate and cannot be null");
-            this.Description = description;
 
             // Set non-required readonly properties with defaultValue
             this.Type = "OrganizationCreate";
@@ -74,36 +55,6 @@ namespace PollinationSDK
         [DataMember(Name = "type", EmitDefaultValue = true)]
         public string Type { get; protected internal set; }  = "OrganizationCreate";
 
-        /// <summary>
-        /// The unique name of the org in small case without spaces
-        /// </summary>
-        /// <value>The unique name of the org in small case without spaces</value>
-        [DataMember(Name = "account_name", IsRequired = true, EmitDefaultValue = false)]
-        public string AccountName { get; set; } 
-        /// <summary>
-        /// The display name for this org
-        /// </summary>
-        /// <value>The display name for this org</value>
-        [DataMember(Name = "name", IsRequired = true, EmitDefaultValue = false)]
-        public string Name { get; set; } 
-        /// <summary>
-        /// URL to the picture associated with this org
-        /// </summary>
-        /// <value>URL to the picture associated with this org</value>
-        [DataMember(Name = "picture_url", IsRequired = true, EmitDefaultValue = false)]
-        public string PictureUrl { get; set; } 
-        /// <summary>
-        /// The contact email for the Organization
-        /// </summary>
-        /// <value>The contact email for the Organization</value>
-        [DataMember(Name = "contact_email", IsRequired = true, EmitDefaultValue = false)]
-        public string ContactEmail { get; set; } 
-        /// <summary>
-        /// A description of the org
-        /// </summary>
-        /// <value>A description of the org</value>
-        [DataMember(Name = "description", EmitDefaultValue = false)]
-        public string Description { get; set; } 
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -168,7 +119,7 @@ namespace PollinationSDK
         /// Creates a new instance with the same properties.
         /// </summary>
         /// <returns>OpenAPIGenBaseModel</returns>
-        public override OpenAPIGenBaseModel DuplicateOpenAPIGenBaseModel()
+        public override OrganizationUpdate DuplicateOrganizationUpdate()
         {
             return DuplicateOrganizationCreate();
         }
@@ -195,31 +146,6 @@ namespace PollinationSDK
                 return false;
             return base.Equals(input) && 
                 (
-                    this.AccountName == input.AccountName ||
-                    (this.AccountName != null &&
-                    this.AccountName.Equals(input.AccountName))
-                ) && base.Equals(input) && 
-                (
-                    this.Name == input.Name ||
-                    (this.Name != null &&
-                    this.Name.Equals(input.Name))
-                ) && base.Equals(input) && 
-                (
-                    this.PictureUrl == input.PictureUrl ||
-                    (this.PictureUrl != null &&
-                    this.PictureUrl.Equals(input.PictureUrl))
-                ) && base.Equals(input) && 
-                (
-                    this.ContactEmail == input.ContactEmail ||
-                    (this.ContactEmail != null &&
-                    this.ContactEmail.Equals(input.ContactEmail))
-                ) && base.Equals(input) && 
-                (
-                    this.Description == input.Description ||
-                    (this.Description != null &&
-                    this.Description.Equals(input.Description))
-                ) && base.Equals(input) && 
-                (
                     this.Type == input.Type ||
                     (this.Type != null &&
                     this.Type.Equals(input.Type))
@@ -235,16 +161,6 @@ namespace PollinationSDK
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = base.GetHashCode();
-                if (this.AccountName != null)
-                    hashCode = hashCode * 59 + this.AccountName.GetHashCode();
-                if (this.Name != null)
-                    hashCode = hashCode * 59 + this.Name.GetHashCode();
-                if (this.PictureUrl != null)
-                    hashCode = hashCode * 59 + this.PictureUrl.GetHashCode();
-                if (this.ContactEmail != null)
-                    hashCode = hashCode * 59 + this.ContactEmail.GetHashCode();
-                if (this.Description != null)
-                    hashCode = hashCode * 59 + this.Description.GetHashCode();
                 if (this.Type != null)
                     hashCode = hashCode * 59 + this.Type.GetHashCode();
                 return hashCode;

@@ -354,7 +354,7 @@ Name | Type | Description  | Notes
 
 ## PostRecipe
 
-> AnyType PostRecipe (string owner, string authorization = null, string type = null, System.IO.Stream package = null)
+> AnyType PostRecipe (string owner, string type = null, System.IO.Stream package = null)
 
 Push an Recipe to the registry
 
@@ -383,14 +383,13 @@ namespace Example
 
             var apiInstance = new RegistriesApi(Configuration.Default);
             var owner = owner_example;  // string | 
-            var authorization = authorization_example;  // string |  (optional) 
             var type = type_example;  // string |  (optional)  (default to "Body_post_recipe_registries__owner__recipes_post")
             var package = BINARY_DATA_HERE;  // System.IO.Stream |  (optional) 
 
             try
             {
                 // Push an Recipe to the registry
-                AnyType result = apiInstance.PostRecipe(owner, authorization, type, package);
+                AnyType result = apiInstance.PostRecipe(owner, type, package);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -410,7 +409,6 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
- **authorization** | **string**|  | [optional] 
  **type** | **string**|  | [optional] [default to &quot;Body_post_recipe_registries__owner__recipes_post&quot;]
  **package** | **System.IO.Stream**|  | [optional] 
 

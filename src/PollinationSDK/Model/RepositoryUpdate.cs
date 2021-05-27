@@ -27,21 +27,25 @@ namespace PollinationSDK
     /// RepositoryUpdate
     /// </summary>
     [DataContract(Name = "RepositoryUpdate")]
-    public partial class RepositoryUpdate : Update, IEquatable<RepositoryUpdate>, IValidatableObject
+    public partial class RepositoryUpdate : OpenAPIGenBaseModel, IEquatable<RepositoryUpdate>, IValidatableObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RepositoryUpdate" /> class.
         /// </summary>
-        /// <param name="_public">Whether or not a repository is publicly viewable (default to true).</param>
+        /// <param name="_public">Whether or not a repository is publicly viewable.</param>
         /// <param name="keywords">A list of keywords to index the repository by.</param>
         /// <param name="description">A description of the repository.</param>
         /// <param name="icon">An icon to represent this repository.</param>
         public RepositoryUpdate
         (
            // Required parameters
-            bool _public = true, List<string> keywords= default, string description= default, string icon= default // Optional parameters
-        ) : base(_public: _public, keywords: keywords, description: description, icon: icon)// BaseClass
+           bool _public= default, List<string> keywords= default, string description= default, string icon= default // Optional parameters
+        ) : base()// BaseClass
         {
+            this.Public = _public;
+            this.Keywords = keywords;
+            this.Description = description;
+            this.Icon = icon;
 
             // Set non-required readonly properties with defaultValue
             this.Type = "RepositoryUpdate";
@@ -54,6 +58,30 @@ namespace PollinationSDK
         [DataMember(Name = "type", EmitDefaultValue = true)]
         public string Type { get; protected internal set; }  = "RepositoryUpdate";
 
+        /// <summary>
+        /// Whether or not a repository is publicly viewable
+        /// </summary>
+        /// <value>Whether or not a repository is publicly viewable</value>
+        [DataMember(Name = "public", EmitDefaultValue = false)]
+        public bool Public { get; set; } 
+        /// <summary>
+        /// A list of keywords to index the repository by
+        /// </summary>
+        /// <value>A list of keywords to index the repository by</value>
+        [DataMember(Name = "keywords", EmitDefaultValue = false)]
+        public List<string> Keywords { get; set; } 
+        /// <summary>
+        /// A description of the repository
+        /// </summary>
+        /// <value>A description of the repository</value>
+        [DataMember(Name = "description", EmitDefaultValue = false)]
+        public string Description { get; set; } 
+        /// <summary>
+        /// An icon to represent this repository
+        /// </summary>
+        /// <value>An icon to represent this repository</value>
+        [DataMember(Name = "icon", EmitDefaultValue = false)]
+        public string Icon { get; set; } 
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -117,7 +145,7 @@ namespace PollinationSDK
         /// Creates a new instance with the same properties.
         /// </summary>
         /// <returns>OpenAPIGenBaseModel</returns>
-        public override Update DuplicateUpdate()
+        public override OpenAPIGenBaseModel DuplicateOpenAPIGenBaseModel()
         {
             return DuplicateRepositoryUpdate();
         }
@@ -144,6 +172,27 @@ namespace PollinationSDK
                 return false;
             return base.Equals(input) && 
                 (
+                    this.Public == input.Public ||
+                    (this.Public != null &&
+                    this.Public.Equals(input.Public))
+                ) && base.Equals(input) && 
+                (
+                    this.Keywords == input.Keywords ||
+                    this.Keywords != null &&
+                    input.Keywords != null &&
+                    this.Keywords.SequenceEqual(input.Keywords)
+                ) && base.Equals(input) && 
+                (
+                    this.Description == input.Description ||
+                    (this.Description != null &&
+                    this.Description.Equals(input.Description))
+                ) && base.Equals(input) && 
+                (
+                    this.Icon == input.Icon ||
+                    (this.Icon != null &&
+                    this.Icon.Equals(input.Icon))
+                ) && base.Equals(input) && 
+                (
                     this.Type == input.Type ||
                     (this.Type != null &&
                     this.Type.Equals(input.Type))
@@ -159,6 +208,14 @@ namespace PollinationSDK
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = base.GetHashCode();
+                if (this.Public != null)
+                    hashCode = hashCode * 59 + this.Public.GetHashCode();
+                if (this.Keywords != null)
+                    hashCode = hashCode * 59 + this.Keywords.GetHashCode();
+                if (this.Description != null)
+                    hashCode = hashCode * 59 + this.Description.GetHashCode();
+                if (this.Icon != null)
+                    hashCode = hashCode * 59 + this.Icon.GetHashCode();
                 if (this.Type != null)
                     hashCode = hashCode * 59 + this.Type.GetHashCode();
                 return hashCode;

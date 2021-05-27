@@ -5,10 +5,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**AccountName** | **string** | The unique name of the org in small case without spaces | 
-**Name** | **string** | The display name for this org | 
-**PictureUrl** | **string** | URL to the picture associated with this org | 
-**ContactEmail** | **string** | The contact email for the Organization | 
+**AccountName** | **string** | The unique name of the org in small case without spaces | [optional] 
+**Name** | **string** | The display name for this org | [optional] 
+**PictureUrl** | **string** | URL to the picture associated with this org | [optional] 
+**ContactEmail** | **string** | The contact email for the Organization | [optional] 
 **Description** | **string** | A description of the org | [optional] 
 **Type** | **string** |  | [optional] [readonly] [default to "OrganizationCreate"]
 

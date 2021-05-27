@@ -43,7 +43,7 @@ namespace PollinationSDK
         /// Initializes a new instance of the <see cref="Team" /> class.
         /// </summary>
         /// <param name="id">The team ID (required).</param>
-        /// <param name="slug">The slug of the team (required).</param>
+        /// <param name="slug">The public slug of the team (required).</param>
         /// <param name="memberCount">The number of members that are part of this team (default to 0).</param>
         /// <param name="name">name (required).</param>
         /// <param name="description">description.</param>
@@ -77,9 +77,9 @@ namespace PollinationSDK
         [DataMember(Name = "id", IsRequired = true, EmitDefaultValue = false)]
         public string Id { get; set; } 
         /// <summary>
-        /// The slug of the team
+        /// The public slug of the team
         /// </summary>
-        /// <value>The slug of the team</value>
+        /// <value>The public slug of the team</value>
         [DataMember(Name = "slug", IsRequired = true, EmitDefaultValue = false)]
         public string Slug { get; set; } 
         /// <summary>

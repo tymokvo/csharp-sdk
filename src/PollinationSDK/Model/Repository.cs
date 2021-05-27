@@ -47,7 +47,7 @@ namespace PollinationSDK
         /// <param name="owner">The owner of the repository (required).</param>
         /// <param name="permissions">The permissions the user making the API call has on the resource.</param>
         /// <param name="slug">The repository slug.</param>
-        /// <param name="_public">Whether or not a repository is publicly viewable (default to true).</param>
+        /// <param name="_public">Whether or not a repository is publicly viewable.</param>
         /// <param name="keywords">A list of keywords to index the repository by.</param>
         /// <param name="description">A description of the repository.</param>
         /// <param name="icon">An icon to represent this repository.</param>
@@ -55,7 +55,7 @@ namespace PollinationSDK
         public Repository
         (
             string name, string id, string latestTag, AccountPublic owner, // Required parameters
-            bool _public = true, List<string> keywords= default, string description= default, string icon= default, RepositoryUserPermissions permissions= default, string slug= default // Optional parameters
+            bool _public= default, List<string> keywords= default, string description= default, string icon= default, RepositoryUserPermissions permissions= default, string slug= default // Optional parameters
         ) : base(_public: _public, keywords: keywords, description: description, icon: icon, name: name)// BaseClass
         {
             // to ensure "id" is required (not null)

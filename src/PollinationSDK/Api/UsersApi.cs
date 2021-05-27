@@ -73,11 +73,11 @@ namespace PollinationSDK.Api
         /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="search">You know, for search (optional)</param>
+        /// <param name="search">Search string to find users (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>UserPublicList</returns>
-        UserPublicList ListUsers (List<string> search = default, int? page = default, int? perPage = default);
+        UserPublicList ListUsers (string search = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// List Users
@@ -86,11 +86,11 @@ namespace PollinationSDK.Api
         /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="search">You know, for search (optional)</param>
+        /// <param name="search">Search string to find users (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of UserPublicList</returns>
-        ApiResponse<UserPublicList> ListUsersWithHttpInfo (List<string> search = default, int? page = default, int? perPage = default);
+        ApiResponse<UserPublicList> ListUsersWithHttpInfo (string search = default, int? page = default, int? perPage = default);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -146,12 +146,12 @@ namespace PollinationSDK.Api
         /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="search">You know, for search (optional)</param>
+        /// <param name="search">Search string to find users (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of UserPublicList</returns>
-        System.Threading.Tasks.Task<UserPublicList> ListUsersAsync (List<string> search = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<UserPublicList> ListUsersAsync (string search = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List Users
@@ -160,12 +160,12 @@ namespace PollinationSDK.Api
         /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="search">You know, for search (optional)</param>
+        /// <param name="search">Search string to find users (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (UserPublicList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<UserPublicList>> ListUsersWithHttpInfoAsync (List<string> search = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<UserPublicList>> ListUsersWithHttpInfoAsync (string search = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -519,11 +519,11 @@ namespace PollinationSDK.Api
         /// List Users 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="search">You know, for search (optional)</param>
+        /// <param name="search">Search string to find users (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>UserPublicList</returns>
-        public UserPublicList ListUsers (List<string> search = default, int? page = default, int? perPage = default)
+        public UserPublicList ListUsers (string search = default, int? page = default, int? perPage = default)
         {
              ApiResponse<UserPublicList> localVarResponse = ListUsersWithHttpInfo(search, page, perPage);
              return localVarResponse.Data;
@@ -533,11 +533,11 @@ namespace PollinationSDK.Api
         /// List Users 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="search">You know, for search (optional)</param>
+        /// <param name="search">Search string to find users (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of UserPublicList</returns>
-        public ApiResponse<UserPublicList> ListUsersWithHttpInfo (List<string> search = default, int? page = default, int? perPage = default)
+        public ApiResponse<UserPublicList> ListUsersWithHttpInfo (string search = default, int? page = default, int? perPage = default)
         {
 
             var localVarPath = "/users";
@@ -561,7 +561,7 @@ namespace PollinationSDK.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (search != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "search", search)); // query parameter
+            if (search != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "search", search)); // query parameter
             if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
             if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
@@ -588,12 +588,12 @@ namespace PollinationSDK.Api
         /// List Users 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="search">You know, for search (optional)</param>
+        /// <param name="search">Search string to find users (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of UserPublicList</returns>
-        public async System.Threading.Tasks.Task<UserPublicList> ListUsersAsync (List<string> search = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<UserPublicList> ListUsersAsync (string search = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
              ApiResponse<UserPublicList> localVarResponse = await ListUsersWithHttpInfoAsync(search, page, perPage, cancellationToken);
              return localVarResponse.Data;
@@ -604,12 +604,12 @@ namespace PollinationSDK.Api
         /// List Users 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="search">You know, for search (optional)</param>
+        /// <param name="search">Search string to find users (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (UserPublicList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<UserPublicList>> ListUsersWithHttpInfoAsync (List<string> search = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<UserPublicList>> ListUsersWithHttpInfoAsync (string search = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
 
             var localVarPath = "/users";
@@ -633,7 +633,7 @@ namespace PollinationSDK.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (search != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "search", search)); // query parameter
+            if (search != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "search", search)); // query parameter
             if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
             if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 

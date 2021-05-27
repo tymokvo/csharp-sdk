@@ -164,7 +164,7 @@ No authorization required
 
 ## ListUsers
 
-> UserPublicList ListUsers (List<string> search = null, int? page = null, int? perPage = null)
+> UserPublicList ListUsers (string search = null, int? page = null, int? perPage = null)
 
 List Users
 
@@ -185,7 +185,7 @@ namespace Example
         {
             Configuration.Default.BasePath = "http://localhost";
             var apiInstance = new UsersApi(Configuration.Default);
-            var search = new List<string>(); // List<string> | You know, for search (optional) 
+            var search = search_example;  // string | Search string to find users (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
@@ -211,7 +211,7 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **search** | [**List&lt;string&gt;**](string.md)| You know, for search | [optional] 
+ **search** | **string**| Search string to find users | [optional] 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
  **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 

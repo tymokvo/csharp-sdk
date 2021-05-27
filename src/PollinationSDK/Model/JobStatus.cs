@@ -60,10 +60,11 @@ namespace PollinationSDK
         /// <param name="runsRunning">The count of runs that are running (default to 0).</param>
         /// <param name="runsCompleted">The count of runs that have completed (default to 0).</param>
         /// <param name="runsFailed">The count of runs that have failed (default to 0).</param>
+        /// <param name="runsCancelled">The count of runs that have been cancelled (default to 0).</param>
         public JobStatus
         (
            string id, DateTime startedAt, // Required parameters
-           Dictionary<string, string> annotations= default, JobStatusEnum status= JobStatusEnum.Unknown, string message= default, DateTime finishedAt= default, string source= default, int runsPending = 0, int runsRunning = 0, int runsCompleted = 0, int runsFailed = 0// Optional parameters
+           Dictionary<string, string> annotations= default, JobStatusEnum status= JobStatusEnum.Unknown, string message= default, DateTime finishedAt= default, string source= default, int runsPending = 0, int runsRunning = 0, int runsCompleted = 0, int runsFailed = 0, int runsCancelled = 0// Optional parameters
         ) : base()// BaseClass
         {
             // to ensure "id" is required (not null)
@@ -78,6 +79,7 @@ namespace PollinationSDK
             this.RunsRunning = runsRunning;
             this.RunsCompleted = runsCompleted;
             this.RunsFailed = runsFailed;
+            this.RunsCancelled = runsCancelled;
 
             // Set non-required readonly properties with defaultValue
             this.Type = "JobStatus";
@@ -157,6 +159,12 @@ namespace PollinationSDK
         /// <value>The count of runs that have failed</value>
         [DataMember(Name = "runs_failed", EmitDefaultValue = true)]
         public int RunsFailed { get; set; }  = 0;
+        /// <summary>
+        /// The count of runs that have been cancelled
+        /// </summary>
+        /// <value>The count of runs that have been cancelled</value>
+        [DataMember(Name = "runs_cancelled", EmitDefaultValue = true)]
+        public int RunsCancelled { get; set; }  = 0;
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -191,6 +199,7 @@ namespace PollinationSDK
             sb.Append("  RunsRunning: ").Append(RunsRunning).Append("\n");
             sb.Append("  RunsCompleted: ").Append(RunsCompleted).Append("\n");
             sb.Append("  RunsFailed: ").Append(RunsFailed).Append("\n");
+            sb.Append("  RunsCancelled: ").Append(RunsCancelled).Append("\n");
             return sb.ToString();
         }
   
@@ -319,6 +328,11 @@ namespace PollinationSDK
                     this.RunsFailed == input.RunsFailed ||
                     (this.RunsFailed != null &&
                     this.RunsFailed.Equals(input.RunsFailed))
+                ) && base.Equals(input) && 
+                (
+                    this.RunsCancelled == input.RunsCancelled ||
+                    (this.RunsCancelled != null &&
+                    this.RunsCancelled.Equals(input.RunsCancelled))
                 );
         }
 
@@ -357,6 +371,8 @@ namespace PollinationSDK
                     hashCode = hashCode * 59 + this.RunsCompleted.GetHashCode();
                 if (this.RunsFailed != null)
                     hashCode = hashCode * 59 + this.RunsFailed.GetHashCode();
+                if (this.RunsCancelled != null)
+                    hashCode = hashCode * 59 + this.RunsCancelled.GetHashCode();
                 return hashCode;
             }
         }

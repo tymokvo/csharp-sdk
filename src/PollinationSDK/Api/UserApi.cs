@@ -87,7 +87,7 @@ namespace PollinationSDK.Api
         /// Update the authenticated user
         /// </summary>
         /// <remarks>
-        /// Update a org (must have org &#x60;owner&#x60; role)
+        /// Update the authenticated user profile
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="userUpdate"></param>
@@ -98,7 +98,7 @@ namespace PollinationSDK.Api
         /// Update the authenticated user
         /// </summary>
         /// <remarks>
-        /// Update a org (must have org &#x60;owner&#x60; role)
+        /// Update the authenticated user profile
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="userUpdate"></param>
@@ -175,7 +175,7 @@ namespace PollinationSDK.Api
         /// Update the authenticated user
         /// </summary>
         /// <remarks>
-        /// Update a org (must have org &#x60;owner&#x60; role)
+        /// Update the authenticated user profile
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="userUpdate"></param>
@@ -187,7 +187,7 @@ namespace PollinationSDK.Api
         /// Update the authenticated user
         /// </summary>
         /// <remarks>
-        /// Update a org (must have org &#x60;owner&#x60; role)
+        /// Update the authenticated user profile
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="userUpdate"></param>
@@ -328,17 +328,6 @@ namespace PollinationSDK.Api
                 localVarPostBody = userCreate; // byte array
             }
 
-            // authentication (APIKeyAuth) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
-            {
-                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
-            }
-            // authentication (JWTAuth) required
-            // http beerer authentication required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
-            }
 
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
@@ -416,17 +405,6 @@ namespace PollinationSDK.Api
                 localVarPostBody = userCreate; // byte array
             }
 
-            // authentication (APIKeyAuth) required
-            if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
-            {
-                localVarHeaderParams["x-pollination-token"] = this.Configuration.GetApiKeyWithPrefix("x-pollination-token");
-            }
-            // authentication (JWTAuth) required
-            // http bearer authentication required
-            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
-            {
-                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
-            }
 
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,
@@ -737,7 +715,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Update the authenticated user Update a org (must have org &#x60;owner&#x60; role)
+        /// Update the authenticated user Update the authenticated user profile
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="userUpdate"></param>
@@ -749,7 +727,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Update the authenticated user Update a org (must have org &#x60;owner&#x60; role)
+        /// Update the authenticated user Update the authenticated user profile
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="userUpdate"></param>
@@ -822,7 +800,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Update the authenticated user Update a org (must have org &#x60;owner&#x60; role)
+        /// Update the authenticated user Update the authenticated user profile
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="userUpdate"></param>
@@ -836,7 +814,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Update the authenticated user Update a org (must have org &#x60;owner&#x60; role)
+        /// Update the authenticated user Update the authenticated user profile
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="userUpdate"></param>

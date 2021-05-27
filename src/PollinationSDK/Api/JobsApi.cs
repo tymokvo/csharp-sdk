@@ -53,7 +53,7 @@ namespace PollinationSDK.Api
         /// Schedule a job
         /// </summary>
         /// <remarks>
-        /// Create a new run.
+        /// Create a new job.
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -68,7 +68,7 @@ namespace PollinationSDK.Api
         /// Schedule a job
         /// </summary>
         /// <remarks>
-        /// Create a new run.
+        /// Create a new job.
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -171,11 +171,11 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="jobId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <returns>List&lt;FileMeta&gt;</returns>
-        List<FileMeta> SearchJobFolder (string owner, string name, string jobId, int? page = default, int? perPage = default, List<string> path = default);
+        List<FileMeta> SearchJobFolder (string owner, string name, string jobId, List<string> path = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// List files/folders in a job folder
@@ -187,11 +187,11 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="jobId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <returns>ApiResponse of List&lt;FileMeta&gt;</returns>
-        ApiResponse<List<FileMeta>> SearchJobFolderWithHttpInfo (string owner, string name, string jobId, int? page = default, int? perPage = default, List<string> path = default);
+        ApiResponse<List<FileMeta>> SearchJobFolderWithHttpInfo (string owner, string name, string jobId, List<string> path = default, int? page = default, int? perPage = default);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -225,7 +225,7 @@ namespace PollinationSDK.Api
         /// Schedule a job
         /// </summary>
         /// <remarks>
-        /// Create a new run.
+        /// Create a new job.
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -241,7 +241,7 @@ namespace PollinationSDK.Api
         /// Schedule a job
         /// </summary>
         /// <remarks>
-        /// Create a new run.
+        /// Create a new job.
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -351,12 +351,12 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="jobId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of List&lt;FileMeta&gt;</returns>
-        System.Threading.Tasks.Task<List<FileMeta>> SearchJobFolderAsync (string owner, string name, string jobId, int? page = default, int? perPage = default, List<string> path = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<List<FileMeta>> SearchJobFolderAsync (string owner, string name, string jobId, List<string> path = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List files/folders in a job folder
@@ -368,12 +368,12 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="jobId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (List&lt;FileMeta&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<FileMeta>>> SearchJobFolderWithHttpInfoAsync (string owner, string name, string jobId, int? page = default, int? perPage = default, List<string> path = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<List<FileMeta>>> SearchJobFolderWithHttpInfoAsync (string owner, string name, string jobId, List<string> path = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -635,7 +635,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Schedule a job Create a new run.
+        /// Schedule a job Create a new job.
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -651,7 +651,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Schedule a job Create a new run.
+        /// Schedule a job Create a new job.
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -738,7 +738,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Schedule a job Create a new run.
+        /// Schedule a job Create a new job.
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -756,7 +756,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Schedule a job Create a new run.
+        /// Schedule a job Create a new job.
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1411,13 +1411,13 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="jobId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <returns>List&lt;FileMeta&gt;</returns>
-        public List<FileMeta> SearchJobFolder (string owner, string name, string jobId, int? page = default, int? perPage = default, List<string> path = default)
+        public List<FileMeta> SearchJobFolder (string owner, string name, string jobId, List<string> path = default, int? page = default, int? perPage = default)
         {
-             ApiResponse<List<FileMeta>> localVarResponse = SearchJobFolderWithHttpInfo(owner, name, jobId, page, perPage, path);
+             ApiResponse<List<FileMeta>> localVarResponse = SearchJobFolderWithHttpInfo(owner, name, jobId, path, page, perPage);
              return localVarResponse.Data;
         }
 
@@ -1428,11 +1428,11 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="jobId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <returns>ApiResponse of List&lt;FileMeta&gt;</returns>
-        public ApiResponse<List<FileMeta>> SearchJobFolderWithHttpInfo (string owner, string name, string jobId, int? page = default, int? perPage = default, List<string> path = default)
+        public ApiResponse<List<FileMeta>> SearchJobFolderWithHttpInfo (string owner, string name, string jobId, List<string> path = default, int? page = default, int? perPage = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1468,9 +1468,9 @@ namespace PollinationSDK.Api
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
             if (jobId != null) localVarPathParams.Add("job_id", this.Configuration.ApiClient.ParameterToString(jobId)); // path parameter
+            if (path != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "path", path)); // query parameter
             if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
             if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
-            if (path != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "path", path)); // query parameter
 
             // authentication (APIKeyAuth) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
@@ -1509,14 +1509,14 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="jobId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of List&lt;FileMeta&gt;</returns>
-        public async System.Threading.Tasks.Task<List<FileMeta>> SearchJobFolderAsync (string owner, string name, string jobId, int? page = default, int? perPage = default, List<string> path = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<List<FileMeta>> SearchJobFolderAsync (string owner, string name, string jobId, List<string> path = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<List<FileMeta>> localVarResponse = await SearchJobFolderWithHttpInfoAsync(owner, name, jobId, page, perPage, path, cancellationToken);
+             ApiResponse<List<FileMeta>> localVarResponse = await SearchJobFolderWithHttpInfoAsync(owner, name, jobId, path, page, perPage, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -1528,12 +1528,12 @@ namespace PollinationSDK.Api
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="jobId"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (List&lt;FileMeta&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<FileMeta>>> SearchJobFolderWithHttpInfoAsync (string owner, string name, string jobId, int? page = default, int? perPage = default, List<string> path = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<List<FileMeta>>> SearchJobFolderWithHttpInfoAsync (string owner, string name, string jobId, List<string> path = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1569,9 +1569,9 @@ namespace PollinationSDK.Api
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
             if (jobId != null) localVarPathParams.Add("job_id", this.Configuration.ApiClient.ParameterToString(jobId)); // path parameter
+            if (path != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "path", path)); // query parameter
             if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
             if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
-            if (path != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "path", path)); // query parameter
 
             // authentication (APIKeyAuth) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))

@@ -25,7 +25,7 @@ namespace PollinationSDK.Api
     {
         #region Synchronous Operations
         /// <summary>
-        /// Create a plugin
+        /// Create a Plugin
         /// </summary>
         /// <remarks>
         /// Create a new plugin.
@@ -37,7 +37,7 @@ namespace PollinationSDK.Api
         CreatedContent CreatePlugin (string owner, RepositoryCreate repositoryCreate);
 
         /// <summary>
-        /// Create a plugin
+        /// Create a Plugin
         /// </summary>
         /// <remarks>
         /// Create a new plugin.
@@ -73,7 +73,7 @@ namespace PollinationSDK.Api
         /// <returns>ApiResponse of CreatedContent</returns>
         ApiResponse<CreatedContent> CreatePluginPackageWithHttpInfo (string owner, string name, NewPluginPackage newPluginPackage);
         /// <summary>
-        /// Delete a plugin
+        /// Delete a Plugin
         /// </summary>
         /// <remarks>
         /// Delete a plugin (must have &#x60;admin&#x60; permission)
@@ -85,7 +85,7 @@ namespace PollinationSDK.Api
         void DeletePlugin (string owner, string name);
 
         /// <summary>
-        /// Delete a plugin
+        /// Delete a Plugin
         /// </summary>
         /// <remarks>
         /// Delete a plugin (must have &#x60;admin&#x60; permission)
@@ -147,7 +147,7 @@ namespace PollinationSDK.Api
         /// Get plugin access permissions
         /// </summary>
         /// <remarks>
-        /// Retrieve a plugin&#39;s access permissions (must have &#x60;contribute&#x60; permission)
+        /// Retrieve a plugin&#39;s access permissions (must have &#x60;write&#x60; permission)
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -163,7 +163,7 @@ namespace PollinationSDK.Api
         /// Get plugin access permissions
         /// </summary>
         /// <remarks>
-        /// Retrieve a plugin&#39;s access permissions (must have &#x60;contribute&#x60; permission)
+        /// Retrieve a plugin&#39;s access permissions (must have &#x60;write&#x60; permission)
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -233,16 +233,16 @@ namespace PollinationSDK.Api
         /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">You know, for search (optional)</param>
         /// <param name="name">The account name (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <param name="permission">Filter by permission on given resource (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>RepositoryList</returns>
-        RepositoryList ListPlugins (int? page = default, int? perPage = default, List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default);
+        RepositoryList ListPlugins (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// List plugins
@@ -251,18 +251,18 @@ namespace PollinationSDK.Api
         /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">You know, for search (optional)</param>
         /// <param name="name">The account name (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <param name="permission">Filter by permission on given resource (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of RepositoryList</returns>
-        ApiResponse<RepositoryList> ListPluginsWithHttpInfo (int? page = default, int? perPage = default, List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default);
+        ApiResponse<RepositoryList> ListPluginsWithHttpInfo (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, int? page = default, int? perPage = default);
         /// <summary>
-        /// Update a plugin
+        /// Update a Plugin
         /// </summary>
         /// <remarks>
         /// Update a plugin (must have &#x60;contribute&#x60; permission)
@@ -275,7 +275,7 @@ namespace PollinationSDK.Api
         UpdateAccepted UpdatePlugin (string owner, string name, RepositoryUpdate repositoryUpdate);
 
         /// <summary>
-        /// Update a plugin
+        /// Update a Plugin
         /// </summary>
         /// <remarks>
         /// Update a plugin (must have &#x60;contribute&#x60; permission)
@@ -314,7 +314,7 @@ namespace PollinationSDK.Api
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
-        /// Create a plugin
+        /// Create a Plugin
         /// </summary>
         /// <remarks>
         /// Create a new plugin.
@@ -327,7 +327,7 @@ namespace PollinationSDK.Api
         System.Threading.Tasks.Task<CreatedContent> CreatePluginAsync (string owner, RepositoryCreate repositoryCreate, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Create a plugin
+        /// Create a Plugin
         /// </summary>
         /// <remarks>
         /// Create a new plugin.
@@ -366,7 +366,7 @@ namespace PollinationSDK.Api
         /// <returns>Task of ApiResponse (CreatedContent)</returns>
         System.Threading.Tasks.Task<ApiResponse<CreatedContent>> CreatePluginPackageWithHttpInfoAsync (string owner, string name, NewPluginPackage newPluginPackage, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete a plugin
+        /// Delete a Plugin
         /// </summary>
         /// <remarks>
         /// Delete a plugin (must have &#x60;admin&#x60; permission)
@@ -379,7 +379,7 @@ namespace PollinationSDK.Api
         System.Threading.Tasks.Task DeletePluginAsync (string owner, string name, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Delete a plugin
+        /// Delete a Plugin
         /// </summary>
         /// <remarks>
         /// Delete a plugin (must have &#x60;admin&#x60; permission)
@@ -446,7 +446,7 @@ namespace PollinationSDK.Api
         /// Get plugin access permissions
         /// </summary>
         /// <remarks>
-        /// Retrieve a plugin&#39;s access permissions (must have &#x60;contribute&#x60; permission)
+        /// Retrieve a plugin&#39;s access permissions (must have &#x60;write&#x60; permission)
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -463,7 +463,7 @@ namespace PollinationSDK.Api
         /// Get plugin access permissions
         /// </summary>
         /// <remarks>
-        /// Retrieve a plugin&#39;s access permissions (must have &#x60;contribute&#x60; permission)
+        /// Retrieve a plugin&#39;s access permissions (must have &#x60;write&#x60; permission)
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -538,17 +538,17 @@ namespace PollinationSDK.Api
         /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">You know, for search (optional)</param>
         /// <param name="name">The account name (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <param name="permission">Filter by permission on given resource (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of RepositoryList</returns>
-        System.Threading.Tasks.Task<RepositoryList> ListPluginsAsync (int? page = default, int? perPage = default, List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<RepositoryList> ListPluginsAsync (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List plugins
@@ -557,19 +557,19 @@ namespace PollinationSDK.Api
         /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">You know, for search (optional)</param>
         /// <param name="name">The account name (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <param name="permission">Filter by permission on given resource (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (RepositoryList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<RepositoryList>> ListPluginsWithHttpInfoAsync (int? page = default, int? perPage = default, List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<RepositoryList>> ListPluginsWithHttpInfoAsync (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update a plugin
+        /// Update a Plugin
         /// </summary>
         /// <remarks>
         /// Update a plugin (must have &#x60;contribute&#x60; permission)
@@ -583,7 +583,7 @@ namespace PollinationSDK.Api
         System.Threading.Tasks.Task<UpdateAccepted> UpdatePluginAsync (string owner, string name, RepositoryUpdate repositoryUpdate, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Update a plugin
+        /// Update a Plugin
         /// </summary>
         /// <remarks>
         /// Update a plugin (must have &#x60;contribute&#x60; permission)
@@ -702,7 +702,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Create a plugin Create a new plugin.
+        /// Create a Plugin Create a new plugin.
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -715,7 +715,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Create a plugin Create a new plugin.
+        /// Create a Plugin Create a new plugin.
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -793,7 +793,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Create a plugin Create a new plugin.
+        /// Create a Plugin Create a new plugin.
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -808,7 +808,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Create a plugin Create a new plugin.
+        /// Create a Plugin Create a new plugin.
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1084,7 +1084,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Delete a plugin Delete a plugin (must have &#x60;admin&#x60; permission)
+        /// Delete a Plugin Delete a plugin (must have &#x60;admin&#x60; permission)
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1096,7 +1096,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Delete a plugin Delete a plugin (must have &#x60;admin&#x60; permission)
+        /// Delete a Plugin Delete a plugin (must have &#x60;admin&#x60; permission)
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1166,7 +1166,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Delete a plugin Delete a plugin (must have &#x60;admin&#x60; permission)
+        /// Delete a Plugin Delete a plugin (must have &#x60;admin&#x60; permission)
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1180,7 +1180,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Delete a plugin Delete a plugin (must have &#x60;admin&#x60; permission)
+        /// Delete a Plugin Delete a plugin (must have &#x60;admin&#x60; permission)
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1615,7 +1615,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Get plugin access permissions Retrieve a plugin&#39;s access permissions (must have &#x60;contribute&#x60; permission)
+        /// Get plugin access permissions Retrieve a plugin&#39;s access permissions (must have &#x60;write&#x60; permission)
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1632,7 +1632,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Get plugin access permissions Retrieve a plugin&#39;s access permissions (must have &#x60;contribute&#x60; permission)
+        /// Get plugin access permissions Retrieve a plugin&#39;s access permissions (must have &#x60;write&#x60; permission)
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1710,7 +1710,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Get plugin access permissions Retrieve a plugin&#39;s access permissions (must have &#x60;contribute&#x60; permission)
+        /// Get plugin access permissions Retrieve a plugin&#39;s access permissions (must have &#x60;write&#x60; permission)
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1729,7 +1729,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Get plugin access permissions Retrieve a plugin&#39;s access permissions (must have &#x60;contribute&#x60; permission)
+        /// Get plugin access permissions Retrieve a plugin&#39;s access permissions (must have &#x60;write&#x60; permission)
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -2173,18 +2173,18 @@ namespace PollinationSDK.Api
         /// List plugins 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">You know, for search (optional)</param>
         /// <param name="name">The account name (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <param name="permission">Filter by permission on given resource (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>RepositoryList</returns>
-        public RepositoryList ListPlugins (int? page = default, int? perPage = default, List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default)
+        public RepositoryList ListPlugins (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, int? page = default, int? perPage = default)
         {
-             ApiResponse<RepositoryList> localVarResponse = ListPluginsWithHttpInfo(page, perPage, search, name, owner, _public, keyword, permission);
+             ApiResponse<RepositoryList> localVarResponse = ListPluginsWithHttpInfo(search, name, owner, _public, keyword, permission, page, perPage);
              return localVarResponse.Data;
         }
 
@@ -2192,16 +2192,16 @@ namespace PollinationSDK.Api
         /// List plugins 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">You know, for search (optional)</param>
         /// <param name="name">The account name (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <param name="permission">Filter by permission on given resource (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of RepositoryList</returns>
-        public ApiResponse<RepositoryList> ListPluginsWithHttpInfo (int? page = default, int? perPage = default, List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default)
+        public ApiResponse<RepositoryList> ListPluginsWithHttpInfo (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, int? page = default, int? perPage = default)
         {
 
             var localVarPath = "/plugins";
@@ -2225,14 +2225,14 @@ namespace PollinationSDK.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
             if (search != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "search", search)); // query parameter
             if (name != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "name", name)); // query parameter
             if (owner != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "owner", owner)); // query parameter
             if (_public != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "public", _public)); // query parameter
             if (keyword != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "keyword", keyword)); // query parameter
             if (permission != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "permission", permission)); // query parameter
+            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
+            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
             // authentication (APIKeyAuth) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
@@ -2268,19 +2268,19 @@ namespace PollinationSDK.Api
         /// List plugins 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">You know, for search (optional)</param>
         /// <param name="name">The account name (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <param name="permission">Filter by permission on given resource (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of RepositoryList</returns>
-        public async System.Threading.Tasks.Task<RepositoryList> ListPluginsAsync (int? page = default, int? perPage = default, List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<RepositoryList> ListPluginsAsync (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<RepositoryList> localVarResponse = await ListPluginsWithHttpInfoAsync(page, perPage, search, name, owner, _public, keyword, permission, cancellationToken);
+             ApiResponse<RepositoryList> localVarResponse = await ListPluginsWithHttpInfoAsync(search, name, owner, _public, keyword, permission, page, perPage, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -2289,17 +2289,17 @@ namespace PollinationSDK.Api
         /// List plugins 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="search">You know, for search (optional)</param>
         /// <param name="name">The account name (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="keyword">A keyword to index the repository by (optional)</param>
         /// <param name="permission">Filter by permission on given resource (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (RepositoryList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<RepositoryList>> ListPluginsWithHttpInfoAsync (int? page = default, int? perPage = default, List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<RepositoryList>> ListPluginsWithHttpInfoAsync (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
 
             var localVarPath = "/plugins";
@@ -2323,14 +2323,14 @@ namespace PollinationSDK.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
             if (search != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "search", search)); // query parameter
             if (name != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "name", name)); // query parameter
             if (owner != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "owner", owner)); // query parameter
             if (_public != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "public", _public)); // query parameter
             if (keyword != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "keyword", keyword)); // query parameter
             if (permission != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "permission", permission)); // query parameter
+            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
+            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
             // authentication (APIKeyAuth) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
@@ -2363,7 +2363,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Update a plugin Update a plugin (must have &#x60;contribute&#x60; permission)
+        /// Update a Plugin Update a plugin (must have &#x60;contribute&#x60; permission)
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -2377,7 +2377,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Update a plugin Update a plugin (must have &#x60;contribute&#x60; permission)
+        /// Update a Plugin Update a plugin (must have &#x60;contribute&#x60; permission)
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -2460,7 +2460,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Update a plugin Update a plugin (must have &#x60;contribute&#x60; permission)
+        /// Update a Plugin Update a plugin (must have &#x60;contribute&#x60; permission)
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -2476,7 +2476,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Update a plugin Update a plugin (must have &#x60;contribute&#x60; permission)
+        /// Update a Plugin Update a plugin (must have &#x60;contribute&#x60; permission)
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>

@@ -43,14 +43,14 @@ namespace PollinationSDK
         /// Initializes a new instance of the <see cref="RepositoryCreate" /> class.
         /// </summary>
         /// <param name="name">The name of the repository (required).</param>
-        /// <param name="_public">Whether or not a repository is publicly viewable (default to true).</param>
+        /// <param name="_public">Whether or not a repository is publicly viewable.</param>
         /// <param name="keywords">A list of keywords to index the repository by.</param>
         /// <param name="description">A description of the repository.</param>
         /// <param name="icon">An icon to represent this repository.</param>
         public RepositoryCreate
         (
            string name, // Required parameters
-            bool _public = true, List<string> keywords= default, string description= default, string icon= default // Optional parameters
+            bool _public= default, List<string> keywords= default, string description= default, string icon= default // Optional parameters
         ) : base(_public: _public, keywords: keywords, description: description, icon: icon)// BaseClass
         {
             // to ensure "name" is required (not null)

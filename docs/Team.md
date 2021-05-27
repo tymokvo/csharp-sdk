@@ -6,7 +6,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** | The team ID | 
-**Slug** | **string** | The slug of the team | 
+**Slug** | **string** | The public slug of the team | 
 **MemberCount** | **int** | The number of members that are part of this team | [optional] [default to 0]
 **Type** | **string** |  | [optional] [readonly] [default to "Team"]
 

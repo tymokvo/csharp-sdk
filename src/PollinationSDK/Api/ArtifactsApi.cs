@@ -28,7 +28,7 @@ namespace PollinationSDK.Api
         /// Get an Artifact upload link.
         /// </summary>
         /// <remarks>
-        /// Create a new artifact.
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -41,7 +41,7 @@ namespace PollinationSDK.Api
         /// Get an Artifact upload link.
         /// </summary>
         /// <remarks>
-        /// Create a new artifact.
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -53,32 +53,36 @@ namespace PollinationSDK.Api
         /// Delete one or many artifacts by key/prefix
         /// </summary>
         /// <remarks>
-        /// Delete one or multiple artifacts based on key prefix
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="path">The path to an file within a project folder (optional)</param>
-        /// <returns>UpdateAccepted</returns>
-        UpdateAccepted DeleteArtifact (string owner, string name, List<string> path = default);
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
+        /// <returns></returns>
+        void DeleteArtifact (string owner, string name, List<string> path = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// Delete one or many artifacts by key/prefix
         /// </summary>
         /// <remarks>
-        /// Delete one or multiple artifacts based on key prefix
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="path">The path to an file within a project folder (optional)</param>
-        /// <returns>ApiResponse of UpdateAccepted</returns>
-        ApiResponse<UpdateAccepted> DeleteArtifactWithHttpInfo (string owner, string name, List<string> path = default);
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
+        /// <returns>ApiResponse of Object(void)</returns>
+        ApiResponse<Object> DeleteArtifactWithHttpInfo (string owner, string name, List<string> path = default, int? page = default, int? perPage = default);
         /// <summary>
         /// Download an artifact from the project folder
         /// </summary>
         /// <remarks>
-        /// Retrieve a list of artifacts.
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -91,7 +95,7 @@ namespace PollinationSDK.Api
         /// Download an artifact from the project folder
         /// </summary>
         /// <remarks>
-        /// Retrieve a list of artifacts.
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -103,38 +107,38 @@ namespace PollinationSDK.Api
         /// List artifacts in a project folder
         /// </summary>
         /// <remarks>
-        /// Retrieve a list of artifacts.
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <returns>List&lt;FileMeta&gt;</returns>
-        List<FileMeta> ListArtifacts (string owner, string name, int? page = default, int? perPage = default, List<string> path = default);
+        List<FileMeta> ListArtifacts (string owner, string name, List<string> path = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// List artifacts in a project folder
         /// </summary>
         /// <remarks>
-        /// Retrieve a list of artifacts.
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <returns>ApiResponse of List&lt;FileMeta&gt;</returns>
-        ApiResponse<List<FileMeta>> ListArtifactsWithHttpInfo (string owner, string name, int? page = default, int? perPage = default, List<string> path = default);
+        ApiResponse<List<FileMeta>> ListArtifactsWithHttpInfo (string owner, string name, List<string> path = default, int? page = default, int? perPage = default);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
         /// Get an Artifact upload link.
         /// </summary>
         /// <remarks>
-        /// Create a new artifact.
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -148,7 +152,7 @@ namespace PollinationSDK.Api
         /// Get an Artifact upload link.
         /// </summary>
         /// <remarks>
-        /// Create a new artifact.
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -161,34 +165,38 @@ namespace PollinationSDK.Api
         /// Delete one or many artifacts by key/prefix
         /// </summary>
         /// <remarks>
-        /// Delete one or multiple artifacts based on key prefix
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="path">The path to an file within a project folder (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of UpdateAccepted</returns>
-        System.Threading.Tasks.Task<UpdateAccepted> DeleteArtifactAsync (string owner, string name, List<string> path = default, CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of void</returns>
+        System.Threading.Tasks.Task DeleteArtifactAsync (string owner, string name, List<string> path = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Delete one or many artifacts by key/prefix
         /// </summary>
         /// <remarks>
-        /// Delete one or multiple artifacts based on key prefix
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="path">The path to an file within a project folder (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of ApiResponse (UpdateAccepted)</returns>
-        System.Threading.Tasks.Task<ApiResponse<UpdateAccepted>> DeleteArtifactWithHttpInfoAsync (string owner, string name, List<string> path = default, CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of ApiResponse</returns>
+        System.Threading.Tasks.Task<ApiResponse<Object>> DeleteArtifactWithHttpInfoAsync (string owner, string name, List<string> path = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Download an artifact from the project folder
         /// </summary>
         /// <remarks>
-        /// Retrieve a list of artifacts.
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -202,7 +210,7 @@ namespace PollinationSDK.Api
         /// Download an artifact from the project folder
         /// </summary>
         /// <remarks>
-        /// Retrieve a list of artifacts.
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -215,33 +223,33 @@ namespace PollinationSDK.Api
         /// List artifacts in a project folder
         /// </summary>
         /// <remarks>
-        /// Retrieve a list of artifacts.
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of List&lt;FileMeta&gt;</returns>
-        System.Threading.Tasks.Task<List<FileMeta>> ListArtifactsAsync (string owner, string name, int? page = default, int? perPage = default, List<string> path = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<List<FileMeta>> ListArtifactsAsync (string owner, string name, List<string> path = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List artifacts in a project folder
         /// </summary>
         /// <remarks>
-        /// Retrieve a list of artifacts.
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (List&lt;FileMeta&gt;)</returns>
-        System.Threading.Tasks.Task<ApiResponse<List<FileMeta>>> ListArtifactsWithHttpInfoAsync (string owner, string name, int? page = default, int? perPage = default, List<string> path = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<List<FileMeta>>> ListArtifactsWithHttpInfoAsync (string owner, string name, List<string> path = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -322,7 +330,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Get an Artifact upload link. Create a new artifact.
+        /// Get an Artifact upload link. 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -336,7 +344,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Get an Artifact upload link. Create a new artifact.
+        /// Get an Artifact upload link. 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -419,7 +427,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Get an Artifact upload link. Create a new artifact.
+        /// Get an Artifact upload link. 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -435,7 +443,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Get an Artifact upload link. Create a new artifact.
+        /// Get an Artifact upload link. 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -519,28 +527,31 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Delete one or many artifacts by key/prefix Delete one or multiple artifacts based on key prefix
+        /// Delete one or many artifacts by key/prefix 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="path">The path to an file within a project folder (optional)</param>
-        /// <returns>UpdateAccepted</returns>
-        public UpdateAccepted DeleteArtifact (string owner, string name, List<string> path = default)
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
+        /// <returns></returns>
+        public void DeleteArtifact (string owner, string name, List<string> path = default, int? page = default, int? perPage = default)
         {
-             ApiResponse<UpdateAccepted> localVarResponse = DeleteArtifactWithHttpInfo(owner, name, path);
-             return localVarResponse.Data;
+             DeleteArtifactWithHttpInfo(owner, name, path, page, perPage);
         }
 
         /// <summary>
-        /// Delete one or many artifacts by key/prefix Delete one or multiple artifacts based on key prefix
+        /// Delete one or many artifacts by key/prefix 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="path">The path to an file within a project folder (optional)</param>
-        /// <returns>ApiResponse of UpdateAccepted</returns>
-        public ApiResponse<UpdateAccepted> DeleteArtifactWithHttpInfo (string owner, string name, List<string> path = default)
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
+        /// <returns>ApiResponse of Object(void)</returns>
+        public ApiResponse<Object> DeleteArtifactWithHttpInfo (string owner, string name, List<string> path = default, int? page = default, int? perPage = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -573,6 +584,8 @@ namespace PollinationSDK.Api
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
             if (path != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "path", path)); // query parameter
+            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
+            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
             // authentication (APIKeyAuth) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
@@ -599,37 +612,40 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<UpdateAccepted>(localVarStatusCode,
+            return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (UpdateAccepted) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(UpdateAccepted)));
+                null);
         }
 
         /// <summary>
-        /// Delete one or many artifacts by key/prefix Delete one or multiple artifacts based on key prefix
+        /// Delete one or many artifacts by key/prefix 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="path">The path to an file within a project folder (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of UpdateAccepted</returns>
-        public async System.Threading.Tasks.Task<UpdateAccepted> DeleteArtifactAsync (string owner, string name, List<string> path = default, CancellationToken cancellationToken = default(CancellationToken))
+        /// <returns>Task of void</returns>
+        public async System.Threading.Tasks.Task DeleteArtifactAsync (string owner, string name, List<string> path = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<UpdateAccepted> localVarResponse = await DeleteArtifactWithHttpInfoAsync(owner, name, path, cancellationToken);
-             return localVarResponse.Data;
+             await DeleteArtifactWithHttpInfoAsync(owner, name, path, page, perPage, cancellationToken);
 
         }
 
         /// <summary>
-        /// Delete one or many artifacts by key/prefix Delete one or multiple artifacts based on key prefix
+        /// Delete one or many artifacts by key/prefix 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="path">The path to an file within a project folder (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of ApiResponse (UpdateAccepted)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<UpdateAccepted>> DeleteArtifactWithHttpInfoAsync (string owner, string name, List<string> path = default, CancellationToken cancellationToken = default(CancellationToken))
+        /// <returns>Task of ApiResponse</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<Object>> DeleteArtifactWithHttpInfoAsync (string owner, string name, List<string> path = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -662,6 +678,8 @@ namespace PollinationSDK.Api
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
             if (path != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "path", path)); // query parameter
+            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
+            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
             // authentication (APIKeyAuth) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
@@ -688,13 +706,13 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<UpdateAccepted>(localVarStatusCode,
+            return new ApiResponse<Object>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (UpdateAccepted) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(UpdateAccepted)));
+                null);
         }
 
         /// <summary>
-        /// Download an artifact from the project folder Retrieve a list of artifacts.
+        /// Download an artifact from the project folder 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -708,7 +726,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Download an artifact from the project folder Retrieve a list of artifacts.
+        /// Download an artifact from the project folder 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -780,7 +798,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Download an artifact from the project folder Retrieve a list of artifacts.
+        /// Download an artifact from the project folder 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -796,7 +814,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Download an artifact from the project folder Retrieve a list of artifacts.
+        /// Download an artifact from the project folder 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -869,32 +887,32 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// List artifacts in a project folder Retrieve a list of artifacts.
+        /// List artifacts in a project folder 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <returns>List&lt;FileMeta&gt;</returns>
-        public List<FileMeta> ListArtifacts (string owner, string name, int? page = default, int? perPage = default, List<string> path = default)
+        public List<FileMeta> ListArtifacts (string owner, string name, List<string> path = default, int? page = default, int? perPage = default)
         {
-             ApiResponse<List<FileMeta>> localVarResponse = ListArtifactsWithHttpInfo(owner, name, page, perPage, path);
+             ApiResponse<List<FileMeta>> localVarResponse = ListArtifactsWithHttpInfo(owner, name, path, page, perPage);
              return localVarResponse.Data;
         }
 
         /// <summary>
-        /// List artifacts in a project folder Retrieve a list of artifacts.
+        /// List artifacts in a project folder 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <returns>ApiResponse of List&lt;FileMeta&gt;</returns>
-        public ApiResponse<List<FileMeta>> ListArtifactsWithHttpInfo (string owner, string name, int? page = default, int? perPage = default, List<string> path = default)
+        public ApiResponse<List<FileMeta>> ListArtifactsWithHttpInfo (string owner, string name, List<string> path = default, int? page = default, int? perPage = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -926,9 +944,9 @@ namespace PollinationSDK.Api
 
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
+            if (path != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "path", path)); // query parameter
             if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
             if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
-            if (path != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "path", path)); // query parameter
 
             // authentication (APIKeyAuth) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
@@ -961,35 +979,35 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// List artifacts in a project folder Retrieve a list of artifacts.
+        /// List artifacts in a project folder 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of List&lt;FileMeta&gt;</returns>
-        public async System.Threading.Tasks.Task<List<FileMeta>> ListArtifactsAsync (string owner, string name, int? page = default, int? perPage = default, List<string> path = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<List<FileMeta>> ListArtifactsAsync (string owner, string name, List<string> path = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<List<FileMeta>> localVarResponse = await ListArtifactsWithHttpInfoAsync(owner, name, page, perPage, path, cancellationToken);
+             ApiResponse<List<FileMeta>> localVarResponse = await ListArtifactsWithHttpInfoAsync(owner, name, path, page, perPage, cancellationToken);
              return localVarResponse.Data;
 
         }
 
         /// <summary>
-        /// List artifacts in a project folder Retrieve a list of artifacts.
+        /// List artifacts in a project folder 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="path">The path to an file within a project folder (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (List&lt;FileMeta&gt;)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<List<FileMeta>>> ListArtifactsWithHttpInfoAsync (string owner, string name, int? page = default, int? perPage = default, List<string> path = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<List<FileMeta>>> ListArtifactsWithHttpInfoAsync (string owner, string name, List<string> path = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1021,9 +1039,9 @@ namespace PollinationSDK.Api
 
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
+            if (path != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "path", path)); // query parameter
             if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
             if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
-            if (path != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "path", path)); // query parameter
 
             // authentication (APIKeyAuth) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))

@@ -17,3 +17,11 @@ namespace PollinationSDK.Api
     //    }
     //}
 }
+
+// namespace PollinationSDK.Model
+// {
+//     public class RoleEnum
+//     {
+
+//     }
+// }

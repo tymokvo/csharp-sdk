@@ -43,17 +43,17 @@ namespace PollinationSDK
         /// Initializes a new instance of the <see cref="Project" /> class.
         /// </summary>
         /// <param name="id">The project ID (required).</param>
-        /// <param name="owner">owner (required).</param>
+        /// <param name="owner">The project owner (required).</param>
         /// <param name="permissions">permissions (required).</param>
         /// <param name="slug">The project name in slug format (required).</param>
-        /// <param name="usage">The CPU/Memory usage of this project.</param>
+        /// <param name="usage">The resource consumption of this project.</param>
         /// <param name="name">The name of the project. Must be unique to a given owner (required).</param>
         /// <param name="description">A description of the project (default to &quot;&quot;).</param>
         /// <param name="_public">Whether or not a project is publicly viewable (default to true).</param>
         public Project
         (
-            string name, string id, AccountPublic owner, ProjectUserPermissions permissions, string slug, // Required parameters
-            string description = "", bool _public = true, ProjectUsage usage= default // Optional parameters
+            string name, string id, AccountPublic owner, UserPermission permissions, string slug, // Required parameters
+            string description = "", bool _public = true, Usage usage= default // Optional parameters
         ) : base(name: name, description: description, _public: _public)// BaseClass
         {
             // to ensure "id" is required (not null)
@@ -84,15 +84,16 @@ namespace PollinationSDK
         [DataMember(Name = "id", IsRequired = true, EmitDefaultValue = false)]
         public string Id { get; set; } 
         /// <summary>
-        /// Gets or Sets Owner
+        /// The project owner
         /// </summary>
+        /// <value>The project owner</value>
         [DataMember(Name = "owner", IsRequired = true, EmitDefaultValue = false)]
         public AccountPublic Owner { get; set; } 
         /// <summary>
         /// Gets or Sets Permissions
         /// </summary>
         [DataMember(Name = "permissions", IsRequired = true, EmitDefaultValue = false)]
-        public ProjectUserPermissions Permissions { get; set; } 
+        public UserPermission Permissions { get; set; } 
         /// <summary>
         /// The project name in slug format
         /// </summary>
@@ -100,11 +101,11 @@ namespace PollinationSDK
         [DataMember(Name = "slug", IsRequired = true, EmitDefaultValue = false)]
         public string Slug { get; set; } 
         /// <summary>
-        /// The CPU/Memory usage of this project
+        /// The resource consumption of this project
         /// </summary>
-        /// <value>The CPU/Memory usage of this project</value>
+        /// <value>The resource consumption of this project</value>
         [DataMember(Name = "usage", EmitDefaultValue = false)]
-        public ProjectUsage Usage { get; set; } 
+        public Usage Usage { get; set; } 
 
         /// <summary>
         /// Returns the string presentation of the object

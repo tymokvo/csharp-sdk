@@ -32,29 +32,17 @@ namespace PollinationSDK
         /// <summary>
         /// Initializes a new instance of the <see cref="ProjectUpdate" /> class.
         /// </summary>
-        [JsonConstructorAttribute]
-        protected ProjectUpdate() 
-        { 
-            // Set non-required readonly properties with defaultValue
-            this.Type = "ProjectUpdate";
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ProjectUpdate" /> class.
-        /// </summary>
-        /// <param name="name">The name of the project. Must be unique to a given owner (required).</param>
-        /// <param name="description">A description of the project (default to &quot;&quot;).</param>
-        /// <param name="_public">Whether or not a project is publicly viewable (default to true).</param>
+        /// <param name="name">The name of the project. Must be unique to a given owner.</param>
+        /// <param name="description">A description of the project.</param>
+        /// <param name="_public">Whether or not a project is publicly viewable.</param>
         public ProjectUpdate
         (
-           string name, // Required parameters
-           string description = "", bool _public = true // Optional parameters
+           // Required parameters
+           string name= default, string description= default, bool _public= default // Optional parameters
         ) : base()// BaseClass
         {
-            // to ensure "name" is required (not null)
-            this.Name = name ?? throw new ArgumentNullException("name is a required property for ProjectUpdate and cannot be null");
-            // use default value if no "description" provided
-            this.Description = description ?? "";
+            this.Name = name;
+            this.Description = description;
             this.Public = _public;
 
             // Set non-required readonly properties with defaultValue
@@ -72,20 +60,20 @@ namespace PollinationSDK
         /// The name of the project. Must be unique to a given owner
         /// </summary>
         /// <value>The name of the project. Must be unique to a given owner</value>
-        [DataMember(Name = "name", IsRequired = true, EmitDefaultValue = false)]
+        [DataMember(Name = "name", EmitDefaultValue = false)]
         public string Name { get; set; } 
         /// <summary>
         /// A description of the project
         /// </summary>
         /// <value>A description of the project</value>
-        [DataMember(Name = "description", EmitDefaultValue = true)]
-        public string Description { get; set; }  = "";
+        [DataMember(Name = "description", EmitDefaultValue = false)]
+        public string Description { get; set; } 
         /// <summary>
         /// Whether or not a project is publicly viewable
         /// </summary>
         /// <value>Whether or not a project is publicly viewable</value>
-        [DataMember(Name = "public", EmitDefaultValue = true)]
-        public bool Public { get; set; }  = true;
+        [DataMember(Name = "public", EmitDefaultValue = false)]
+        public bool Public { get; set; } 
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -223,16 +211,6 @@ namespace PollinationSDK
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
         IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
-        {
-            return this.BaseValidate(validationContext);
-        }
-
-        /// <summary>
-        /// To validate all properties of the instance
-        /// </summary>
-        /// <param name="validationContext">Validation context</param>
-        /// <returns>Validation Result</returns>
-        protected IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> BaseValidate(ValidationContext validationContext)
         {
             foreach(var x in base.BaseValidate(validationContext)) yield return x;
 

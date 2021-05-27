@@ -132,11 +132,10 @@ namespace PollinationSDK.Api
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="type"> (optional, default to &quot;Body_post_recipe_registries__owner__recipes_post&quot;)</param>
         /// <param name="package"> (optional)</param>
         /// <returns>object</returns>
-        object PostRecipe (string owner, string authorization = default, string type = default, System.IO.Stream package = default);
+        object PostRecipe (string owner, string type = default, System.IO.Stream package = default);
 
         /// <summary>
         /// Push an Recipe to the registry
@@ -146,11 +145,10 @@ namespace PollinationSDK.Api
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="type"> (optional, default to &quot;Body_post_recipe_registries__owner__recipes_post&quot;)</param>
         /// <param name="package"> (optional)</param>
         /// <returns>ApiResponse of object</returns>
-        ApiResponse<object> PostRecipeWithHttpInfo (string owner, string authorization = default, string type = default, System.IO.Stream package = default);
+        ApiResponse<object> PostRecipeWithHttpInfo (string owner, string type = default, System.IO.Stream package = default);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -269,12 +267,11 @@ namespace PollinationSDK.Api
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="type"> (optional, default to &quot;Body_post_recipe_registries__owner__recipes_post&quot;)</param>
         /// <param name="package"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of object</returns>
-        System.Threading.Tasks.Task<object> PostRecipeAsync (string owner, string authorization = default, string type = default, System.IO.Stream package = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<object> PostRecipeAsync (string owner, string type = default, System.IO.Stream package = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Push an Recipe to the registry
@@ -284,12 +281,11 @@ namespace PollinationSDK.Api
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="type"> (optional, default to &quot;Body_post_recipe_registries__owner__recipes_post&quot;)</param>
         /// <param name="package"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (object)</returns>
-        System.Threading.Tasks.Task<ApiResponse<object>> PostRecipeWithHttpInfoAsync (string owner, string authorization = default, string type = default, System.IO.Stream package = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<object>> PostRecipeWithHttpInfoAsync (string owner, string type = default, System.IO.Stream package = default, CancellationToken cancellationToken = default(CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -1090,13 +1086,12 @@ namespace PollinationSDK.Api
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="type"> (optional, default to &quot;Body_post_recipe_registries__owner__recipes_post&quot;)</param>
         /// <param name="package"> (optional)</param>
         /// <returns>object</returns>
-        public object PostRecipe (string owner, string authorization = default, string type = default, System.IO.Stream package = default)
+        public object PostRecipe (string owner, string type = default, System.IO.Stream package = default)
         {
-             ApiResponse<object> localVarResponse = PostRecipeWithHttpInfo(owner, authorization, type, package);
+             ApiResponse<object> localVarResponse = PostRecipeWithHttpInfo(owner, type, package);
              return localVarResponse.Data;
         }
 
@@ -1105,11 +1100,10 @@ namespace PollinationSDK.Api
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="type"> (optional, default to &quot;Body_post_recipe_registries__owner__recipes_post&quot;)</param>
         /// <param name="package"> (optional)</param>
         /// <returns>ApiResponse of object</returns>
-        public ApiResponse<object> PostRecipeWithHttpInfo (string owner, string authorization = default, string type = default, System.IO.Stream package = default)
+        public ApiResponse<object> PostRecipeWithHttpInfo (string owner, string type = default, System.IO.Stream package = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1138,7 +1132,6 @@ namespace PollinationSDK.Api
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
-            if (authorization != null) localVarHeaderParams.Add("authorization", this.Configuration.ApiClient.ParameterToString(authorization)); // header parameter
             if (type != null) localVarFormParams.Add("type", this.Configuration.ApiClient.ParameterToString(type)); // form parameter
             if (package != null) localVarFileParams.Add("package", this.Configuration.ApiClient.ParameterToFile("package", package));
 
@@ -1177,14 +1170,13 @@ namespace PollinationSDK.Api
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="type"> (optional, default to &quot;Body_post_recipe_registries__owner__recipes_post&quot;)</param>
         /// <param name="package"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of object</returns>
-        public async System.Threading.Tasks.Task<object> PostRecipeAsync (string owner, string authorization = default, string type = default, System.IO.Stream package = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<object> PostRecipeAsync (string owner, string type = default, System.IO.Stream package = default, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<object> localVarResponse = await PostRecipeWithHttpInfoAsync(owner, authorization, type, package, cancellationToken);
+             ApiResponse<object> localVarResponse = await PostRecipeWithHttpInfoAsync(owner, type, package, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -1194,12 +1186,11 @@ namespace PollinationSDK.Api
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
-        /// <param name="authorization"> (optional)</param>
         /// <param name="type"> (optional, default to &quot;Body_post_recipe_registries__owner__recipes_post&quot;)</param>
         /// <param name="package"> (optional)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (object)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<object>> PostRecipeWithHttpInfoAsync (string owner, string authorization = default, string type = default, System.IO.Stream package = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<object>> PostRecipeWithHttpInfoAsync (string owner, string type = default, System.IO.Stream package = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1228,7 +1219,6 @@ namespace PollinationSDK.Api
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
-            if (authorization != null) localVarHeaderParams.Add("authorization", this.Configuration.ApiClient.ParameterToString(authorization)); // header parameter
             if (type != null) localVarFormParams.Add("type", this.Configuration.ApiClient.ParameterToString(type)); // form parameter
             if (package != null) localVarFileParams.Add("package", this.Configuration.ApiClient.ParameterToFile("package", package));
 

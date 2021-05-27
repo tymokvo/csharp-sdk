@@ -53,6 +53,7 @@ namespace PollinationSDK
         /// <param name="role">The role the user has within the organization.</param>
         /// <param name="memberCount">The number of members that are part of this org (default to 0).</param>
         /// <param name="teamCount">The number of teams that are part of this org (default to 0).</param>
+        /// <param name="accountName">The unique name of the org in small case without spaces.</param>
         /// <param name="name">The display name for this org.</param>
         /// <param name="pictureUrl">URL to the picture associated with this org.</param>
         /// <param name="contactEmail">The contact email for the Organization.</param>
@@ -60,8 +61,8 @@ namespace PollinationSDK
         public Organization
         (
            string id, AccountPublic owner, // Required parameters
-            string name= default, string pictureUrl= default, string contactEmail= default, string description= default, OrganizationRoleEnum role= default, int memberCount = 0, int teamCount = 0 // Optional parameters
-        ) : base(name: name, pictureUrl: pictureUrl, contactEmail: contactEmail, description: description)// BaseClass
+            string accountName= default, string name= default, string pictureUrl= default, string contactEmail= default, string description= default, OrganizationRoleEnum role= default, int memberCount = 0, int teamCount = 0 // Optional parameters
+        ) : base(accountName: accountName, name: name, pictureUrl: pictureUrl, contactEmail: contactEmail, description: description)// BaseClass
         {
             // to ensure "id" is required (not null)
             this.Id = id ?? throw new ArgumentNullException("id is a required property for Organization and cannot be null");
@@ -128,6 +129,7 @@ namespace PollinationSDK
             var sb = new StringBuilder();
             sb.Append("Organization:\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
+            sb.Append("  AccountName: ").Append(AccountName).Append("\n");
             sb.Append("  Name: ").Append(Name).Append("\n");
             sb.Append("  PictureUrl: ").Append(PictureUrl).Append("\n");
             sb.Append("  ContactEmail: ").Append(ContactEmail).Append("\n");

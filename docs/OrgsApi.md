@@ -363,7 +363,7 @@ Name | Type | Description  | Notes
 
 ## GetOrgMembers
 
-> OrganizationMemberList GetOrgMembers (string name, int? page = null, int? perPage = null)
+> OrganizationMemberList GetOrgMembers (string name)
 
 List organization members
 
@@ -387,13 +387,11 @@ namespace Example
             Configuration.Default.BasePath = "http://localhost";
             var apiInstance = new OrgsApi(Configuration.Default);
             var name = name_example;  // string | 
-            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
                 // List organization members
-                OrganizationMemberList result = apiInstance.GetOrgMembers(name, page, perPage);
+                OrganizationMemberList result = apiInstance.GetOrgMembers(name);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -413,8 +411,6 @@ namespace Example
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **string**|  | 
- **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
 ### Return type
 
@@ -443,7 +439,7 @@ No authorization required
 
 ## ListOrgs
 
-> OrganizationList ListOrgs (int? page = null, int? perPage = null, List<string> search = null, List<string> name = null, List<string> member = null)
+> OrganizationList ListOrgs (List<string> search = null, List<string> name = null, List<string> member = null, int? page = null, int? perPage = null)
 
 List Orgs
 
@@ -473,16 +469,16 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new OrgsApi(Configuration.Default);
-            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
             var search = new List<string>(); // List<string> | You know, for search (optional) 
             var name = new List<string>(); // List<string> | The account name (optional) 
-            var member = new List<string>(); // List<string> | The ID of a user (optional) 
+            var member = new List<string>(); // List<string> | The username of a user (optional) 
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
                 // List Orgs
-                OrganizationList result = apiInstance.ListOrgs(page, perPage, search, name, member);
+                OrganizationList result = apiInstance.ListOrgs(search, name, member, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -501,11 +497,11 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int?**| Number of items per page | [optional] [default to 25]
  **search** | [**List&lt;string&gt;**](string.md)| You know, for search | [optional] 
  **name** | [**List&lt;string&gt;**](string.md)| The account name | [optional] 
- **member** | [**List&lt;string&gt;**](string.md)| The ID of a user | [optional] 
+ **member** | [**List&lt;string&gt;**](string.md)| The username of a user | [optional] 
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
 ### Return type
 

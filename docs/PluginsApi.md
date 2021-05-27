@@ -4,16 +4,16 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**CreatePlugin**](PluginsApi.md#createplugin) | **POST** /plugins/{owner} | Create a plugin
+[**CreatePlugin**](PluginsApi.md#createplugin) | **POST** /plugins/{owner} | Create a Plugin
 [**CreatePluginPackage**](PluginsApi.md#createpluginpackage) | **POST** /plugins/{owner}/{name}/tags | Create a new Plugin package
-[**DeletePlugin**](PluginsApi.md#deleteplugin) | **DELETE** /plugins/{owner}/{name} | Delete a plugin
+[**DeletePlugin**](PluginsApi.md#deleteplugin) | **DELETE** /plugins/{owner}/{name} | Delete a Plugin
 [**DeletePluginOrgPermission**](PluginsApi.md#deletepluginorgpermission) | **DELETE** /plugins/{owner}/{name}/permissions | Remove a Repository permissions
 [**GetPlugin**](PluginsApi.md#getplugin) | **GET** /plugins/{owner}/{name} | Get a plugin
 [**GetPluginAccessPermissions**](PluginsApi.md#getpluginaccesspermissions) | **GET** /plugins/{owner}/{name}/permissions | Get plugin access permissions
 [**GetPluginByTag**](PluginsApi.md#getpluginbytag) | **GET** /plugins/{owner}/{name}/tags/{tag} | Get a plugin tag
 [**ListPluginTags**](PluginsApi.md#listplugintags) | **GET** /plugins/{owner}/{name}/tags | Get a plugin tags
 [**ListPlugins**](PluginsApi.md#listplugins) | **GET** /plugins | List plugins
-[**UpdatePlugin**](PluginsApi.md#updateplugin) | **PUT** /plugins/{owner}/{name} | Update a plugin
+[**UpdatePlugin**](PluginsApi.md#updateplugin) | **PUT** /plugins/{owner}/{name} | Update a Plugin
 [**UpsertPluginPermission**](PluginsApi.md#upsertpluginpermission) | **PATCH** /plugins/{owner}/{name}/permissions | Upsert a new permission to a plugin
 
 
@@ -22,7 +22,7 @@ Method | HTTP request | Description
 
 > CreatedContent CreatePlugin (string owner, RepositoryCreate repositoryCreate)
 
-Create a plugin
+Create a Plugin
 
 Create a new plugin.
 
@@ -55,7 +55,7 @@ namespace Example
 
             try
             {
-                // Create a plugin
+                // Create a Plugin
                 CreatedContent result = apiInstance.CreatePlugin(owner, repositoryCreate);
                 Debug.WriteLine(result);
             }
@@ -202,7 +202,7 @@ Name | Type | Description  | Notes
 
 > void DeletePlugin (string owner, string name)
 
-Delete a plugin
+Delete a Plugin
 
 Delete a plugin (must have `admin` permission)
 
@@ -235,7 +235,7 @@ namespace Example
 
             try
             {
-                // Delete a plugin
+                // Delete a Plugin
                 apiInstance.DeletePlugin(owner, name);
             }
             catch (ApiException e)
@@ -469,7 +469,7 @@ Name | Type | Description  | Notes
 
 Get plugin access permissions
 
-Retrieve a plugin's access permissions (must have `contribute` permission)
+Retrieve a plugin's access permissions (must have `write` permission)
 
 ### Example
 
@@ -745,7 +745,7 @@ Name | Type | Description  | Notes
 
 ## ListPlugins
 
-> RepositoryList ListPlugins (int? page = null, int? perPage = null, List<string> search = null, List<string> name = null, List<string> owner = null, bool? _public = null, List<string> keyword = null, List<string> permission = null)
+> RepositoryList ListPlugins (List<string> search = null, List<string> name = null, List<string> owner = null, bool? _public = null, List<string> keyword = null, List<string> permission = null, int? page = null, int? perPage = null)
 
 List plugins
 
@@ -773,19 +773,19 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new PluginsApi(Configuration.Default);
-            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
-            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
             var search = new List<string>(); // List<string> | You know, for search (optional) 
             var name = new List<string>(); // List<string> | The account name (optional) 
             var owner = new List<string>(); // List<string> | Owner of the project (optional) 
             var _public = true;  // bool? | Boolean check for public/private projects (optional) 
             var keyword = new List<string>(); // List<string> | A keyword to index the repository by (optional) 
             var permission = new List<string>(); // List<string> | Filter by permission on given resource (optional) 
+            var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
+            var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
                 // List plugins
-                RepositoryList result = apiInstance.ListPlugins(page, perPage, search, name, owner, _public, keyword, permission);
+                RepositoryList result = apiInstance.ListPlugins(search, name, owner, _public, keyword, permission, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -804,14 +804,14 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
- **perPage** | **int?**| Number of items per page | [optional] [default to 25]
  **search** | [**List&lt;string&gt;**](string.md)| You know, for search | [optional] 
  **name** | [**List&lt;string&gt;**](string.md)| The account name | [optional] 
  **owner** | [**List&lt;string&gt;**](string.md)| Owner of the project | [optional] 
  **_public** | **bool?**| Boolean check for public/private projects | [optional] 
  **keyword** | [**List&lt;string&gt;**](string.md)| A keyword to index the repository by | [optional] 
  **permission** | [**List&lt;string&gt;**](string.md)| Filter by permission on given resource | [optional] 
+ **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
+ **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
 ### Return type
 
@@ -842,7 +842,7 @@ Name | Type | Description  | Notes
 
 > UpdateAccepted UpdatePlugin (string owner, string name, RepositoryUpdate repositoryUpdate)
 
-Update a plugin
+Update a Plugin
 
 Update a plugin (must have `contribute` permission)
 
@@ -876,7 +876,7 @@ namespace Example
 
             try
             {
-                // Update a plugin
+                // Update a Plugin
                 UpdateAccepted result = apiInstance.UpdatePlugin(owner, name, repositoryUpdate);
                 Debug.WriteLine(result);
             }

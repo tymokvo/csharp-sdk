@@ -28,7 +28,7 @@ namespace PollinationSDK.Api
         /// Create a Project
         /// </summary>
         /// <remarks>
-        /// Create a new project.
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -40,7 +40,7 @@ namespace PollinationSDK.Api
         /// Create a Project
         /// </summary>
         /// <remarks>
-        /// Create a new project.
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -51,32 +51,32 @@ namespace PollinationSDK.Api
         /// Upsert a recipe filter to a project
         /// </summary>
         /// <remarks>
-        /// Upsert a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="projectRecipeFilter"></param>
-        /// <returns>UpdateAccepted</returns>
-        UpdateAccepted CreateProjectRecipeFilter (string owner, string name, ProjectRecipeFilter projectRecipeFilter);
+        /// <returns>ProjectRecipeFilter</returns>
+        ProjectRecipeFilter CreateProjectRecipeFilter (string owner, string name, ProjectRecipeFilter projectRecipeFilter);
 
         /// <summary>
         /// Upsert a recipe filter to a project
         /// </summary>
         /// <remarks>
-        /// Upsert a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="projectRecipeFilter"></param>
-        /// <returns>ApiResponse of UpdateAccepted</returns>
-        ApiResponse<UpdateAccepted> CreateProjectRecipeFilterWithHttpInfo (string owner, string name, ProjectRecipeFilter projectRecipeFilter);
+        /// <returns>ApiResponse of ProjectRecipeFilter</returns>
+        ApiResponse<ProjectRecipeFilter> CreateProjectRecipeFilterWithHttpInfo (string owner, string name, ProjectRecipeFilter projectRecipeFilter);
         /// <summary>
         /// Delete a Project
         /// </summary>
         /// <remarks>
-        /// Delete a project (must have &#x60;admin&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -88,7 +88,7 @@ namespace PollinationSDK.Api
         /// Delete a Project
         /// </summary>
         /// <remarks>
-        /// Delete a project (must have &#x60;admin&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -99,7 +99,7 @@ namespace PollinationSDK.Api
         /// Remove a Project permissions
         /// </summary>
         /// <remarks>
-        /// Delete a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -112,7 +112,7 @@ namespace PollinationSDK.Api
         /// Remove a Project permissions
         /// </summary>
         /// <remarks>
-        /// Delete a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -121,10 +121,10 @@ namespace PollinationSDK.Api
         /// <returns>ApiResponse of Object(void)</returns>
         ApiResponse<Object> DeleteProjectOrgPermissionWithHttpInfo (string owner, string name, ProjectPolicySubject projectPolicySubject);
         /// <summary>
-        /// Remove a Project permissions
+        /// Remove a Project recipe filter
         /// </summary>
         /// <remarks>
-        /// Delete a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -134,10 +134,10 @@ namespace PollinationSDK.Api
         void DeleteProjectRecipeFilter (string owner, string name, ProjectRecipeFilter projectRecipeFilter);
 
         /// <summary>
-        /// Remove a Project permissions
+        /// Remove a Project recipe filter
         /// </summary>
         /// <remarks>
-        /// Delete a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -149,7 +149,7 @@ namespace PollinationSDK.Api
         /// Get a project
         /// </summary>
         /// <remarks>
-        /// Retrieve a project by name
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -161,7 +161,7 @@ namespace PollinationSDK.Api
         /// Get a project
         /// </summary>
         /// <remarks>
-        /// Retrieve a project by name
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -172,7 +172,7 @@ namespace PollinationSDK.Api
         /// Get project access permissions
         /// </summary>
         /// <remarks>
-        /// Retrieve a project&#39;s access permissions (must have &#x60;contribute&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -188,7 +188,7 @@ namespace PollinationSDK.Api
         /// Get project access permissions
         /// </summary>
         /// <remarks>
-        /// Retrieve a project&#39;s access permissions (must have &#x60;contribute&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -203,94 +203,96 @@ namespace PollinationSDK.Api
         /// Get project recipe filters
         /// </summary>
         /// <remarks>
-        /// Retrieve a project&#39;s access permissions (must have &#x60;read&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ProjectRecipeFilterList</returns>
-        ProjectRecipeFilterList GetProjectRecipeFilters (string owner, string name);
+        ProjectRecipeFilterList GetProjectRecipeFilters (string owner, string name, int? page = default, int? perPage = default);
 
         /// <summary>
         /// Get project recipe filters
         /// </summary>
         /// <remarks>
-        /// Retrieve a project&#39;s access permissions (must have &#x60;read&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of ProjectRecipeFilterList</returns>
-        ApiResponse<ProjectRecipeFilterList> GetProjectRecipeFiltersWithHttpInfo (string owner, string name);
+        ApiResponse<ProjectRecipeFilterList> GetProjectRecipeFiltersWithHttpInfo (string owner, string name, int? page = default, int? perPage = default);
         /// <summary>
         /// Get project recipes
         /// </summary>
         /// <remarks>
-        /// Retrieve a project&#39;s access permissions (must have &#x60;read&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="search"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>RecipeInterfaceList</returns>
-        RecipeInterfaceList GetProjectRecipes (string owner, string name, string search = default, int? page = default, int? perPage = default);
+        RecipeInterfaceList GetProjectRecipes (string owner, string name, int? page = default, int? perPage = default);
 
         /// <summary>
         /// Get project recipes
         /// </summary>
         /// <remarks>
-        /// Retrieve a project&#39;s access permissions (must have &#x60;read&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="search"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of RecipeInterfaceList</returns>
-        ApiResponse<RecipeInterfaceList> GetProjectRecipesWithHttpInfo (string owner, string name, string search = default, int? page = default, int? perPage = default);
+        ApiResponse<RecipeInterfaceList> GetProjectRecipesWithHttpInfo (string owner, string name, int? page = default, int? perPage = default);
         /// <summary>
         /// List Projects
         /// </summary>
         /// <remarks>
-        /// search for projects using query parameters
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="search">You know, for search (optional)</param>
-        /// <param name="id">The ID of a project to search for (optional)</param>
-        /// <param name="name">The account name (optional)</param>
+        /// <param name="search">Search string to find accounts (optional)</param>
+        /// <param name="ids">The ID of a project to search for (optional)</param>
+        /// <param name="names">The name of the project (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
-        /// <param name="permission">Filter by permission on given resource (optional)</param>
+        /// <param name="permissions">Filter by permission on given resource (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ProjectList</returns>
-        ProjectList ListProjects (int? page = default, int? perPage = default, List<string> search = default, List<string> id = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> permission = default);
+        ProjectList ListProjects (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// List Projects
         /// </summary>
         /// <remarks>
-        /// search for projects using query parameters
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="search">You know, for search (optional)</param>
-        /// <param name="id">The ID of a project to search for (optional)</param>
-        /// <param name="name">The account name (optional)</param>
+        /// <param name="search">Search string to find accounts (optional)</param>
+        /// <param name="ids">The ID of a project to search for (optional)</param>
+        /// <param name="names">The name of the project (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
-        /// <param name="permission">Filter by permission on given resource (optional)</param>
+        /// <param name="permissions">Filter by permission on given resource (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of ProjectList</returns>
-        ApiResponse<ProjectList> ListProjectsWithHttpInfo (int? page = default, int? perPage = default, List<string> search = default, List<string> id = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> permission = default);
+        ApiResponse<ProjectList> ListProjectsWithHttpInfo (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, int? page = default, int? perPage = default);
         /// <summary>
         /// Update a Project
         /// </summary>
         /// <remarks>
-        /// Update a project (must have &#x60;contribute&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -303,7 +305,7 @@ namespace PollinationSDK.Api
         /// Update a Project
         /// </summary>
         /// <remarks>
-        /// Update a project (must have &#x60;contribute&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -315,7 +317,7 @@ namespace PollinationSDK.Api
         /// Upsert a new permission to a project
         /// </summary>
         /// <remarks>
-        /// Upsert a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -328,7 +330,7 @@ namespace PollinationSDK.Api
         /// Upsert a new permission to a project
         /// </summary>
         /// <remarks>
-        /// Upsert a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -342,7 +344,7 @@ namespace PollinationSDK.Api
         /// Create a Project
         /// </summary>
         /// <remarks>
-        /// Create a new project.
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -355,7 +357,7 @@ namespace PollinationSDK.Api
         /// Create a Project
         /// </summary>
         /// <remarks>
-        /// Create a new project.
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -367,34 +369,34 @@ namespace PollinationSDK.Api
         /// Upsert a recipe filter to a project
         /// </summary>
         /// <remarks>
-        /// Upsert a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="projectRecipeFilter"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of UpdateAccepted</returns>
-        System.Threading.Tasks.Task<UpdateAccepted> CreateProjectRecipeFilterAsync (string owner, string name, ProjectRecipeFilter projectRecipeFilter, CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of ProjectRecipeFilter</returns>
+        System.Threading.Tasks.Task<ProjectRecipeFilter> CreateProjectRecipeFilterAsync (string owner, string name, ProjectRecipeFilter projectRecipeFilter, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Upsert a recipe filter to a project
         /// </summary>
         /// <remarks>
-        /// Upsert a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="projectRecipeFilter"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of ApiResponse (UpdateAccepted)</returns>
-        System.Threading.Tasks.Task<ApiResponse<UpdateAccepted>> CreateProjectRecipeFilterWithHttpInfoAsync (string owner, string name, ProjectRecipeFilter projectRecipeFilter, CancellationToken cancellationToken = default(CancellationToken));
+        /// <returns>Task of ApiResponse (ProjectRecipeFilter)</returns>
+        System.Threading.Tasks.Task<ApiResponse<ProjectRecipeFilter>> CreateProjectRecipeFilterWithHttpInfoAsync (string owner, string name, ProjectRecipeFilter projectRecipeFilter, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a Project
         /// </summary>
         /// <remarks>
-        /// Delete a project (must have &#x60;admin&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -407,7 +409,7 @@ namespace PollinationSDK.Api
         /// Delete a Project
         /// </summary>
         /// <remarks>
-        /// Delete a project (must have &#x60;admin&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -419,7 +421,7 @@ namespace PollinationSDK.Api
         /// Remove a Project permissions
         /// </summary>
         /// <remarks>
-        /// Delete a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -433,7 +435,7 @@ namespace PollinationSDK.Api
         /// Remove a Project permissions
         /// </summary>
         /// <remarks>
-        /// Delete a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -443,10 +445,10 @@ namespace PollinationSDK.Api
         /// <returns>Task of ApiResponse</returns>
         System.Threading.Tasks.Task<ApiResponse<Object>> DeleteProjectOrgPermissionWithHttpInfoAsync (string owner, string name, ProjectPolicySubject projectPolicySubject, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Remove a Project permissions
+        /// Remove a Project recipe filter
         /// </summary>
         /// <remarks>
-        /// Delete a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -457,10 +459,10 @@ namespace PollinationSDK.Api
         System.Threading.Tasks.Task DeleteProjectRecipeFilterAsync (string owner, string name, ProjectRecipeFilter projectRecipeFilter, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Remove a Project permissions
+        /// Remove a Project recipe filter
         /// </summary>
         /// <remarks>
-        /// Delete a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -473,7 +475,7 @@ namespace PollinationSDK.Api
         /// Get a project
         /// </summary>
         /// <remarks>
-        /// Retrieve a project by name
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -486,7 +488,7 @@ namespace PollinationSDK.Api
         /// Get a project
         /// </summary>
         /// <remarks>
-        /// Retrieve a project by name
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -498,7 +500,7 @@ namespace PollinationSDK.Api
         /// Get project access permissions
         /// </summary>
         /// <remarks>
-        /// Retrieve a project&#39;s access permissions (must have &#x60;contribute&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -515,7 +517,7 @@ namespace PollinationSDK.Api
         /// Get project access permissions
         /// </summary>
         /// <remarks>
-        /// Retrieve a project&#39;s access permissions (must have &#x60;contribute&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -531,100 +533,102 @@ namespace PollinationSDK.Api
         /// Get project recipe filters
         /// </summary>
         /// <remarks>
-        /// Retrieve a project&#39;s access permissions (must have &#x60;read&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ProjectRecipeFilterList</returns>
-        System.Threading.Tasks.Task<ProjectRecipeFilterList> GetProjectRecipeFiltersAsync (string owner, string name, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ProjectRecipeFilterList> GetProjectRecipeFiltersAsync (string owner, string name, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get project recipe filters
         /// </summary>
         /// <remarks>
-        /// Retrieve a project&#39;s access permissions (must have &#x60;read&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (ProjectRecipeFilterList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ProjectRecipeFilterList>> GetProjectRecipeFiltersWithHttpInfoAsync (string owner, string name, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<ProjectRecipeFilterList>> GetProjectRecipeFiltersWithHttpInfoAsync (string owner, string name, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get project recipes
         /// </summary>
         /// <remarks>
-        /// Retrieve a project&#39;s access permissions (must have &#x60;read&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="search"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of RecipeInterfaceList</returns>
-        System.Threading.Tasks.Task<RecipeInterfaceList> GetProjectRecipesAsync (string owner, string name, string search = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<RecipeInterfaceList> GetProjectRecipesAsync (string owner, string name, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get project recipes
         /// </summary>
         /// <remarks>
-        /// Retrieve a project&#39;s access permissions (must have &#x60;read&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="search"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (RecipeInterfaceList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<RecipeInterfaceList>> GetProjectRecipesWithHttpInfoAsync (string owner, string name, string search = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<RecipeInterfaceList>> GetProjectRecipesWithHttpInfoAsync (string owner, string name, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List Projects
         /// </summary>
         /// <remarks>
-        /// search for projects using query parameters
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="search">You know, for search (optional)</param>
-        /// <param name="id">The ID of a project to search for (optional)</param>
-        /// <param name="name">The account name (optional)</param>
+        /// <param name="search">Search string to find accounts (optional)</param>
+        /// <param name="ids">The ID of a project to search for (optional)</param>
+        /// <param name="names">The name of the project (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
-        /// <param name="permission">Filter by permission on given resource (optional)</param>
+        /// <param name="permissions">Filter by permission on given resource (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ProjectList</returns>
-        System.Threading.Tasks.Task<ProjectList> ListProjectsAsync (int? page = default, int? perPage = default, List<string> search = default, List<string> id = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> permission = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ProjectList> ListProjectsAsync (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List Projects
         /// </summary>
         /// <remarks>
-        /// search for projects using query parameters
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="search">You know, for search (optional)</param>
-        /// <param name="id">The ID of a project to search for (optional)</param>
-        /// <param name="name">The account name (optional)</param>
+        /// <param name="search">Search string to find accounts (optional)</param>
+        /// <param name="ids">The ID of a project to search for (optional)</param>
+        /// <param name="names">The name of the project (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
-        /// <param name="permission">Filter by permission on given resource (optional)</param>
+        /// <param name="permissions">Filter by permission on given resource (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (ProjectList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ProjectList>> ListProjectsWithHttpInfoAsync (int? page = default, int? perPage = default, List<string> search = default, List<string> id = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> permission = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<ProjectList>> ListProjectsWithHttpInfoAsync (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update a Project
         /// </summary>
         /// <remarks>
-        /// Update a project (must have &#x60;contribute&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -638,7 +642,7 @@ namespace PollinationSDK.Api
         /// Update a Project
         /// </summary>
         /// <remarks>
-        /// Update a project (must have &#x60;contribute&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -651,7 +655,7 @@ namespace PollinationSDK.Api
         /// Upsert a new permission to a project
         /// </summary>
         /// <remarks>
-        /// Upsert a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -665,7 +669,7 @@ namespace PollinationSDK.Api
         /// Upsert a new permission to a project
         /// </summary>
         /// <remarks>
-        /// Upsert a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -754,7 +758,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Create a Project Create a new project.
+        /// Create a Project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -767,7 +771,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Create a Project Create a new project.
+        /// Create a Project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -845,7 +849,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Create a Project Create a new project.
+        /// Create a Project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -860,7 +864,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Create a Project Create a new project.
+        /// Create a Project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -939,28 +943,28 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Upsert a recipe filter to a project Upsert a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// Upsert a recipe filter to a project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="projectRecipeFilter"></param>
-        /// <returns>UpdateAccepted</returns>
-        public UpdateAccepted CreateProjectRecipeFilter (string owner, string name, ProjectRecipeFilter projectRecipeFilter)
+        /// <returns>ProjectRecipeFilter</returns>
+        public ProjectRecipeFilter CreateProjectRecipeFilter (string owner, string name, ProjectRecipeFilter projectRecipeFilter)
         {
-             ApiResponse<UpdateAccepted> localVarResponse = CreateProjectRecipeFilterWithHttpInfo(owner, name, projectRecipeFilter);
+             ApiResponse<ProjectRecipeFilter> localVarResponse = CreateProjectRecipeFilterWithHttpInfo(owner, name, projectRecipeFilter);
              return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Upsert a recipe filter to a project Upsert a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// Upsert a recipe filter to a project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="projectRecipeFilter"></param>
-        /// <returns>ApiResponse of UpdateAccepted</returns>
-        public ApiResponse<UpdateAccepted> CreateProjectRecipeFilterWithHttpInfo (string owner, string name, ProjectRecipeFilter projectRecipeFilter)
+        /// <returns>ApiResponse of ProjectRecipeFilter</returns>
+        public ApiResponse<ProjectRecipeFilter> CreateProjectRecipeFilterWithHttpInfo (string owner, string name, ProjectRecipeFilter projectRecipeFilter)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1030,37 +1034,37 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<UpdateAccepted>(localVarStatusCode,
+            return new ApiResponse<ProjectRecipeFilter>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (UpdateAccepted) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(UpdateAccepted)));
+                (ProjectRecipeFilter) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ProjectRecipeFilter)));
         }
 
         /// <summary>
-        /// Upsert a recipe filter to a project Upsert a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// Upsert a recipe filter to a project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="projectRecipeFilter"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of UpdateAccepted</returns>
-        public async System.Threading.Tasks.Task<UpdateAccepted> CreateProjectRecipeFilterAsync (string owner, string name, ProjectRecipeFilter projectRecipeFilter, CancellationToken cancellationToken = default(CancellationToken))
+        /// <returns>Task of ProjectRecipeFilter</returns>
+        public async System.Threading.Tasks.Task<ProjectRecipeFilter> CreateProjectRecipeFilterAsync (string owner, string name, ProjectRecipeFilter projectRecipeFilter, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<UpdateAccepted> localVarResponse = await CreateProjectRecipeFilterWithHttpInfoAsync(owner, name, projectRecipeFilter, cancellationToken);
+             ApiResponse<ProjectRecipeFilter> localVarResponse = await CreateProjectRecipeFilterWithHttpInfoAsync(owner, name, projectRecipeFilter, cancellationToken);
              return localVarResponse.Data;
 
         }
 
         /// <summary>
-        /// Upsert a recipe filter to a project Upsert a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// Upsert a recipe filter to a project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
         /// <param name="projectRecipeFilter"></param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
-        /// <returns>Task of ApiResponse (UpdateAccepted)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<UpdateAccepted>> CreateProjectRecipeFilterWithHttpInfoAsync (string owner, string name, ProjectRecipeFilter projectRecipeFilter, CancellationToken cancellationToken = default(CancellationToken))
+        /// <returns>Task of ApiResponse (ProjectRecipeFilter)</returns>
+        public async System.Threading.Tasks.Task<ApiResponse<ProjectRecipeFilter>> CreateProjectRecipeFilterWithHttpInfoAsync (string owner, string name, ProjectRecipeFilter projectRecipeFilter, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -1130,13 +1134,13 @@ namespace PollinationSDK.Api
                 if (exception != null) throw exception;
             }
 
-            return new ApiResponse<UpdateAccepted>(localVarStatusCode,
+            return new ApiResponse<ProjectRecipeFilter>(localVarStatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => string.Join(",", x.Value)),
-                (UpdateAccepted) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(UpdateAccepted)));
+                (ProjectRecipeFilter) this.Configuration.ApiClient.Deserialize(localVarResponse, typeof(ProjectRecipeFilter)));
         }
 
         /// <summary>
-        /// Delete a Project Delete a project (must have &#x60;admin&#x60; permission)
+        /// Delete a Project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1148,7 +1152,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Delete a Project Delete a project (must have &#x60;admin&#x60; permission)
+        /// Delete a Project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1218,7 +1222,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Delete a Project Delete a project (must have &#x60;admin&#x60; permission)
+        /// Delete a Project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1232,7 +1236,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Delete a Project Delete a project (must have &#x60;admin&#x60; permission)
+        /// Delete a Project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1303,7 +1307,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Remove a Project permissions Delete a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// Remove a Project permissions 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1316,7 +1320,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Remove a Project permissions Delete a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// Remove a Project permissions 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1399,7 +1403,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Remove a Project permissions Delete a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// Remove a Project permissions 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1414,7 +1418,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Remove a Project permissions Delete a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// Remove a Project permissions 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1498,7 +1502,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Remove a Project permissions Delete a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// Remove a Project recipe filter 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1511,7 +1515,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Remove a Project permissions Delete a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// Remove a Project recipe filter 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1594,7 +1598,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Remove a Project permissions Delete a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// Remove a Project recipe filter 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1609,7 +1613,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Remove a Project permissions Delete a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// Remove a Project recipe filter 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1693,7 +1697,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Get a project Retrieve a project by name
+        /// Get a project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1706,7 +1710,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Get a project Retrieve a project by name
+        /// Get a project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1776,7 +1780,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Get a project Retrieve a project by name
+        /// Get a project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1791,7 +1795,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Get a project Retrieve a project by name
+        /// Get a project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1862,7 +1866,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Get project access permissions Retrieve a project&#39;s access permissions (must have &#x60;contribute&#x60; permission)
+        /// Get project access permissions 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1879,7 +1883,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Get project access permissions Retrieve a project&#39;s access permissions (must have &#x60;contribute&#x60; permission)
+        /// Get project access permissions 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1957,7 +1961,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Get project access permissions Retrieve a project&#39;s access permissions (must have &#x60;contribute&#x60; permission)
+        /// Get project access permissions 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -1976,7 +1980,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Get project access permissions Retrieve a project&#39;s access permissions (must have &#x60;contribute&#x60; permission)
+        /// Get project access permissions 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -2055,26 +2059,30 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Get project recipe filters Retrieve a project&#39;s access permissions (must have &#x60;read&#x60; permission)
+        /// Get project recipe filters 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ProjectRecipeFilterList</returns>
-        public ProjectRecipeFilterList GetProjectRecipeFilters (string owner, string name)
+        public ProjectRecipeFilterList GetProjectRecipeFilters (string owner, string name, int? page = default, int? perPage = default)
         {
-             ApiResponse<ProjectRecipeFilterList> localVarResponse = GetProjectRecipeFiltersWithHttpInfo(owner, name);
+             ApiResponse<ProjectRecipeFilterList> localVarResponse = GetProjectRecipeFiltersWithHttpInfo(owner, name, page, perPage);
              return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get project recipe filters Retrieve a project&#39;s access permissions (must have &#x60;read&#x60; permission)
+        /// Get project recipe filters 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of ProjectRecipeFilterList</returns>
-        public ApiResponse<ProjectRecipeFilterList> GetProjectRecipeFiltersWithHttpInfo (string owner, string name)
+        public ApiResponse<ProjectRecipeFilterList> GetProjectRecipeFiltersWithHttpInfo (string owner, string name, int? page = default, int? perPage = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2106,6 +2114,8 @@ namespace PollinationSDK.Api
 
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
+            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
+            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
             // authentication (APIKeyAuth) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
@@ -2138,29 +2148,33 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Get project recipe filters Retrieve a project&#39;s access permissions (must have &#x60;read&#x60; permission)
+        /// Get project recipe filters 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ProjectRecipeFilterList</returns>
-        public async System.Threading.Tasks.Task<ProjectRecipeFilterList> GetProjectRecipeFiltersAsync (string owner, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ProjectRecipeFilterList> GetProjectRecipeFiltersAsync (string owner, string name, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<ProjectRecipeFilterList> localVarResponse = await GetProjectRecipeFiltersWithHttpInfoAsync(owner, name, cancellationToken);
+             ApiResponse<ProjectRecipeFilterList> localVarResponse = await GetProjectRecipeFiltersWithHttpInfoAsync(owner, name, page, perPage, cancellationToken);
              return localVarResponse.Data;
 
         }
 
         /// <summary>
-        /// Get project recipe filters Retrieve a project&#39;s access permissions (must have &#x60;read&#x60; permission)
+        /// Get project recipe filters 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (ProjectRecipeFilterList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<ProjectRecipeFilterList>> GetProjectRecipeFiltersWithHttpInfoAsync (string owner, string name, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<ProjectRecipeFilterList>> GetProjectRecipeFiltersWithHttpInfoAsync (string owner, string name, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2192,6 +2206,8 @@ namespace PollinationSDK.Api
 
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
+            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
+            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
             // authentication (APIKeyAuth) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
@@ -2224,32 +2240,30 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Get project recipes Retrieve a project&#39;s access permissions (must have &#x60;read&#x60; permission)
+        /// Get project recipes 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="search"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>RecipeInterfaceList</returns>
-        public RecipeInterfaceList GetProjectRecipes (string owner, string name, string search = default, int? page = default, int? perPage = default)
+        public RecipeInterfaceList GetProjectRecipes (string owner, string name, int? page = default, int? perPage = default)
         {
-             ApiResponse<RecipeInterfaceList> localVarResponse = GetProjectRecipesWithHttpInfo(owner, name, search, page, perPage);
+             ApiResponse<RecipeInterfaceList> localVarResponse = GetProjectRecipesWithHttpInfo(owner, name, page, perPage);
              return localVarResponse.Data;
         }
 
         /// <summary>
-        /// Get project recipes Retrieve a project&#39;s access permissions (must have &#x60;read&#x60; permission)
+        /// Get project recipes 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="search"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of RecipeInterfaceList</returns>
-        public ApiResponse<RecipeInterfaceList> GetProjectRecipesWithHttpInfo (string owner, string name, string search = default, int? page = default, int? perPage = default)
+        public ApiResponse<RecipeInterfaceList> GetProjectRecipesWithHttpInfo (string owner, string name, int? page = default, int? perPage = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2281,7 +2295,6 @@ namespace PollinationSDK.Api
 
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
-            if (search != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "search", search)); // query parameter
             if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
             if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
@@ -2316,35 +2329,33 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Get project recipes Retrieve a project&#39;s access permissions (must have &#x60;read&#x60; permission)
+        /// Get project recipes 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="search"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of RecipeInterfaceList</returns>
-        public async System.Threading.Tasks.Task<RecipeInterfaceList> GetProjectRecipesAsync (string owner, string name, string search = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<RecipeInterfaceList> GetProjectRecipesAsync (string owner, string name, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<RecipeInterfaceList> localVarResponse = await GetProjectRecipesWithHttpInfoAsync(owner, name, search, page, perPage, cancellationToken);
+             ApiResponse<RecipeInterfaceList> localVarResponse = await GetProjectRecipesWithHttpInfoAsync(owner, name, page, perPage, cancellationToken);
              return localVarResponse.Data;
 
         }
 
         /// <summary>
-        /// Get project recipes Retrieve a project&#39;s access permissions (must have &#x60;read&#x60; permission)
+        /// Get project recipes 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
-        /// <param name="search"> (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (RecipeInterfaceList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<RecipeInterfaceList>> GetProjectRecipesWithHttpInfoAsync (string owner, string name, string search = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<RecipeInterfaceList>> GetProjectRecipesWithHttpInfoAsync (string owner, string name, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2376,7 +2387,6 @@ namespace PollinationSDK.Api
 
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
-            if (search != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "search", search)); // query parameter
             if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
             if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
@@ -2411,38 +2421,38 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// List Projects search for projects using query parameters
+        /// List Projects 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="search">You know, for search (optional)</param>
-        /// <param name="id">The ID of a project to search for (optional)</param>
-        /// <param name="name">The account name (optional)</param>
+        /// <param name="search">Search string to find accounts (optional)</param>
+        /// <param name="ids">The ID of a project to search for (optional)</param>
+        /// <param name="names">The name of the project (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
-        /// <param name="permission">Filter by permission on given resource (optional)</param>
+        /// <param name="permissions">Filter by permission on given resource (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ProjectList</returns>
-        public ProjectList ListProjects (int? page = default, int? perPage = default, List<string> search = default, List<string> id = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> permission = default)
+        public ProjectList ListProjects (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, int? page = default, int? perPage = default)
         {
-             ApiResponse<ProjectList> localVarResponse = ListProjectsWithHttpInfo(page, perPage, search, id, name, owner, _public, permission);
+             ApiResponse<ProjectList> localVarResponse = ListProjectsWithHttpInfo(search, ids, names, owner, _public, permissions, page, perPage);
              return localVarResponse.Data;
         }
 
         /// <summary>
-        /// List Projects search for projects using query parameters
+        /// List Projects 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="search">You know, for search (optional)</param>
-        /// <param name="id">The ID of a project to search for (optional)</param>
-        /// <param name="name">The account name (optional)</param>
+        /// <param name="search">Search string to find accounts (optional)</param>
+        /// <param name="ids">The ID of a project to search for (optional)</param>
+        /// <param name="names">The name of the project (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
-        /// <param name="permission">Filter by permission on given resource (optional)</param>
+        /// <param name="permissions">Filter by permission on given resource (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of ProjectList</returns>
-        public ApiResponse<ProjectList> ListProjectsWithHttpInfo (int? page = default, int? perPage = default, List<string> search = default, List<string> id = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> permission = default)
+        public ApiResponse<ProjectList> ListProjectsWithHttpInfo (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, int? page = default, int? perPage = default)
         {
 
             var localVarPath = "/projects";
@@ -2466,14 +2476,14 @@ namespace PollinationSDK.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
-            if (search != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "search", search)); // query parameter
-            if (id != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "id", id)); // query parameter
-            if (name != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "name", name)); // query parameter
+            if (search != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "search", search)); // query parameter
+            if (ids != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "ids", ids)); // query parameter
+            if (names != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "names", names)); // query parameter
             if (owner != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "owner", owner)); // query parameter
             if (_public != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "public", _public)); // query parameter
-            if (permission != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "permission", permission)); // query parameter
+            if (permissions != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "permissions", permissions)); // query parameter
+            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
+            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
             // authentication (APIKeyAuth) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
@@ -2506,41 +2516,41 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// List Projects search for projects using query parameters
+        /// List Projects 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="search">You know, for search (optional)</param>
-        /// <param name="id">The ID of a project to search for (optional)</param>
-        /// <param name="name">The account name (optional)</param>
+        /// <param name="search">Search string to find accounts (optional)</param>
+        /// <param name="ids">The ID of a project to search for (optional)</param>
+        /// <param name="names">The name of the project (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
-        /// <param name="permission">Filter by permission on given resource (optional)</param>
+        /// <param name="permissions">Filter by permission on given resource (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ProjectList</returns>
-        public async System.Threading.Tasks.Task<ProjectList> ListProjectsAsync (int? page = default, int? perPage = default, List<string> search = default, List<string> id = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> permission = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ProjectList> ListProjectsAsync (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<ProjectList> localVarResponse = await ListProjectsWithHttpInfoAsync(page, perPage, search, id, name, owner, _public, permission, cancellationToken);
+             ApiResponse<ProjectList> localVarResponse = await ListProjectsWithHttpInfoAsync(search, ids, names, owner, _public, permissions, page, perPage, cancellationToken);
              return localVarResponse.Data;
 
         }
 
         /// <summary>
-        /// List Projects search for projects using query parameters
+        /// List Projects 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
-        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
-        /// <param name="search">You know, for search (optional)</param>
-        /// <param name="id">The ID of a project to search for (optional)</param>
-        /// <param name="name">The account name (optional)</param>
+        /// <param name="search">Search string to find accounts (optional)</param>
+        /// <param name="ids">The ID of a project to search for (optional)</param>
+        /// <param name="names">The name of the project (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
-        /// <param name="permission">Filter by permission on given resource (optional)</param>
+        /// <param name="permissions">Filter by permission on given resource (optional)</param>
+        /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
+        /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (ProjectList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<ProjectList>> ListProjectsWithHttpInfoAsync (int? page = default, int? perPage = default, List<string> search = default, List<string> id = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> permission = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<ProjectList>> ListProjectsWithHttpInfoAsync (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
 
             var localVarPath = "/projects";
@@ -2564,14 +2574,14 @@ namespace PollinationSDK.Api
             if (localVarHttpHeaderAccept != null)
                 localVarHeaderParams.Add("Accept", localVarHttpHeaderAccept);
 
-            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
-            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
-            if (search != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "search", search)); // query parameter
-            if (id != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "id", id)); // query parameter
-            if (name != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "name", name)); // query parameter
+            if (search != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "search", search)); // query parameter
+            if (ids != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "ids", ids)); // query parameter
+            if (names != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "names", names)); // query parameter
             if (owner != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "owner", owner)); // query parameter
             if (_public != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "public", _public)); // query parameter
-            if (permission != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "permission", permission)); // query parameter
+            if (permissions != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "permissions", permissions)); // query parameter
+            if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
+            if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
             // authentication (APIKeyAuth) required
             if (!String.IsNullOrEmpty(this.Configuration.GetApiKeyWithPrefix("x-pollination-token")))
@@ -2604,7 +2614,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Update a Project Update a project (must have &#x60;contribute&#x60; permission)
+        /// Update a Project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -2618,7 +2628,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Update a Project Update a project (must have &#x60;contribute&#x60; permission)
+        /// Update a Project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -2701,7 +2711,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Update a Project Update a project (must have &#x60;contribute&#x60; permission)
+        /// Update a Project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -2717,7 +2727,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Update a Project Update a project (must have &#x60;contribute&#x60; permission)
+        /// Update a Project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -2801,7 +2811,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Upsert a new permission to a project Upsert a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// Upsert a new permission to a project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -2815,7 +2825,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Upsert a new permission to a project Upsert a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// Upsert a new permission to a project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -2898,7 +2908,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Upsert a new permission to a project Upsert a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// Upsert a new permission to a project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
@@ -2914,7 +2924,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Upsert a new permission to a project Upsert a project&#39;s access policy (must have &#x60;admin&#x60; permission)
+        /// Upsert a new permission to a project 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
