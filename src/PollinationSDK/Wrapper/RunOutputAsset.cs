@@ -26,10 +26,10 @@ namespace PollinationSDK.Wrapper
                 return;
 
             this.Name = dagOutput.Name;
-            this.IsLinkedAsset = dagOutput is DAGLinkedOutputAlias;
-   
+          
             //var platform = "grasshopper";
             var dagOutputAlias = dagOutput.GetAlias(platform);
+            this.IsLinkedAsset = dagOutputAlias is DAGLinkedOutputAlias;
             // override the name and description
             this.AliasName = dagOutputAlias?.Name ?? this.Name;
             this.Handlers = dagOutputAlias?.Handler;
