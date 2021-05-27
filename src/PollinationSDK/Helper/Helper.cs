@@ -401,15 +401,6 @@ namespace PollinationSDK
             var outputDirOrFile = saveAsDir;
 
 
-            var subItems = tempDir.GetFileSystemInfos("*", SearchOption.TopDirectoryOnly);
-
-            if (subItems.Count() == 1 )
-            {
-                // if there is only one file/folder inside
-                var f = subItems[0];
-                if (f.Exists) outputDirOrFile = Path.Combine(saveAsDir, f.Name);
-            }
-
             return outputDirOrFile;
         }
 

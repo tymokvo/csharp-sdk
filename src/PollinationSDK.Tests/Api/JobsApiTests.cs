@@ -195,18 +195,9 @@ namespace PollinationSDK.Test
             var proj = instance.GetProject(Helper.CurrentUser.Username, "demo");
 
 
-            var response = api.ListJobs(Helper.CurrentUser.Username, "demo");
-            var objs = response.Resources;
-
-            foreach (var item in objs)
-            {
-                Console.WriteLine($"CloudJob: {item.Id}");
-            }
-
             var runApi = new Api.RunsApi();
-            var runs = runApi.ListRuns(Helper.CurrentUser.Username, "demo", jobId: new List<string>(){ objs.First().Id }).Resources;
-            var run = runs[0];
-
+            // energy simu
+            var run = runApi.GetRun(Helper.CurrentUser.Username, "demo", "908adb92-6339-4e34-8f01-7ddb55c52da2");
             var runInfo = new RunInfo(proj, run);
 
 
@@ -214,20 +205,33 @@ namespace PollinationSDK.Test
             var inputs = runInfo.GetInputAssets();
             assets.AddRange(inputs);
 
-            var task = runInfo.DownloadRunAssetsAsync(assets, useCached: true);
+            var task = runInfo.DownloadRunAssetsAsync(assets, useCached: false);
             var downloaded = task.Result;
-            foreach (var item in downloaded)
+            // download cached.
+            var task2 = runInfo.DownloadRunAssetsAsync(assets, useCached: true);
+            var downloadedCached = task2.Result;
+
+            var allDownloaded = downloaded.Zip(downloadedCached, (d, dc) => new { nonCached = d, Cached = dc });
+            foreach (var savedAsset in allDownloaded)
             {
+                var item = savedAsset.nonCached;
+                var itemCached = savedAsset.Cached;
+
                 if (item.IsDownloadable())
                 {
                     Console.WriteLine($"Is Saved {item.Name}:{item.IsSaved()} to {item.LocalPath}");
+                    Console.WriteLine($"Is Saved (cached) {itemCached.Name}:{itemCached.IsSaved()} to {itemCached.LocalPath}");
                     Assert.IsTrue(item.IsSaved());
+                    Assert.IsTrue(item.LocalPath == itemCached.LocalPath);
                 }
                 else
                 {
                     var v = string.Join(",", item.Value);
+                    var v2 = string.Join(",", itemCached.Value);
                     Console.WriteLine($"Value {item.Name}: {v}");
+                    Console.WriteLine($"Value(cached) {itemCached.Name}: {v2}");
                     Assert.IsTrue(!string.IsNullOrEmpty(v));
+                    Assert.IsTrue(v == v2);
                 }
             }
 

@@ -281,7 +281,7 @@ namespace PollinationSDK.Wrapper
                 var outputTasks = DownloadOutputArtifact(this, outputAssets, outputDir);
                 tasks.AddRange(outputTasks);
 
-                // watching tasks
+                // download tasks
                 var total = tasks.Count();
                 var completed = 0;
                 reportingAction?.Invoke($"0%");
@@ -300,13 +300,35 @@ namespace PollinationSDK.Wrapper
                 allAssets.AddRange(inputAssets);
                 allAssets.AddRange(outputAssets);
 
+                var savedAssets = tasks.Select(_ => _.Result);
+
                 // collect all downloaded assets
-                var works = allAssets.Zip(tasks, (asset, task) => new { asset, task });
+                var works = allAssets.Zip(savedAssets, (asset, saved) => new { asset, saved });
                 foreach (var item in works)
                 {
-                    var savedFolderOrFilePath = await item.task;
                     var dup = item.asset.Duplicate();
-                    dup.LocalPath = savedFolderOrFilePath;
+
+                    // get saved path type assets
+                    if (item.asset.IsDownloadable())
+                    {
+                        var savedFolderOrFilePath = item.saved;
+                        // check folder
+                        if (!Path.HasExtension(savedFolderOrFilePath))
+                        {
+                            var tempDir = new DirectoryInfo(savedFolderOrFilePath);
+                            var subItems = tempDir.GetFileSystemInfos("*", SearchOption.TopDirectoryOnly);
+
+                            if (subItems.Count() == 1)
+                            {
+                                // if there is only one file/folder inside
+                                var f = subItems[0];
+                                if (f.Exists) savedFolderOrFilePath = f.FullName;
+                            }
+                        }
+                        // update saved path
+                        dup.LocalPath = savedFolderOrFilePath;
+                    }
+                    
                     downloadedAssets.Add(dup);
                 }
 
