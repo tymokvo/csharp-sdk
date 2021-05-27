@@ -70,7 +70,10 @@ namespace PollinationSDK.Test
 
             var jobInfo = new JobInfo(rec);
 
-            jobInfo.AddArgument(new JobPathArgument("model", new ProjectFolder(path: @"../../../TestSample/two_rooms.hbjson")));
+            var model = Path.GetFullPath(@"../../../TestSample/two_rooms.hbjson");
+            if (!File.Exists(model))
+                throw new ArgumentException("Input doesn't exist");
+            jobInfo.AddArgument(new JobPathArgument("model", new ProjectFolder(path: model)));
 
             jobInfo.SetJobSubFolderPath("round1/test");
             jobInfo.SetJobName("A new daylight simulation");

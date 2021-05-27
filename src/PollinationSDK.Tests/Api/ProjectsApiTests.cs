@@ -85,6 +85,10 @@ namespace PollinationSDK.Test
         {
             var response = api.ListProjects(owner: new List<string>() {Helper.CurrentUser.Username });
             var projs = response.Resources;
+            foreach (var item in projs)
+            {
+                Console.WriteLine($"projects: {item.Owner.Name}/{item.Name}");
+            }
             Assert.IsTrue(projs.Count > 1);
 
             var found = projs.FirstOrDefault(_ => _.Name == this.NewProject);
