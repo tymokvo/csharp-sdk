@@ -5,6 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Annotations** | **Dictionary&lt;string, string&gt;** | An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries. | [optional] 
 **Path** | **string** | Relative path to a folder. | 
 **Type** | **string** |  | [optional] [readonly] [default to "FolderReference"]
 

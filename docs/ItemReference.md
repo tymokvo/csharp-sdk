@@ -5,8 +5,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Variable** | **string** | The name of the looped item variable (use dot notation for nested json values) | [optional] 
+**Annotations** | **Dictionary&lt;string, string&gt;** | An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries. | [optional] 
 **Type** | **string** |  | [optional] [readonly] [default to "ItemReference"]
+**Variable** | **string** | The name of the looped item variable (use dot notation for nested json values) | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
