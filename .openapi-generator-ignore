@@ -21,16 +21,3 @@
 #docs/*.md
 # Then explicitly reverse the ignore rule for a single file:
 #!docs/README.md
-
-.travis.yml
-
-.gitignore
-
-build.bat
-build.sh
-git_push.sh
-mono_nunit_test.sh
-packages.config
-openapitools.json
-appveyor.yml
-packages.config
