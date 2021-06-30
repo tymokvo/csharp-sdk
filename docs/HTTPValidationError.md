@@ -1,11 +1,11 @@
 
-# PollinationSDK.Model.OpenAPIGenBaseModel
+# PollinationSDK.Model.HTTPValidationError
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Type** | **string** | A base class to use when there is no baseclass available to fall on. | [optional] [readonly] [default to "InvalidType"]
+**Detail** | [**List&lt;ValidationError&gt;**](ValidationError.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)

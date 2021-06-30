@@ -1,12 +1,11 @@
 
-# PollinationSDK.Model.InputReferenceBase
+# PollinationSDK.Model.BodyPostPluginOwnerPluginsPost
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Variable** | **string** | The name of the DAG input variable | 
-**Type** | **string** |  | [optional] [readonly] [default to "_InputReferenceBase"]
+**Package** | **System.IO.Stream** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models)
 [[Back to API list]](../README.md#documentation-for-api-endpoints)
