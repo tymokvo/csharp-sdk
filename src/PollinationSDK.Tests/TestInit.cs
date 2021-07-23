@@ -10,9 +10,12 @@ namespace PollinationSDK.Test
         [OneTimeSetUp]
         public void Init()
         {
+            var useDevelopmentServer = true;
             var key = string.Empty;
+
             // for local development tests, you must add Api key to ApiKey.txt
-            var keyPath = @"../../../ApiKey.txt";
+            var keyPath = useDevelopmentServer? @"../../../ApiKey.txt": @"../../../ApiKey_production.txt";
+
             if (System.IO.File.Exists(keyPath))
                 key = System.IO.File.ReadAllText(keyPath);
             else
@@ -21,10 +24,10 @@ namespace PollinationSDK.Test
 
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentException("Invalid Pollination ApiKey");
-            
+
 
             var apiAuthentication = key;
-            var task = System.Threading.Tasks.Task.Run(async () => await AuthHelper.SignInWithApiAuthAsync(apiAuthentication, null, devEnv: true));
+            var task = System.Threading.Tasks.Task.Run(async () => await AuthHelper.SignInWithApiAuthAsync(apiAuthentication, null, devEnv: useDevelopmentServer));
             task.Wait();
         }
     }
