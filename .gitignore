@@ -9,13 +9,15 @@ git_push.sh
 mono_nunit_test.sh
 .travis.yml
 packages.config
+openapitools.json
+.openapi-generator-ignore
 
 # User-specific files
 *.suo
 *.user
 *.sln.docstates
 ./nuget
-.vscode
+
 
 # Build results
 
@@ -28,7 +30,6 @@ build/
 .vs/
 node_modules/
 src/PollinationSDK.Test/
-PublishProfiles/
 
 # NuGet Packages
 *.nupkg
@@ -197,4 +198,3 @@ $RECYCLE.BIN/
 
 # Visual Studio 2014 CTP
 **/*.sln.ide
-src/PollinationSDK.Tests/Apikey.txt
