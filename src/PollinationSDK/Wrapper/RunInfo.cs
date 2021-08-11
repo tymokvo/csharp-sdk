@@ -30,8 +30,10 @@ namespace PollinationSDK.Wrapper
             this.Recipe = this.Run.Recipe;
         }
 
-        public RunInfo(string localRunPath)
+        public RunInfo(RecipeInterface recipe , string localRunPath)
         {
+            this.Run = new Run(localRunPath);
+            this.Recipe = recipe;
         }
 
         private static Run GetRun(Project proj, string runID)
@@ -50,7 +52,10 @@ namespace PollinationSDK.Wrapper
 
         public override string ToString()
         {
-            return $"CLOUD:{this.Project.Owner.Name}/{this.Project.Name}/{this.RunID}";
+            if (Guid.TryParse( this.RunID, out var res))
+                return $"CLOUD:{this.Project.Owner.Name}/{this.Project.Name}/{this.RunID}";
+            return $"LOCAL:{this.RunID}";
+
         }
 
 

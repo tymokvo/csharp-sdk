@@ -1,8 +1,12 @@
 using NUnit.Framework;
 using PollinationSDK.Api;
 using PollinationSDK.Client;
+using PollinationSDK.Wrapper;
 using RestSharp;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace PollinationSDK.Test
 {
@@ -10,7 +14,7 @@ namespace PollinationSDK.Test
     public class UtilityTests
     {
         [Test]
-        public void IsLadybugTest()
+        public void DownloadRecipeTest()
         {
             //public recipe
             var zipfile = Utilities.GetCompiledRecipe("ladybug-tools", "annual-daylight", "latest");
@@ -21,59 +25,52 @@ namespace PollinationSDK.Test
             Assert.IsTrue(System.IO.File.Exists(privatefile));
         }
 
-        //[Test]
-        //public void IsLadybugTest()
-        //{
-            
+        [Test]
+        public void GetLocalRecipeTest()
+        {
+            var recipeOwner = "ladybug-tools";
+            var recipeName = "annual-daylight";
+            var recipeApi = new RecipesApi();
+            var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest").Manifest;
 
-        //    //var signTask = AuthHelper.SignInAsync(devEnv: true);
-        //    //signTask.Wait();
-        //    //var config = Configuration.Default;
+            //public recipe
+            var recipeFolder = Utilities.GetLocalRecipe(recipeOwner, recipeName, rec.Metadata.Tag);
+            Assert.IsTrue(System.IO.Directory.GetFiles(recipeFolder).Any());
+        }
 
-        //    //var url = "https://utilities.pollination.cloud/to-luigi-archive";
-        //    //var url2 = "https://utilities.staging.pollination.cloud/luigi-archive";
-        //    //var url3 = "https://utilities.staging.pollination.cloud/luigi-archive?owner=ladybug-tools&name=annual-daylight&tag=latest";
+        [Test]
+        public void RunLocalTest()
+        {
 
+            var recipeOwner = "ladybug-tools";
+            var recipeName = "daylight-factor";
+            var recipeApi = new RecipesApi();
+            var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest").Manifest;
 
-        //    var request = new RestRequest(Method.GET);
-        //    var url = $"{Configuration.Default.BasePath}/luigi-archive";
-     
-        //    //request.AddParameter("owner", "ladybug-tools");
-        //    //request.AddParameter("name", "annual-daylight");
-        //    request.AddParameter("owner", "pollination");
-        //    request.AddParameter("name", "leed-daylight-illuminance");
-        //    request.AddParameter("tag", "latest");
-            
-        //    var client = new RestClient(url.ToString());
-        //    var response = client.Execute(request);
-        //    if (response.StatusCode != System.Net.HttpStatusCode.OK)
-        //    {
-              
-        //    }
+            var jobInfo = new JobInfo(rec);
 
+            var model = Path.GetFullPath(@"../../../TestSample/two_rooms.hbjson");
+            if (!File.Exists(model))
+                throw new ArgumentException("Input doesn't exist");
+            jobInfo.AddArgument(new JobPathArgument("model", new ProjectFolder(path: model)));
 
-        //    // prep file path
-        //    var saveAsDir = System.IO.Path.GetTempPath();
-        //    var fileName = "annual-daylight.zip";
-
-        //    System.IO.Directory.CreateDirectory(saveAsDir);
-        //    var file = System.IO.Path.Combine(saveAsDir, fileName);
-
-        //    var b = response.RawBytes;
-        //    System.IO.File.WriteAllBytes(file, b);
-
-        //    Assert.IsTrue(System.IO.File.Exists(file));
-        //    if (!System.IO.File.Exists(file))
-        //    {
-        //        //var e = new ArgumentException($"Failed to download {fileName}");
-        //        //Helper.Logger.Error(e, $"DownloadFromUrlAsync: error");
-        //        //throw e;
-                
-        //    }
-
-        //}
+            jobInfo.SetJobSubFolderPath("round1/test");
+            jobInfo.SetJobName("A new daylight simulation");
 
 
+            // run a job
+            var path = @"C:\Users\mingo\simulation";
+            var lbt = @"C:\Users\mingo\ladybug_tools";
+            Utilities.SetPaths(lbt);
+            var job = jobInfo.RunJobOnLocal(path, 5);
+
+
+            //Assert.IsTrue(!string.IsNullOrEmpty(ScheduledJob.CloudJob.Id));
+
+
+        }
+
+      
 
     }
 

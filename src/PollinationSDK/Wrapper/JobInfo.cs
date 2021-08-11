@@ -2,20 +2,25 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace PollinationSDK.Wrapper
 {
     public class JobInfo
     {
+        public string RecipeOwner { get; private set; }
         public RecipeInterface Recipe { get; private set; }
         public Job Job { get; private set; }
         public string SubFolderPath { get; private set; }
 
 
-        public JobInfo(RecipeInterface recpie)
+        public JobInfo( RecipeInterface recpie)
         {
-            //this.ProjectName = projName;
             this.Recipe = recpie;
+            //recpie.Source: https://api.staging.pollination.cloud/registries/ladybug-tools/recipe/annual-daylight/0.6.4
+            if (string.IsNullOrEmpty( recpie.Source))
+                throw new ArgumentException("Failed to find the source of recipe!");
+            this.RecipeOwner = recpie.Source.Split('/')?.Reverse()?.Take(4)?.LastOrDefault();
 
             this.Job = new Job(recpie.Source);
             this.Job.Arguments = new List<List<AnyOf<JobArgument, JobPathArgument>>>();
@@ -39,12 +44,12 @@ namespace PollinationSDK.Wrapper
             return FromJson(this.ToJson());
         }
 
-        //public RunInfo RunJobOnLocal(int cpuNum = 2)
-        //{
-        //    var runner = new JobRunner(this);
-        //    var projPath = runner.RunOnLocalMachine(cpuNum);
-        //    return new RunInfo(projPath);
-        //}
+        public RunInfo RunJobOnLocal(string workDir, int cpuNum = 2)
+        {
+            var runner = new JobRunner(this);
+            var projPath = runner.RunOnLocalMachine(workDir, cpuNum);
+            return new RunInfo(Recipe, projPath);
+        }
         public async Task<ScheduledJobInfo> RunJobOnCloud(Project proj, Action<string> progressReporting = default, System.Threading.CancellationToken token = default)
         {
             var runner = new JobRunner(this);

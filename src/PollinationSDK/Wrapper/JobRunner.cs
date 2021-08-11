@@ -141,67 +141,70 @@ namespace PollinationSDK.Wrapper
 
         }
 
-        public string RunOnLocalMachine(int cpuNum)
+
+        public string RunOnLocalMachine(string workFolder, int workerNum)
         {
+            if (string.IsNullOrEmpty(Utilities.LadybugToolRoot) || string.IsNullOrEmpty(Utilities.PythonRoot))
+                throw new ArgumentException("Missing some setting for local simulations, please use Utilities.SetPaths before running any local simulations");
 
-            //C:\Users\mingo\ladybug_tools\python\Scripts\queenbee luigi translate
-            //"C:\Users\mingo\ladybug_tools\resources\recipes\daylight-factor-baked.yaml"
-            //"D:\Test\queenbeeTest"
-            //- i "D:\Test\queenbeeTest\inputs.json"--workers 10--run
+            var workName = this.Job.Name ?? Guid.NewGuid().ToString().Substring(0, 5);
+            workName = new String(workName.Where(c => char.IsLetterOrDigit(c)).ToArray());
+         
+            var workDir = Path.Combine(workFolder, workName, this.JobInfo.SubFolderPath);
+            if (!Directory.Exists(workDir))
+                Directory.CreateDirectory(workDir);
 
-            var program = @"C:\Users\mingo\ladybug_tools\python\Scripts\queenbee.exe";
-            var recipe = @"C:\Users\mingo\ladybug_tools\resources\recipes\daylight-factor-baked.yaml";
-            var modelFile = @"D:\Test\queenbeeTest\model.hbjson";
-            var argsInputs = @"D:\Test\queenbeeTest\inputs.json";
-            var cpuNumber = cpuNum;
+            //var isDirNotEmpty = Directory.GetFiles(targetFolder).Any();
+            //if (isDirNotEmpty)
+            //{
+            //    var rs = Eto.Forms.MessageBox.Show($"Target folder [{targetFolder}] is not empty, do you want to write new results to this folder?", MessageBoxButtons.OKCancel, Eto.Forms.MessageBoxType.Question);
+            //    if (rs != DialogResult.Ok)
+            //        return;
+            //}
 
-            var tempProjectFolder = Path.Combine(Path.GetTempPath(), "Queenbee", "localRun"); // @"D:\Test\queenbeeTest";
-            if (Directory.Exists(tempProjectFolder))
-                Directory.Delete(tempProjectFolder, true);
-            Directory.CreateDirectory(tempProjectFolder);
-            //Copy model file
-            File.Copy(modelFile, Path.Combine(tempProjectFolder, "model.hbjson"));
+            var recipeOwner = this.JobInfo.RecipeOwner;
+            var recipeName = this.JobInfo.Recipe.Metadata.Name;
+            var recipeTag = this.JobInfo.Recipe.Metadata.Tag;
 
-            var args = $"luigi translate {recipe} {tempProjectFolder} -i {argsInputs} --workers {cpuNumber} --run";
-            var command = $"{program} {args}";
+            var localArgs = this.Job.Arguments.Select(_ => new LocalRunArguments(_));
+            var localArg = localArgs.FirstOrDefault(); //TODO: ignore parametric runs for now
+        
+            //localArg.Validate(userRecipe);
+            var inputJson = localArg.SaveToPath(workDir); //save args to input.json file
 
-            RunCommand(program, tempProjectFolder, command);
-
-            return command;
-
-        }
-
-        private void RunCommand(string program, string workingDir, string arg)
-        {
+            // run the bat file
             try
             {
-                var exeProcess = new Process()
-                {
-                    StartInfo = new ProcessStartInfo()
-                    {
-                        CreateNoWindow = false,
-                        UseShellExecute = true,
-                        FileName = "cmd",
-                        WorkingDirectory = workingDir,
-                        //RedirectStandardError = true,
-                        //RedirectStandardOutput = true,
-                        Arguments = "/c " + arg,
-                    },
-                    EnableRaisingEvents = true
+                var program = Utilities.IsMac ? Path.Combine(Utilities.PythonRoot, "bin", "queenbee") : Path.Combine(Utilities.PythonRoot, "Scripts", "queenbee");
 
-                };
-                exeProcess.Start();
-                exeProcess.WaitForExit();
-                string result = exeProcess.StandardOutput.ReadToEnd();
+                var recipeDir = Utilities.GetLocalRecipe(recipeOwner, recipeName, recipeTag);
+      
+                var name = workName;
+                var inputJons = inputJson;
+                var workerNumber = workerNum;
+                var envArg = Utilities.GetEnvArgForRadiance();
+
+                var arguments = $"local run \"{recipeDir}\" \"{workDir}\" -n \"{name}\" -i \"{inputJons}\" -w {workerNumber} {envArg}";
+                var runFile = Utilities.IsMac ? "run.sh" : "run.bat";
+                var scriptFile = Path.Combine(workDir, runFile);
+                var script = $"{program} {arguments}";
+                script = Utilities.IsMac ? script : $"{script}{Environment.NewLine}PAUSE";
+                File.WriteAllText(scriptFile, script);
+
+                // dealing with both windows and mac
+                Helper.RunScriptFile(scriptFile);
             }
-            catch (System.Exception objException)
+            catch (Exception ex)
             {
-                // Log the exception
+                Helper.Logger.Error(ex, $"Failed to run simulations locally");
+                throw ex;
             }
 
+            return workDir;
         }
 
-        
+
+
         private static string CheckRecipeInProject(string recipeSource, Project project)
         {
             var found = Helper.GetRecipeFromRecipeSourceURL(recipeSource, out var recOwner, out var recName, out var recVersion);

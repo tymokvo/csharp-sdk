@@ -431,5 +431,53 @@ namespace PollinationSDK
         }
 
 
+        /// <summary>
+        /// Execute *.sh file on Mac or *.bat on Windows
+        /// </summary>
+        /// <param name="scriptFile"></param>
+        public static void RunScriptFile(string scriptFile)
+        {
+            if (!Utilities.IsMac)
+            {
+                //Windows
+                System.Diagnostics.Process.Start(scriptFile);
+            }
+            else //Mac
+            {
+                var chmod = new System.Diagnostics.Process
+                {
+                    StartInfo = {
+                        FileName = @"/bin/bash",
+                        Arguments = string.Format("-c \"chmod 777 {0}\"", scriptFile),
+                        UseShellExecute = false,
+                        CreateNoWindow = true
+                    }
+                };
+
+                chmod.Start();
+                chmod.WaitForExit();
+
+                //Catalina and Big Sur.
+                var terminalMac = @"/System/Applications/Utilities/Terminal.app/Contents/MacOS/Terminal";
+                // old mac os
+                terminalMac = File.Exists(terminalMac) ? terminalMac : @"/Applications/Utilities/Terminal.app/Contents/MacOS/Terminal";
+
+                var uploadProc = new System.Diagnostics.Process
+                {
+                    StartInfo = {
+                        FileName = terminalMac,
+                        Arguments = scriptFile,
+                        UseShellExecute = false,
+                        CreateNoWindow = false,
+                        WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal
+                    }
+                };
+
+                uploadProc.Start();
+            }
+
+        }
+
+
     }
 }
