@@ -238,6 +238,47 @@ namespace PollinationSDK.Test
         }
 
         [Test]
+        public void DownloadBigAssetTest()
+        {
+            //var owner = "abrahamyezioro";
+            //var projName = "demo";
+            //var instance = new ProjectsApi();
+            //var proj = instance.GetProject(owner, projName);
+
+
+            //var runApi = new Api.RunsApi();
+            //// energy simu
+            //var runId = "1a12e860-a081-5622-a1e9-e5b2506ab181";
+            //var run = runApi.GetRun(owner, projName, runId);
+            //var runInfo = new RunInfo(proj, run);
+
+
+            //var assets = runInfo.GetOutputAssets("grasshopper").OfType<RunAssetBase>().ToList();
+       
+            //var task = runInfo.DownloadRunAssetsAsync(assets, useCached: false);
+            //var downloaded = task.Result;
+           
+
+            //foreach (var savedAsset in downloaded)
+            //{
+            //    var item = savedAsset;
+
+            //    if (item.IsDownloadable())
+            //    {
+            //        Console.WriteLine($"Is Saved {item.Name}:{item.IsSaved()} to {item.LocalPath}");
+            //        Assert.IsTrue(item.IsSaved());
+            //    }
+            //    else
+            //    {
+            //        var v = string.Join(",", item.Value);
+            //        Console.WriteLine($"Value {item.Name}: {v}");
+            //        Assert.IsTrue(!string.IsNullOrEmpty(v));
+            //    }
+            //}
+
+        }
+
+        [Test]
         public void RunInputsTest()
         {
             var response = api.ListJobs(Helper.CurrentUser.Username, "demo");
