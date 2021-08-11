@@ -147,10 +147,12 @@ namespace PollinationSDK.Wrapper
             if (string.IsNullOrEmpty(Utilities.LadybugToolRoot) || string.IsNullOrEmpty(Utilities.PythonRoot))
                 throw new ArgumentException("Missing some setting for local simulations, please use Utilities.SetPaths before running any local simulations");
 
-            var workName = this.Job.Name ?? Guid.NewGuid().ToString().Substring(0, 5);
+            var workName = this.Job.Name ?? "Unnamed";
             workName = new String(workName.Where(c => char.IsLetterOrDigit(c)).ToArray());
          
-            var workDir = Path.Combine(workFolder, workName, this.JobInfo.SubFolderPath);
+            var workDir = Path.Combine(workFolder, workName);
+            if (!string.IsNullOrEmpty( this.JobInfo.SubFolderPath))
+                workDir = Path.Combine(workDir, this.JobInfo.SubFolderPath);
             if (!Directory.Exists(workDir))
                 Directory.CreateDirectory(workDir);
 
@@ -170,7 +172,7 @@ namespace PollinationSDK.Wrapper
             var localArg = localArgs.FirstOrDefault(); //TODO: ignore parametric runs for now
         
             //localArg.Validate(userRecipe);
-            var inputJson = localArg.SaveToPath(workDir); //save args to input.json file
+            var inputJson = localArg.SaveToFolder(workDir); //save args to input.json file
 
             // run the bat file
             try
@@ -188,7 +190,7 @@ namespace PollinationSDK.Wrapper
                 var runFile = Utilities.IsMac ? "run.sh" : "run.bat";
                 var scriptFile = Path.Combine(workDir, runFile);
                 var script = $"{program} {arguments}";
-                script = Utilities.IsMac ? script : $"{script}{Environment.NewLine}PAUSE";
+                //script = Utilities.IsMac ? script : $"{script}{Environment.NewLine}PAUSE";
                 File.WriteAllText(scriptFile, script);
 
                 // dealing with both windows and mac
