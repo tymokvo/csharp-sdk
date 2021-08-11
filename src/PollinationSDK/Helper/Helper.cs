@@ -440,7 +440,8 @@ namespace PollinationSDK
             if (!Utilities.IsMac)
             {
                 //Windows
-                System.Diagnostics.Process.Start(scriptFile);
+                var p = System.Diagnostics.Process.Start(scriptFile);
+                p.WaitForExit();
             }
             else //Mac
             {
@@ -462,7 +463,7 @@ namespace PollinationSDK
                 // old mac os
                 terminalMac = File.Exists(terminalMac) ? terminalMac : @"/Applications/Utilities/Terminal.app/Contents/MacOS/Terminal";
 
-                var uploadProc = new System.Diagnostics.Process
+                var p = new System.Diagnostics.Process
                 {
                     StartInfo = {
                         FileName = terminalMac,
@@ -473,7 +474,8 @@ namespace PollinationSDK
                     }
                 };
 
-                uploadProc.Start();
+                p.Start();
+                p.WaitForExit();
             }
 
         }
