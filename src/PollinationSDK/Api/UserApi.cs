@@ -28,7 +28,7 @@ namespace PollinationSDK.Api
         /// Register a new user
         /// </summary>
         /// <remarks>
-        /// Create a new org.
+        /// Create a new user.
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="userCreate"></param>
@@ -39,7 +39,7 @@ namespace PollinationSDK.Api
         /// Register a new user
         /// </summary>
         /// <remarks>
-        /// Create a new org.
+        /// Create a new user.
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="userCreate"></param>
@@ -110,7 +110,7 @@ namespace PollinationSDK.Api
         /// Register a new user
         /// </summary>
         /// <remarks>
-        /// Create a new org.
+        /// Create a new user.
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="userCreate"></param>
@@ -122,7 +122,7 @@ namespace PollinationSDK.Api
         /// Register a new user
         /// </summary>
         /// <remarks>
-        /// Create a new org.
+        /// Create a new user.
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="userCreate"></param>
@@ -274,7 +274,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Register a new user Create a new org.
+        /// Register a new user Create a new user.
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="userCreate"></param>
@@ -286,7 +286,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Register a new user Create a new org.
+        /// Register a new user Create a new user.
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="userCreate"></param>
@@ -328,6 +328,12 @@ namespace PollinationSDK.Api
                 localVarPostBody = userCreate; // byte array
             }
 
+            // authentication (JWTAuth) required
+            // http beerer authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
 
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) this.Configuration.ApiClient.CallApi(localVarPath,
@@ -348,7 +354,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Register a new user Create a new org.
+        /// Register a new user Create a new user.
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="userCreate"></param>
@@ -362,7 +368,7 @@ namespace PollinationSDK.Api
         }
 
         /// <summary>
-        /// Register a new user Create a new org.
+        /// Register a new user Create a new user.
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="userCreate"></param>
@@ -405,6 +411,12 @@ namespace PollinationSDK.Api
                 localVarPostBody = userCreate; // byte array
             }
 
+            // authentication (JWTAuth) required
+            // http bearer authentication required
+            if (!String.IsNullOrEmpty(this.Configuration.AccessToken))
+            {
+                localVarHeaderParams["Authorization"] = "Bearer " + this.Configuration.AccessToken;
+            }
 
             // make the HTTP request
             IRestResponse localVarResponse = (IRestResponse) await this.Configuration.ApiClient.CallApiAsync(localVarPath,

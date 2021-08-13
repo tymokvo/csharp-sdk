@@ -652,7 +652,7 @@ Name | Type | Description  | Notes
 
 ## ListPluginTags
 
-> PluginPackageList ListPluginTags (string owner, string name, int? page = null, int? perPage = null)
+> PluginPackageList ListPluginTags (string owner, string name, PackageSortKey sortBy = null, SortEnum sortOrder = null, int? page = null, int? perPage = null)
 
 Get a plugin tags
 
@@ -684,13 +684,15 @@ namespace Example
             var apiInstance = new PluginsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
+            var sortBy = new PackageSortKey(); // PackageSortKey | Key to sort the list by (optional) 
+            var sortOrder = new SortEnum(); // SortEnum | The order to sort the list (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
                 // Get a plugin tags
-                PluginPackageList result = apiInstance.ListPluginTags(owner, name, page, perPage);
+                PluginPackageList result = apiInstance.ListPluginTags(owner, name, sortBy, sortOrder, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -711,6 +713,8 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
+ **sortBy** | [**PackageSortKey**](PackageSortKey.md)| Key to sort the list by | [optional] 
+ **sortOrder** | [**SortEnum**](SortEnum.md)| The order to sort the list | [optional] 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
  **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
@@ -745,7 +749,7 @@ Name | Type | Description  | Notes
 
 ## ListPlugins
 
-> RepositoryList ListPlugins (List<string> search = null, List<string> name = null, List<string> owner = null, bool? _public = null, List<string> keyword = null, List<string> permission = null, int? page = null, int? perPage = null)
+> RepositoryList ListPlugins (List<string> search = null, List<string> name = null, List<string> owner = null, bool? _public = null, List<string> keyword = null, List<string> permission = null, RepositorySortKey sortBy = null, SortEnum sortOrder = null, int? page = null, int? perPage = null)
 
 List plugins
 
@@ -779,13 +783,15 @@ namespace Example
             var _public = true;  // bool? | Boolean check for public/private projects (optional) 
             var keyword = new List<string>(); // List<string> | A keyword to index the repository by (optional) 
             var permission = new List<string>(); // List<string> | Filter by permission on given resource (optional) 
+            var sortBy = new RepositorySortKey(); // RepositorySortKey | Key to sort the list by (optional) 
+            var sortOrder = new SortEnum(); // SortEnum | The order to sort the list (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
                 // List plugins
-                RepositoryList result = apiInstance.ListPlugins(search, name, owner, _public, keyword, permission, page, perPage);
+                RepositoryList result = apiInstance.ListPlugins(search, name, owner, _public, keyword, permission, sortBy, sortOrder, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -810,6 +816,8 @@ Name | Type | Description  | Notes
  **_public** | **bool?**| Boolean check for public/private projects | [optional] 
  **keyword** | [**List&lt;string&gt;**](string.md)| A keyword to index the repository by | [optional] 
  **permission** | [**List&lt;string&gt;**](string.md)| Filter by permission on given resource | [optional] 
+ **sortBy** | [**RepositorySortKey**](RepositorySortKey.md)| Key to sort the list by | [optional] 
+ **sortOrder** | [**SortEnum**](SortEnum.md)| The order to sort the list | [optional] 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
  **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 

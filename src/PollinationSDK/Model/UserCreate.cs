@@ -43,23 +43,17 @@ namespace PollinationSDK
         /// Initializes a new instance of the <see cref="UserCreate" /> class.
         /// </summary>
         /// <param name="username">The unique name of the user in small case without spaces (required).</param>
-        /// <param name="email">The contact email for the Organization (required).</param>
-        /// <param name="password">A password for this new user to authenticate with (required).</param>
         /// <param name="name">The display name for this user (required).</param>
         /// <param name="pictureUrl">URL to the picture associated with this user (required).</param>
         /// <param name="description">A description of the user (default to &quot;&quot;).</param>
         public UserCreate
         (
-            string name, string pictureUrl, string username, string email, string password, // Required parameters
+            string name, string pictureUrl, string username, // Required parameters
             string description = "" // Optional parameters
         ) : base(name: name, pictureUrl: pictureUrl, description: description)// BaseClass
         {
             // to ensure "username" is required (not null)
             this.Username = username ?? throw new ArgumentNullException("username is a required property for UserCreate and cannot be null");
-            // to ensure "email" is required (not null)
-            this.Email = email ?? throw new ArgumentNullException("email is a required property for UserCreate and cannot be null");
-            // to ensure "password" is required (not null)
-            this.Password = password ?? throw new ArgumentNullException("password is a required property for UserCreate and cannot be null");
 
             // Set non-required readonly properties with defaultValue
             this.Type = "UserCreate";
@@ -78,18 +72,6 @@ namespace PollinationSDK
         /// <value>The unique name of the user in small case without spaces</value>
         [DataMember(Name = "username", IsRequired = true, EmitDefaultValue = false)]
         public string Username { get; set; } 
-        /// <summary>
-        /// The contact email for the Organization
-        /// </summary>
-        /// <value>The contact email for the Organization</value>
-        [DataMember(Name = "email", IsRequired = true, EmitDefaultValue = false)]
-        public string Email { get; set; } 
-        /// <summary>
-        /// A password for this new user to authenticate with
-        /// </summary>
-        /// <value>A password for this new user to authenticate with</value>
-        [DataMember(Name = "password", IsRequired = true, EmitDefaultValue = false)]
-        public string Password { get; set; } 
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -116,8 +98,6 @@ namespace PollinationSDK
             sb.Append("  PictureUrl: ").Append(PictureUrl).Append("\n");
             sb.Append("  Description: ").Append(Description).Append("\n");
             sb.Append("  Username: ").Append(Username).Append("\n");
-            sb.Append("  Email: ").Append(Email).Append("\n");
-            sb.Append("  Password: ").Append(Password).Append("\n");
             return sb.ToString();
         }
   
@@ -187,16 +167,6 @@ namespace PollinationSDK
                     this.Username.Equals(input.Username))
                 ) && base.Equals(input) && 
                 (
-                    this.Email == input.Email ||
-                    (this.Email != null &&
-                    this.Email.Equals(input.Email))
-                ) && base.Equals(input) && 
-                (
-                    this.Password == input.Password ||
-                    (this.Password != null &&
-                    this.Password.Equals(input.Password))
-                ) && base.Equals(input) && 
-                (
                     this.Type == input.Type ||
                     (this.Type != null &&
                     this.Type.Equals(input.Type))
@@ -214,10 +184,6 @@ namespace PollinationSDK
                 int hashCode = base.GetHashCode();
                 if (this.Username != null)
                     hashCode = hashCode * 59 + this.Username.GetHashCode();
-                if (this.Email != null)
-                    hashCode = hashCode * 59 + this.Email.GetHashCode();
-                if (this.Password != null)
-                    hashCode = hashCode * 59 + this.Password.GetHashCode();
                 if (this.Type != null)
                     hashCode = hashCode * 59 + this.Type.GetHashCode();
                 return hashCode;

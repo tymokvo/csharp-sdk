@@ -17,7 +17,7 @@ Method | HTTP request | Description
 
 Register a new user
 
-Create a new org.
+Create a new user.
 
 ### Example
 
@@ -35,6 +35,9 @@ namespace Example
         public static void Main()
         {
             Configuration.Default.BasePath = "http://localhost";
+            // Configure HTTP bearer authorization: JWTAuth
+            Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
+
             var apiInstance = new UserApi(Configuration.Default);
             var userCreate = new UserCreate(); // UserCreate | 
 
@@ -68,7 +71,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[JWTAuth](../README.md#JWTAuth)
 
 ### HTTP request headers
 

@@ -727,7 +727,7 @@ Name | Type | Description  | Notes
 
 ## GetProjectRecipes
 
-> RecipeInterfaceList GetProjectRecipes (string owner, string name, int? page = null, int? perPage = null)
+> RecipeInterfaceList GetProjectRecipes (string owner, string name, string search = null, int? page = null, int? perPage = null)
 
 Get project recipes
 
@@ -757,13 +757,14 @@ namespace Example
             var apiInstance = new ProjectsApi(Configuration.Default);
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
+            var search = search_example;  // string | Search string to find recipes (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
                 // Get project recipes
-                RecipeInterfaceList result = apiInstance.GetProjectRecipes(owner, name, page, perPage);
+                RecipeInterfaceList result = apiInstance.GetProjectRecipes(owner, name, search, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -784,6 +785,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **owner** | **string**|  | 
  **name** | **string**|  | 
+ **search** | **string**| Search string to find recipes | [optional] 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
  **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
@@ -817,7 +819,7 @@ Name | Type | Description  | Notes
 
 ## ListProjects
 
-> ProjectList ListProjects (string search = null, List<string> ids = null, List<string> names = null, List<string> owner = null, bool? _public = null, List<string> permissions = null, int? page = null, int? perPage = null)
+> ProjectList ListProjects (string search = null, List<string> ids = null, List<string> names = null, List<string> owner = null, bool? _public = null, List<string> permissions = null, ProjectSortKey sortBy = null, SortEnum sortOrder = null, int? page = null, int? perPage = null)
 
 List Projects
 
@@ -845,19 +847,21 @@ namespace Example
             Configuration.Default.AccessToken = "YOUR_ACCESS_TOKEN";
 
             var apiInstance = new ProjectsApi(Configuration.Default);
-            var search = search_example;  // string | Search string to find accounts (optional) 
+            var search = search_example;  // string | Search string to find projects (optional) 
             var ids = new List<string>(); // List<string> | The ID of a project to search for (optional) 
             var names = new List<string>(); // List<string> | The name of the project (optional) 
             var owner = new List<string>(); // List<string> | Owner of the project (optional) 
             var _public = true;  // bool? | Boolean check for public/private projects (optional) 
             var permissions = new List<string>(); // List<string> | Filter by permission on given resource (optional) 
+            var sortBy = new ProjectSortKey(); // ProjectSortKey | Key to sort the list by (optional) 
+            var sortOrder = new SortEnum(); // SortEnum | The order to sort the list (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
             try
             {
                 // List Projects
-                ProjectList result = apiInstance.ListProjects(search, ids, names, owner, _public, permissions, page, perPage);
+                ProjectList result = apiInstance.ListProjects(search, ids, names, owner, _public, permissions, sortBy, sortOrder, page, perPage);
                 Debug.WriteLine(result);
             }
             catch (ApiException e)
@@ -876,12 +880,14 @@ namespace Example
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **search** | **string**| Search string to find accounts | [optional] 
+ **search** | **string**| Search string to find projects | [optional] 
  **ids** | [**List&lt;string&gt;**](string.md)| The ID of a project to search for | [optional] 
  **names** | [**List&lt;string&gt;**](string.md)| The name of the project | [optional] 
  **owner** | [**List&lt;string&gt;**](string.md)| Owner of the project | [optional] 
  **_public** | **bool?**| Boolean check for public/private projects | [optional] 
  **permissions** | [**List&lt;string&gt;**](string.md)| Filter by permission on given resource | [optional] 
+ **sortBy** | [**ProjectSortKey**](ProjectSortKey.md)| Key to sort the list by | [optional] 
+ **sortOrder** | [**SortEnum**](SortEnum.md)| The order to sort the list | [optional] 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
  **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 

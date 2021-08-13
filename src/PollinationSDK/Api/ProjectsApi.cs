@@ -235,10 +235,11 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="search">Search string to find recipes (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>RecipeInterfaceList</returns>
-        RecipeInterfaceList GetProjectRecipes (string owner, string name, int? page = default, int? perPage = default);
+        RecipeInterfaceList GetProjectRecipes (string owner, string name, string search = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// Get project recipes
@@ -249,10 +250,11 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="search">Search string to find recipes (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of RecipeInterfaceList</returns>
-        ApiResponse<RecipeInterfaceList> GetProjectRecipesWithHttpInfo (string owner, string name, int? page = default, int? perPage = default);
+        ApiResponse<RecipeInterfaceList> GetProjectRecipesWithHttpInfo (string owner, string name, string search = default, int? page = default, int? perPage = default);
         /// <summary>
         /// List Projects
         /// </summary>
@@ -260,16 +262,18 @@ namespace PollinationSDK.Api
         /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="search">Search string to find accounts (optional)</param>
+        /// <param name="search">Search string to find projects (optional)</param>
         /// <param name="ids">The ID of a project to search for (optional)</param>
         /// <param name="names">The name of the project (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="permissions">Filter by permission on given resource (optional)</param>
+        /// <param name="sortBy">Key to sort the list by (optional)</param>
+        /// <param name="sortOrder">The order to sort the list (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ProjectList</returns>
-        ProjectList ListProjects (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, int? page = default, int? perPage = default);
+        ProjectList ListProjects (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// List Projects
@@ -278,16 +282,18 @@ namespace PollinationSDK.Api
         /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="search">Search string to find accounts (optional)</param>
+        /// <param name="search">Search string to find projects (optional)</param>
         /// <param name="ids">The ID of a project to search for (optional)</param>
         /// <param name="names">The name of the project (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="permissions">Filter by permission on given resource (optional)</param>
+        /// <param name="sortBy">Key to sort the list by (optional)</param>
+        /// <param name="sortOrder">The order to sort the list (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of ProjectList</returns>
-        ApiResponse<ProjectList> ListProjectsWithHttpInfo (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, int? page = default, int? perPage = default);
+        ApiResponse<ProjectList> ListProjectsWithHttpInfo (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default);
         /// <summary>
         /// Update a Project
         /// </summary>
@@ -567,11 +573,12 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="search">Search string to find recipes (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of RecipeInterfaceList</returns>
-        System.Threading.Tasks.Task<RecipeInterfaceList> GetProjectRecipesAsync (string owner, string name, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<RecipeInterfaceList> GetProjectRecipesAsync (string owner, string name, string search = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get project recipes
@@ -582,11 +589,12 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="search">Search string to find recipes (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (RecipeInterfaceList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<RecipeInterfaceList>> GetProjectRecipesWithHttpInfoAsync (string owner, string name, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<RecipeInterfaceList>> GetProjectRecipesWithHttpInfoAsync (string owner, string name, string search = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List Projects
         /// </summary>
@@ -594,17 +602,19 @@ namespace PollinationSDK.Api
         /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="search">Search string to find accounts (optional)</param>
+        /// <param name="search">Search string to find projects (optional)</param>
         /// <param name="ids">The ID of a project to search for (optional)</param>
         /// <param name="names">The name of the project (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="permissions">Filter by permission on given resource (optional)</param>
+        /// <param name="sortBy">Key to sort the list by (optional)</param>
+        /// <param name="sortOrder">The order to sort the list (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ProjectList</returns>
-        System.Threading.Tasks.Task<ProjectList> ListProjectsAsync (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ProjectList> ListProjectsAsync (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List Projects
@@ -613,17 +623,19 @@ namespace PollinationSDK.Api
         /// 
         /// </remarks>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="search">Search string to find accounts (optional)</param>
+        /// <param name="search">Search string to find projects (optional)</param>
         /// <param name="ids">The ID of a project to search for (optional)</param>
         /// <param name="names">The name of the project (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="permissions">Filter by permission on given resource (optional)</param>
+        /// <param name="sortBy">Key to sort the list by (optional)</param>
+        /// <param name="sortOrder">The order to sort the list (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (ProjectList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ProjectList>> ListProjectsWithHttpInfoAsync (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<ProjectList>> ListProjectsWithHttpInfoAsync (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update a Project
         /// </summary>
@@ -2245,12 +2257,13 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="search">Search string to find recipes (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>RecipeInterfaceList</returns>
-        public RecipeInterfaceList GetProjectRecipes (string owner, string name, int? page = default, int? perPage = default)
+        public RecipeInterfaceList GetProjectRecipes (string owner, string name, string search = default, int? page = default, int? perPage = default)
         {
-             ApiResponse<RecipeInterfaceList> localVarResponse = GetProjectRecipesWithHttpInfo(owner, name, page, perPage);
+             ApiResponse<RecipeInterfaceList> localVarResponse = GetProjectRecipesWithHttpInfo(owner, name, search, page, perPage);
              return localVarResponse.Data;
         }
 
@@ -2260,10 +2273,11 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="search">Search string to find recipes (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of RecipeInterfaceList</returns>
-        public ApiResponse<RecipeInterfaceList> GetProjectRecipesWithHttpInfo (string owner, string name, int? page = default, int? perPage = default)
+        public ApiResponse<RecipeInterfaceList> GetProjectRecipesWithHttpInfo (string owner, string name, string search = default, int? page = default, int? perPage = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2295,6 +2309,7 @@ namespace PollinationSDK.Api
 
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
+            if (search != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "search", search)); // query parameter
             if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
             if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
@@ -2334,13 +2349,14 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="search">Search string to find recipes (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of RecipeInterfaceList</returns>
-        public async System.Threading.Tasks.Task<RecipeInterfaceList> GetProjectRecipesAsync (string owner, string name, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<RecipeInterfaceList> GetProjectRecipesAsync (string owner, string name, string search = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<RecipeInterfaceList> localVarResponse = await GetProjectRecipesWithHttpInfoAsync(owner, name, page, perPage, cancellationToken);
+             ApiResponse<RecipeInterfaceList> localVarResponse = await GetProjectRecipesWithHttpInfoAsync(owner, name, search, page, perPage, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -2351,11 +2367,12 @@ namespace PollinationSDK.Api
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
         /// <param name="owner"></param>
         /// <param name="name"></param>
+        /// <param name="search">Search string to find recipes (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (RecipeInterfaceList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<RecipeInterfaceList>> GetProjectRecipesWithHttpInfoAsync (string owner, string name, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<RecipeInterfaceList>> GetProjectRecipesWithHttpInfoAsync (string owner, string name, string search = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2387,6 +2404,7 @@ namespace PollinationSDK.Api
 
             if (owner != null) localVarPathParams.Add("owner", this.Configuration.ApiClient.ParameterToString(owner)); // path parameter
             if (name != null) localVarPathParams.Add("name", this.Configuration.ApiClient.ParameterToString(name)); // path parameter
+            if (search != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "search", search)); // query parameter
             if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
             if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
@@ -2424,18 +2442,20 @@ namespace PollinationSDK.Api
         /// List Projects 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="search">Search string to find accounts (optional)</param>
+        /// <param name="search">Search string to find projects (optional)</param>
         /// <param name="ids">The ID of a project to search for (optional)</param>
         /// <param name="names">The name of the project (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="permissions">Filter by permission on given resource (optional)</param>
+        /// <param name="sortBy">Key to sort the list by (optional)</param>
+        /// <param name="sortOrder">The order to sort the list (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ProjectList</returns>
-        public ProjectList ListProjects (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, int? page = default, int? perPage = default)
+        public ProjectList ListProjects (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default)
         {
-             ApiResponse<ProjectList> localVarResponse = ListProjectsWithHttpInfo(search, ids, names, owner, _public, permissions, page, perPage);
+             ApiResponse<ProjectList> localVarResponse = ListProjectsWithHttpInfo(search, ids, names, owner, _public, permissions, sortBy, sortOrder, page, perPage);
              return localVarResponse.Data;
         }
 
@@ -2443,16 +2463,18 @@ namespace PollinationSDK.Api
         /// List Projects 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="search">Search string to find accounts (optional)</param>
+        /// <param name="search">Search string to find projects (optional)</param>
         /// <param name="ids">The ID of a project to search for (optional)</param>
         /// <param name="names">The name of the project (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="permissions">Filter by permission on given resource (optional)</param>
+        /// <param name="sortBy">Key to sort the list by (optional)</param>
+        /// <param name="sortOrder">The order to sort the list (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of ProjectList</returns>
-        public ApiResponse<ProjectList> ListProjectsWithHttpInfo (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, int? page = default, int? perPage = default)
+        public ApiResponse<ProjectList> ListProjectsWithHttpInfo (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default)
         {
 
             var localVarPath = "/projects";
@@ -2482,6 +2504,8 @@ namespace PollinationSDK.Api
             if (owner != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "owner", owner)); // query parameter
             if (_public != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "public", _public)); // query parameter
             if (permissions != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "permissions", permissions)); // query parameter
+            if (sortBy != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "sort_by", sortBy)); // query parameter
+            if (sortOrder != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "sort_order", sortOrder)); // query parameter
             if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
             if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 
@@ -2519,19 +2543,21 @@ namespace PollinationSDK.Api
         /// List Projects 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="search">Search string to find accounts (optional)</param>
+        /// <param name="search">Search string to find projects (optional)</param>
         /// <param name="ids">The ID of a project to search for (optional)</param>
         /// <param name="names">The name of the project (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="permissions">Filter by permission on given resource (optional)</param>
+        /// <param name="sortBy">Key to sort the list by (optional)</param>
+        /// <param name="sortOrder">The order to sort the list (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ProjectList</returns>
-        public async System.Threading.Tasks.Task<ProjectList> ListProjectsAsync (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ProjectList> ListProjectsAsync (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
-             ApiResponse<ProjectList> localVarResponse = await ListProjectsWithHttpInfoAsync(search, ids, names, owner, _public, permissions, page, perPage, cancellationToken);
+             ApiResponse<ProjectList> localVarResponse = await ListProjectsWithHttpInfoAsync(search, ids, names, owner, _public, permissions, sortBy, sortOrder, page, perPage, cancellationToken);
              return localVarResponse.Data;
 
         }
@@ -2540,17 +2566,19 @@ namespace PollinationSDK.Api
         /// List Projects 
         /// </summary>
         /// <exception cref="PollinationSDK.Client.ApiException">Thrown when fails to make API call</exception>
-        /// <param name="search">Search string to find accounts (optional)</param>
+        /// <param name="search">Search string to find projects (optional)</param>
         /// <param name="ids">The ID of a project to search for (optional)</param>
         /// <param name="names">The name of the project (optional)</param>
         /// <param name="owner">Owner of the project (optional)</param>
         /// <param name="_public">Boolean check for public/private projects (optional)</param>
         /// <param name="permissions">Filter by permission on given resource (optional)</param>
+        /// <param name="sortBy">Key to sort the list by (optional)</param>
+        /// <param name="sortOrder">The order to sort the list (optional)</param>
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (ProjectList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<ProjectList>> ListProjectsWithHttpInfoAsync (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<ProjectList>> ListProjectsWithHttpInfoAsync (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
 
             var localVarPath = "/projects";
@@ -2580,6 +2608,8 @@ namespace PollinationSDK.Api
             if (owner != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "owner", owner)); // query parameter
             if (_public != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "public", _public)); // query parameter
             if (permissions != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("multi", "permissions", permissions)); // query parameter
+            if (sortBy != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "sort_by", sortBy)); // query parameter
+            if (sortOrder != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "sort_order", sortOrder)); // query parameter
             if (page != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "page", page)); // query parameter
             if (perPage != null) localVarQueryParams.AddRange(this.Configuration.ApiClient.ParameterToKeyValuePairs("", "per-page", perPage)); // query parameter
 

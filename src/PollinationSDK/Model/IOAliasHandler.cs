@@ -46,10 +46,11 @@ namespace PollinationSDK
         /// <param name="module">Target module or namespace to load the alias function. (required).</param>
         /// <param name="function">Name of the function. The input value will be passed to this function as the first argument. (required).</param>
         /// <param name="annotations">An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries..</param>
+        /// <param name="index">An integer to set the index for the order of execution. This input is only useful when there are more than one handler for the same platform and the output of one handler should be passed to another handler. This is also called chained handlers. By default all the handlers are indexed as 0 assuming they are not chained. (default to 0).</param>
         public IOAliasHandler
         (
            string language, string module, string function, // Required parameters
-           Dictionary<string, string> annotations= default// Optional parameters
+           Dictionary<string, string> annotations= default, int index = 0// Optional parameters
         ) : base()// BaseClass
         {
             // to ensure "language" is required (not null)
@@ -59,6 +60,7 @@ namespace PollinationSDK
             // to ensure "function" is required (not null)
             this.Function = function ?? throw new ArgumentNullException("function is a required property for IOAliasHandler and cannot be null");
             this.Annotations = annotations;
+            this.Index = index;
 
             // Set non-required readonly properties with defaultValue
             this.Type = "IOAliasHandler";
@@ -95,6 +97,12 @@ namespace PollinationSDK
         /// <value>An optional dictionary to add annotations to inputs. These annotations will be used by the client side libraries.</value>
         [DataMember(Name = "annotations", EmitDefaultValue = false)]
         public Dictionary<string, string> Annotations { get; set; } 
+        /// <summary>
+        /// An integer to set the index for the order of execution. This input is only useful when there are more than one handler for the same platform and the output of one handler should be passed to another handler. This is also called chained handlers. By default all the handlers are indexed as 0 assuming they are not chained.
+        /// </summary>
+        /// <value>An integer to set the index for the order of execution. This input is only useful when there are more than one handler for the same platform and the output of one handler should be passed to another handler. This is also called chained handlers. By default all the handlers are indexed as 0 assuming they are not chained.</value>
+        [DataMember(Name = "index", EmitDefaultValue = true)]
+        public int Index { get; set; }  = 0;
 
         /// <summary>
         /// Returns the string presentation of the object
@@ -121,6 +129,7 @@ namespace PollinationSDK
             sb.Append("  Module: ").Append(Module).Append("\n");
             sb.Append("  Function: ").Append(Function).Append("\n");
             sb.Append("  Annotations: ").Append(Annotations).Append("\n");
+            sb.Append("  Index: ").Append(Index).Append("\n");
             return sb.ToString();
         }
   
@@ -209,6 +218,11 @@ namespace PollinationSDK
                     this.Annotations != null &&
                     input.Annotations != null &&
                     this.Annotations.SequenceEqual(input.Annotations)
+                ) && base.Equals(input) && 
+                (
+                    this.Index == input.Index ||
+                    (this.Index != null &&
+                    this.Index.Equals(input.Index))
                 );
         }
 
@@ -231,6 +245,8 @@ namespace PollinationSDK
                     hashCode = hashCode * 59 + this.Type.GetHashCode();
                 if (this.Annotations != null)
                     hashCode = hashCode * 59 + this.Annotations.GetHashCode();
+                if (this.Index != null)
+                    hashCode = hashCode * 59 + this.Index.GetHashCode();
                 return hashCode;
             }
         }

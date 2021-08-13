@@ -24,36 +24,36 @@ using System.ComponentModel.DataAnnotations;
 namespace PollinationSDK
 {
     /// <summary>
-    /// BodyPostPluginRegistriesOwnerPluginsPost
+    /// BodyPostRecipeOwnerRecipesPost
     /// </summary>
-    [DataContract(Name = "Body_post_plugin_registries__owner__plugins_post")]
-    public partial class BodyPostPluginRegistriesOwnerPluginsPost : OpenAPIGenBaseModel, IEquatable<BodyPostPluginRegistriesOwnerPluginsPost>, IValidatableObject
+    [DataContract(Name = "Body_post_recipe__owner__recipes_post")]
+    public partial class BodyPostRecipeOwnerRecipesPost : OpenAPIGenBaseModel, IEquatable<BodyPostRecipeOwnerRecipesPost>, IValidatableObject
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BodyPostPluginRegistriesOwnerPluginsPost" /> class.
+        /// Initializes a new instance of the <see cref="BodyPostRecipeOwnerRecipesPost" /> class.
         /// </summary>
         [JsonConstructorAttribute]
-        protected BodyPostPluginRegistriesOwnerPluginsPost() 
+        protected BodyPostRecipeOwnerRecipesPost() 
         { 
             // Set non-required readonly properties with defaultValue
-            this.Type = "Body_post_plugin_registries__owner__plugins_post";
+            this.Type = "Body_post_recipe__owner__recipes_post";
         }
         
         /// <summary>
-        /// Initializes a new instance of the <see cref="BodyPostPluginRegistriesOwnerPluginsPost" /> class.
+        /// Initializes a new instance of the <see cref="BodyPostRecipeOwnerRecipesPost" /> class.
         /// </summary>
         /// <param name="package">package (required).</param>
-        public BodyPostPluginRegistriesOwnerPluginsPost
+        public BodyPostRecipeOwnerRecipesPost
         (
            System.IO.Stream package// Required parameters
            // Optional parameters
         ) : base()// BaseClass
         {
             // to ensure "package" is required (not null)
-            this.Package = package ?? throw new ArgumentNullException("package is a required property for BodyPostPluginRegistriesOwnerPluginsPost and cannot be null");
+            this.Package = package ?? throw new ArgumentNullException("package is a required property for BodyPostRecipeOwnerRecipesPost and cannot be null");
 
             // Set non-required readonly properties with defaultValue
-            this.Type = "Body_post_plugin_registries__owner__plugins_post";
+            this.Type = "Body_post_recipe__owner__recipes_post";
         }
 
         //============================================== is ReadOnly 
@@ -61,7 +61,7 @@ namespace PollinationSDK
         /// Gets or Sets Type
         /// </summary>
         [DataMember(Name = "type", EmitDefaultValue = true)]
-        public string Type { get; protected internal set; }  = "Body_post_plugin_registries__owner__plugins_post";
+        public string Type { get; protected internal set; }  = "Body_post_recipe__owner__recipes_post";
 
         /// <summary>
         /// Gets or Sets Package
@@ -75,7 +75,7 @@ namespace PollinationSDK
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            return "BodyPostPluginRegistriesOwnerPluginsPost";
+            return "BodyPostRecipeOwnerRecipesPost";
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace PollinationSDK
                 return this.ToString();
             
             var sb = new StringBuilder();
-            sb.Append("BodyPostPluginRegistriesOwnerPluginsPost:\n");
+            sb.Append("BodyPostRecipeOwnerRecipesPost:\n");
             sb.Append("  Type: ").Append(Type).Append("\n");
             sb.Append("  Package: ").Append(Package).Append("\n");
             return sb.ToString();
@@ -97,10 +97,10 @@ namespace PollinationSDK
         /// <summary>
         /// Returns the object from JSON string
         /// </summary>
-        /// <returns>BodyPostPluginRegistriesOwnerPluginsPost object</returns>
-        public static BodyPostPluginRegistriesOwnerPluginsPost FromJson(string json)
+        /// <returns>BodyPostRecipeOwnerRecipesPost object</returns>
+        public static BodyPostRecipeOwnerRecipesPost FromJson(string json)
         {
-            var obj = JsonConvert.DeserializeObject<BodyPostPluginRegistriesOwnerPluginsPost>(json, JsonSetting.AnyOfConvertSetting);
+            var obj = JsonConvert.DeserializeObject<BodyPostRecipeOwnerRecipesPost>(json, JsonSetting.AnyOfConvertSetting);
             if (obj == null)
                 return null;
             return obj.Type.ToLower() == obj.GetType().Name.ToLower() ? obj : null;
@@ -109,8 +109,8 @@ namespace PollinationSDK
         /// <summary>
         /// Creates a new instance with the same properties.
         /// </summary>
-        /// <returns>BodyPostPluginRegistriesOwnerPluginsPost object</returns>
-        public virtual BodyPostPluginRegistriesOwnerPluginsPost DuplicateBodyPostPluginRegistriesOwnerPluginsPost()
+        /// <returns>BodyPostRecipeOwnerRecipesPost object</returns>
+        public virtual BodyPostRecipeOwnerRecipesPost DuplicateBodyPostRecipeOwnerRecipesPost()
         {
             return FromJson(this.ToJson());
         }
@@ -121,7 +121,7 @@ namespace PollinationSDK
         /// <returns>OpenAPIGenBaseModel</returns>
         public override OpenAPIGenBaseModel Duplicate()
         {
-            return DuplicateBodyPostPluginRegistriesOwnerPluginsPost();
+            return DuplicateBodyPostRecipeOwnerRecipesPost();
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace PollinationSDK
         /// <returns>OpenAPIGenBaseModel</returns>
         public override OpenAPIGenBaseModel DuplicateOpenAPIGenBaseModel()
         {
-            return DuplicateBodyPostPluginRegistriesOwnerPluginsPost();
+            return DuplicateBodyPostRecipeOwnerRecipesPost();
         }
      
         /// <summary>
@@ -141,15 +141,15 @@ namespace PollinationSDK
         public override bool Equals(object input)
         {
             input = input is AnyOf anyOf ? anyOf.Obj : input;
-            return this.Equals(input as BodyPostPluginRegistriesOwnerPluginsPost);
+            return this.Equals(input as BodyPostRecipeOwnerRecipesPost);
         }
 
         /// <summary>
-        /// Returns true if BodyPostPluginRegistriesOwnerPluginsPost instances are equal
+        /// Returns true if BodyPostRecipeOwnerRecipesPost instances are equal
         /// </summary>
-        /// <param name="input">Instance of BodyPostPluginRegistriesOwnerPluginsPost to be compared</param>
+        /// <param name="input">Instance of BodyPostRecipeOwnerRecipesPost to be compared</param>
         /// <returns>Boolean</returns>
-        public bool Equals(BodyPostPluginRegistriesOwnerPluginsPost input)
+        public bool Equals(BodyPostRecipeOwnerRecipesPost input)
         {
             if (input == null)
                 return false;
@@ -194,7 +194,7 @@ namespace PollinationSDK
 
             
             // Type (string) pattern
-            Regex regexType = new Regex(@"^Body_post_plugin_registries__owner__plugins_post$", RegexOptions.CultureInvariant);
+            Regex regexType = new Regex(@"^Body_post_recipe__owner__recipes_post$", RegexOptions.CultureInvariant);
             if (false == regexType.Match(this.Type).Success)
             {
                 yield return new System.ComponentModel.DataAnnotations.ValidationResult("Invalid value for Type, must match a pattern of " + regexType, new [] { "Type" });
