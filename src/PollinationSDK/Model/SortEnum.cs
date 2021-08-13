@@ -11,10 +11,10 @@ namespace PollinationSDK
     public enum SortEnum
     {
         [EnumMember(Value = "ascending")]
-        Ascending = 1,
+        ascending,
 
         [EnumMember(Value = "descending")]
-        Descending = 2,
+        descending,
 
 
     }

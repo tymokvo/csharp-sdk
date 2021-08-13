@@ -29,10 +29,10 @@ namespace PollinationSDK
     public enum RoleEnum
     {
         [EnumMember(Value = "owner")]
-        Owner = 1,
+        owner,
 
         [EnumMember(Value = "member")]
-        Member = 2,
+        member,
 
 
     }
