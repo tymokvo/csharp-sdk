@@ -32,7 +32,8 @@ namespace PollinationSDK.Wrapper
 
         public RunInfo(RecipeInterface recipe , string localRunPath)
         {
-            this.Run = new Run(localRunPath);
+            var localPath = Path.GetFullPath(localRunPath);
+            this.Run = new Run(localPath);
             this.Recipe = recipe;
         }
 
@@ -52,12 +53,13 @@ namespace PollinationSDK.Wrapper
 
         public override string ToString()
         {
-            if (Guid.TryParse( this.RunID, out var res))
+            if (!IsLocalRun)
                 return $"CLOUD:{this.Project.Owner.Name}/{this.Project.Name}/{this.RunID}";
             return $"LOCAL:{this.RunID}";
 
         }
 
+        public bool IsLocalRun => !Guid.TryParse(this.RunID, out var res);
 
         //public async Task<string> WatchRunStatusAsync(Action<string> progressAction = default, System.Threading.CancellationToken cancelToken = default)
         //{
@@ -218,16 +220,63 @@ namespace PollinationSDK.Wrapper
 
         //}
 
+        /// <summary>
+        /// Load a RunInfo from a local run's folder.
+        /// This folder must contains recipe.json for RecipeInterface, and input.json for input arguments
+        /// </summary>
+        /// <param name="folder"></param>
+        /// <returns></returns>
+        public static RunInfo LoadFromLocalFolder(string folder)
+        {
+            RunInfo runInfo = null;
+            if (Directory.Exists(folder))
+            {
+                var recipeFile = Path.Combine(folder, "recipe.json");
+                var recipeJson = File.ReadAllText(recipeFile);
+                var recipe = RecipeInterface.FromJson(recipeJson);
+                runInfo = new RunInfo(recipe, folder);
+            }
+            return runInfo;
+           
+        }
+
 
         public List<Interface.Io.Outputs.IDag> GetOutputs() => this.Recipe.GetOutputs();
 
+        private List<Interface.Io.Inputs.IStep> GetLocalInputs()
+        {
+            if (!this.IsLocalRun)
+                throw new ArgumentException("This is not a local run");
+
+            var folder = this.RunID;
+            var file = Path.Combine(folder, "inputs.json");
+            var json = File.ReadAllText(file);
+            var args = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+
+            var recipeInputs = this.Recipe.InputList;
+            var stepInputs = new List<Interface.Io.Inputs.IStep>();
+            foreach (var input in recipeInputs)
+            {
+                if (!args.TryGetValue(input.Name, out var value))
+                    value = input.GetDefaultValue();
+
+                var sinput =  input.ToStepInput(value);
+                stepInputs.Add(sinput);
+            }
+
+            return stepInputs;
+        }
 
         public List<Interface.Io.Inputs.IStep> GetInputs()
         {
-            var inputs = this.Run.Status.Inputs
+            var inputs = 
+                this.IsLocalRun ? 
+                GetLocalInputs(): 
+                this.Run.Status.Inputs
                   .OfType<Interface.Io.Inputs.IStep>().ToList();
-           
+
             return inputs;
+
         }
 
 
@@ -237,8 +286,8 @@ namespace PollinationSDK.Wrapper
         /// <returns></returns>
         public List<RunOutputAsset> GetOutputAssets(string platform)
         {
-            var cloudSource = this.ToString();
-            var assets = this.GetOutputs().Select(_ => new RunOutputAsset(_, platform, cloudSource)).ToList();
+            var sourcelink = this.ToString();
+            var assets = this.GetOutputs().Select(_ => new RunOutputAsset(_, platform, sourcelink)).ToList();
             return assets;
         }
 
@@ -249,16 +298,52 @@ namespace PollinationSDK.Wrapper
         /// <returns></returns>
         public List<RunInputAsset> GetInputAssets()
         {
-            var cloudSource = this.ToString();
-            var assets = this.GetInputs().Select(_ => new RunInputAsset(_, cloudSource)).ToList();
+            var sourcelink = this.ToString();
+            var assets = this.GetInputs().Select(_ => new RunInputAsset(_, sourcelink)).ToList();
             return assets;
 
         }
 
-        
+        public List<RunAssetBase> LoadLocalRunAssets(List<RunAssetBase> runAssets, string saveAsDir = default)
+        {
+            var root = this.RunID; // local folder path
+            if (!Directory.Exists(root))
+                throw new ArgumentException($"Failed to find the local folder {root}");
+
+            var updatedAssets = new List<RunAssetBase>();
+            foreach (var item in runAssets)
+            {
+                var dup = item.Duplicate();
+                if (!dup.IsPathAsset())
+                {
+                    updatedAssets.Add(dup);
+                    continue;
+                }
+                 
+                var filePath = dup.RelativePath;
+                if (dup is RunInputAsset input)
+                {
+                    dup.LocalPath = Path.Combine(root, filePath);
+                }
+                else if (dup is RunOutputAsset output)
+                {
+                    var fd = Directory.GetDirectories(root).FirstOrDefault();
+                    dup.LocalPath = Path.Combine(fd, output.RelativePath);
+                }
+
+                if (dup.IsSaved())
+                    throw new ArgumentException($"Failed to find asset: {dup.LocalPath}");
+               
+                updatedAssets.Add(dup);
+            }
+            return updatedAssets;
+        }
 
         public async Task<List<RunAssetBase>> DownloadRunAssetsAsync(List<RunAssetBase> runAssets, string saveAsDir = default, Action<string> reportingAction = default, bool useCached = false)
         {
+
+            if (this.IsLocalRun)
+                throw new System.ArgumentException("This is a local run, please use LoadLocalRunAssets() to load local assets");
             var downloadedAssets = new List<RunAssetBase>();
 
             try
@@ -312,7 +397,7 @@ namespace PollinationSDK.Wrapper
                     var dup = item.asset.Duplicate();
 
                     // get saved path type assets
-                    if (item.asset.IsDownloadable())
+                    if (item.asset.IsPathAsset())
                     {
                         var savedFolderOrFilePath = await item.saved;
                         // check folder
@@ -381,7 +466,7 @@ namespace PollinationSDK.Wrapper
             {
                 try
                 {
-                    if (asset.IsDownloadable() && !asset.IsSaved())
+                    if (asset.IsPathAsset() && !asset.IsSaved())
                     {
                         var url = api.GetRunOutput(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID, asset.Name).ToString();
                         var task = Helper.DownloadFromUrlAsync(url, Path.Combine(saveAsDir, asset.Name));
@@ -417,9 +502,9 @@ namespace PollinationSDK.Wrapper
             {
                 try
                 {
-                    if (asset.IsDownloadable() && !asset.IsSaved())
+                    if (asset.IsPathAsset() && !asset.IsSaved())
                     {
-                        var url = api.DownloadRunArtifact(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID, path: asset.CloudPath).ToString();
+                        var url = api.DownloadRunArtifact(runInfo.Project.Owner.Name, runInfo.Project.Name, runInfo.RunID, path: asset.RelativePath).ToString();
                         var task = Helper.DownloadFromUrlAsync(url, Path.Combine(saveAsDir, asset.Name));
                         tasks.Add(task);
                     }

@@ -69,8 +69,30 @@ namespace PollinationSDK
             }
             return value;
         }
+        /// <summary>
+        /// Get asset path of ProjectFolder type to be downloaded
+        /// </summary>
+        /// <param name="outputDag"></param>
+        /// <returns>return empty if it is not a path type input</returns>
+        public static string GetOutputPath(this Interface.Io.Outputs.IDag outputDag)
+        {
+            var value = string.Empty;
+            if (outputDag.IsPathType())
+            {
+                var pathSource = outputDag.GetPathSource();
+                if (!string.IsNullOrEmpty(pathSource))
+                    value = pathSource;
+                else
+                    throw new System.ArgumentException($"The source of {outputDag.Name} is not supported FileRenference or FolderReference type");
 
+            }
+            return value;
+        }
         private static object GetPropertyValue(this Interface.Io.Inputs.IoBase ioBase, string propertyName)
+        {
+            return ioBase.GetType().GetProperty(propertyName).GetValue(ioBase, null);
+        }
+        private static object GetPropertyValue(this Interface.Io.Outputs.IoBase ioBase, string propertyName)
         {
             return ioBase.GetType().GetProperty(propertyName).GetValue(ioBase, null);
         }
@@ -144,6 +166,18 @@ namespace PollinationSDK
         }
 
         /// <summary>
+        /// Check if a Dag input is a DAGFileOutput, DAGFolderOutput, or DAGPathOutput
+        /// </summary>
+        /// <param name="inputDag"></param>
+        /// <returns></returns>
+        public static bool IsPathType(this Interface.Io.Outputs.IDag inputDag)
+        {
+            if (inputDag is DAGFileOutput) return true;
+            if (inputDag is DAGFolderOutput) return true;
+            if (inputDag is DAGPathOutput) return true;
+            return false;
+        }
+        /// <summary>
         /// Get the source of a path type Step input. Returns null if inputStep is not path type
         /// </summary>
         /// <param name="inputStep"></param>
@@ -161,7 +195,40 @@ namespace PollinationSDK
             }
             
         }
+        /// <summary>
+        /// Get the source of a path type Step input. Returns null if inputStep is not path type
+        /// </summary>
+        /// <param name="outputDag"></param>
+        /// <returns></returns>
+        public static string GetPathSource(this Interface.Io.Outputs.IDag outputDag)
+        {
+            if (outputDag.IsPathType())
+            {
+                if (outputDag is DAGFileOutput f)
+                    return GetPath(f.From.Obj);
+                else if(outputDag is DAGFolderOutput folder)
+                    return GetPath(folder.From.Obj);
+                else if (outputDag is DAGPathOutput p)
+                    return GetPath(p.From.Obj);
+                else
+                    return null;
+            }
+            else
+            {
+                return null;
+            }
 
+            string GetPath(object obj)
+            {
+                if (obj is FileReference f)
+                    return f.Path;
+                else if (obj is FolderReference folder)
+                    return folder?.Path;
+                else
+                    return null;
+            }
+
+        }
         /// <summary>
         /// Get the value of non-path type Stet input. Returns null if inputStep is a path type
         /// </summary>

@@ -20,7 +20,7 @@ namespace PollinationSDK.Wrapper
         {
         }
 
-        public RunOutputAsset(Interface.Io.Outputs.IDag dagOutput, string platform, string cloudRunSource = default)
+        public RunOutputAsset(Interface.Io.Outputs.IDag dagOutput, string platform, string runSource = default)
         {
             if (dagOutput == null)
                 return;
@@ -36,8 +36,8 @@ namespace PollinationSDK.Wrapper
             this.Description = dagOutputAlias?.Description ?? dagOutput.Description;
 
             // keep cloud source: CLOUD:mingbo/demo/1D725BD1-44E1-4C3C-85D6-4D98F558DE7C
-            this.CloudRunSource = cloudRunSource;
-            this.CloudPath = this.Name;
+            this.RunSource = runSource;
+            this.RelativePath = dagOutput.GetOutputPath();
         }
 
         public override object CheckOutputWithHandler(object inputData, HandlerChecker handlerChecker)

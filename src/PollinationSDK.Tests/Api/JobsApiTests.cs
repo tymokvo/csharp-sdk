@@ -115,7 +115,7 @@ namespace PollinationSDK.Test
 
             // Load run's input assets to download
             var inputAssets = runInfo.GetInputAssets();
-            var inputPathAssets = inputAssets.Where(_ => _.IsDownloadable());
+            var inputPathAssets = inputAssets.Where(_ => _.IsPathAsset());
             Assert.IsTrue(inputPathAssets.Any());
 
 
@@ -156,7 +156,7 @@ namespace PollinationSDK.Test
 
 
             // get run's value type input arguments that don't need to download
-            var inputValueAssets = inputAssets.Where(_ => !_.IsDownloadable());
+            var inputValueAssets = inputAssets.Where(_ => !_.IsPathAsset());
             foreach (var item in inputValueAssets)
             {
                 Console.WriteLine($"Asset: {item.Name}\nUser input: {item.Value}");
@@ -217,7 +217,7 @@ namespace PollinationSDK.Test
                 var item = savedAsset.nonCached;
                 var itemCached = savedAsset.Cached;
 
-                if (item.IsDownloadable())
+                if (item.IsPathAsset())
                 {
                     Console.WriteLine($"Is Saved {item.Name}:{item.IsSaved()} to {item.LocalPath}");
                     Console.WriteLine($"Is Saved (cached) {itemCached.Name}:{itemCached.IsSaved()} to {itemCached.LocalPath}");

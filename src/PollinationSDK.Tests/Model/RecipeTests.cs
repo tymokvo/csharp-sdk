@@ -174,8 +174,8 @@ namespace PollinationSDK.Test
             var dup = asset.Duplicate() as Wrapper.RunOutputAsset;
 
             Assert.IsTrue(dup.Name == asset.Name);
-            Assert.IsTrue(dup.CloudRunSource == asset.CloudRunSource);
-            Assert.IsTrue(dup.CloudPath == asset.CloudPath);
+            Assert.IsTrue(dup.RunSource == asset.RunSource);
+            Assert.IsTrue(dup.RelativePath == asset.RelativePath);
             Assert.IsTrue(dup.Handlers.First().Function == asset.Handlers.First().Function);
 
         }

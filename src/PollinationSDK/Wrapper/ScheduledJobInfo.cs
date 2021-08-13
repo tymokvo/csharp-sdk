@@ -26,9 +26,6 @@ namespace PollinationSDK.Wrapper
             this.Recipe = this.CloudJob.Recipe;
         }
 
-        public ScheduledJobInfo(string localRunPath)
-        {
-        }
 
         public ScheduledJobInfo(string clouldProjectName, string projectOwner, string jobID)
         {

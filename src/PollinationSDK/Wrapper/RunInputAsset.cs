@@ -10,7 +10,7 @@ namespace PollinationSDK.Wrapper
         protected RunInputAsset()
         {
         }
-        public RunInputAsset(Interface.Io.Inputs.IStep dagInput, string cloudRunSource = default)
+        public RunInputAsset(Interface.Io.Inputs.IStep dagInput, string runSource = default)
         {
             if (dagInput == null)
                 return;
@@ -20,15 +20,15 @@ namespace PollinationSDK.Wrapper
             this.Description = dagInput.Description;
 
             // check path type
-            this.CloudPath = dagInput.GetInputPath();
+            this.RelativePath = dagInput.GetInputPath();
             
 
             // value type
             this.Value = dagInput.GetInputValue();
 
-            // keep cloud source: CLOUD:mingbo/demo/1D725BD1-44E1-4C3C-85D6-4D98F558DE7C
-            this.CloudRunSource = cloudRunSource;
-            dagInput.GetInputValue();
+            // cloud source: CLOUD:mingbo/demo/1D725BD1-44E1-4C3C-85D6-4D98F558DE7C
+            // local source: LOCAL:C\Users\mingo\simulaiton\1D725BD1
+            this.RunSource = runSource;
         }
 
         public override RunAssetBase Duplicate()

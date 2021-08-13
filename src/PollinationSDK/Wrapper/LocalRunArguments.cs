@@ -31,9 +31,9 @@ namespace PollinationSDK.Wrapper
         //    }
         //}
 
-        public string SaveToFolder(string folder)
+        private List<AnyOf<JobArgument, JobPathArgument>> CopyLocalPathArgs(string folder)
         {
-            var dic = new Dictionary<string, object>();
+            var newArgs = new List<AnyOf<JobArgument, JobPathArgument>>();
             foreach (var item in this._args)
             {
                 var argName = string.Empty;
@@ -41,7 +41,6 @@ namespace PollinationSDK.Wrapper
 
                 if (item.Obj is JobPathArgument p)
                 {
-                    argName = p.Name;
                     //copy to folder
                     var tempPath = (p.Source.Obj as PollinationSDK.ProjectFolder).Path;
                     if (!File.Exists(tempPath))
@@ -51,8 +50,32 @@ namespace PollinationSDK.Wrapper
                     File.Copy(tempPath, newPath, true);
                     if (!File.Exists(newPath))
                         throw new ArgumentException($"Failed to find path argument {newPath}");
-                    argValue = fileName;
+                  
+                    newArgs.Add(new JobPathArgument(p.Name, new ProjectFolder(path: fileName)));
 
+                }
+                else if (item.Obj is JobArgument arg)
+                {
+                    newArgs.Add(arg.DuplicateJobArgument());
+                }
+            }
+            return newArgs;
+        }
+
+
+        public string SaveToFolder(string folder)
+        {
+            var dic = new Dictionary<string, object>();
+            var args = CopyLocalPathArgs(folder);
+            foreach (var item in args)
+            {
+                var argName = string.Empty;
+                object argValue = string.Empty;
+
+                if (item.Obj is JobPathArgument p)
+                {
+                    argName = p.Name;
+                    argValue = (p.Source.Obj as PollinationSDK.ProjectFolder).Path;
                 }
                 else if (item.Obj is JobArgument arg)
                 {
@@ -60,12 +83,14 @@ namespace PollinationSDK.Wrapper
                     argValue = arg.Value;
                 }
 
-                //// check with handlers
-                //var alias = this.RecipeInfo.InputArgumentInfos.FirstOrDefault(_ => _.DagInput.Name == argName).DagInputAlias;
-                //argValue = CheckInputWithHandler(argValue, alias?.Handler);
-
                 dic.Add(argName, argValue);
             }
+
+            //// save original List<AnyOf<JobArgument, JobPathArgument>> to inputs_raw.json
+            //string rawJson = JsonConvert.SerializeObject(args, JsonSetting.AnyOfConvertSetting);
+            //var rawPath = Path.Combine(folder, "inputs_raw.json");
+            //File.WriteAllText(rawPath, rawJson);
+
 
             string json = JsonConvert.SerializeObject(dic, Formatting.Indented);
             var path = Path.Combine(folder, "inputs.json");
@@ -73,6 +98,17 @@ namespace PollinationSDK.Wrapper
             if (!File.Exists(path))
                 throw new ArgumentException("Failed to save inputs.json");
             return path;
+        }
+
+        public static string ToJson(object obj)
+        {
+            return JsonConvert.SerializeObject(obj, JsonSetting.AnyOfConvertSetting);
+        }
+
+        public static object FromJson(string json)
+        {
+            var obj = JsonConvert.DeserializeObject<List<AnyOf<JobArgument, JobPathArgument>>>(json, JsonSetting.AnyOfConvertSetting);
+            return obj;
         }
 
     }

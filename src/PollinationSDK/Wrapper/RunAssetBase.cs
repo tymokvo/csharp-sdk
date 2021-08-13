@@ -26,14 +26,14 @@ namespace PollinationSDK.Wrapper
         /// <summary>
         /// Original Run source for redownloading the asset. Formated as CLOUD:mingbo/demo/1D725BD1-44E1-4C3C-85D6-4D98F558DE7C
         /// </summary>
-        public string CloudRunSource { get; protected set; }
+        public string RunSource { get; protected set; }
 
         [JsonProperty]
         /// <summary>
         /// For input asset: a relative path to the cloud project root that this asset belongs to.
         /// For output asset: same as asset name
         /// </summary>
-        public string CloudPath { get; protected set; }
+        public string RelativePath { get; protected set; }
 
         [JsonProperty]
         public string LocalPath { get; set; }
@@ -71,7 +71,7 @@ namespace PollinationSDK.Wrapper
         /// Lastly, if it is an input asset, check if CloudPath is valid.
         /// </summary>
         /// <returns></returns>
-        public bool IsDownloadable()
+        public bool IsPathAsset()
         {
             if (this.Value != null && this.Value.Any())
                 return false;
@@ -81,7 +81,7 @@ namespace PollinationSDK.Wrapper
             //    return false;
 
             if (this.IsInputAsset)
-                return !string.IsNullOrEmpty(CloudPath);
+                return !string.IsNullOrEmpty(RelativePath);
             else
                 return true;
 
@@ -103,7 +103,7 @@ namespace PollinationSDK.Wrapper
 
             if (this.IsInputAsset)
             {
-                var assetPath = this.CloudPath;
+                var assetPath = this.RelativePath;
                 // folder asset is a zip file, assetDir has all unzipped files
                 if (assetPath.EndsWith(".zip"))
                     return true;
@@ -118,7 +118,7 @@ namespace PollinationSDK.Wrapper
         internal string GetCachedAsset(string dir)
         {
             var assetName = this.Name;
-            var assetPath = this.CloudPath;
+            var assetPath = this.RelativePath;
 
 
             var cachedPath = string.Empty;
@@ -153,7 +153,7 @@ namespace PollinationSDK.Wrapper
             if (this.Value != null && this.Value.Any())
                 return base.ToString();
 
-            var v = $"{CloudRunSource}/{Name}";
+            var v = $"{RunSource}/{Name}";
 
             if (this is RunOutputAsset outputAsset)
             {
@@ -178,8 +178,8 @@ namespace PollinationSDK.Wrapper
         private string[] CheckRunSource()
         {
             //CLOUD:mingbo/demo/1D725BD1-44E1-4C3C-85D6-4D98F558DE7C
-            var runID = this.CloudRunSource;
-            if (string.IsNullOrEmpty(runID))
+            var runID = this.RunSource;
+            if (string.IsNullOrEmpty(runID) || runID.StartsWith("LOCAL:"))
                 throw new ArgumentException($"Not valid cloud run source");
             if (runID.StartsWith("CLOUD:"))
                 runID = runID.Substring(6);
@@ -201,11 +201,20 @@ namespace PollinationSDK.Wrapper
 
         public RunInfo GetRunInfo()
         {
-            var run = GetRun();
-            var proj = GetRoject();
-      
-            var runInfo = new RunInfo(proj, run);
-            return runInfo;
+            if (this.RunSource.StartsWith("LOCAL:"))
+            {
+                var folder = this.RunSource.Substring(6);
+                return RunInfo.LoadFromLocalFolder(folder);
+            }
+            else
+            {
+                var run = GetRun();
+                var proj = GetRoject();
+
+                var runInfo = new RunInfo(proj, run);
+                return runInfo;
+            }
+        
         }
 
 

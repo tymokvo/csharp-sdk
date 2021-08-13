@@ -153,26 +153,27 @@ namespace PollinationSDK.Wrapper
             var workDir = Path.Combine(workFolder, workName);
             if (!string.IsNullOrEmpty( this.JobInfo.SubFolderPath))
                 workDir = Path.Combine(workDir, this.JobInfo.SubFolderPath);
-            if (!Directory.Exists(workDir))
-                Directory.CreateDirectory(workDir);
-
-            //var isDirNotEmpty = Directory.GetFiles(targetFolder).Any();
-            //if (isDirNotEmpty)
-            //{
-            //    var rs = Eto.Forms.MessageBox.Show($"Target folder [{targetFolder}] is not empty, do you want to write new results to this folder?", MessageBoxButtons.OKCancel, Eto.Forms.MessageBoxType.Question);
-            //    if (rs != DialogResult.Ok)
-            //        return;
-            //}
+            workDir = Path.GetFullPath(workDir);
+            if (Directory.Exists(workDir))
+                System.IO.Directory.Delete(workDir, true);
+            Directory.CreateDirectory(workDir);
 
             var recipeOwner = this.JobInfo.RecipeOwner;
             var recipeName = this.JobInfo.Recipe.Metadata.Name;
             var recipeTag = this.JobInfo.Recipe.Metadata.Tag;
 
-            var localArgs = this.Job.Arguments.Select(_ => new LocalRunArguments(_));
-            var localArg = localArgs.FirstOrDefault(); //TODO: ignore parametric runs for now
+            var localArgs = this.Job.Arguments;
+            var localArg = new LocalRunArguments(localArgs.FirstOrDefault()); //TODO: ignore parametric runs for now
         
             //localArg.Validate(userRecipe);
             var inputJson = localArg.SaveToFolder(workDir); //save args to input.json file
+
+
+            //save recipe to folder
+            string recipeJson = this.JobInfo.Recipe.ToJson();
+            var path = Path.Combine(workDir, "recipe.json");
+            File.WriteAllText(path, recipeJson);
+
 
             // run the bat file
             try
@@ -180,7 +181,6 @@ namespace PollinationSDK.Wrapper
                 var program = Utilities.IsMac ? Path.Combine(Utilities.PythonRoot, "bin", "queenbee") : Path.Combine(Utilities.PythonRoot, "Scripts", "queenbee");
 
                 var recipeDir = Utilities.GetLocalRecipe(recipeOwner, recipeName, recipeTag);
-      
                 var name = workName;
                 var inputJons = inputJson;
                 var workerNumber = workerNum;

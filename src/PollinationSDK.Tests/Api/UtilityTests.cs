@@ -43,13 +43,13 @@ namespace PollinationSDK.Test
         {
 
             var recipeOwner = "ladybug-tools";
-            var recipeName = "daylight-factor";
+            var recipeName = "annual-energy-use";
             var recipeApi = new RecipesApi();
             var rec = recipeApi.GetRecipeByTag(recipeOwner, recipeName, "latest").Manifest;
 
             var jobInfo = new JobInfo(rec);
 
-            var model = Path.GetFullPath(@"../../../TestSample/two_rooms.hbjson");
+            var model = Path.GetFullPath(@"../../../TestSample/Room.hbjson");
             if (!File.Exists(model))
                 throw new ArgumentException("Input doesn't exist");
             jobInfo.AddArgument(new JobPathArgument("model", new ProjectFolder(path: model)));
@@ -58,19 +58,33 @@ namespace PollinationSDK.Test
             jobInfo.SetJobName("A new daylight simulation");
 
 
+
             // run a job
             var path = @"C:\Users\mingo\simulation";
             var lbt = @"C:\Users\mingo\ladybug_tools";
             Utilities.SetPaths(lbt);
             var job = jobInfo.RunJobOnLocal(path, 5);
-
+            //runID: LOCAL:C:\Users\mingo\simulation\Anewdaylightsimulation\round1/test
 
             //Assert.IsTrue(!string.IsNullOrEmpty(ScheduledJob.CloudJob.Id));
 
+        }
+
+        [Test]
+        public void LoadLocalResultTest()
+        {
+            //LOCAL:C:\Users\mingo\simulation\Anewdaylightsimulation\round1/test
+            var run = RunInfo.LoadFromLocalFolder(@"C:\Users\mingo\simulation\Anewdaylightsimulation\round1/test");
+            var inputs = run.GetInputAssets();
+            var outputs = run.GetOutputAssets("grasshopper");
+
+            var assets = new List<RunAssetBase>();
+            assets.AddRange(inputs);
+            assets.AddRange(outputs);
+            var loadedAssets = run.LoadLocalRunAssets(assets);
 
         }
 
-      
 
     }
 
