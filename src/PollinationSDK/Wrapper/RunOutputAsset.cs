@@ -35,7 +35,8 @@ namespace PollinationSDK.Wrapper
             this.Handlers = dagOutputAlias?.Handler;
             this.Description = dagOutputAlias?.Description ?? dagOutput.Description;
 
-            // keep cloud source: CLOUD:mingbo/demo/1D725BD1-44E1-4C3C-85D6-4D98F558DE7C
+            // cloud source: CLOUD:mingbo/demo/1D725BD1-44E1-4C3C-85D6-4D98F558DE7C
+            // local source: LOCAL:C\Users\mingo\simulaiton\1D725BD1
             this.RunSource = runSource;
             this.RelativePath = dagOutput.GetOutputPath();
         }

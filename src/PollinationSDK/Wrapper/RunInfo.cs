@@ -320,20 +320,45 @@ namespace PollinationSDK.Wrapper
                     continue;
                 }
                  
-                var filePath = dup.RelativePath;
+                var relativePath = dup.RelativePath;
                 if (dup is RunInputAsset input)
                 {
-                    dup.LocalPath = Path.Combine(root, filePath);
+                    dup.LocalPath = Path.Combine(root, relativePath);
                 }
                 else if (dup is RunOutputAsset output)
                 {
+                    //this.Run
                     var fd = Directory.GetDirectories(root).FirstOrDefault();
-                    dup.LocalPath = Path.Combine(fd, output.RelativePath);
+                    dup.LocalPath = Path.Combine(fd, relativePath);
                 }
 
-                if (dup.IsSaved())
+
+                if (!dup.IsSaved())
                     throw new ArgumentException($"Failed to find asset: {dup.LocalPath}");
                
+
+                dup.LocalPath = Path.GetFullPath(dup.LocalPath);
+                // copy to saveAsDir
+                if (!string.IsNullOrEmpty(saveAsDir))
+                {
+                    var jobName = Path.GetFileName(root);
+                    var newPath = Path.Combine(saveAsDir, jobName,  relativePath);
+                    newPath = Path.GetFullPath(newPath);
+                    var newRoot = Path.GetDirectoryName(newPath);
+                    Directory.CreateDirectory(newRoot);
+
+                    // file type 
+                    if (Path.HasExtension(newPath))
+                    {
+                        File.Copy(dup.LocalPath, newPath, true);
+                    }
+                    else //folder type
+                    {
+                        Helper.CopyDirectory(dup.LocalPath, newPath);
+                    }
+                    dup.LocalPath = newPath;
+                }
+
                 updatedAssets.Add(dup);
             }
             return updatedAssets;

@@ -405,7 +405,7 @@ namespace PollinationSDK
         }
 
         //https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-copy-directories?redirectedfrom=MSDN
-        private static void CopyDirectory(string sDir, string dDir)
+        internal static void CopyDirectory(string sDir, string dDir)
         {
             if (!Directory.Exists(sDir)) return;
             var dir = new DirectoryInfo(sDir);
