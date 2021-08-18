@@ -8,11 +8,12 @@ namespace PollinationSDK.Wrapper
 {
     public class ScheduledJobInfo
     {
-        public string JobID => this.CloudJob.Id;
+        public string JobID => IsLocalJob? this.LocalJob.RunID : this.CloudJob.Id;
         public CloudJob CloudJob { get; private set; }
         public Project Project { get; private set; }
         public RecipeInterface Recipe { get; private set; }
-
+        public RunInfo LocalJob { get; private set; }
+        public bool IsLocalJob => LocalJob != null;
         //[IgnoreDataMember]
         //public string Logs { get; set; }
         public ScheduledJobInfo(Project proj, string jobID): this(proj, GetJob(proj, jobID))
@@ -26,6 +27,11 @@ namespace PollinationSDK.Wrapper
             this.Recipe = this.CloudJob.Recipe;
         }
 
+        public ScheduledJobInfo(RunInfo localRun)
+        {
+            this.LocalJob = localRun;
+            this.Recipe = localRun.Recipe;
+        }
 
         public ScheduledJobInfo(string clouldProjectName, string projectOwner, string jobID)
         {
@@ -51,7 +57,7 @@ namespace PollinationSDK.Wrapper
 
         public override string ToString()
         {
-            return $"CLOUD:{this.Project.Owner.Name}/{this.Project.Name}/{this.JobID}";
+            return  this.IsLocalJob ? this.JobID : $"CLOUD:{this.Project.Owner.Name}/{this.Project.Name}/{this.JobID}";
         }
         
 
