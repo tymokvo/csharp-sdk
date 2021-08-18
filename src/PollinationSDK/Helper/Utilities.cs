@@ -22,7 +22,7 @@ namespace PollinationSDK
             var url = $"{Configuration.Default.BasePath}/luigi-archive".Replace("https://api.", "https://utilities.");
 
             // add Authorization JWT
-            request.AddHeaders(Configuration.Default.DefaultHeader); 
+            request.AddHeaders(Configuration.Default.DefaultHeader);
 
             // add API key
             var apiKey = Configuration.Default.GetApiKeyWithPrefix("x-pollination-token");
@@ -30,7 +30,14 @@ namespace PollinationSDK
             {
                 request.AddHeader("x-pollination-token", apiKey);
             }
-            
+
+            if (!request.Parameters.Any())
+            {
+                var e = new ArgumentException("Please login first for downloading recipes!");
+                Helper.Logger.Error(e, $"GetCompiledRecipe: error");
+                throw e;
+            }
+
             request.AddParameter("owner", owner);
             request.AddParameter("name", recipeName);
             request.AddParameter("tag", tag);
@@ -39,17 +46,17 @@ namespace PollinationSDK
             var response = client.Execute(request);
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
-                var e = new ArgumentException($"{(int)response.StatusCode}: Failed to download {recipeName}");
+                var e = new ArgumentException($"HttpCode {(int)response.StatusCode}: Failed to download {recipeName}");
                 Helper.Logger.Error(e, $"GetCompiledRecipe: error");
                 throw e;
             }
 
             //{Content-Disposition=attachment; filename=annual-daylight-0.6.4.zip}
-            var filename = response.Headers.First(_=>_.Name == "Content-Disposition")?.Value.ToString()?.Split('=')?.LastOrDefault();
+            var filename = response.Headers.FirstOrDefault(_ => _.Name.ToLower() == "content-disposition")?.Value?.ToString()?.Split('=')?.LastOrDefault();
 
             // prep file path
             var saveAsDir = RecipeCacheFolder;
-            var fileName = string.IsNullOrEmpty(filename)? $"{owner}_{recipeName}-{tag}.zip" : $"{owner}_{filename}";
+            var fileName = string.IsNullOrEmpty(filename) ? $"{owner}_{recipeName}-{tag}.zip" : $"{owner}_{filename}";
 
             System.IO.Directory.CreateDirectory(saveAsDir);
             var file = System.IO.Path.Combine(saveAsDir, fileName);
@@ -107,7 +114,14 @@ namespace PollinationSDK
         public static bool IsMac => System.Environment.OSVersion.Platform == PlatformID.Unix;
         public static string LadybugToolRoot { get; set; }
         public static string PythonRoot { get; set; }
-        public static string RecipeCacheFolder => Path.Combine(Path.GetTempPath(), "Pollination", "Recipes");
+        public static string RecipeCacheFolder
+        {
+            get { 
+                var p = Path.Combine(Path.GetTempPath(), "Pollination", "Recipes");
+                Directory.CreateDirectory(p);
+                return p;
+            }
+        }
 
         //public static string ApplicationRoot => IsMac ?
         //  Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(typeof(Utilities).Assembly.Location))))) :
