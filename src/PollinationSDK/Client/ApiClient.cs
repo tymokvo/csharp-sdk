@@ -14,6 +14,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Threading;
+using System.Runtime.Serialization;
 using System.Web;
 using System.Linq;
 using System.Net;
@@ -270,8 +271,23 @@ namespace PollinationSDK.Client
                 }
                 return flattenedString.ToString();
             }
+            else if (obj is Enum)
+            {
+                return GetEnumMemberAttrValue(obj.GetType(), obj);
+            }
             else
                 return Convert.ToString (obj);
+        }
+
+        public string GetEnumMemberAttrValue(Type enumType, object enumVal)
+        {
+            var memInfo = enumType.GetMember(enumVal.ToString());
+            var attr = memInfo[0].GetCustomAttributes(false).OfType<EnumMemberAttribute>().FirstOrDefault();
+            if (attr != null)
+            {
+                return attr.Value;
+            }
+            return null;
         }
 
         /// <summary>

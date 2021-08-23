@@ -819,7 +819,7 @@ Name | Type | Description  | Notes
 
 ## ListProjects
 
-> ProjectList ListProjects (string search = null, List<string> ids = null, List<string> names = null, List<string> owner = null, bool? _public = null, List<string> permissions = null, ProjectSortKey sortBy = null, SortEnum sortOrder = null, int? page = null, int? perPage = null)
+> ProjectList ListProjects (string search = null, List<string> ids = null, List<string> names = null, List<string> owner = null, bool? _public = null, List<string> permissions = null, ProjectSortKey sortBy = null, SortEnum? sortOrder = null, int? page = null, int? perPage = null)
 
 List Projects
 
@@ -854,7 +854,7 @@ namespace Example
             var _public = true;  // bool? | Boolean check for public/private projects (optional) 
             var permissions = new List<string>(); // List<string> | Filter by permission on given resource (optional) 
             var sortBy = new ProjectSortKey(); // ProjectSortKey | Key to sort the list by (optional) 
-            var sortOrder = new SortEnum(); // SortEnum | The order to sort the list (optional) 
+            var sortOrder = ;  // SortEnum? | The order to sort the list (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
@@ -887,7 +887,7 @@ Name | Type | Description  | Notes
  **_public** | **bool?**| Boolean check for public/private projects | [optional] 
  **permissions** | [**List&lt;string&gt;**](string.md)| Filter by permission on given resource | [optional] 
  **sortBy** | [**ProjectSortKey**](ProjectSortKey.md)| Key to sort the list by | [optional] 
- **sortOrder** | [**SortEnum**](SortEnum.md)| The order to sort the list | [optional] 
+ **sortOrder** | **SortEnum?**| The order to sort the list | [optional] 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
  **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 

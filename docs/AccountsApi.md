@@ -87,7 +87,7 @@ No authorization required
 
 ## ListAccounts
 
-> PublicAccountList ListAccounts (string search = null, string type = null, RoleEnum role = null, int? page = null, int? perPage = null)
+> PublicAccountList ListAccounts (string search = null, string type = null, RoleEnum? role = null, int? page = null, int? perPage = null)
 
 List Accounts on the Pollination platform
 
@@ -119,7 +119,7 @@ namespace Example
             var apiInstance = new AccountsApi(Configuration.Default);
             var search = search_example;  // string | Search string to find accounts (optional) 
             var type = type_example;  // string | Whether the account is for a user or an org (optional) 
-            var role = new RoleEnum(); // RoleEnum | The role the user has in relation to this account (optional) 
+            var role = ;  // RoleEnum? | The role the user has in relation to this account (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
@@ -147,7 +147,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **search** | **string**| Search string to find accounts | [optional] 
  **type** | **string**| Whether the account is for a user or an org | [optional] 
- **role** | [**RoleEnum**](RoleEnum.md)| The role the user has in relation to this account | [optional] 
+ **role** | **RoleEnum?**| The role the user has in relation to this account | [optional] 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
  **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 

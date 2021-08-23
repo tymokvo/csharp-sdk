@@ -58,7 +58,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>PublicAccountList</returns>
-        PublicAccountList ListAccounts (string search = default, string type = default, RoleEnum role = default, int? page = default, int? perPage = default);
+        PublicAccountList ListAccounts (string search = default, string type = default, RoleEnum? role = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// List Accounts on the Pollination platform
@@ -73,7 +73,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of PublicAccountList</returns>
-        ApiResponse<PublicAccountList> ListAccountsWithHttpInfo (string search = default, string type = default, RoleEnum role = default, int? page = default, int? perPage = default);
+        ApiResponse<PublicAccountList> ListAccountsWithHttpInfo (string search = default, string type = default, RoleEnum? role = default, int? page = default, int? perPage = default);
         #endregion Synchronous Operations
         #region Asynchronous Operations
         /// <summary>
@@ -113,7 +113,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of PublicAccountList</returns>
-        System.Threading.Tasks.Task<PublicAccountList> ListAccountsAsync (string search = default, string type = default, RoleEnum role = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<PublicAccountList> ListAccountsAsync (string search = default, string type = default, RoleEnum? role = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List Accounts on the Pollination platform
@@ -129,7 +129,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (PublicAccountList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PublicAccountList>> ListAccountsWithHttpInfoAsync (string search = default, string type = default, RoleEnum role = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<PublicAccountList>> ListAccountsWithHttpInfoAsync (string search = default, string type = default, RoleEnum? role = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         #endregion Asynchronous Operations
     }
 
@@ -354,7 +354,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>PublicAccountList</returns>
-        public PublicAccountList ListAccounts (string search = default, string type = default, RoleEnum role = default, int? page = default, int? perPage = default)
+        public PublicAccountList ListAccounts (string search = default, string type = default, RoleEnum? role = default, int? page = default, int? perPage = default)
         {
              ApiResponse<PublicAccountList> localVarResponse = ListAccountsWithHttpInfo(search, type, role, page, perPage);
              return localVarResponse.Data;
@@ -370,7 +370,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of PublicAccountList</returns>
-        public ApiResponse<PublicAccountList> ListAccountsWithHttpInfo (string search = default, string type = default, RoleEnum role = default, int? page = default, int? perPage = default)
+        public ApiResponse<PublicAccountList> ListAccountsWithHttpInfo (string search = default, string type = default, RoleEnum? role = default, int? page = default, int? perPage = default)
         {
 
             var localVarPath = "/accounts";
@@ -441,7 +441,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of PublicAccountList</returns>
-        public async System.Threading.Tasks.Task<PublicAccountList> ListAccountsAsync (string search = default, string type = default, RoleEnum role = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<PublicAccountList> ListAccountsAsync (string search = default, string type = default, RoleEnum? role = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
              ApiResponse<PublicAccountList> localVarResponse = await ListAccountsWithHttpInfoAsync(search, type, role, page, perPage, cancellationToken);
              return localVarResponse.Data;
@@ -459,7 +459,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (PublicAccountList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<PublicAccountList>> ListAccountsWithHttpInfoAsync (string search = default, string type = default, RoleEnum role = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<PublicAccountList>> ListAccountsWithHttpInfoAsync (string search = default, string type = default, RoleEnum? role = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
 
             var localVarPath = "/accounts";

@@ -273,7 +273,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ProjectList</returns>
-        ProjectList ListProjects (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default);
+        ProjectList ListProjects (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// List Projects
@@ -293,7 +293,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of ProjectList</returns>
-        ApiResponse<ProjectList> ListProjectsWithHttpInfo (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default);
+        ApiResponse<ProjectList> ListProjectsWithHttpInfo (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default);
         /// <summary>
         /// Update a Project
         /// </summary>
@@ -614,7 +614,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ProjectList</returns>
-        System.Threading.Tasks.Task<ProjectList> ListProjectsAsync (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ProjectList> ListProjectsAsync (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List Projects
@@ -635,7 +635,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (ProjectList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<ProjectList>> ListProjectsWithHttpInfoAsync (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<ProjectList>> ListProjectsWithHttpInfoAsync (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update a Project
         /// </summary>
@@ -2453,7 +2453,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ProjectList</returns>
-        public ProjectList ListProjects (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default)
+        public ProjectList ListProjects (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default)
         {
              ApiResponse<ProjectList> localVarResponse = ListProjectsWithHttpInfo(search, ids, names, owner, _public, permissions, sortBy, sortOrder, page, perPage);
              return localVarResponse.Data;
@@ -2474,7 +2474,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of ProjectList</returns>
-        public ApiResponse<ProjectList> ListProjectsWithHttpInfo (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default)
+        public ApiResponse<ProjectList> ListProjectsWithHttpInfo (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default)
         {
 
             var localVarPath = "/projects";
@@ -2555,7 +2555,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ProjectList</returns>
-        public async System.Threading.Tasks.Task<ProjectList> ListProjectsAsync (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ProjectList> ListProjectsAsync (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
              ApiResponse<ProjectList> localVarResponse = await ListProjectsWithHttpInfoAsync(search, ids, names, owner, _public, permissions, sortBy, sortOrder, page, perPage, cancellationToken);
              return localVarResponse.Data;
@@ -2578,7 +2578,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (ProjectList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<ProjectList>> ListProjectsWithHttpInfoAsync (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<ProjectList>> ListProjectsWithHttpInfoAsync (string search = default, List<string> ids = default, List<string> names = default, List<string> owner = default, bool? _public = default, List<string> permissions = default, ProjectSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
 
             var localVarPath = "/projects";

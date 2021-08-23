@@ -316,6 +316,7 @@ docs/RepositoryUpdate.md
 docs/RepositoryUpdateAllOf.md
 docs/RepositoryUserPermissions.md
 docs/RepositoryUserPermissionsAllOf.md
+docs/RoleEnum.md
 docs/Run.md
 docs/RunAllOf.md
 docs/RunList.md
@@ -330,6 +331,7 @@ docs/S3.md
 docs/S3AllOf.md
 docs/S3UploadRequest.md
 docs/S3UploadRequestAllOf.md
+docs/SortEnum.md
 docs/StatusType.md
 docs/StepArrayInput.md
 docs/StepArrayInputAllOf.md
@@ -752,6 +754,7 @@ src/PollinationSDK.Test/Model/RepositoryUpdateAllOfTests.cs
 src/PollinationSDK.Test/Model/RepositoryUpdateTests.cs
 src/PollinationSDK.Test/Model/RepositoryUserPermissionsAllOfTests.cs
 src/PollinationSDK.Test/Model/RepositoryUserPermissionsTests.cs
+src/PollinationSDK.Test/Model/RoleEnumTests.cs
 src/PollinationSDK.Test/Model/RunAllOfTests.cs
 src/PollinationSDK.Test/Model/RunListAllOfTests.cs
 src/PollinationSDK.Test/Model/RunListTests.cs
@@ -765,6 +768,7 @@ src/PollinationSDK.Test/Model/S3AllOfTests.cs
 src/PollinationSDK.Test/Model/S3Tests.cs
 src/PollinationSDK.Test/Model/S3UploadRequestAllOfTests.cs
 src/PollinationSDK.Test/Model/S3UploadRequestTests.cs
+src/PollinationSDK.Test/Model/SortEnumTests.cs
 src/PollinationSDK.Test/Model/StatusTypeTests.cs
 src/PollinationSDK.Test/Model/StepArrayInputAllOfTests.cs
 src/PollinationSDK.Test/Model/StepArrayInputTests.cs
@@ -1194,6 +1198,7 @@ src/PollinationSDK/Model/RepositoryUpdate.cs
 src/PollinationSDK/Model/RepositoryUpdateAllOf.cs
 src/PollinationSDK/Model/RepositoryUserPermissions.cs
 src/PollinationSDK/Model/RepositoryUserPermissionsAllOf.cs
+src/PollinationSDK/Model/RoleEnum.cs
 src/PollinationSDK/Model/Run.cs
 src/PollinationSDK/Model/RunAllOf.cs
 src/PollinationSDK/Model/RunList.cs
@@ -1207,6 +1212,7 @@ src/PollinationSDK/Model/S3.cs
 src/PollinationSDK/Model/S3AllOf.cs
 src/PollinationSDK/Model/S3UploadRequest.cs
 src/PollinationSDK/Model/S3UploadRequestAllOf.cs
+src/PollinationSDK/Model/SortEnum.cs
 src/PollinationSDK/Model/StatusType.cs
 src/PollinationSDK/Model/StepArrayInput.cs
 src/PollinationSDK/Model/StepArrayInputAllOf.cs

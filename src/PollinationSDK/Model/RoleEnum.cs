@@ -23,17 +23,26 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PollinationSDK
 {
+    /// <summary>
+    /// An enumeration.
+    /// </summary>
+    /// <value>An enumeration.</value>
     
     [JsonConverter(typeof(StringEnumConverter))]
     
     public enum RoleEnum
     {
+        /// <summary>
+        /// Enum Owner for value: owner
+        /// </summary>
         [EnumMember(Value = "owner")]
-        owner,
+        Owner = 1,
 
+        /// <summary>
+        /// Enum Member for value: member
+        /// </summary>
         [EnumMember(Value = "member")]
-        member,
-
+        Member = 2
 
     }
 

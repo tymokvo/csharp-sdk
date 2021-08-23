@@ -213,7 +213,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>PluginPackageList</returns>
-        PluginPackageList ListPluginTags (string owner, string name, PackageSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default);
+        PluginPackageList ListPluginTags (string owner, string name, PackageSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// Get a plugin tags
@@ -229,7 +229,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of PluginPackageList</returns>
-        ApiResponse<PluginPackageList> ListPluginTagsWithHttpInfo (string owner, string name, PackageSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default);
+        ApiResponse<PluginPackageList> ListPluginTagsWithHttpInfo (string owner, string name, PackageSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default);
         /// <summary>
         /// List plugins
         /// </summary>
@@ -248,7 +248,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>RepositoryList</returns>
-        RepositoryList ListPlugins (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default);
+        RepositoryList ListPlugins (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// List plugins
@@ -268,7 +268,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of RepositoryList</returns>
-        ApiResponse<RepositoryList> ListPluginsWithHttpInfo (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default);
+        ApiResponse<RepositoryList> ListPluginsWithHttpInfo (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default);
         /// <summary>
         /// Update a Plugin
         /// </summary>
@@ -525,7 +525,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of PluginPackageList</returns>
-        System.Threading.Tasks.Task<PluginPackageList> ListPluginTagsAsync (string owner, string name, PackageSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<PluginPackageList> ListPluginTagsAsync (string owner, string name, PackageSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get a plugin tags
@@ -542,7 +542,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (PluginPackageList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<PluginPackageList>> ListPluginTagsWithHttpInfoAsync (string owner, string name, PackageSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<PluginPackageList>> ListPluginTagsWithHttpInfoAsync (string owner, string name, PackageSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List plugins
         /// </summary>
@@ -562,7 +562,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of RepositoryList</returns>
-        System.Threading.Tasks.Task<RepositoryList> ListPluginsAsync (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<RepositoryList> ListPluginsAsync (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List plugins
@@ -583,7 +583,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (RepositoryList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<RepositoryList>> ListPluginsWithHttpInfoAsync (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<RepositoryList>> ListPluginsWithHttpInfoAsync (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update a Plugin
         /// </summary>
@@ -2015,7 +2015,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>PluginPackageList</returns>
-        public PluginPackageList ListPluginTags (string owner, string name, PackageSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default)
+        public PluginPackageList ListPluginTags (string owner, string name, PackageSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default)
         {
              ApiResponse<PluginPackageList> localVarResponse = ListPluginTagsWithHttpInfo(owner, name, sortBy, sortOrder, page, perPage);
              return localVarResponse.Data;
@@ -2032,7 +2032,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of PluginPackageList</returns>
-        public ApiResponse<PluginPackageList> ListPluginTagsWithHttpInfo (string owner, string name, PackageSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default)
+        public ApiResponse<PluginPackageList> ListPluginTagsWithHttpInfo (string owner, string name, PackageSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2111,7 +2111,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of PluginPackageList</returns>
-        public async System.Threading.Tasks.Task<PluginPackageList> ListPluginTagsAsync (string owner, string name, PackageSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<PluginPackageList> ListPluginTagsAsync (string owner, string name, PackageSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
              ApiResponse<PluginPackageList> localVarResponse = await ListPluginTagsWithHttpInfoAsync(owner, name, sortBy, sortOrder, page, perPage, cancellationToken);
              return localVarResponse.Data;
@@ -2130,7 +2130,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (PluginPackageList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<PluginPackageList>> ListPluginTagsWithHttpInfoAsync (string owner, string name, PackageSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<PluginPackageList>> ListPluginTagsWithHttpInfoAsync (string owner, string name, PackageSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2212,7 +2212,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>RepositoryList</returns>
-        public RepositoryList ListPlugins (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default)
+        public RepositoryList ListPlugins (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default)
         {
              ApiResponse<RepositoryList> localVarResponse = ListPluginsWithHttpInfo(search, name, owner, _public, keyword, permission, sortBy, sortOrder, page, perPage);
              return localVarResponse.Data;
@@ -2233,7 +2233,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of RepositoryList</returns>
-        public ApiResponse<RepositoryList> ListPluginsWithHttpInfo (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default)
+        public ApiResponse<RepositoryList> ListPluginsWithHttpInfo (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default)
         {
 
             var localVarPath = "/plugins";
@@ -2314,7 +2314,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of RepositoryList</returns>
-        public async System.Threading.Tasks.Task<RepositoryList> ListPluginsAsync (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<RepositoryList> ListPluginsAsync (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
              ApiResponse<RepositoryList> localVarResponse = await ListPluginsWithHttpInfoAsync(search, name, owner, _public, keyword, permission, sortBy, sortOrder, page, perPage, cancellationToken);
              return localVarResponse.Data;
@@ -2337,7 +2337,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (RepositoryList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<RepositoryList>> ListPluginsWithHttpInfoAsync (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<RepositoryList>> ListPluginsWithHttpInfoAsync (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
 
             var localVarPath = "/plugins";

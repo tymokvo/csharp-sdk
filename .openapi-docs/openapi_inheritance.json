@@ -14560,6 +14560,24 @@
           "propertyName": "type"
         }
       },
+      "RoleEnum": {
+        "title": "RoleEnum",
+        "enum": [
+          "owner",
+          "member"
+        ],
+        "type": "string",
+        "description": "An enumeration."
+      },
+      "SortEnum": {
+        "title": "SortEnum",
+        "enum": [
+          "ascending",
+          "descending"
+        ],
+        "type": "string",
+        "description": "An enumeration."
+      },
       "OrganizationRoleEnum": {
         "title": "OrganizationRoleEnum",
         "description": "An enumeration.",

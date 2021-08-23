@@ -213,7 +213,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>RecipePackageList</returns>
-        RecipePackageList ListRecipeTags (string owner, string name, PackageSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default);
+        RecipePackageList ListRecipeTags (string owner, string name, PackageSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// Get a recipe tags
@@ -229,7 +229,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of RecipePackageList</returns>
-        ApiResponse<RecipePackageList> ListRecipeTagsWithHttpInfo (string owner, string name, PackageSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default);
+        ApiResponse<RecipePackageList> ListRecipeTagsWithHttpInfo (string owner, string name, PackageSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default);
         /// <summary>
         /// List recipes
         /// </summary>
@@ -248,7 +248,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>RepositoryList</returns>
-        RepositoryList ListRecipes (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default);
+        RepositoryList ListRecipes (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default);
 
         /// <summary>
         /// List recipes
@@ -268,7 +268,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of RepositoryList</returns>
-        ApiResponse<RepositoryList> ListRecipesWithHttpInfo (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default);
+        ApiResponse<RepositoryList> ListRecipesWithHttpInfo (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default);
         /// <summary>
         /// Update a Recipe
         /// </summary>
@@ -525,7 +525,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of RecipePackageList</returns>
-        System.Threading.Tasks.Task<RecipePackageList> ListRecipeTagsAsync (string owner, string name, PackageSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<RecipePackageList> ListRecipeTagsAsync (string owner, string name, PackageSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get a recipe tags
@@ -542,7 +542,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (RecipePackageList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<RecipePackageList>> ListRecipeTagsWithHttpInfoAsync (string owner, string name, PackageSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<RecipePackageList>> ListRecipeTagsWithHttpInfoAsync (string owner, string name, PackageSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List recipes
         /// </summary>
@@ -562,7 +562,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of RepositoryList</returns>
-        System.Threading.Tasks.Task<RepositoryList> ListRecipesAsync (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<RepositoryList> ListRecipesAsync (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List recipes
@@ -583,7 +583,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (RepositoryList)</returns>
-        System.Threading.Tasks.Task<ApiResponse<RepositoryList>> ListRecipesWithHttpInfoAsync (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
+        System.Threading.Tasks.Task<ApiResponse<RepositoryList>> ListRecipesWithHttpInfoAsync (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update a Recipe
         /// </summary>
@@ -2015,7 +2015,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>RecipePackageList</returns>
-        public RecipePackageList ListRecipeTags (string owner, string name, PackageSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default)
+        public RecipePackageList ListRecipeTags (string owner, string name, PackageSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default)
         {
              ApiResponse<RecipePackageList> localVarResponse = ListRecipeTagsWithHttpInfo(owner, name, sortBy, sortOrder, page, perPage);
              return localVarResponse.Data;
@@ -2032,7 +2032,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of RecipePackageList</returns>
-        public ApiResponse<RecipePackageList> ListRecipeTagsWithHttpInfo (string owner, string name, PackageSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default)
+        public ApiResponse<RecipePackageList> ListRecipeTagsWithHttpInfo (string owner, string name, PackageSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default)
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2111,7 +2111,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of RecipePackageList</returns>
-        public async System.Threading.Tasks.Task<RecipePackageList> ListRecipeTagsAsync (string owner, string name, PackageSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<RecipePackageList> ListRecipeTagsAsync (string owner, string name, PackageSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
              ApiResponse<RecipePackageList> localVarResponse = await ListRecipeTagsWithHttpInfoAsync(owner, name, sortBy, sortOrder, page, perPage, cancellationToken);
              return localVarResponse.Data;
@@ -2130,7 +2130,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (RecipePackageList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<RecipePackageList>> ListRecipeTagsWithHttpInfoAsync (string owner, string name, PackageSortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<RecipePackageList>> ListRecipeTagsWithHttpInfoAsync (string owner, string name, PackageSortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
             // verify the required parameter 'owner' is set
             if (owner == null)
@@ -2212,7 +2212,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>RepositoryList</returns>
-        public RepositoryList ListRecipes (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default)
+        public RepositoryList ListRecipes (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default)
         {
              ApiResponse<RepositoryList> localVarResponse = ListRecipesWithHttpInfo(search, name, owner, _public, keyword, permission, sortBy, sortOrder, page, perPage);
              return localVarResponse.Data;
@@ -2233,7 +2233,7 @@ namespace PollinationSDK.Api
         /// <param name="page">Page number starting from 1 (optional, default to 1)</param>
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <returns>ApiResponse of RepositoryList</returns>
-        public ApiResponse<RepositoryList> ListRecipesWithHttpInfo (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default)
+        public ApiResponse<RepositoryList> ListRecipesWithHttpInfo (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default)
         {
 
             var localVarPath = "/recipes";
@@ -2314,7 +2314,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of RepositoryList</returns>
-        public async System.Threading.Tasks.Task<RepositoryList> ListRecipesAsync (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<RepositoryList> ListRecipesAsync (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
              ApiResponse<RepositoryList> localVarResponse = await ListRecipesWithHttpInfoAsync(search, name, owner, _public, keyword, permission, sortBy, sortOrder, page, perPage, cancellationToken);
              return localVarResponse.Data;
@@ -2337,7 +2337,7 @@ namespace PollinationSDK.Api
         /// <param name="perPage">Number of items per page (optional, default to 25)</param>
         /// <param name="cancellationToken">Cancellation Token to cancel request (optional) </param>
         /// <returns>Task of ApiResponse (RepositoryList)</returns>
-        public async System.Threading.Tasks.Task<ApiResponse<RepositoryList>> ListRecipesWithHttpInfoAsync (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<ApiResponse<RepositoryList>> ListRecipesWithHttpInfoAsync (List<string> search = default, List<string> name = default, List<string> owner = default, bool? _public = default, List<string> keyword = default, List<string> permission = default, RepositorySortKey sortBy = default, SortEnum? sortOrder = default, int? page = default, int? perPage = default, CancellationToken cancellationToken = default(CancellationToken))
         {
 
             var localVarPath = "/recipes";

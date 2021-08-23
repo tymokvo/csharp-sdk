@@ -652,7 +652,7 @@ Name | Type | Description  | Notes
 
 ## ListRecipeTags
 
-> RecipePackageList ListRecipeTags (string owner, string name, PackageSortKey sortBy = null, SortEnum sortOrder = null, int? page = null, int? perPage = null)
+> RecipePackageList ListRecipeTags (string owner, string name, PackageSortKey sortBy = null, SortEnum? sortOrder = null, int? page = null, int? perPage = null)
 
 Get a recipe tags
 
@@ -685,7 +685,7 @@ namespace Example
             var owner = owner_example;  // string | 
             var name = name_example;  // string | 
             var sortBy = new PackageSortKey(); // PackageSortKey | Key to sort the list by (optional) 
-            var sortOrder = new SortEnum(); // SortEnum | The order to sort the list (optional) 
+            var sortOrder = ;  // SortEnum? | The order to sort the list (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
@@ -714,7 +714,7 @@ Name | Type | Description  | Notes
  **owner** | **string**|  | 
  **name** | **string**|  | 
  **sortBy** | [**PackageSortKey**](PackageSortKey.md)| Key to sort the list by | [optional] 
- **sortOrder** | [**SortEnum**](SortEnum.md)| The order to sort the list | [optional] 
+ **sortOrder** | **SortEnum?**| The order to sort the list | [optional] 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
  **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
@@ -749,7 +749,7 @@ Name | Type | Description  | Notes
 
 ## ListRecipes
 
-> RepositoryList ListRecipes (List<string> search = null, List<string> name = null, List<string> owner = null, bool? _public = null, List<string> keyword = null, List<string> permission = null, RepositorySortKey sortBy = null, SortEnum sortOrder = null, int? page = null, int? perPage = null)
+> RepositoryList ListRecipes (List<string> search = null, List<string> name = null, List<string> owner = null, bool? _public = null, List<string> keyword = null, List<string> permission = null, RepositorySortKey sortBy = null, SortEnum? sortOrder = null, int? page = null, int? perPage = null)
 
 List recipes
 
@@ -784,7 +784,7 @@ namespace Example
             var keyword = new List<string>(); // List<string> | A keyword to index the repository by (optional) 
             var permission = new List<string>(); // List<string> | Filter by permission on given resource (optional) 
             var sortBy = new RepositorySortKey(); // RepositorySortKey | Key to sort the list by (optional) 
-            var sortOrder = new SortEnum(); // SortEnum | The order to sort the list (optional) 
+            var sortOrder = ;  // SortEnum? | The order to sort the list (optional) 
             var page = 56;  // int? | Page number starting from 1 (optional)  (default to 1)
             var perPage = 56;  // int? | Number of items per page (optional)  (default to 25)
 
@@ -817,7 +817,7 @@ Name | Type | Description  | Notes
  **keyword** | [**List&lt;string&gt;**](string.md)| A keyword to index the repository by | [optional] 
  **permission** | [**List&lt;string&gt;**](string.md)| Filter by permission on given resource | [optional] 
  **sortBy** | [**RepositorySortKey**](RepositorySortKey.md)| Key to sort the list by | [optional] 
- **sortOrder** | [**SortEnum**](SortEnum.md)| The order to sort the list | [optional] 
+ **sortOrder** | **SortEnum?**| The order to sort the list | [optional] 
  **page** | **int?**| Page number starting from 1 | [optional] [default to 1]
  **perPage** | **int?**| Number of items per page | [optional] [default to 25]
 
