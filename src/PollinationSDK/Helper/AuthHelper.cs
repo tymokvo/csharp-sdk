@@ -12,8 +12,8 @@ namespace PollinationSDK
     public static class AuthHelper
     {
 
-        private static string LoginURL => "https://app.pollination.cloud/sdk-login";
-        private static string LoginURL_Dev => "https://app.staging.pollination.cloud/sdk-login";
+        private static string LoginURL => "https://auth.pollination.cloud/sdk-login";
+        private static string LoginURL_Dev => "https://auth.staging.pollination.cloud/sdk-login";
 
         public static string ApiURL => "https://api.pollination.cloud/";
         public static string ApiURL_Dev => "https://api.staging.pollination.cloud/";
@@ -21,7 +21,7 @@ namespace PollinationSDK
         public static async Task SignInAsync(Action ActionWhenDone = default, bool devEnv = false)
         {
             //OutputMessage = string.Empty;
-           
+
             try
             {
                 var task = PollinationSignInAsync(devEnv);
@@ -81,11 +81,12 @@ namespace PollinationSDK
 
         private static async Task<string> PollinationSignInAsync(bool devEnv = false)
         {
-            if (!HttpListener.IsSupported) {
+            if (!HttpListener.IsSupported)
+            {
                 Helper.Logger.Error($"PollinationSignInAsync: HttpListener is not supported on this system");
                 throw new ArgumentException("PollinationSignIn is not supported on this system");
             }
-               
+
             var redirectUrl = "http://localhost:8645/";
             var loginUrl = devEnv ? LoginURL_Dev : LoginURL;
 
@@ -93,7 +94,7 @@ namespace PollinationSDK
 
             try
             {
-               
+
                 listener.Prefixes.Add(redirectUrl);
                 listener.Start();
                 //listener.TimeoutManager.IdleConnection = TimeSpan.FromSeconds(30);
@@ -131,7 +132,8 @@ namespace PollinationSDK
             var response = context.Response;
 
             var returnUrl = request.RawUrl.Contains("?token=") ? request.RawUrl : request.UrlReferrer?.PathAndQuery;
-            if (string.IsNullOrEmpty(returnUrl)) {
+            if (string.IsNullOrEmpty(returnUrl))
+            {
                 Helper.Logger.Error($"PollinationSignInAsync: Failed to authorize the login: \n{request.RawUrl}");
                 throw new ArgumentException($"Failed to authorize the login: \n{request.RawUrl}");
             }
