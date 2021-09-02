@@ -1,16 +1,42 @@
-﻿using Newtonsoft.Json;
-using PollinationSDK.Client;
-using RestSharp;
-using System;
-using System.Linq;
+﻿using System;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Specialized;
+using PollinationSDK.Client;
 
 namespace PollinationSDK
 {
     public static class AuthHelper
     {
+        public struct AuthResult
+        {
+            public string IDToken;
+
+            public int ExpiresInSeconds;
+
+            public string RefreshToken;
+
+            public static AuthResult From(NameValueCollection queryMap)
+            {
+                var idToken = queryMap.Get("token");
+
+                var expiresIn = queryMap.Get("expiresIn");
+
+                var expirationSeconds = 3600;
+
+                int.TryParse(expiresIn, out expirationSeconds);
+
+                var refreshToken = queryMap.Get("refreshToken");
+
+                return new AuthResult
+                {
+                    IDToken = idToken,
+                    ExpiresInSeconds = expirationSeconds,
+                    RefreshToken = refreshToken
+                };
+            }
+        }
 
         private static string LoginURL => "https://auth.pollination.cloud/sdk-login";
         private static string LoginURL_Dev => "https://auth.staging.pollination.cloud/sdk-login";
@@ -25,11 +51,11 @@ namespace PollinationSDK
             try
             {
                 var task = PollinationSignInAsync(devEnv);
-                var token = await task;
-                if (!string.IsNullOrEmpty(token))
+                var authResult = await task;
+                if (!string.IsNullOrEmpty(authResult.IDToken))
                 {
                     Configuration.Default.BasePath = devEnv ? ApiURL_Dev : ApiURL;
-                    Configuration.Default.AddDefaultHeader("Authorization", $"Bearer {token}");
+                    Configuration.Default.AddDefaultHeader("Authorization", $"Bearer {authResult.IDToken}");
                     Helper.CurrentUser = Helper.GetUser();
                     Helper.Logger.Information($"SignInAsync: logged in as {Helper.CurrentUser.Username}");
                 }
@@ -79,7 +105,7 @@ namespace PollinationSDK
         }
 
 
-        private static async Task<string> PollinationSignInAsync(bool devEnv = false)
+        public static async Task<AuthResult> PollinationSignInAsync(bool devEnv = false)
         {
             if (!HttpListener.IsSupported)
             {
@@ -150,7 +176,8 @@ namespace PollinationSDK
             listener.Stop();
 
             Helper.Logger.Information($"PollinationSignInAsync: closing the listener");
-            return returnUrl.Split('=').LastOrDefault();
+
+            return AuthResult.From(request.QueryString);
         }
     }
 }
