@@ -38,8 +38,17 @@ namespace PollinationSDK
             }
         }
 
-        private static string LoginURL => "https://auth.pollination.cloud/sdk-login";
-        private static string LoginURL_Dev => "https://auth.staging.pollination.cloud/sdk-login";
+        private static readonly string DevDomain = "staging.";
+        private static readonly string AuthURL_Base = "https://auth.{0}pollination.cloud{1}";
+
+        private static readonly string AuthSignInPath = "/sdk-login";
+
+        private static readonly string AuthRefreshPath = "/authAPI/refreshToken";
+        private static string LoginURL => string.Format(AuthURL_Base, "", AuthSignInPath);
+        private static string LoginURL_Dev => string.Format(AuthURL_Base, DevDomain, AuthRefreshPath);
+        public static string RefreshURL => string.Format(AuthURL_Base, "", AuthRefreshPath);
+
+        public static string RefreshURL_Dev => string.Format(AuthURL_Base, DevDomain, AuthRefreshPath);
 
         public static string ApiURL => "https://api.pollination.cloud/";
         public static string ApiURL_Dev => "https://api.staging.pollination.cloud/";
@@ -55,7 +64,9 @@ namespace PollinationSDK
                 if (!string.IsNullOrEmpty(authResult.IDToken))
                 {
                     Configuration.Default.BasePath = devEnv ? ApiURL_Dev : ApiURL;
-                    Configuration.Default.AddDefaultHeader("Authorization", $"Bearer {authResult.IDToken}");
+
+                    // Configuration.Default.TokenRepo = new TokenRepo()
+                    // Configuration.Default.AddDefaultHeader("Authorization", $"Bearer {authResult.IDToken}");
                     Helper.CurrentUser = Helper.GetUser();
                     Helper.Logger.Information($"SignInAsync: logged in as {Helper.CurrentUser.Username}");
                 }
