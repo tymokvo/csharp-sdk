@@ -45,7 +45,7 @@ namespace PollinationSDK
 
         private static readonly string AuthRefreshPath = "/authAPI/refreshToken";
         private static string LoginURL => string.Format(AuthURL_Base, "", AuthSignInPath);
-        private static string LoginURL_Dev => string.Format(AuthURL_Base, DevDomain, AuthRefreshPath);
+        private static string LoginURL_Dev => string.Format(AuthURL_Base, DevDomain, AuthSignInPath);
         public static string RefreshURL => string.Format(AuthURL_Base, "", AuthRefreshPath);
 
         public static string RefreshURL_Dev => string.Format(AuthURL_Base, DevDomain, AuthRefreshPath);
@@ -65,8 +65,12 @@ namespace PollinationSDK
                 {
                     Configuration.Default.BasePath = devEnv ? ApiURL_Dev : ApiURL;
 
-                    // Configuration.Default.TokenRepo = new TokenRepo()
-                    // Configuration.Default.AddDefaultHeader("Authorization", $"Bearer {authResult.IDToken}");
+                    Configuration.Default.TokenRepo = new TokenRepo(
+                        refreshURL: devEnv ? RefreshURL_Dev : RefreshURL,
+                        idToken: authResult.IDToken,
+                        expiresInSeconds: authResult.ExpiresInSeconds,
+                        refreshToken: authResult.RefreshToken
+                    );
                     Helper.CurrentUser = Helper.GetUser();
                     Helper.Logger.Information($"SignInAsync: logged in as {Helper.CurrentUser.Username}");
                 }

@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using RestSharp;
 
 namespace PollinationSDK.Client
 {
@@ -158,6 +159,12 @@ namespace PollinationSDK.Client
         private string _tempFolderPath = Path.GetTempPath();
 
         #endregion Private Members
+
+        #region Public Members
+
+        public TokenRepo TokenRepo;
+
+        #endregion
 
         #region Constructors
 
@@ -348,7 +355,13 @@ namespace PollinationSDK.Client
         /// Gets or sets the access token for OAuth2 authentication.
         /// </summary>
         /// <value>The access token.</value>
-        public virtual string AccessToken { get; set; }
+        public virtual string AccessToken
+        {
+            get
+            {
+                return TokenRepo.GetToken().Result;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the temporary folder path to store the files downloaded from the server.
