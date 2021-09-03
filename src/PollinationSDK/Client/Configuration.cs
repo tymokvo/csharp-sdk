@@ -18,6 +18,64 @@ using System.Text;
 namespace PollinationSDK.Client
 {
     /// <summary>
+    /// TokenRepo is responsible for holding and acquiring auth tokens
+    /// </summary>
+    public class TokenRepo
+    {
+        public string RefreshURL;
+        private string IDToken;
+        public DateTime ExpiresAt;
+        public string RefreshToken;
+
+        public TokenRepo(string refreshURL, string idToken, int expiresInSeconds, string refreshToken)
+        {
+            RefreshURL = refreshURL;
+            IDToken = idToken;
+            ExpiresAt = DateTime.Now.AddSeconds(expiresInSeconds);
+            RefreshToken = refreshToken;
+        }
+
+        private async System.Threading.Tasks.Task RefreshTokenAsync()
+        {
+
+            var client = new RestClient(this.RefreshURL);
+
+            var req = new RestRequest().AddJsonBody(
+                new Dictionary<string, string>
+                {
+                    {
+                        "token", this.RefreshToken }
+                    }
+                );
+
+            var res = await client.PostAsync<Dictionary<string, string>>(req);
+
+            string detail = null;
+
+            res.TryGetValue("detail", out detail);
+
+            if (detail != null)
+            {
+                throw new Exception(detail);
+            }
+
+            this.IDToken = res["id_token"];
+            this.ExpiresAt = DateTime.Now.AddSeconds(int.Parse(res["expires_in"]));
+            this.RefreshToken = res["refresh_token"];
+        }
+
+        public async System.Threading.Tasks.Task<string> GetToken()
+        {
+            if (DateTime.Now >= this.ExpiresAt)
+            {
+                await this.RefreshTokenAsync();
+            }
+
+            return this.IDToken;
+        }
+    }
+
+    /// <summary>
     /// Represents a set of configuration settings
     /// </summary>
     public class Configuration : IReadableConfiguration
