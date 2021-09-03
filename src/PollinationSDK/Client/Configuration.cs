@@ -54,6 +54,7 @@ namespace PollinationSDK.Client
             string detail = null;
 
             res.TryGetValue("detail", out detail);
+            res.TryGetValue("message", out detail);
 
             if (detail != null)
             {
@@ -359,7 +360,11 @@ namespace PollinationSDK.Client
         {
             get
             {
-                return TokenRepo.GetToken().Result;
+                if (TokenRepo != null)
+                {
+                    return TokenRepo.GetToken().Result;
+                }
+                return "";
             }
         }
 
