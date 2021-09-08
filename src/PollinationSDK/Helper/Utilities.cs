@@ -21,8 +21,14 @@ namespace PollinationSDK
             //https://utilities.staging.pollination.cloud/luigi-archive
             var url = $"{Configuration.Default.BasePath}/luigi-archive".Replace("https://api.", "https://utilities.");
 
+
             // add Authorization JWT
-            request.AddHeaders(Configuration.Default.DefaultHeader);
+            var jwt = Configuration.Default.AccessToken;
+            // http beerer authentication required
+            if (!String.IsNullOrEmpty(jwt))
+            {
+                request.AddHeader("Authorization", $"Bearer {jwt}");
+            }
 
             // add API key
             var apiKey = Configuration.Default.GetApiKeyWithPrefix("x-pollination-token");
