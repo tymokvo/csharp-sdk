@@ -47,8 +47,8 @@ namespace {{packageName}}.Client
 
             string detail = null;
 
-            res.TryGetValue("detail", out detail);
-            res.TryGetValue("message", out detail);
+            res.TryGetValue("detail", out detail); // A Pollination error occurred
+            res.TryGetValue("message", out detail); // A Firebase error occurred
 
             if (detail != null)
             {
