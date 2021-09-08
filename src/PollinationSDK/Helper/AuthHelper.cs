@@ -120,7 +120,7 @@ namespace PollinationSDK
         }
 
 
-        public static async Task<AuthResult> PollinationSignInAsync(bool devEnv = false)
+        private static async Task<AuthResult> PollinationSignInAsync(bool devEnv = false)
         {
             if (!HttpListener.IsSupported)
             {
