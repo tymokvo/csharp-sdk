@@ -15,7 +15,7 @@ namespace {{packageName}}.Client
     /// <summary>
     /// TokenRepo is responsible for holding and acquiring auth tokens
     /// </summary>
-    {{>visibility}} class TokenRepo
+    public class TokenRepo
     {
         public string RefreshURL;
         private string IDToken;
@@ -28,43 +28,54 @@ namespace {{packageName}}.Client
             IDToken = idToken;
             ExpiresAt = DateTime.Now.AddSeconds(expiresInSeconds);
             RefreshToken = refreshToken;
+            this.LogTokenExpiration();
         }
 
-        private async System.Threading.Tasks.Task RefreshTokenAsync()
+        private void LogTokenExpiration()
         {
+            Helper.Logger.Information($"Token expires at: {ExpiresAt}");
+        }
 
+        private void DoTokenRefresh()
+        {
             var client = new RestClient(this.RefreshURL);
 
             var req = new RestRequest().AddJsonBody(
                 new Dictionary<string, string>
                 {
-                    {
-                        "token", this.RefreshToken }
-                    }
+                    {"token", this.RefreshToken}
+                }
                 );
 
-            var res = await client.PostAsync<Dictionary<string, string>>(req);
+            var res = client.Post<Dictionary<string, string>>(req);
 
             string detail = null;
 
-            res.TryGetValue("detail", out detail); // A Pollination error occurred
-            res.TryGetValue("message", out detail); // A Firebase error occurred
+            res.Data.TryGetValue("detail", out detail);
+            res.Data.TryGetValue("message", out detail);
 
             if (detail != null)
             {
                 throw new Exception(detail);
             }
 
-            this.IDToken = res["id_token"];
-            this.ExpiresAt = DateTime.Now.AddSeconds(int.Parse(res["expires_in"]));
-            this.RefreshToken = res["refresh_token"];
+            this.IDToken = res.Data["id_token"];
+            this.ExpiresAt = DateTime.Now.AddSeconds(int.Parse(res.Data["expires_in"]));
+            this.RefreshToken = res.Data["refresh_token"];
         }
 
-        public async System.Threading.Tasks.Task<string> GetToken()
+        private void DoTokenRefreshLogged()
+        {
+            Helper.Logger.Information("Refreshing token");
+            this.DoTokenRefresh();
+            Helper.Logger.Information("Token refresh finished");
+            this.LogTokenExpiration();
+        }
+        public string GetToken()
         {
             if (DateTime.Now >= this.ExpiresAt)
             {
-                await this.RefreshTokenAsync();
+                this.DoTokenRefreshLogged();
             }
 
             return this.IDToken;
@@ -357,7 +368,7 @@ namespace {{packageName}}.Client
             {
                 if (TokenRepo != null)
                 {
-                    return TokenRepo.GetToken().Result;
+                    return TokenRepo.GetToken();
                 }
                 return "";
             }
